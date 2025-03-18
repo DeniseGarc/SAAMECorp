@@ -4,7 +4,7 @@
  */
 package dto;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -17,12 +17,12 @@ public class PsicologoDTO {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String correo;
-    private List<Time> horarioDia;
+    private List<LocalTime> horarioDia;
 
     public PsicologoDTO() {
     }
 
-    public PsicologoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<Time> horarioDia) {
+    public PsicologoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horarioDia) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -62,11 +62,11 @@ public class PsicologoDTO {
         this.correo = correo;
     }
 
-    public List<Time> getHorarioDia() {
+    public List<LocalTime> getHorarioDia() {
         return horarioDia;
     }
 
-    public void setHorarioDia(List<Time> horarioDia) {
+    public void setHorarioDia(List<LocalTime> horarioDia) {
         this.horarioDia = horarioDia;
     }
 
