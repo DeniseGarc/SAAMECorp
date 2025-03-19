@@ -8,6 +8,6 @@ package gestorCalendario;
  *
  * @author Alici
  */
-public class FGestorCalendario {
+public class FGestorCalendario implements IGestorCalendario{
     
 }

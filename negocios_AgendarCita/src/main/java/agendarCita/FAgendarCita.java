@@ -8,6 +8,6 @@ package agendarCita;
  *
  * @author Alici
  */
-public class FAgendarCita {
+public class FAgendarCita implements IAgendarCita {
     
 }
