@@ -9,6 +9,7 @@
         <module>presentacion_SAAMECorp</module>
         <module>dto_negocios</module>
         <module>negocios_AgendarCita</module>
+        <module>negocios_GestorCalendario</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

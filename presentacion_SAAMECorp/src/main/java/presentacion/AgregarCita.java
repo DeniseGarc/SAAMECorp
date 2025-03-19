@@ -38,11 +38,10 @@ public class AgregarCita extends javax.swing.JFrame {
         lblReportes = new javax.swing.JLabel();
         lblPsicologos = new javax.swing.JLabel();
         lblCubiculos = new javax.swing.JLabel();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
+        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
-        setPreferredSize(new java.awt.Dimension(1100, 800));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
@@ -52,7 +51,7 @@ public class AgregarCita extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
         lblTitulo.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
-        lblTitulo.setText("Cita");
+        lblTitulo.setText("Agendar Cita");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -60,8 +59,8 @@ public class AgregarCita extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1108, Short.MAX_VALUE))
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(959, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +80,6 @@ public class AgregarCita extends javax.swing.JFrame {
         jButton4.setFocusPainted(false);
 
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-carpeta-50.png"))); // NOI18N
-        btnReportes.setActionCommand("");
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
 
@@ -157,13 +155,21 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addComponent(btnCubiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCubiculos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
-        jCalendar1.setBackground(new java.awt.Color(204, 204, 255));
-        jCalendar1.setDecorationBackgroundColor(new java.awt.Color(221, 212, 240));
-        jCalendar1.setSundayForeground(new java.awt.Color(102, 0, 102));
-        jCalendar1.setWeekdayForeground(new java.awt.Color(188, 163, 226));
+        jPanel4.setPreferredSize(new java.awt.Dimension(850, 650));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 650, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -171,12 +177,13 @@ public class AgregarCita extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,8 +191,8 @@ public class AgregarCita extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 161, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,10 +223,10 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton4;
-    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblCitas;
     private javax.swing.JLabel lblCubiculos;
     private javax.swing.JLabel lblPsicologos;
