@@ -5,7 +5,10 @@
 package gestorCalendario;
 
 import dto.PsicologoDTO;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,16 +18,28 @@ import java.util.List;
 public class FGestorCalendario implements IGestorCalendario{
 
     @Override
-    public List<Date> diasAgendaLlena() {
-        
+    public List<LocalDate> diasAgendaLlena() {
+        List<LocalDate> diasConAgendaLlena = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        for (int i = 0; i < 5; i++) {
+            diasConAgendaLlena.add(fechaActual.plusDays(i));
+        }
+        return diasConAgendaLlena;
     }
 
     @Override
-    public List<Date> diasConReservas() {
+    public List<LocalDate> diasConReservas() {
+        List<LocalDate> diasConReservas = new ArrayList<>();
+        LocalDate fechaActual = LocalDate.now();
+        for (int i = 0; i < 5; i++) {
+            diasConReservas.add(fechaActual.plusDays(i));
+        }
+        return diasConReservas;
     }
 
     @Override
-    public boolean diaDisponiblePsicologo(PsicologoDTO psicologo, Date fecha) {
-    
+    public boolean diaDisponiblePsicologo(PsicologoDTO psicologo, LocalDate fecha) {
+
+        return false;
     }
 }
