@@ -27,7 +27,18 @@ import javax.swing.JOptionPane;
 public class ControladorAplicacion {
 
     private IAgendarCita sistemaAgendaCita = new FAgendarCita();
-
+    
+    public void pantallaInicioSesion (){
+        IniciarSesion frmInicioSesion = new IniciarSesion();
+        frmInicioSesion.setVisible(true);
+        
+    }
+    
+    public void pantallaPrincipal (JFrame frm){
+        PantallaInicio frmInicio = new PantallaInicio();
+        frmInicio.setVisible(true);
+        frm.dispose();
+    }
     public void pantallaCalendarioCitas(JFrame frm) {
         CalendarioCitas frmCalendarioCita = new CalendarioCitas();
         frmCalendarioCita.setVisible(true);

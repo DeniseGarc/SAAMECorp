@@ -13,6 +13,7 @@ public class PantallaInicio extends javax.swing.JFrame {
     /**
      * Creates new form PantallaInicio
      */
+    ControladorAplicacion control = new ControladorAplicacion();
     public PantallaInicio() {
         initComponents();
     }
@@ -55,6 +56,11 @@ public class PantallaInicio extends javax.swing.JFrame {
         btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-lista-50.png"))); // NOI18N
         btnCitas.setBorderPainted(false);
         btnCitas.setContentAreaFilled(false);
+        btnCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCitasMouseClicked(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/team.png"))); // NOI18N
         jButton4.setBorderPainted(false);
@@ -72,33 +78,27 @@ public class PantallaInicio extends javax.swing.JFrame {
         btnCubiculos.setPreferredSize(new java.awt.Dimension(60, 60));
 
         lblCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCitas.setForeground(new java.awt.Color(0, 0, 0));
         lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCitas.setText("Citas");
 
         lblReportes.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblReportes.setForeground(new java.awt.Color(0, 0, 0));
         lblReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblReportes.setText("Reportes");
 
         lblPsicologos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblPsicologos.setForeground(new java.awt.Color(0, 0, 0));
         lblPsicologos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPsicologos.setText("Psicologos");
 
         lblCubiculos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCubiculos.setForeground(new java.awt.Color(0, 0, 0));
         lblCubiculos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCubiculos.setText("Cubiculos");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-user-50.png"))); // NOI18N
 
-        btnPagos.setBackground(new java.awt.Color(255, 255, 255));
         btnPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-x-50.png"))); // NOI18N
         btnPagos.setBorder(null);
 
         lblCubiculos1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCubiculos1.setForeground(new java.awt.Color(0, 0, 0));
         lblCubiculos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCubiculos1.setText("Pagos");
 
@@ -148,7 +148,7 @@ public class PantallaInicio extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(btnCitas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCitas)
@@ -176,7 +176,6 @@ public class PantallaInicio extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Bienvenid@ administrador");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/Logo.png"))); // NOI18N
@@ -246,40 +245,14 @@ public class PantallaInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAjustesActionPerformed
 
+    private void btnCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCitasMouseClicked
+        control.pantallaCalendarioCitas(this);
+    }//GEN-LAST:event_btnCitasMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaInicio().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjustes;
