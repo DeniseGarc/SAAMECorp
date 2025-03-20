@@ -13,7 +13,7 @@ import java.util.List;
  * @author Alici
  */
 public interface IGestorCalendario {
-    public List<LocalDate> diasAgendaLlena();
-    public List<LocalDate> diasConReservas();
-    public boolean diaDisponiblePsicologo(PsicologoDTO psicologo, LocalDate fecha);
+    public abstract List<LocalDate> diasAgendaLlena();
+    public abstract List<LocalDate> diasConReservas();
+    public abstract boolean diaDisponiblePsicologo(PsicologoDTO psicologo, LocalDate fecha);
 }
