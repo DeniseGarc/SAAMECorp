@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import java.util.Date;
+
 /**
  *
  * @author Alici
@@ -13,6 +15,8 @@ public class CalendarioCitas extends javax.swing.JFrame {
     /**
      * Creates new form CalendarioCitas
      */
+    //crear instancia del control de la aplicacion para poder usar los metodos
+    ControladorAplicacion control = new ControladorAplicacion();
     public CalendarioCitas() {
         initComponents();
     }
@@ -52,6 +56,16 @@ public class CalendarioCitas extends javax.swing.JFrame {
         CalendarioCitas.setRequestFocusEnabled(false);
         CalendarioCitas.setSundayForeground(new java.awt.Color(102, 0, 102));
         CalendarioCitas.setWeekdayForeground(new java.awt.Color(188, 163, 226));
+        CalendarioCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CalendarioCitasMouseClicked(evt);
+            }
+        });
+        CalendarioCitas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                CalendarioCitasPropertyChange(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
@@ -209,40 +223,22 @@ public class CalendarioCitas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CalendarioCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalendarioCitasMouseClicked
+        
+    }//GEN-LAST:event_CalendarioCitasMouseClicked
+
+    private void CalendarioCitasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_CalendarioCitasPropertyChange
+        Date fechaSeleccionada = CalendarioCitas.getDate();
+        System.out.println("Día seleccionado: " + fechaSeleccionada);
+
+        // Llama al método para pasar a la siguente pantalla 
+        control.pantallaCalendarioCitas(this);
+    }//GEN-LAST:event_CalendarioCitasPropertyChange
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalendarioCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalendarioCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalendarioCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CalendarioCitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CalendarioCitas().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar CalendarioCitas;
