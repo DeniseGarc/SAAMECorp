@@ -13,6 +13,8 @@ public class AgregarCita extends javax.swing.JFrame {
     /**
      * Creates new form AgregarCita
      */
+    //crear instancia del control de la aplicacion para poder usar los metodos
+    ControladorAplicacion control = new ControladorAplicacion();
     public AgregarCita() {
         initComponents();
     }
@@ -52,6 +54,7 @@ public class AgregarCita extends javax.swing.JFrame {
         lblTelefonoPaciente1 = new javax.swing.JLabel();
         txtCorreoPaciente = new javax.swing.JTextField();
         btbConfirmar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
@@ -202,9 +205,23 @@ public class AgregarCita extends javax.swing.JFrame {
         btbConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btbConfirmar.setForeground(new java.awt.Color(255, 255, 255));
         btbConfirmar.setText("Confirmar");
+        btbConfirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btbConfirmarMouseClicked(evt);
+            }
+        });
         btbConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btbConfirmarActionPerformed(evt);
+            }
+        });
+
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-back-30.png"))); // NOI18N
+        btnRegresar.setBorderPainted(false);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseClicked(evt);
             }
         });
 
@@ -213,21 +230,26 @@ public class AgregarCita extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCorreoPaciente)
-                    .addComponent(txtTelefonoPaciente)
-                    .addComponent(lblTelefonoPaciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CmbCubiculo, 0, 602, Short.MAX_VALUE)
-                    .addComponent(lblCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CmbHorarios, 0, 602, Short.MAX_VALUE)
-                    .addComponent(lblHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CmbPsicologos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblPsicologo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombrePaciente)
-                    .addComponent(btbConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCorreoPaciente)
+                            .addComponent(txtTelefonoPaciente)
+                            .addComponent(lblTelefonoPaciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CmbCubiculo, 0, 602, Short.MAX_VALUE)
+                            .addComponent(lblCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CmbHorarios, 0, 602, Short.MAX_VALUE)
+                            .addComponent(lblHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CmbPsicologos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblPsicologo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombrePaciente)
+                            .addComponent(btbConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegresar)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -257,9 +279,11 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addComponent(lblTelefonoPaciente1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCorreoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(btbConfirmar)
-                .addGap(62, 62, 62))
+                .addGap(33, 33, 33)
+                .addComponent(btnRegresar)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -308,6 +332,15 @@ public class AgregarCita extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btbConfirmarActionPerformed
 
+    private void btbConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbConfirmarMouseClicked
+        
+        //control.resumenCita(cita);
+    }//GEN-LAST:event_btbConfirmarMouseClicked
+
+    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+        control.pantallaCalendarioCitas(this);
+    }//GEN-LAST:event_btnRegresarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -320,6 +353,7 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JButton btbConfirmar;
     private javax.swing.JButton btnCitas;
     private javax.swing.JButton btnCubiculos;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
