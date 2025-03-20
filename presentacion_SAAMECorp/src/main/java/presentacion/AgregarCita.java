@@ -39,9 +39,23 @@ public class AgregarCita extends javax.swing.JFrame {
         lblPsicologos = new javax.swing.JLabel();
         lblCubiculos = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        lblPsicologo = new javax.swing.JLabel();
+        CmbPsicologos = new javax.swing.JComboBox<>();
+        lblHorario = new javax.swing.JLabel();
+        CmbHorarios = new javax.swing.JComboBox<>();
+        CmbCubiculo = new javax.swing.JComboBox<>();
+        lblCubiculo = new javax.swing.JLabel();
+        lblNombrePaciente = new javax.swing.JLabel();
+        txtNombrePaciente = new javax.swing.JTextField();
+        lblTelefonoPaciente = new javax.swing.JLabel();
+        txtTelefonoPaciente = new javax.swing.JTextField();
+        lblTelefonoPaciente1 = new javax.swing.JLabel();
+        txtCorreoPaciente = new javax.swing.JTextField();
+        btbConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
+        setPreferredSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
@@ -158,17 +172,94 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addContainerGap(252, Short.MAX_VALUE))
         );
 
-        jPanel4.setPreferredSize(new java.awt.Dimension(850, 650));
+        jPanel4.setPreferredSize(new java.awt.Dimension(850, 550));
+
+        lblPsicologo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblPsicologo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPsicologo.setText("Psicologo");
+
+        lblHorario.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHorario.setText("Horario");
+
+        lblCubiculo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblCubiculo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCubiculo.setText("Cubiculo");
+
+        lblNombrePaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombrePaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombrePaciente.setText("Nombre del Paciente");
+
+        lblTelefonoPaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTelefonoPaciente.setText("Telefono del Paciente");
+
+        lblTelefonoPaciente1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTelefonoPaciente1.setText("Correo del Paciente");
+
+        btbConfirmar.setBackground(new java.awt.Color(86, 33, 89));
+        btbConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btbConfirmar.setForeground(new java.awt.Color(255, 255, 255));
+        btbConfirmar.setText("Confirmar");
+        btbConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btbConfirmarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCorreoPaciente)
+                    .addComponent(txtTelefonoPaciente)
+                    .addComponent(lblTelefonoPaciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmbCubiculo, 0, 602, Short.MAX_VALUE)
+                    .addComponent(lblCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmbHorarios, 0, 602, Short.MAX_VALUE)
+                    .addComponent(lblHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmbPsicologos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPsicologo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombrePaciente)
+                    .addComponent(btbConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lblPsicologo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CmbPsicologos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lblHorario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CmbHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCubiculo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CmbCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblNombrePaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblTelefonoPaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblTelefonoPaciente1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCorreoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(btbConfirmar)
+                .addGap(62, 62, 62))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -182,15 +273,15 @@ public class AgregarCita extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(92, 92, 92)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -213,12 +304,20 @@ public class AgregarCita extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbConfirmarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btbConfirmarActionPerformed
+
     /**
      * @param args the command line arguments
      */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CmbCubiculo;
+    private javax.swing.JComboBox<String> CmbHorarios;
+    private javax.swing.JComboBox<String> CmbPsicologos;
+    private javax.swing.JButton btbConfirmar;
     private javax.swing.JButton btnCitas;
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnReportes;
@@ -228,9 +327,18 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblCitas;
+    private javax.swing.JLabel lblCubiculo;
     private javax.swing.JLabel lblCubiculos;
+    private javax.swing.JLabel lblHorario;
+    private javax.swing.JLabel lblNombrePaciente;
+    private javax.swing.JLabel lblPsicologo;
     private javax.swing.JLabel lblPsicologos;
     private javax.swing.JLabel lblReportes;
+    private javax.swing.JLabel lblTelefonoPaciente;
+    private javax.swing.JLabel lblTelefonoPaciente1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtCorreoPaciente;
+    private javax.swing.JTextField txtNombrePaciente;
+    private javax.swing.JTextField txtTelefonoPaciente;
     // End of variables declaration//GEN-END:variables
 }
