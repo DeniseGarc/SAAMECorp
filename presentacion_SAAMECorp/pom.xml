@@ -19,6 +19,11 @@
             <artifactId>negocios_AgendarCita</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
