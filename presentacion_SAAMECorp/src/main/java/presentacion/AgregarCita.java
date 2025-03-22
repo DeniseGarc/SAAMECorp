@@ -14,7 +14,8 @@ public class AgregarCita extends javax.swing.JFrame {
      * Creates new form AgregarCita
      */
     //crear instancia del control de la aplicacion para poder usar los metodos
-    ControladorAplicacion control = new ControladorAplicacion();
+    CoordinadorAplicacion control = new CoordinadorAplicacion();
+
     public AgregarCita() {
         initComponents();
     }
@@ -333,7 +334,7 @@ public class AgregarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btbConfirmarActionPerformed
 
     private void btbConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbConfirmarMouseClicked
-        
+
         //control.resumenCita(cita);
     }//GEN-LAST:event_btbConfirmarMouseClicked
 
@@ -344,7 +345,6 @@ public class AgregarCita extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbCubiculo;

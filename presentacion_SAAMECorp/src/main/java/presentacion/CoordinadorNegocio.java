@@ -4,52 +4,23 @@
  */
 package presentacion;
 
-//import dto.CitaDTO;
-//import dto.CubiculoDTO;
-//import dto.PsicologoDTO;
-//import java.awt.List;
-//import java.time.LocalTime;
 import agendarCita.FAgendarCita;
 import agendarCita.IAgendarCita;
 import dto.CitaDTO;
-import dto.CubiculoDTO;
 import dto.PsicologoDTO;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.time.LocalTime;
-import javax.swing.JFrame;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alici
+ * clase que se va a encarga de acciones/metodos que conectan con negocio sigue
+ * siendo el controlador de aplicación pero con el fin de no sobre cargar el
+ * controlador con metodos que permiten mover de pantallas y funcionalidades
  */
-public class ControladorAplicacion {
+public class CoordinadorNegocio {
 
     private IAgendarCita sistemaAgendaCita = new FAgendarCita();
-    
-    public void pantallaInicioSesion (){
-        IniciarSesion frmInicioSesion = new IniciarSesion();
-        frmInicioSesion.setVisible(true);
-        
-    }
-    
-    public void pantallaPrincipal (JFrame frm){
-        PantallaInicio frmInicio = new PantallaInicio();
-        frmInicio.setVisible(true);
-        frm.dispose();
-    }
-    public void pantallaCalendarioCitas(JFrame frm) {
-        CalendarioCitas frmCalendarioCita = new CalendarioCitas();
-        frmCalendarioCita.setVisible(true);
-        frm.dispose();
-    }
-
-    public void pantallaAgregarCita(JFrame frm) {
-        AgregarCita frmAgregarCita = new AgregarCita();
-        frmAgregarCita.setVisible(true);
-        frm.dispose();
-    }
 
 //    public List<PsicologoDTO> mostrarPsicologos() {
 //            return sistemaAgendaCita.mandarPsicologos();

@@ -13,7 +13,8 @@ public class PantallaInicio extends javax.swing.JFrame {
     /**
      * Creates new form PantallaInicio
      */
-    ControladorAplicacion control = new ControladorAplicacion();
+    CoordinadorAplicacion control = new CoordinadorAplicacion();
+
     public PantallaInicio() {
         initComponents();
     }
@@ -252,7 +253,6 @@ public class PantallaInicio extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjustes;

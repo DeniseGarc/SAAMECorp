@@ -14,8 +14,8 @@ public class inicio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ControladorAplicacion control = new ControladorAplicacion();
+        CoordinadorAplicacion control = new CoordinadorAplicacion();
         control.pantallaInicioSesion();
     }
-    
+
 }

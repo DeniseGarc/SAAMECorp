@@ -13,9 +13,10 @@ import java.awt.Toolkit;
 public class IniciarSesion extends javax.swing.JFrame {
 
     /**
- * Creates new form IniciarSesion
+     * Creates new form IniciarSesion
      */
-    ControladorAplicacion control = new ControladorAplicacion();
+    CoordinadorAplicacion control = new CoordinadorAplicacion();
+
     public IniciarSesion() {
         initComponents();
     }
@@ -151,7 +152,6 @@ public class IniciarSesion extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField PwdField;

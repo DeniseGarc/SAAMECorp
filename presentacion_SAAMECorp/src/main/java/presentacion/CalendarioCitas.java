@@ -16,7 +16,8 @@ public class CalendarioCitas extends javax.swing.JFrame {
      * Creates new form CalendarioCitas
      */
     //crear instancia del control de la aplicacion para poder usar los metodos
-    ControladorAplicacion control = new ControladorAplicacion();
+    CoordinadorAplicacion control = new CoordinadorAplicacion();
+
     public CalendarioCitas() {
         initComponents();
     }
@@ -224,7 +225,7 @@ public class CalendarioCitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CalendarioCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalendarioCitasMouseClicked
-        
+
     }//GEN-LAST:event_CalendarioCitasMouseClicked
 
     private void CalendarioCitasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_CalendarioCitasPropertyChange
@@ -238,7 +239,6 @@ public class CalendarioCitas extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar CalendarioCitas;
