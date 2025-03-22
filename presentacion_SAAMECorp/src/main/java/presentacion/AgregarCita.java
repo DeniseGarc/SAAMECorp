@@ -59,7 +59,6 @@ public class AgregarCita extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
-        setPreferredSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
@@ -88,20 +87,20 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-lista-50.png"))); // NOI18N
+        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
         btnCitas.setBorderPainted(false);
         btnCitas.setContentAreaFilled(false);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/team.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/team.png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setFocusPainted(false);
 
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-carpeta-50.png"))); // NOI18N
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
 
-        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-estrella-50.png"))); // NOI18N
+        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-estrella-50.png"))); // NOI18N
         btnCubiculos.setBorderPainted(false);
         btnCubiculos.setContentAreaFilled(false);
         btnCubiculos.setFocusPainted(false);
@@ -217,7 +216,7 @@ public class AgregarCita extends javax.swing.JFrame {
             }
         });
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-back-30.png"))); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -327,6 +326,7 @@ public class AgregarCita extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbConfirmarActionPerformed

@@ -41,12 +41,11 @@ public class IniciarSesion extends javax.swing.JFrame {
         btnIngresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 700));
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 1100));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/Logo.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo.png"))); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(350, 300));
@@ -143,6 +142,7 @@ public class IniciarSesion extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseClicked

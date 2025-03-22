@@ -44,9 +44,11 @@ public class CalendarioCitas extends javax.swing.JFrame {
         lblReportes = new javax.swing.JLabel();
         lblPsicologos = new javax.swing.JLabel();
         lblCubiculos = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 700));
+        setPreferredSize(new java.awt.Dimension(1100, 800));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 800));
@@ -57,16 +59,6 @@ public class CalendarioCitas extends javax.swing.JFrame {
         CalendarioCitas.setRequestFocusEnabled(false);
         CalendarioCitas.setSundayForeground(new java.awt.Color(102, 0, 102));
         CalendarioCitas.setWeekdayForeground(new java.awt.Color(188, 163, 226));
-        CalendarioCitas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CalendarioCitasMouseClicked(evt);
-            }
-        });
-        CalendarioCitas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                CalendarioCitasPropertyChange(evt);
-            }
-        });
 
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
@@ -90,20 +82,20 @@ public class CalendarioCitas extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-lista-50.png"))); // NOI18N
+        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
         btnCitas.setBorderPainted(false);
         btnCitas.setContentAreaFilled(false);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/team.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/team.png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setFocusPainted(false);
 
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-carpeta-50.png"))); // NOI18N
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
 
-        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-estrella-50.png"))); // NOI18N
+        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-estrella-50.png"))); // NOI18N
         btnCubiculos.setBorderPainted(false);
         btnCubiculos.setContentAreaFilled(false);
         btnCubiculos.setFocusPainted(false);
@@ -178,6 +170,13 @@ public class CalendarioCitas extends javax.swing.JFrame {
                 .addContainerGap(246, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Seleccionar Dia");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,7 +189,9 @@ public class CalendarioCitas extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(CalendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(CalendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -201,6 +202,8 @@ public class CalendarioCitas extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CalendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -218,23 +221,21 @@ public class CalendarioCitas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CalendarioCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CalendarioCitasMouseClicked
-
-    }//GEN-LAST:event_CalendarioCitasMouseClicked
-
-    private void CalendarioCitasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_CalendarioCitasPropertyChange
-        Date fechaSeleccionada = CalendarioCitas.getDate();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         Date fechaSeleccionada = CalendarioCitas.getDate();
         System.out.println("Día seleccionado: " + fechaSeleccionada);
 
         // Llama al método para pasar a la siguente pantalla 
-        control.pantallaCalendarioCitas(this);
-    }//GEN-LAST:event_CalendarioCitasPropertyChange
+        control.pantallaAgregarCita(this);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +246,7 @@ public class CalendarioCitas extends javax.swing.JFrame {
     private javax.swing.JButton btnCitas;
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnReportes;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

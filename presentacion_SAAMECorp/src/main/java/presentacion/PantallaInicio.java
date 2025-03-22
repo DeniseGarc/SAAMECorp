@@ -54,25 +54,25 @@ public class PantallaInicio extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-lista-50.png"))); // NOI18N
+        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
         btnCitas.setBorderPainted(false);
         btnCitas.setContentAreaFilled(false);
-        btnCitas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCitasMouseClicked(evt);
+        btnCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCitasActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/team.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/team.png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setFocusPainted(false);
 
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-carpeta-50.png"))); // NOI18N
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
 
-        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-estrella-50.png"))); // NOI18N
+        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-estrella-50.png"))); // NOI18N
         btnCubiculos.setBorderPainted(false);
         btnCubiculos.setContentAreaFilled(false);
         btnCubiculos.setFocusPainted(false);
@@ -94,9 +94,9 @@ public class PantallaInicio extends javax.swing.JFrame {
         lblCubiculos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCubiculos.setText("Cubiculos");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-user-50.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-user-50.png"))); // NOI18N
 
-        btnPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-x-50.png"))); // NOI18N
+        btnPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-x-50.png"))); // NOI18N
         btnPagos.setBorder(null);
 
         lblCubiculos1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -104,7 +104,7 @@ public class PantallaInicio extends javax.swing.JFrame {
         lblCubiculos1.setText("Pagos");
 
         btnAjustes.setBackground(new java.awt.Color(101, 85, 143));
-        btnAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/icons8-ajustes-50.png"))); // NOI18N
+        btnAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-ajustes-50.png"))); // NOI18N
         btnAjustes.setBorder(null);
         btnAjustes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +179,7 @@ public class PantallaInicio extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         jLabel2.setText("Bienvenid@ administrador");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/imgs/Logo.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -240,15 +240,18 @@ public class PantallaInicio extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAjustesActionPerformed
 
-    private void btnCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCitasMouseClicked
+    private void btnCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitasActionPerformed
+        // TODO add your handling code here:
         control.pantallaCalendarioCitas(this);
-    }//GEN-LAST:event_btnCitasMouseClicked
+
+    }//GEN-LAST:event_btnCitasActionPerformed
 
     /**
      * @param args the command line arguments
