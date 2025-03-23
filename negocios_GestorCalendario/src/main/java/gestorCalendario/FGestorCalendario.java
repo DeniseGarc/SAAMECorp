@@ -56,6 +56,6 @@ public class FGestorCalendario implements IGestorCalendario {
     @Override
     public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
 
-        return false;
+        return true;
     }
 }

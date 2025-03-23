@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class FAgendarCita implements IAgendarCita {
 
-    @Override
-    public List<PsicologoDTO> mandarPsicologos() {
-        List<PsicologoDTO> listaPsicologos = new ArrayList<>();
+    List<PsicologoDTO> listaPsicologos = new ArrayList<>();
+
+    public FAgendarCita() {
         List<LocalTime> listaHoras1 = new ArrayList<>();
         List<LocalTime> listaHoras2 = new ArrayList<>();
         List<LocalTime> listaHoras3 = new ArrayList<>();
@@ -39,7 +39,10 @@ public class FAgendarCita implements IAgendarCita {
         listaPsicologos.add(new PsicologoDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras1));
         listaPsicologos.add(new PsicologoDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
         listaPsicologos.add(new PsicologoDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
+    }
 
+    @Override
+    public List<PsicologoDTO> mandarPsicologos() {
         return listaPsicologos;
     }
 
@@ -66,7 +69,7 @@ public class FAgendarCita implements IAgendarCita {
         return "¿Desea agendar la cita?\n"
                 + cita.getCubiculo() + "\n"
                 + "Fecha" + cita.getFechaHora().toLocalDate() + " " + cita.getFechaHora().toLocalTime() + "\n"
-                + "Psicólogo: " + cita.getPsicologo().getNombre() + "\n"
+                + "Psicólogo: " + cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno() + " " + cita.getPsicologo().getApellidoMaterno() + "\n"
                 + "Cliente: " + cita.getNombrePaciente() + ", Teléfono: " + cita.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + cita.getCorreoPaciente();
     }
@@ -78,13 +81,7 @@ public class FAgendarCita implements IAgendarCita {
 
     @Override
     public PsicologoDTO obtenerPsicologo(String identificador) {
-        List<LocalTime> listaHoras = new ArrayList<>();
-
-        listaHoras.add(LocalTime.of(8, 0));
-        listaHoras.add(LocalTime.of(10, 30));
-        listaHoras.add(LocalTime.of(15, 45));
-
-        return new PsicologoDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras);
+        return listaPsicologos.getLast();
     }
 
 }

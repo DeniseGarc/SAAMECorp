@@ -45,6 +45,10 @@ public class AgregarCita extends javax.swing.JFrame {
             llenarComboPsicologos();
         } else {
             seleccionarPsicologoUsuario();
+
+        }
+        if (cmbPsicologos.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay psicologos disponibles en el momento", "Información", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -381,7 +385,7 @@ public class AgregarCita extends javax.swing.JFrame {
     }
 
     private void seleccionarPsicologoUsuario() {
-        cmbPsicologos.setSelectedItem(controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario()));
+        cmbPsicologos.addItem(controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario()));
         cmbPsicologos.setEnabled(false);
     }
 
@@ -439,7 +443,6 @@ public class AgregarCita extends javax.swing.JFrame {
     private void llenarComboCubiculos() {
         cmbCubiculo.removeAllItems();
         cmbCubiculo.setEnabled(true);
-        System.out.println("Hola");
         List<String> cubiculos = controlNegocio.mostrarCubiculos(obtenerFechaHoraCita());
         for (String cubiculo : cubiculos) {
             cmbCubiculo.addItem(cubiculo);
@@ -487,11 +490,9 @@ public class AgregarCita extends javax.swing.JFrame {
                     llenarComboHorariosPsicologo(psicologoSeleccionado);
                 } else {
                     if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
-                        JOptionPane.showMessageDialog(null, "El psicologo presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No es posible agendar cita para este psicologo", JOptionPane.INFORMATION_MESSAGE);
                         cmbPsicologos.removeItem(psicologoSeleccionado);
                     } else {
                         JOptionPane.showMessageDialog(null, "Usted presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No le es posible agendar cita en este momento", JOptionPane.INFORMATION_MESSAGE);
-                        control.pantallaPrincipal(this);
                     }
                 }
             } else {
