@@ -4,8 +4,7 @@
  */
 package gestorCalendario;
 
-import dto.PsicologoDTO;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +12,10 @@ import java.util.List;
  * @author Alici
  */
 public interface IGestorCalendario {
-    public abstract List<LocalDate> diasAgendaLlena();
-    public abstract List<LocalDate> diasConReservas();
-    public abstract boolean diaDisponiblePsicologo(PsicologoDTO psicologo, LocalDate fecha);
+
+    public abstract List<Date> diasAgendaLlena();
+
+    public abstract List<Date> diasConReservas();
+
+    public abstract boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha);
 }

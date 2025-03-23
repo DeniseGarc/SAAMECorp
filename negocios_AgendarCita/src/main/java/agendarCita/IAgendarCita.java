@@ -4,7 +4,7 @@
  */
 package agendarCita;
 
-import dto.CitaDTO;
+import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import java.time.LocalDateTime;
@@ -15,10 +15,17 @@ import java.util.List;
  * @author Alici
  */
 public interface IAgendarCita {
-    List<PsicologoDTO> mandarPsicologos();
-    boolean validarAdeudoPsicologo(PsicologoDTO psicologo);
-    List<CubiculoDTO> mandarCubiculos(LocalDateTime fecha);
-    String resumenCita(CitaDTO cita);
-    boolean agendarCita(CitaDTO cita);
 
-} 
+    public List<PsicologoDTO> mandarPsicologos();
+
+    public boolean validarAdeudoPsicologo(PsicologoDTO psicologo);
+
+    public List<String> mandarCubiculos(LocalDateTime fecha);
+
+    public String resumenCita(CitaNuevaDTO cita);
+
+    public boolean agendarCita(CitaNuevaDTO cita);
+    
+    public PsicologoDTO obtenerPsicologo(String identificador);
+
+}

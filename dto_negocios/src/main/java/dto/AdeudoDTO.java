@@ -16,12 +16,12 @@ public class AdeudoDTO {
     private boolean estado;
     private PsicologoDTO psicologo;
     private LocalDateTime fechaHora;
-    private CitaDTO cita;
+    private CitaNuevaDTO cita;
 
     public AdeudoDTO() {
     }
 
-    public AdeudoDTO(double cantidad, boolean estado, PsicologoDTO psicologo, LocalDateTime fechaHora, CitaDTO cita) {
+    public AdeudoDTO(double cantidad, boolean estado, PsicologoDTO psicologo, LocalDateTime fechaHora, CitaNuevaDTO cita) {
         this.cantidad = cantidad;
         this.estado = estado;
         this.psicologo = psicologo;
@@ -61,11 +61,11 @@ public class AdeudoDTO {
         this.fechaHora = fechaHora;
     }
 
-    public CitaDTO getCita() {
+    public CitaNuevaDTO getCita() {
         return cita;
     }
 
-    public void setCita(CitaDTO cita) {
+    public void setCita(CitaNuevaDTO cita) {
         this.cita = cita;
     }
 

@@ -284,29 +284,32 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtCorreoPaciente" max="32767" attributes="0"/>
-                                  <Component id="txtTelefonoPaciente" max="32767" attributes="0"/>
-                                  <Component id="lblTelefonoPaciente1" min="-2" pref="192" max="-2" attributes="0"/>
-                                  <Component id="lblTelefonoPaciente" min="-2" pref="192" max="-2" attributes="0"/>
-                                  <Component id="CmbCubiculo" pref="602" max="32767" attributes="0"/>
-                                  <Component id="lblCubiculo" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <Component id="CmbHorarios" pref="602" max="32767" attributes="0"/>
-                                  <Component id="lblHorario" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <Component id="CmbPsicologos" max="32767" attributes="0"/>
-                                  <Component id="lblPsicologo" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <Component id="lblNombrePaciente" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                                  <Component id="txtNombrePaciente" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btbConfirmar" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFechaCita" alignment="0" min="-2" pref="602" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtCorreoPaciente" max="32767" attributes="0"/>
+                                      <Component id="txtTelefonoPaciente" max="32767" attributes="0"/>
+                                      <Component id="lblTelefonoPaciente1" min="-2" pref="192" max="-2" attributes="0"/>
+                                      <Component id="lblTelefonoPaciente" min="-2" pref="192" max="-2" attributes="0"/>
+                                      <Component id="cmbCubiculo" pref="602" max="32767" attributes="0"/>
+                                      <Component id="lblCubiculo" min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="cmbHorarios" pref="602" max="32767" attributes="0"/>
+                                      <Component id="lblHorario" min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="cmbPsicologos" max="32767" attributes="0"/>
+                                      <Component id="lblPsicologo" min="-2" pref="104" max="-2" attributes="0"/>
+                                      <Component id="lblNombrePaciente" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
+                                      <Component id="txtNombrePaciente" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnConfirmar" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace pref="98" max="32767" attributes="0"/>
@@ -316,18 +319,20 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="lblFechaCita" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblPsicologo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CmbPsicologos" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbPsicologos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="lblHorario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CmbHorarios" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbHorarios" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblCubiculo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CmbCubiculo" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbCubiculo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblNombrePaciente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -341,7 +346,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtCorreoPaciente" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="54" max="32767" attributes="0"/>
-                      <Component id="btbConfirmar" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnConfirmar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -359,14 +364,14 @@
                 <Property name="text" type="java.lang.String" value="Psicologo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="CmbPsicologos">
+            <Component class="javax.swing.JComboBox" name="cmbPsicologos">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;PsicologoDTO&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="lblHorario">
@@ -378,17 +383,17 @@
                 <Property name="text" type="java.lang.String" value="Horario"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="CmbHorarios">
+            <Component class="javax.swing.JComboBox" name="cmbHorarios">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;LocalTime&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="CmbCubiculo">
+            <Component class="javax.swing.JComboBox" name="cmbCubiculo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
@@ -440,7 +445,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtCorreoPaciente">
             </Component>
-            <Component class="javax.swing.JButton" name="btbConfirmar">
+            <Component class="javax.swing.JButton" name="btnConfirmar">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="21" red="56" type="rgb"/>
@@ -454,8 +459,7 @@
                 <Property name="text" type="java.lang.String" value="Confirmar"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btbConfirmarMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btbConfirmarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnRegresar">
@@ -467,8 +471,17 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRegresarMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegresarActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblFechaCita">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="FECHA"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

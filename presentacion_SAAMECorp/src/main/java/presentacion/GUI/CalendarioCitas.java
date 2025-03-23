@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package presentacion;
+package presentacion.GUI;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
+import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
@@ -12,14 +15,14 @@ import java.util.Date;
  */
 public class CalendarioCitas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CalendarioCitas
-     */
     //crear instancia del control de la aplicacion para poder usar los metodos
-    CoordinadorAplicacion control = new CoordinadorAplicacion();
+    private final CoordinadorAplicacion control = new CoordinadorAplicacion();
+    private final CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
 
     public CalendarioCitas() {
         initComponents();
+        controlNegocio.pintarDiasCalendario(calendarioCitas);
+        controlNegocio.bloquearDiasNoDisponibles(calendarioCitas);
     }
 
     /**
@@ -32,7 +35,7 @@ public class CalendarioCitas extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        CalendarioCitas = new com.toedter.calendar.JCalendar();
+        calendarioCitas = new com.toedter.calendar.JCalendar();
         jPanel3 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -44,21 +47,20 @@ public class CalendarioCitas extends javax.swing.JFrame {
         lblReportes = new javax.swing.JLabel();
         lblPsicologos = new javax.swing.JLabel();
         lblCubiculos = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSeleccionarDia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 800));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 800));
 
-        CalendarioCitas.setBackground(new java.awt.Color(204, 204, 255));
-        CalendarioCitas.setDecorationBackgroundColor(new java.awt.Color(221, 212, 240));
-        CalendarioCitas.setPreferredSize(new java.awt.Dimension(850, 550));
-        CalendarioCitas.setRequestFocusEnabled(false);
-        CalendarioCitas.setSundayForeground(new java.awt.Color(102, 0, 102));
-        CalendarioCitas.setWeekdayForeground(new java.awt.Color(188, 163, 226));
+        calendarioCitas.setBackground(new java.awt.Color(204, 204, 255));
+        calendarioCitas.setDecorationBackgroundColor(new java.awt.Color(221, 212, 240));
+        calendarioCitas.setPreferredSize(new java.awt.Dimension(850, 550));
+        calendarioCitas.setRequestFocusEnabled(false);
+        calendarioCitas.setSundayForeground(new java.awt.Color(102, 0, 102));
+        calendarioCitas.setWeekdayForeground(new java.awt.Color(188, 163, 226));
 
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
@@ -170,10 +172,10 @@ public class CalendarioCitas extends javax.swing.JFrame {
                 .addContainerGap(246, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Seleccionar Dia");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionarDia.setText("Seleccionar Dia");
+        btnSeleccionarDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSeleccionarDiaActionPerformed(evt);
             }
         });
 
@@ -190,8 +192,8 @@ public class CalendarioCitas extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(CalendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnSeleccionarDia)
+                            .addComponent(calendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -201,9 +203,9 @@ public class CalendarioCitas extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CalendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(calendarioCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnSeleccionarDia)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -228,25 +230,26 @@ public class CalendarioCitas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-         Date fechaSeleccionada = CalendarioCitas.getDate();
-        System.out.println("Día seleccionado: " + fechaSeleccionada);
-
+    private void btnSeleccionarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarDiaActionPerformed
+        Date diaSeleccionado = calendarioCitas.getDate();
+        if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
+            JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
+            return;
+        }
         // Llama al método para pasar a la siguente pantalla 
-        control.pantallaAgregarCita(this);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        control.pantallaAgregarCita(this, diaSeleccionado);
+    }//GEN-LAST:event_btnSeleccionarDiaActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JCalendar CalendarioCitas;
     private javax.swing.JButton btnCitas;
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSeleccionarDia;
+    private com.toedter.calendar.JCalendar calendarioCitas;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

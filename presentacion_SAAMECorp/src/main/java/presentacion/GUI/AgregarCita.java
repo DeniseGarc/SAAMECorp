@@ -2,7 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package presentacion;
+package presentacion.GUI;
+
+import dto.CitaNuevaDTO;
+import dto.PsicologoDTO;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
+import presentacion.sesion.GestorSesion;
+import presentacion.sesion.TipoUsuario;
 
 /**
  *
@@ -10,14 +28,24 @@ package presentacion;
  */
 public class AgregarCita extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AgregarCita
-     */
+    private final Date fechaCita;
     //crear instancia del control de la aplicacion para poder usar los metodos
-    CoordinadorAplicacion control = new CoordinadorAplicacion();
+    private final CoordinadorAplicacion control = new CoordinadorAplicacion();
+    CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
+    private final List<PsicologoDTO> psicologos = controlNegocio.mostrarPsicologos();
 
-    public AgregarCita() {
+    public AgregarCita(Date fechaSeleccionada) {
+        this.fechaCita = fechaSeleccionada;
         initComponents();
+        agregarListeners();
+        btnConfirmar.setEnabled(false);
+        SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
+        lblFechaCita.setText(formato.format(fechaCita));
+        if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+            llenarComboPsicologos();
+        } else {
+            seleccionarPsicologoUsuario();
+        }
     }
 
     /**
@@ -43,10 +71,10 @@ public class AgregarCita extends javax.swing.JFrame {
         lblCubiculos = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblPsicologo = new javax.swing.JLabel();
-        CmbPsicologos = new javax.swing.JComboBox<>();
+        cmbPsicologos = new javax.swing.JComboBox<>();
         lblHorario = new javax.swing.JLabel();
-        CmbHorarios = new javax.swing.JComboBox<>();
-        CmbCubiculo = new javax.swing.JComboBox<>();
+        cmbHorarios = new javax.swing.JComboBox<>();
+        cmbCubiculo = new javax.swing.JComboBox<>();
         lblCubiculo = new javax.swing.JLabel();
         lblNombrePaciente = new javax.swing.JLabel();
         txtNombrePaciente = new javax.swing.JTextField();
@@ -54,8 +82,9 @@ public class AgregarCita extends javax.swing.JFrame {
         txtTelefonoPaciente = new javax.swing.JTextField();
         lblTelefonoPaciente1 = new javax.swing.JLabel();
         txtCorreoPaciente = new javax.swing.JTextField();
-        btbConfirmar = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        lblFechaCita = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
@@ -201,29 +230,28 @@ public class AgregarCita extends javax.swing.JFrame {
         lblTelefonoPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTelefonoPaciente1.setText("Correo del Paciente");
 
-        btbConfirmar.setBackground(new java.awt.Color(86, 33, 89));
-        btbConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btbConfirmar.setForeground(new java.awt.Color(255, 255, 255));
-        btbConfirmar.setText("Confirmar");
-        btbConfirmar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btbConfirmarMouseClicked(evt);
-            }
-        });
-        btbConfirmar.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirmar.setBackground(new java.awt.Color(86, 33, 89));
+        btnConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnConfirmar.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btbConfirmarActionPerformed(evt);
+                btnConfirmarActionPerformed(evt);
             }
         });
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
-        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegresarMouseClicked(evt);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
             }
         });
+
+        lblFechaCita.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFechaCita.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFechaCita.setText("FECHA");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -232,41 +260,45 @@ public class AgregarCita extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCorreoPaciente)
-                            .addComponent(txtTelefonoPaciente)
-                            .addComponent(lblTelefonoPaciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CmbCubiculo, 0, 602, Short.MAX_VALUE)
-                            .addComponent(lblCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CmbHorarios, 0, 602, Short.MAX_VALUE)
-                            .addComponent(lblHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CmbPsicologos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPsicologo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombrePaciente)
-                            .addComponent(btbConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnRegresar)))
+                        .addComponent(btnRegresar))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtCorreoPaciente)
+                                .addComponent(txtTelefonoPaciente)
+                                .addComponent(lblTelefonoPaciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTelefonoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbCubiculo, 0, 602, Short.MAX_VALUE)
+                                .addComponent(lblCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbHorarios, 0, 602, Short.MAX_VALUE)
+                                .addComponent(lblHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbPsicologos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblPsicologo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombrePaciente)
+                                .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
+                .addComponent(lblFechaCita)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPsicologo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CmbPsicologos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbPsicologos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(lblHorario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CmbHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbHorarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCubiculo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CmbCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblNombrePaciente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -280,7 +312,7 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCorreoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btbConfirmar)
+                .addComponent(btnConfirmar)
                 .addGap(33, 33, 33)
                 .addComponent(btnRegresar)
                 .addContainerGap())
@@ -329,32 +361,167 @@ public class AgregarCita extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbConfirmarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btbConfirmarActionPerformed
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        mostrarResumenCita();
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    private void btbConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbConfirmarMouseClicked
-
-        //control.resumenCita(cita);
-    }//GEN-LAST:event_btbConfirmarMouseClicked
-
-    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         control.pantallaCalendarioCitas(this);
-    }//GEN-LAST:event_btnRegresarMouseClicked
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private CitaNuevaDTO obtenerDatosCita() {
+        return new CitaNuevaDTO(
+                obtenerFechaHoraCita(),
+                cmbCubiculo.getSelectedItem().toString(),
+                (PsicologoDTO) cmbPsicologos.getSelectedItem(),
+                txtNombrePaciente.getText(),
+                txtTelefonoPaciente.getText(),
+                txtCorreoPaciente.getText()
+        );
+    }
+
+    private void seleccionarPsicologoUsuario() {
+        cmbPsicologos.setSelectedItem(controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario()));
+        cmbPsicologos.setEnabled(false);
+    }
+
+    private void mostrarResumenCita() {
+        CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
+        String mensaje = controlNegocio.obtenerResumenCita(cita);
+
+        if (!mensaje.startsWith("¿Desea agendar la cita?")) {
+            JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int opcion = JOptionPane.showOptionDialog(
+                this,
+                mensaje,
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Cancelar", "Aceptar"},
+                "Aceptar"
+        );
+
+        if (opcion == 1) {
+            if (controlNegocio.agendarCita(cita)) {
+                JOptionPane.showMessageDialog(null, "La cita ha sido agendada, se ha mandado un correo al psicológo para su confirmación", "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                control.pantallaCalendarioCitas(this);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al agendar cita", "No se ha podido agendar la cita", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void llenarComboPsicologos() {
+        cmbPsicologos.removeAllItems();
+        for (PsicologoDTO psicologo : psicologos) {
+            cmbPsicologos.addItem(psicologo);
+        }
+    }
+
+    private void llenarComboHorariosPsicologo(PsicologoDTO psicologoSeleccionado) {
+        cmbHorarios.removeAllItems();
+        cmbHorarios.setEnabled(true);
+        for (LocalTime hora : psicologoSeleccionado.getHorarioDia()) {
+            cmbHorarios.addItem(hora);
+        }
+    }
+
+    private LocalDateTime obtenerFechaHoraCita() {
+        LocalTime horaSeleccionada = (LocalTime) cmbHorarios.getSelectedItem();
+        LocalDate fechaCitaLocal = fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return LocalDateTime.of(fechaCitaLocal, horaSeleccionada);
+    }
+
+    private void llenarComboCubiculos() {
+        cmbCubiculo.removeAllItems();
+        cmbCubiculo.setEnabled(true);
+        System.out.println("Hola");
+        List<String> cubiculos = controlNegocio.mostrarCubiculos(obtenerFechaHoraCita());
+        for (String cubiculo : cubiculos) {
+            cmbCubiculo.addItem(cubiculo);
+        }
+    }
+
+    private void actualizarEstadoBoton() {
+        boolean camposLlenos = !txtNombrePaciente.getText().trim().isEmpty()
+                && !txtCorreoPaciente.getText().trim().isEmpty()
+                && !txtTelefonoPaciente.getText().trim().isEmpty()
+                && cmbCubiculo.getSelectedIndex() != -1
+                && cmbPsicologos.getSelectedIndex() != -1
+                && cmbHorarios.getSelectedIndex() != -1;
+
+        btnConfirmar.setEnabled(camposLlenos);
+
+    }
+
+    private void agregarListeners() {
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarEstadoBoton();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarEstadoBoton();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarEstadoBoton();
+            }
+        };
+        txtNombrePaciente.getDocument().addDocumentListener(listener);
+        txtCorreoPaciente.getDocument().addDocumentListener(listener);
+        txtTelefonoPaciente.getDocument().addDocumentListener(listener);
+
+        // Listener para cBoxEspecialidad
+        cmbPsicologos.addItemListener(e -> {
+            if (cmbPsicologos.getSelectedIndex() != -1) {
+                PsicologoDTO psicologoSeleccionado = (PsicologoDTO) cmbPsicologos.getSelectedItem();
+                if (controlNegocio.validarAdeudoPsicologoSeleccionado(psicologoSeleccionado)) {
+                    llenarComboHorariosPsicologo(psicologoSeleccionado);
+                } else {
+                    if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+                        JOptionPane.showMessageDialog(null, "El psicologo presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No es posible agendar cita para este psicologo", JOptionPane.INFORMATION_MESSAGE);
+                        cmbPsicologos.removeItem(psicologoSeleccionado);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usted presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No le es posible agendar cita en este momento", JOptionPane.INFORMATION_MESSAGE);
+                        control.pantallaPrincipal(this);
+                    }
+                }
+            } else {
+                cmbHorarios.setEnabled(false);
+                cmbCubiculo.setEnabled(false);
+            }
+        });
+
+        // Listener para cBoxMedico
+        cmbHorarios.addItemListener(e -> {
+            if (cmbHorarios.getSelectedIndex() != -1) {
+                llenarComboCubiculos();
+            } else {
+                cmbCubiculo.setEnabled(false);
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbCubiculo;
-    private javax.swing.JComboBox<String> CmbHorarios;
-    private javax.swing.JComboBox<String> CmbPsicologos;
-    private javax.swing.JButton btbConfirmar;
     private javax.swing.JButton btnCitas;
+    private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnReportes;
+    private javax.swing.JComboBox<String> cmbCubiculo;
+    private javax.swing.JComboBox<LocalTime> cmbHorarios;
+    private javax.swing.JComboBox<PsicologoDTO> cmbPsicologos;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -363,6 +530,7 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JLabel lblCitas;
     private javax.swing.JLabel lblCubiculo;
     private javax.swing.JLabel lblCubiculos;
+    private javax.swing.JLabel lblFechaCita;
     private javax.swing.JLabel lblHorario;
     private javax.swing.JLabel lblNombrePaciente;
     private javax.swing.JLabel lblPsicologo;

@@ -2,8 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package presentacion;
+package presentacion.control;
 
+import java.util.Date;
+import presentacion.GUI.PantallaInicio;
+import presentacion.GUI.IniciarSesion;
+import presentacion.GUI.CalendarioCitas;
+import presentacion.GUI.AgregarCita;
 import javax.swing.JFrame;
 
 /**
@@ -31,8 +36,8 @@ public class CoordinadorAplicacion {
         frm.dispose();
     }
 
-    public void pantallaAgregarCita(JFrame frm) {
-        AgregarCita frmAgregarCita = new AgregarCita();
+    public void pantallaAgregarCita(JFrame frm, Date fechaSeleccionada) {
+        AgregarCita frmAgregarCita = new AgregarCita(fechaSeleccionada);
         frmAgregarCita.setVisible(true);
         frm.dispose();
     }

@@ -10,27 +10,25 @@ import java.time.LocalDateTime;
  *
  * @author Alici
  */
-public class CitaDTO {
+public class CitaNuevaDTO {
 
     private LocalDateTime fechaHora;
-    private CubiculoDTO cubiculo;
+    private String cubiculo;
     private PsicologoDTO psicologo;
     private String nombrePaciente;
     private String telefonoPaciente;
     private String correoPaciente;
-    private boolean estado;
 
-    public CitaDTO() {
+    public CitaNuevaDTO() {
     }
 
-    public CitaDTO(LocalDateTime fechaHora, CubiculoDTO cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, boolean estado) {
+    public CitaNuevaDTO(LocalDateTime fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
         this.psicologo = psicologo;
         this.nombrePaciente = nombrePaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.correoPaciente = correoPaciente;
-        this.estado = estado;
     }
 
     public LocalDateTime getFechaHora() {
@@ -41,11 +39,11 @@ public class CitaDTO {
         this.fechaHora = fechaHora;
     }
 
-    public CubiculoDTO getCubiculo() {
+    public String getCubiculo() {
         return cubiculo;
     }
 
-    public void setCubiculo(CubiculoDTO cubiculo) {
+    public void setCubiculo(String cubiculo) {
         this.cubiculo = cubiculo;
     }
 
@@ -81,11 +79,4 @@ public class CitaDTO {
         this.correoPaciente = correoPaciente;
     }
 
-    public boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
 }

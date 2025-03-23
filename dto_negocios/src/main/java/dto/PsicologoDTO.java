@@ -72,7 +72,7 @@ public class PsicologoDTO {
 
     @Override
     public String toString() {
-        return "PsicologoDTO{" + "nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", correo=" + correo + ", horarioDia=" + horarioDia + '}';
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
 
 }
