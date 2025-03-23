@@ -96,7 +96,7 @@ public class AgregarCita extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setMinimumSize(new java.awt.Dimension(800, 500));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1100, 800));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1100, 680));
 
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
@@ -120,20 +120,26 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
+        btnCitas.setBorder(null);
         btnCitas.setBorderPainted(false);
         btnCitas.setContentAreaFilled(false);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/team.png"))); // NOI18N
+        jButton4.setBorder(null);
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setFocusPainted(false);
 
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
+        btnReportes.setBorder(null);
         btnReportes.setBorderPainted(false);
         btnReportes.setContentAreaFilled(false);
 
         btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-estrella-50.png"))); // NOI18N
+        btnCubiculos.setBorder(null);
         btnCubiculos.setBorderPainted(false);
         btnCubiculos.setContentAreaFilled(false);
         btnCubiculos.setFocusPainted(false);
@@ -168,23 +174,18 @@ public class AgregarCita extends javax.swing.JFrame {
                             .addComponent(lblCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnCitas)
-                                .addGap(14, 14, 14))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblPsicologos)
-                                    .addComponent(jButton4))
+                                .addComponent(lblPsicologos)
                                 .addGap(12, 12, 12))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblCubiculos)
-                                    .addComponent(btnCubiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblCubiculos)
                                 .addGap(16, 16, 16))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnReportes)
-                            .addComponent(lblReportes))
+                        .addComponent(lblReportes)
                         .addGap(12, 12, 12))))
+            .addComponent(btnCubiculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,39 +206,65 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addComponent(btnCubiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCubiculos)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(850, 550));
 
         lblPsicologo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblPsicologo.setForeground(new java.awt.Color(0, 0, 0));
         lblPsicologo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPsicologo.setText("Psicologo");
 
+        cmbPsicologos.setBackground(new java.awt.Color(255, 255, 255));
+        cmbPsicologos.setForeground(new java.awt.Color(0, 0, 0));
+
         lblHorario.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblHorario.setForeground(new java.awt.Color(0, 0, 0));
         lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHorario.setText("Horario");
 
+        cmbHorarios.setBackground(new java.awt.Color(255, 255, 255));
+        cmbHorarios.setForeground(new java.awt.Color(0, 0, 0));
+
+        cmbCubiculo.setBackground(new java.awt.Color(255, 255, 255));
+        cmbCubiculo.setForeground(new java.awt.Color(0, 0, 0));
+
         lblCubiculo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblCubiculo.setForeground(new java.awt.Color(0, 0, 0));
         lblCubiculo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCubiculo.setText("Cubiculo");
 
         lblNombrePaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombrePaciente.setForeground(new java.awt.Color(0, 0, 0));
         lblNombrePaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombrePaciente.setText("Nombre del Paciente");
 
+        txtNombrePaciente.setBackground(new java.awt.Color(255, 255, 255));
+        txtNombrePaciente.setForeground(new java.awt.Color(0, 0, 0));
+
         lblTelefonoPaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente.setForeground(new java.awt.Color(0, 0, 0));
         lblTelefonoPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTelefonoPaciente.setText("Telefono del Paciente");
 
+        txtTelefonoPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        txtTelefonoPaciente.setForeground(new java.awt.Color(0, 0, 0));
+
         lblTelefonoPaciente1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente1.setForeground(new java.awt.Color(0, 0, 0));
         lblTelefonoPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTelefonoPaciente1.setText("Correo del Paciente");
+
+        txtCorreoPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        txtCorreoPaciente.setForeground(new java.awt.Color(0, 0, 0));
 
         btnConfirmar.setBackground(new java.awt.Color(86, 33, 89));
         btnConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnConfirmar.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.setBorder(null);
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarActionPerformed(evt);
@@ -254,6 +281,7 @@ public class AgregarCita extends javax.swing.JFrame {
         });
 
         lblFechaCita.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFechaCita.setForeground(new java.awt.Color(0, 0, 0));
         lblFechaCita.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFechaCita.setText("FECHA");
 
@@ -315,8 +343,8 @@ public class AgregarCita extends javax.swing.JFrame {
                 .addComponent(lblTelefonoPaciente1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCorreoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnConfirmar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btnRegresar)
                 .addContainerGap())
@@ -333,7 +361,7 @@ public class AgregarCita extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
+                        .addGap(116, 116, 116)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -342,8 +370,8 @@ public class AgregarCita extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 167, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
