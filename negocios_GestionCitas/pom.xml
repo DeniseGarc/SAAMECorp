@@ -6,7 +6,7 @@
         <artifactId>SAAMECorp</artifactId>
         <version>1.0-SNAPSHO</version>
     </parent>
-    <artifactId>negocios_GestorCalendario</artifactId>
+    <artifactId>negocios_GestionCitas</artifactId>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -14,20 +14,10 @@
             <artifactId>dto_negocios</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>negocios_GestionPsicologos</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>negocios_GestionCitas</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.negocios_gestorcalendario.Negocios_GestorCalendario</exec.mainClass>
+        <exec.mainClass>com.negocios_gestioncitas.Negocios_GestionCitas</exec.mainClass>
     </properties>
 </project>

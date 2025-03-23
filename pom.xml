@@ -10,6 +10,8 @@
         <module>dto_negocios</module>
         <module>negocios_AgendarCita</module>
         <module>negocios_GestorCalendario</module>
+        <module>negocios_GestionPsicologos</module>
+        <module>negocios_GestionCitas</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

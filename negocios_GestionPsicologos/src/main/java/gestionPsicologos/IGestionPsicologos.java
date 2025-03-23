@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package gestorCalendario;
+package gestionPsicologos;
 
+import dto.PsicologoDTO;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +12,9 @@ import java.util.List;
  *
  * @author Alici
  */
-public interface IGestorCalendario {
+public interface IGestionPsicologos {
 
-    public List<Date> diasAgendaLlena();
-
-    public List<Date> diasConReservas();
+    public List<PsicologoDTO> obtenerPsicologosDisponibles();
 
     public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha);
 }

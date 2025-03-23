@@ -3,3 +3,5 @@
 /dto_negocios/target/
 /negocios_GestorCalendario/target/
 *.idea
+/negocios_GestionCitas/target/
+/negocios_GestionPsicologos/target/
