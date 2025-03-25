@@ -32,10 +32,11 @@ public class AgregarCita extends javax.swing.JFrame {
     //crear instancia del control de la aplicacion para poder usar los metodos
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
     CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
-    private final List<PsicologoDTO> psicologos = controlNegocio.mostrarPsicologos();
+    private final List<PsicologoDTO> psicologos;
 
     public AgregarCita(Date fechaSeleccionada) {
         this.fechaCita = fechaSeleccionada;
+        this.psicologos = controlNegocio.mostrarPsicologos(fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         initComponents();
         agregarListeners();
         btnConfirmar.setEnabled(false);

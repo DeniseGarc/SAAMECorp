@@ -13,6 +13,7 @@ import dto.PsicologoDTO;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import java.awt.Color;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -42,8 +43,8 @@ public class CoordinadorNegocio {
         return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
     }
 
-    public List<PsicologoDTO> mostrarPsicologos() {
-        return sistemaAgendarCita.mandarPsicologos();
+    public List<PsicologoDTO> mostrarPsicologos(LocalDate fecha) {
+        return sistemaAgendarCita.mandarPsicologos(fecha);
     }
 
     public List<LocalTime> mostrarHorarios(PsicologoDTO psicologo) {
