@@ -22,7 +22,7 @@ public interface IAgendarCita {
 
     public boolean validarAdeudoPsicologo(PsicologoDTO psicologo);
 
-    public List<String> mandarCubiculos(LocalDateTime fecha);
+    public List<CubiculoDTO> mandarCubiculos(LocalDateTime fecha);
 
     public String resumenCita(CitaNuevaDTO cita);
 
