@@ -14,8 +14,8 @@ public class FGestionAdeudos implements IGestionAdeudos {
 
     //mock, remplazar con metodo final 
     @Override
-    public boolean validarAdeudoPsicologo(PsicologoDTO psicologo) {
-        return true;
+    public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologo) {
+        return 200.0;
     }
     
 }

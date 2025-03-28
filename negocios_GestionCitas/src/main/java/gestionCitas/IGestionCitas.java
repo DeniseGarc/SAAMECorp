@@ -19,4 +19,6 @@ public interface IGestionCitas {
     public List<Date> obtenerDiasConCita();
 
     public List<Date> obtenerDiasConAgendaLlena();
+
+    public boolean validarFechaCitaRepetida();
 }

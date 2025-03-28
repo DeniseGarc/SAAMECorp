@@ -18,7 +18,7 @@ public class FGestionCitas implements IGestionCitas {
     // todavia no se utiliza por lo que no se mockea
     @Override
     public boolean agendarCita(CitaNuevaDTO cita) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return true;
     }
 
     // devuelve la lista de dias con cita 
@@ -42,6 +42,11 @@ public class FGestionCitas implements IGestionCitas {
         cal4.set(2025, Calendar.APRIL, 5);
         List<Date> diasConAgendaLlena = List.of(cal3.getTime(), cal4.getTime());
         return diasConAgendaLlena;
+    }
+
+    @Override
+    public boolean validarFechaCitaRepetida() {
+        return false;
     }
 
 }

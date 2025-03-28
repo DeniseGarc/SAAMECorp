@@ -11,5 +11,5 @@ import dto.PsicologoDTO;
  * @author erika
  */
 public interface IGestionAdeudos {
-    public boolean validarAdeudoPsicologo(PsicologoDTO psicologo);
+    public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologo);
 }
