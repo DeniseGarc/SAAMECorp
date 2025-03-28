@@ -4,6 +4,7 @@
  */
 package agendarCita;
 
+import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
@@ -25,17 +26,19 @@ import gestionPsicologos.IGestionPsicologos;
  * @author Alici
  */
 public class FAgendarCita implements IAgendarCita {
-    
+
     private final IGestionPsicologos sistemaGestorPsicologos = new FGestionPsicologos();
     private final IGestionAdeudos sistemaGestorAdeudos = new FGestionAdeudos();
     private final IGestionCubiculos sistemaGestionCubiculos = new FGestionCubiculos();
-    
-   
+
     public FAgendarCita() {
-        
+
     }
+
     /**
-     * Llama al metodo del gestor de psicologos que devuelve los psicologos disponibles en ese dia
+     * Llama al metodo del gestor de psicologos que devuelve los psicologos
+     * disponibles en ese dia
+     *
      * @param fecha
      * @return Regresa los PsicologoDTO
      */
@@ -43,29 +46,37 @@ public class FAgendarCita implements IAgendarCita {
     public List<PsicologoDTO> mandarPsicologos(LocalDate fecha) {
         return sistemaGestorPsicologos.obtenerPsicologosDisponibles(fecha);
     }
+
     /**
-     * Manda a llamar al metodo de gestor de adeudos y aqui se pone la condición de maximo de adeudo de 500
+     * Manda a llamar al metodo de gestor de adeudos y aqui se pone la condición
+     * de maximo de adeudo de 500
+     *
      * @param psicologo el psicologo del que se quiere validar adeudo
      * @return true si el adeudo es menor a 500 y false si es mayor
      */
     @Override
     public boolean validarAdeudoPsicologo(PsicologoDTO psicologo) {
         return sistemaGestorAdeudos.validarAdeudoPsicologo(psicologo);
-       
+
     }
+
     /**
-     * Llama al metodo del gestor de cubiculos para obtener los cubiculos disponibles del dia de la cita
+     * Llama al metodo del gestor de cubiculos para obtener los cubiculos
+     * disponibles del dia de la cita
+     *
      * @param fecha la fecha de la que se necesitan los cubiculos
-     * @return los cubiculos disponibles del dia 
+     * @return los cubiculos disponibles del dia
      */
     @Override
     public List<CubiculoDTO> mandarCubiculos(LocalDateTime fecha) {
-       return sistemaGestionCubiculos.obtenerCubiculosDisponiblesHorario(fecha);
+        return sistemaGestionCubiculos.obtenerCubiculosDisponiblesHorario(fecha);
     }
+
     /**
      * terminao
+     *
      * @param cita
-     * @return 
+     * @return
      */
     @Override
     public String resumenCita(CitaNuevaDTO cita) {
@@ -80,23 +91,32 @@ public class FAgendarCita implements IAgendarCita {
                 + "Cliente: " + cita.getNombrePaciente() + ", Teléfono: " + cita.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + cita.getCorreoPaciente();
     }
+
     /**
-     * 
+     *
      * @param cita
-     * @return 
+     * @return
      */
     @Override
     public boolean agendarCita(CitaNuevaDTO cita) {
         return true;
     }
+
     /**
-     * Llama a un metodo del gestor de psicologos el cual recupera al psicologo con su identificador
+     * Llama a un metodo del gestor de psicologos el cual recupera al psicologo
+     * con su identificador
+     *
      * @param identificador el usuario con el que inician sesion
      * @return el psicologo que tiene ese identificador
+     * @throws excepciones.AgendarCitaException
      */
     @Override
-    public PsicologoDTO obtenerPsicologo(String identificador) {
-        return sistemaGestorPsicologos.obtenerPsicologoPorID(identificador);
+    public PsicologoDTO obtenerPsicologo(String identificador) throws AgendarCitaException {
+        PsicologoDTO psicologo = sistemaGestorPsicologos.obtenerPsicologoPorID(identificador);
+        if (psicologo.getHorarioDia().isEmpty()) {
+            throw new AgendarCitaException("El psicologo obtenido no tiene horario disponible por el momento");
+        }
+        return psicologo;
     }
 
 }

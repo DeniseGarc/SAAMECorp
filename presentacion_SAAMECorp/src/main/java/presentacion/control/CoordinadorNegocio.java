@@ -9,18 +9,24 @@ import agendarCita.IAgendarCita;
 import com.toedter.calendar.IDateEvaluator;
 import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
+import dto.CubiculoDTO;
 import dto.PsicologoDTO;
+import excepciones.AgendarCitaException;
+import excepciones.CoordinadorException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
@@ -32,11 +38,16 @@ import presentacion.sesion.TipoUsuario;
  */
 public class CoordinadorNegocio {
 
-    private IAgendarCita sistemaAgendarCita = new FAgendarCita();
-    private IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
+    private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
+    private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
 
-    public PsicologoDTO mostrarPsicologo(String identificadorPsicologo) {
-        return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo);
+    public PsicologoDTO mostrarPsicologo(String identificadorPsicologo) throws CoordinadorException {
+        try {
+            return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo);
+        } catch (AgendarCitaException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("El psicologo no se encuentra con disponiblidad de horario");
+        }
     }
 
     public boolean validarAdeudoPsicologoSeleccionado(PsicologoDTO psicologo) {
@@ -52,7 +63,11 @@ public class CoordinadorNegocio {
     }
 
     public List<String> mostrarCubiculos(LocalDateTime fechaHoraCita) {
-        return sistemaAgendarCita.mandarCubiculos(fechaHoraCita);
+        List<String> nombresCubiculos = new ArrayList<>();
+        for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
+            nombresCubiculos.add(cubiculo.getNombre());
+        }
+        return nombresCubiculos;
     }
 
     public String obtenerResumenCita(CitaNuevaDTO cita) {
@@ -127,7 +142,7 @@ public class CoordinadorNegocio {
             fechaEntrante.setTime(date);
             // Se recorre la lista de fechas
             for (Date d : fechas) {
-                // Se convierte el dia de la lista a Calenda
+                // Se convierte el dia de la lista a Calendar
                 fechaLista.setTime(d);
                 // Se compara si el dia del parametro coincide con el dia de la lista
                 if (fechaEntrante.get(Calendar.YEAR) == fechaLista.get(Calendar.YEAR)

@@ -4,6 +4,7 @@
  */
 package agendarCita;
 
+import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
@@ -27,7 +28,7 @@ public interface IAgendarCita {
     public String resumenCita(CitaNuevaDTO cita);
 
     public boolean agendarCita(CitaNuevaDTO cita);
-    
-    public PsicologoDTO obtenerPsicologo(String identificador);
+
+    public PsicologoDTO obtenerPsicologo(String identificador) throws AgendarCitaException;
 
 }

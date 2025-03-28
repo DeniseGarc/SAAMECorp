@@ -6,6 +6,7 @@ package presentacion.GUI;
 
 import dto.CitaNuevaDTO;
 import dto.PsicologoDTO;
+import excepciones.CoordinadorException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -38,15 +41,15 @@ public class AgregarCita extends javax.swing.JFrame {
         this.fechaCita = fechaSeleccionada;
         this.psicologos = controlNegocio.mostrarPsicologos(fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         initComponents();
-        agregarListeners();
         btnConfirmar.setEnabled(false);
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
         lblFechaCita.setText(formato.format(fechaCita));
         if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
             llenarComboPsicologos();
+            agregarListeners();
         } else {
+            agregarListeners();
             seleccionarPsicologoUsuario();
-
         }
         if (cmbPsicologos.getItemCount() == 0) {
             JOptionPane.showMessageDialog(null, "No hay psicologos disponibles en el momento", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -414,8 +417,14 @@ public class AgregarCita extends javax.swing.JFrame {
     }
 
     private void seleccionarPsicologoUsuario() {
-        cmbPsicologos.addItem(controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario()));
-        cmbPsicologos.setEnabled(false);
+        try {
+            PsicologoDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario());
+            cmbPsicologos.addItem(psicologoUsuario);
+            cmbPsicologos.setEnabled(false);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Usted no tiene disponibilidad de horarios para el día seleccionado", "No es posible agendar ninguna cita para el día seleccionado", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void mostrarResumenCita() {
@@ -473,6 +482,9 @@ public class AgregarCita extends javax.swing.JFrame {
         cmbCubiculo.removeAllItems();
         cmbCubiculo.setEnabled(true);
         List<String> cubiculos = controlNegocio.mostrarCubiculos(obtenerFechaHoraCita());
+        if (cubiculos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay cubiculos disponibles para la fecha y hora seleccionadas", "Sin disponiblidad de cubiculos", JOptionPane.INFORMATION_MESSAGE);
+        }
         for (String cubiculo : cubiculos) {
             cmbCubiculo.addItem(cubiculo);
         }
@@ -519,6 +531,7 @@ public class AgregarCita extends javax.swing.JFrame {
                     llenarComboHorariosPsicologo(psicologoSeleccionado);
                 } else {
                     if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+                        JOptionPane.showMessageDialog(null, "El psicólogo seleccionado presenta un adeudo de 500 o mayor, por lo que no es posible agendarle una cita", "No le es posible agendar cita a este psicólogo en este momento", JOptionPane.INFORMATION_MESSAGE);
                         cmbPsicologos.removeItem(psicologoSeleccionado);
                     } else {
                         JOptionPane.showMessageDialog(null, "Usted presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No le es posible agendar cita en este momento", JOptionPane.INFORMATION_MESSAGE);
