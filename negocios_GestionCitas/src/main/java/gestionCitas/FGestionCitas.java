@@ -45,7 +45,7 @@ public class FGestionCitas implements IGestionCitas {
     }
 
     @Override
-    public boolean validarFechaCitaRepetida() {
+    public boolean validarFechaCitaRepetida(CitaNuevaDTO citaNueva) {
         return false;
     }
 

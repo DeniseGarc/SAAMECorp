@@ -20,5 +20,5 @@ public interface IGestionCitas {
 
     public List<Date> obtenerDiasConAgendaLlena();
 
-    public boolean validarFechaCitaRepetida();
+    public boolean validarFechaCitaRepetida(CitaNuevaDTO citaNueva);
 }
