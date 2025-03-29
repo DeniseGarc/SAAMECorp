@@ -428,32 +428,40 @@ public class AgregarCita extends javax.swing.JFrame {
     }
 
     private void mostrarResumenCita() {
-        CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
-        String mensaje = controlNegocio.obtenerResumenCita(cita);
+        try {
+            CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
+            String mensaje = controlNegocio.obtenerResumenCita(cita);
 
-        if (!mensaje.startsWith("¿Desea agendar la cita?")) {
-            JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int opcion = JOptionPane.showOptionDialog(
-                this,
-                mensaje,
-                "Confirmación",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                new Object[]{"Cancelar", "Aceptar"},
-                "Aceptar"
-        );
-
-        if (opcion == 1) {
-            if (controlNegocio.agendarCita(cita)) {
-                JOptionPane.showMessageDialog(null, "La cita ha sido agendada, se ha mandado un correo al psicológo para su confirmación", "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
-                control.pantallaCalendarioCitas(this);
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al agendar cita", "No se ha podido agendar la cita", JOptionPane.ERROR_MESSAGE);
+            if (!mensaje.startsWith("¿Desea agendar la cita?")) {
+                JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            int opcion = JOptionPane.showOptionDialog(
+                    this,
+                    mensaje,
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Cancelar", "Aceptar"},
+                    "Aceptar"
+            );
+
+            if (opcion == 1) {
+                try {
+                    if (controlNegocio.agendarCita(cita)) {
+                        JOptionPane.showMessageDialog(null, "La cita ha sido agendada, se ha mandado un correo al psicológo para su confirmación", "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                        control.pantallaCalendarioCitas(this);
+                    }
+                } catch (CoordinadorException ex) {
+                    Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+            }
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al agendar cita", JOptionPane.ERROR_MESSAGE);
         }
     }
 
