@@ -4,8 +4,10 @@
  */
 package agendarCita;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
+import excepciones.AgendarCitaException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -76,10 +78,10 @@ public class FAgendarCitaTest {
         listaHoras.add(LocalTime.of(8, 0));
         listaHoras.add(LocalTime.of(10, 30));
         listaHoras.add(LocalTime.of(15, 45));
-        cita.setPsicologo(new PsicologoDTO("Juan", "Perez", "Lopez", "juanperezlopez@gmail.com",listaHoras));
-        cita.setNombrePaciente("Paciente Prueba");
+        cita.setPsicologo(new PsicologoDTO("Juan", "Heras", "Carrazco", "juanherascarrazco@gmail.com",listaHoras));
+        cita.setNombrePaciente("Pedro Morales");
         cita.setTelefonoPaciente("123456789");
-        cita.setCorreoPaciente("correo@example.com");
+        cita.setCorreoPaciente("pedromorales@gmail.com");
         cita.setFechaHora(LocalDateTime.now());
 
         assertDoesNotThrow(() -> {
@@ -93,6 +95,29 @@ public class FAgendarCitaTest {
      */
     @Test
     public void testAgendarCita() throws Exception {
+        CitaNuevaDTO cita = new CitaNuevaDTO();
+        List <LocalTime> listaHoras = new ArrayList<>();
+        listaHoras.add(LocalTime.of(8, 0));
+        listaHoras.add(LocalTime.of(10, 30));
+        listaHoras.add(LocalTime.of(15, 45));
+        listaHoras.add(LocalTime.of(23, 48));
+        cita.setPsicologo(new PsicologoDTO("Chris", "Alvarez", "Centeno", 
+                "chrisalvarezcenteno@gmail.com",listaHoras));
+        cita.setCubiculo("Cubiculo 1");
+        cita.setFechaHora(LocalDateTime.now());
+        cita.setNombrePaciente("Luis Uribe");
+        cita.setTelefonoPaciente("123456789");
+        cita.setCorreoPaciente("luisuribe@gmail.com");
+        CitaRegistradaDTO citaRegistradaDTO = new CitaRegistradaDTO("1", 
+                cita.getFechaHora(), cita.getCubiculo(), cita.getPsicologo(), 
+                cita.getNombrePaciente(), cita.getTelefonoPaciente(), 
+                cita.getCorreoPaciente());
+        //sigue mock, se ocupa crear una cita desde GestionCitas
+        assertThrows(AgendarCitaException.class, () -> fAgendarCita.agendarCita(null));
+        assertDoesNotThrow(() -> {
+            boolean resultado = fAgendarCita.agendarCita(cita);
+            assertTrue(resultado);
+        });
     }
 
     /**
@@ -100,6 +125,11 @@ public class FAgendarCitaTest {
      */
     @Test
     public void testObtenerPsicologo() throws Exception {
+         String identificador = "1234";
+         //sigue mock
+        assertDoesNotThrow(() -> {
+            PsicologoDTO resultado = fAgendarCita.obtenerPsicologo(identificador);
+            assertNotNull(resultado);});
     }
     
 }
