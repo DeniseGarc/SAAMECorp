@@ -406,10 +406,11 @@ public class AgregarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private CitaNuevaDTO obtenerDatosCita() {
+        PsicologoDTO psicologo = (PsicologoDTO) cmbPsicologos.getSelectedItem();
         return new CitaNuevaDTO(
                 obtenerFechaHoraCita(),
                 cmbCubiculo.getSelectedItem().toString(),
-                (PsicologoDTO) cmbPsicologos.getSelectedItem(),
+                psicologo,
                 txtNombrePaciente.getText(),
                 txtTelefonoPaciente.getText(),
                 txtCorreoPaciente.getText()
