@@ -17,5 +17,5 @@ public class FGestionAdeudos implements IGestionAdeudos {
     public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologo) {
         return 200.0;
     }
-    
+
 }

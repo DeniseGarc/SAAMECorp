@@ -5,6 +5,7 @@
 package gestionCitas;
 
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +18,8 @@ public class FGestionCitas implements IGestionCitas {
 
     // todavia no se utiliza por lo que no se mockea
     @Override
-    public boolean agendarCita(CitaNuevaDTO cita) {
-        return true;
+    public CitaRegistradaDTO agendarCita(CitaNuevaDTO cita) {
+        return new CitaRegistradaDTO();
     }
 
     // devuelve la lista de dias con cita 

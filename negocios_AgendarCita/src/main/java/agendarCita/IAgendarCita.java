@@ -10,7 +10,6 @@ import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +24,9 @@ public interface IAgendarCita {
 
     public List<CubiculoDTO> mandarCubiculos(LocalDateTime fecha);
 
-    public String resumenCita(CitaNuevaDTO cita);
+    public String resumenCita(CitaNuevaDTO cita) throws AgendarCitaException;
 
-    public boolean agendarCita(CitaNuevaDTO cita);
+    public boolean agendarCita(CitaNuevaDTO cita) throws AgendarCitaException;
 
     public PsicologoDTO obtenerPsicologo(String identificador) throws AgendarCitaException;
 

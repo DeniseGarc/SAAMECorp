@@ -2,18 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package gestionAdeudos;
-
-import dto.CitaRegistradaDTO;
-import dto.PsicologoDTO;
+package correoElectronico;
 
 /**
  *
- * @author erika
+ * @author Alici
  */
-public interface IGestionAdeudos {
+public interface ICorreoElectronico {
 
-    public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologo);
-
- 
+    public boolean mandarCorreo(String correo, String mensaje);
 }

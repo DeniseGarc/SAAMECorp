@@ -4,19 +4,21 @@
  */
 package agendarCita;
 
+import correoElectronico.FCorreoElectronico;
+import correoElectronico.ICorreoElectronico;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import gestionAdeudos.FGestionAdeudos;
 import gestionAdeudos.IGestionAdeudos;
+import gestionCitas.FGestionCitas;
+import gestionCitas.IGestionCitas;
 import gestionCubiculos.FGestionCubiculos;
 import gestionCubiculos.IGestionCubiculos;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import gestionPsicologos.FGestionPsicologos;
 import gestionPsicologos.IGestionPsicologos;
@@ -30,6 +32,8 @@ public class FAgendarCita implements IAgendarCita {
     private final IGestionPsicologos sistemaGestorPsicologos = new FGestionPsicologos();
     private final IGestionAdeudos sistemaGestorAdeudos = new FGestionAdeudos();
     private final IGestionCubiculos sistemaGestionCubiculos = new FGestionCubiculos();
+    private final IGestionCitas sistemaGestorCitas = new FGestionCitas();
+    private final ICorreoElectronico sistemaCorreoElectronico = new FCorreoElectronico();
 
     public FAgendarCita() {
 
@@ -56,7 +60,7 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public boolean validarAdeudoPsicologo(PsicologoDTO psicologo) {
-        return sistemaGestorAdeudos.validarAdeudoPsicologo(psicologo);
+        return sistemaGestorAdeudos.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
 
     }
 
@@ -77,12 +81,12 @@ public class FAgendarCita implements IAgendarCita {
      *
      * @param cita
      * @return
+     * @throws excepciones.AgendarCitaException
      */
     @Override
-    public String resumenCita(CitaNuevaDTO cita) {
+    public String resumenCita(CitaNuevaDTO cita) throws AgendarCitaException {
         if (cita == null) {
-            //Esto pasara a ser una excepcion
-            System.out.println("La cita es nula");
+            throw new AgendarCitaException("La cita no puede ser nula");
         }
         return "¿Desea agendar la cita?\n"
                 + cita.getCubiculo() + "\n"
@@ -96,9 +100,25 @@ public class FAgendarCita implements IAgendarCita {
      *
      * @param cita
      * @return
+     * @throws excepciones.AgendarCitaException
      */
     @Override
-    public boolean agendarCita(CitaNuevaDTO cita) {
+    public boolean agendarCita(CitaNuevaDTO cita) throws AgendarCitaException {
+        if (cita == null) {
+            throw new AgendarCitaException("La cita no puede ser nula");
+        }
+        if (sistemaGestorCitas.validarFechaCitaRepetida(cita)) {
+            throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
+        }
+        CitaRegistradaDTO citaRegistrada = sistemaGestorCitas.agendarCita(cita);
+        // Ver si luego cambia a exception
+        if (citaRegistrada == null) {
+            throw new AgendarCitaException("No fue posible agendar la cita");
+        }
+        // Va a cambiar cuando se implemente correctamente el subsistema de correo electronico
+        if (!sistemaCorreoElectronico.mandarCorreo(citaRegistrada.getPsicologo().getCorreo(), "Texto temporal")) {
+            throw new AgendarCitaException("No fue posible enviar el correo de confirmación");
+        }
         return true;
     }
 

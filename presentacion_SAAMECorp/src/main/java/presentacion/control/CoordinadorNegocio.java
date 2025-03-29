@@ -70,16 +70,26 @@ public class CoordinadorNegocio {
         return nombresCubiculos;
     }
 
-    public String obtenerResumenCita(CitaNuevaDTO cita) {
+    public String obtenerResumenCita(CitaNuevaDTO cita) throws CoordinadorException {
         String error = Validadores.validarCita(cita);
         if (error != null) {
             return error;
         }
-        return sistemaAgendarCita.resumenCita(cita);
+        try {
+            return sistemaAgendarCita.resumenCita(cita);
+        } catch (AgendarCitaException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al generar resumen de la cita.");
+        }
     }
 
-    public boolean agendarCita(CitaNuevaDTO cita) {
-        return sistemaAgendarCita.agendarCita(cita);
+    public boolean agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
+        try {
+            return sistemaAgendarCita.agendarCita(cita);
+        } catch (AgendarCitaException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
     }
 
     public void bloquearDiasNoDisponibles(JCalendar calendario) {

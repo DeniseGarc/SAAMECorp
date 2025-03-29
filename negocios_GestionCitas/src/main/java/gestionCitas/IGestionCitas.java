@@ -5,6 +5,7 @@
 package gestionCitas;
 
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface IGestionCitas {
 
-    public boolean agendarCita(CitaNuevaDTO cita);
+    public CitaRegistradaDTO agendarCita(CitaNuevaDTO cita);
 
     public List<Date> obtenerDiasConCita();
 

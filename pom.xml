@@ -14,6 +14,7 @@
         <module>negocios_GestionCitas</module>
         <module>negocios_GestionCubiculos</module>
         <module>negocios_GestionAdeudos</module>
+        <module>infraestructura_CorreoElectronico</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
