@@ -19,7 +19,7 @@ public class FGestionCitas implements IGestionCitas {
     // todavia no se utiliza por lo que no se mockea
     @Override
     public CitaRegistradaDTO agendarCita(CitaNuevaDTO cita) {
-        return new CitaRegistradaDTO();
+        return new CitaRegistradaDTO("1", cita.getFechaHora(), cita.getCubiculo(), cita.getPsicologo(), cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
     }
 
     // devuelve la lista de dias con cita 
