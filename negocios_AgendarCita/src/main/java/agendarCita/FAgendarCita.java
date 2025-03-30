@@ -110,13 +110,13 @@ public class FAgendarCita implements IAgendarCita {
         if (sistemaGestorCitas.validarFechaCitaRepetida(cita)) {
             throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
         }
-        CitaRegistradaDTO citaRegistrada = sistemaGestorCitas.agendarCita(cita);
+        boolean citaRegistrada = sistemaGestorCitas.agendarCita(cita);
         // Ver si luego cambia a exception
-        if (citaRegistrada == null) {
+        if (!citaRegistrada) {
             throw new AgendarCitaException("No fue posible agendar la cita");
         }
         // Va a cambiar cuando se implemente correctamente el subsistema de correo electronico
-        if (!sistemaCorreoElectronico.mandarCorreo(citaRegistrada.getPsicologo().getCorreo(), "Texto temporal")) {
+        if (!sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), "Texto temporal")) {
             throw new AgendarCitaException("No fue posible enviar el correo de confirmación");
         }
         return true;

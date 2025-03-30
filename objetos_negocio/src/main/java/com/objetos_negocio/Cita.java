@@ -53,7 +53,7 @@ public class Cita {
         return fechasAgendadas;
     }
     
-    public boolean cubiculoTieneHorasDisponiblesDia(CubiculoDTO cubiculo, LocalDate dia){
+    public boolean cubiculoTieneHorasDisponiblesDia(String cubiculo, LocalDate dia){
         return true;
     }
     

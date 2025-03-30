@@ -6,6 +6,7 @@ package gestionCitas;
 
 import dto.CitaNuevaDTO;
 import dto.CitaRegistradaDTO;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
  */
 public interface IGestionCitas {
 
-    public CitaRegistradaDTO agendarCita(CitaNuevaDTO cita);
+    public boolean agendarCita(CitaNuevaDTO cita);
 
-    public List<Date> obtenerDiasConCita();
+    public List<LocalDate> obtenerDiasConCita();
 
-    public List<Date> obtenerDiasConAgendaLlena();
+    public List<LocalDate> obtenerDiasConAgendaLlena();
 
     public boolean validarFechaCitaRepetida(CitaNuevaDTO citaNueva);
 }
