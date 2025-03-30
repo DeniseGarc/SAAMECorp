@@ -18,9 +18,9 @@ public interface IGestionCitas {
 
     public boolean agendarCita(CitaNuevaDTO cita);
 
-    public List<LocalDate> obtenerDiasConCita();
+    public List<Date> obtenerDiasConCita();
 
-    public List<LocalDate> obtenerDiasConAgendaLlena();
+    public List<Date> obtenerDiasConAgendaLlena();
 
     public boolean validarFechaCitaRepetida(CitaNuevaDTO citaNueva);
 }

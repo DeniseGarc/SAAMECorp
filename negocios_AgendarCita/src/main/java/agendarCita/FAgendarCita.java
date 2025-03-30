@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import gestionPsicologos.FGestionPsicologos;
 import gestionPsicologos.IGestionPsicologos;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  *
@@ -48,7 +50,7 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public List<PsicologoDTO> mandarPsicologos(LocalDate fecha) {
-        return sistemaGestorPsicologos.obtenerPsicologosDisponibles(fecha);
+        return sistemaGestorPsicologos.obtenerPsicologosDisponibles(Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 
     /**

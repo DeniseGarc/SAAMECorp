@@ -53,7 +53,7 @@ public class FGestionPsicologos implements IGestionPsicologos {
      * @return  lista de PsicologosDTO
      */
     @Override
-    public List<PsicologoDTO> obtenerPsicologosDisponibles(LocalDate fecha) {
+    public List<PsicologoDTO> obtenerPsicologosDisponibles(Date fecha) {
         List<PsicologoDTO> disponibles = new ArrayList<>();
         List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
         for (PsicologoDTO psic : psicologos) {
@@ -72,7 +72,7 @@ public class FGestionPsicologos implements IGestionPsicologos {
      * @return 
      */
     @Override
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, LocalDate fecha) {
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
         List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
         for (PsicologoDTO psic : psicologos) {
             if (psic.getCorreo().equals(identificadorPsicologo)) {
@@ -86,11 +86,13 @@ public class FGestionPsicologos implements IGestionPsicologos {
     }
     
     //Este iría en el objeto negocio pq el subsistema no se comunica con la base no?
+    // Este metodo le debe de llamar al de objeto negocio
     /**
-     * Metodo para obtener un psicologo de la base de datos usando su identificasdor
+     *
      * @param identificador del psicologo
      * @return psicologoDTO 
      */
+    @Override
     public PsicologoDTO obtenerPsicologoPorID(String identificador){
         return listaPsicologos.getLast();
     }
