@@ -4,6 +4,8 @@
  */
 package gestionPsicologos;
 
+import com.objetos_negocio.Cita;
+import com.objetos_negocio.Psicologo;
 import dto.PsicologoDTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +19,8 @@ import java.util.List;
  */
 public class FGestionPsicologos implements IGestionPsicologos {
     List<PsicologoDTO> listaPsicologos = new ArrayList<>();
-    
-    
+    Psicologo psicologo = new Psicologo();
+    Cita cita = new Cita();
    
     public FGestionPsicologos(){
     
@@ -44,6 +46,7 @@ public class FGestionPsicologos implements IGestionPsicologos {
         listaPsicologos.add(new PsicologoDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
         listaPsicologos.add(new PsicologoDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
     }
+    
     /**
      * regresa la lista de psicologos disponibles en la fecha dada
      * @param fecha dia de la cita
@@ -51,14 +54,38 @@ public class FGestionPsicologos implements IGestionPsicologos {
      */
     @Override
     public List<PsicologoDTO> obtenerPsicologosDisponibles(LocalDate fecha) {
-        return listaPsicologos;
+        List<PsicologoDTO> disponibles = new ArrayList<>();
+        List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoDTO psic : psicologos) {
+            List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
+            if (!horas.isEmpty()) {
+                disponibles.add(psic);
+            }
+        }
+        return disponibles;
     }
 
-    // mock del metodo
+    /**
+     * 
+     * @param identificadorPsicologo
+     * @param fecha
+     * @return 
+     */
     @Override
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
-        return true;
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, LocalDate fecha) {
+        List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoDTO psic : psicologos) {
+            if (psic.getCorreo().equals(identificadorPsicologo)) {
+                List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
+                if (!horas.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+    
+    //Este iría en el objeto negocio pq el subsistema no se comunica con la base no?
     /**
      * Metodo para obtener un psicologo de la base de datos usando su identificasdor
      * @param identificador del psicologo

@@ -18,7 +18,7 @@ public interface IGestionPsicologos {
 
     public List<PsicologoDTO> obtenerPsicologosDisponibles(LocalDate fecha);
 
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha);
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, LocalDate fecha);
     
     public PsicologoDTO obtenerPsicologoPorID(String identificador);
 }

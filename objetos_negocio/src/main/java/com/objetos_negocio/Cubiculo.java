@@ -13,7 +13,8 @@ import java.util.List;
  * @author alexnieblas
  */
 public class Cubiculo {
-    List<CubiculoDTO> obtenerCubiculosEstadoDisponible(){
+    
+    public List<CubiculoDTO> obtenerCubiculosEstadoDisponible(){
         List<CubiculoDTO> cubiculos = new LinkedList<>();
         cubiculos.add(new CubiculoDTO("Cubiculo 1", true));
         cubiculos.add(new CubiculoDTO("Cubiculo 2", true));
