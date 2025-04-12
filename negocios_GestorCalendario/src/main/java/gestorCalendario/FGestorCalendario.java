@@ -1,45 +1,54 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gestorCalendario;
 
-import gestionCitas.FGestionCitas;
-import gestionCitas.IGestionCitas;
-import gestionPsicologos.FGestionPsicologos;
-import gestionPsicologos.IGestionPsicologos;
-import java.util.ArrayList;
-import java.util.Date;
+import gestorCalendario.control.ControlGestorCalendario;
+import java.util.Calendar;
 import java.util.List;
 
 /**
+ * Clase fachada del subsistema GestorCalendario, se encarga de todas las
+ * operaciones relacionadas al calendario de citas.
  *
  * @author Alici
  */
 public class FGestorCalendario implements IGestorCalendario {
 
-    private final IGestionPsicologos sistemaGestorPsicologos = new FGestionPsicologos();
-    private final IGestionCitas sistemaGestorCitas = new FGestionCitas();
+    private final ControlGestorCalendario control = new ControlGestorCalendario();
 
-    // El sistema gestor de citas se encarga de obtener los dias con agenda llena
+    /**
+     * Método que obtiene las fechas del consultorio donde todos los horarios
+     * han sido agendados y ya no quedan cubiculos con horas disponibles.
+     *
+     * @return Lista de fechas a partir de la fecha actual donde se ha llenado
+     * la agenda del consultorio
+     */
     @Override
-    public List<Date> diasAgendaLlena() {
-        return sistemaGestorCitas.obtenerDiasConAgendaLlena();
+    public List<Calendar> diasAgendaLlena() {
+        return control.obtenerDiasConAgendaLlena();
     }
 
-    // El sistema gestor de citas se encarga de obtener los dias que tengan citas agendadas
+    /**
+     * Método que obtiene las fechas las cuales tienen citas registradas y sin
+     * contar aquellas donde la agenda del consultorio se encuentra llena.
+     *
+     * @return Lista de fechas a partir de la fecha actual donde se han
+     * registrado citas en el sistema.
+     */
     @Override
-    public List<Date> diasConReservas() {
-        // Se obtiene la lista de días con citas y se crea una copia mutable
-        List<Date> diasConReserva = new ArrayList<>(sistemaGestorCitas.obtenerDiasConCita());
-        // Se remueven los días con agenda llena
-        diasConReserva.removeAll(diasAgendaLlena());
-        return diasConReserva;
+    public List<Calendar> diasConReservas() {
+        return control.obtenerDiasConCita();
     }
 
-    // El gestor de psicolos se encarga de la logica de validacion
+    /**
+     * Método que manda a validar si el día seleccionado del calendario esta
+     * disponible para el psicólogo cuando es usuario.
+     *
+     * @param identificadorPsicologo Identificador del psicólogo registrado.
+     * @param fecha Fecha seleccionada del calendario
+     * @return true si el psicólogo tiene horas disponibles para el día, false
+     * en caso contrario.
+     */
     @Override
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
-        return sistemaGestorPsicologos.diaDisponiblePsicologo(identificadorPsicologo, fecha);
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha) {
+        return control.diaDisponiblePsicologo(identificadorPsicologo, fecha);
     }
 }

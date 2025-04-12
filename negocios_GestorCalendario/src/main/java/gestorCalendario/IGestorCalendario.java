@@ -4,7 +4,7 @@
  */
 package gestorCalendario;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface IGestorCalendario {
 
-    public List<Date> diasAgendaLlena();
+    public List<Calendar> diasAgendaLlena();
 
-    public List<Date> diasConReservas();
+    public List<Calendar> diasConReservas();
 
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha);
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha);
 }
