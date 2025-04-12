@@ -4,7 +4,7 @@
  */
 package presentacion.control;
 
-import java.util.Date;
+import java.util.Calendar;
 import presentacion.GUI.PantallaInicio;
 import presentacion.GUI.IniciarSesion;
 import presentacion.GUI.CalendarioCitas;
@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 /**
  * Clase que se va a encargar de generar los JFrame y el cambio de pantallas
  * UNICAMENTE SU FUNCION ES CERRAR Y ABRIR PANTALLAS
+ *
  * @author Alici
  */
 public class CoordinadorAplicacion {
@@ -36,7 +37,7 @@ public class CoordinadorAplicacion {
         frm.dispose();
     }
 
-    public void pantallaAgregarCita(JFrame frm, Date fechaSeleccionada) {
+    public void pantallaAgregarCita(JFrame frm, Calendar fechaSeleccionada) {
         AgregarCita frmAgregarCita = new AgregarCita(fechaSeleccionada);
         frmAgregarCita.setVisible(true);
         frm.dispose();

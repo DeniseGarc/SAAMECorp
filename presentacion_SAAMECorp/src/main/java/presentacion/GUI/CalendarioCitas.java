@@ -4,7 +4,7 @@
  */
 package presentacion.GUI;
 
-import java.util.Date;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
@@ -238,7 +238,7 @@ public class CalendarioCitas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarDiaActionPerformed
-        Date diaSeleccionado = calendarioCitas.getDate();
+        Calendar diaSeleccionado = calendarioCitas.getCalendar();
         if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
             JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
             return;

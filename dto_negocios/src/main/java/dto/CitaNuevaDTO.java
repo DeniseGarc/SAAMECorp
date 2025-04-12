@@ -5,6 +5,7 @@
 package dto;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  */
 public class CitaNuevaDTO {
 
-    private LocalDateTime fechaHora;
+    private Calendar fechaHora;
     private String cubiculo;
     private PsicologoDTO psicologo;
     private String nombrePaciente;
@@ -22,7 +23,7 @@ public class CitaNuevaDTO {
     public CitaNuevaDTO() {
     }
 
-    public CitaNuevaDTO(LocalDateTime fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
+    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
         this.psicologo = psicologo;
@@ -31,11 +32,11 @@ public class CitaNuevaDTO {
         this.correoPaciente = correoPaciente;
     }
 
-    public LocalDateTime getFechaHora() {
+    public Calendar getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
+    public void setFechaHora(Calendar fechaHora) {
         this.fechaHora = fechaHora;
     }
 

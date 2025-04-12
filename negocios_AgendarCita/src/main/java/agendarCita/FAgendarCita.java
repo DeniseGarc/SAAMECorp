@@ -75,7 +75,7 @@ public class FAgendarCita implements IAgendarCita {
         }
         return "¿Desea agendar la cita?\n"
                 + citaNueva.getCubiculo() + "\n"
-                + "Fecha" + citaNueva.getFechaHora().toLocalDate() + " " + citaNueva.getFechaHora().toLocalTime() + "\n"
+                + "Fecha" + citaNueva.getFechaHora() + " " + citaNueva.getFechaHora() + "\n"
                 + "Psicólogo: " + citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() + "\n"
                 + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + citaNueva.getCorreoPaciente();
@@ -87,6 +87,7 @@ public class FAgendarCita implements IAgendarCita {
      * Agendar una cita requiere: 
      * - Validar que no haya una cita "repetida" en el sistema. 
      * - Registrar la cita en el sistema.
+     * - Registrar adeudo de la cita en el sistema.
      * - Mandar un correo de confirmación al psicólogo que agendó la cita.
      *
      * @param cita

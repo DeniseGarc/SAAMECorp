@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion.GUI;
 
 import dto.CitaNuevaDTO;
@@ -12,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,15 +28,15 @@ import presentacion.sesion.TipoUsuario;
  */
 public class AgregarCita extends javax.swing.JFrame {
 
-    private final Date fechaCita;
+    private final Calendar fechaCita;
     //crear instancia del control de la aplicacion para poder usar los metodos
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
     CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
     private final List<PsicologoDTO> psicologos;
 
-    public AgregarCita(Date fechaSeleccionada) {
+    public AgregarCita(Calendar fechaSeleccionada) {
         this.fechaCita = fechaSeleccionada;
-        this.psicologos = controlNegocio.mostrarPsicologos(fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        this.psicologos = controlNegocio.mostrarPsicologos(fechaSeleccionada);
         initComponents();
         btnConfirmar.setEnabled(false);
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
@@ -481,10 +478,11 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
-    private LocalDateTime obtenerFechaHoraCita() {
+    private Calendar obtenerFechaHoraCita() {
         LocalTime horaSeleccionada = (LocalTime) cmbHorarios.getSelectedItem();
-        LocalDate fechaCitaLocal = fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return LocalDateTime.of(fechaCitaLocal, horaSeleccionada);
+        fechaCita.set(Calendar.HOUR_OF_DAY, horaSeleccionada.getHour());
+        fechaCita.set(Calendar.MINUTE, horaSeleccionada.getMinute());
+        return fechaCita;
     }
 
     private void llenarComboCubiculos() {

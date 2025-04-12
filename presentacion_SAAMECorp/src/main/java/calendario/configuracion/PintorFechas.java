@@ -27,7 +27,7 @@ public class PintorFechas implements IDateEvaluator {
     private final Color colorFondo;
     private final boolean marcarComoInvalido;
     private final String textoInfo;
-    
+
     public PintorFechas(List<Calendar> fechas, Color colorTexto, Color colorFondo, boolean marcarComoInvalido, String textoInfo) {
         this.fechas = new HashSet<>(fechas);
         this.colorTexto = colorTexto;
