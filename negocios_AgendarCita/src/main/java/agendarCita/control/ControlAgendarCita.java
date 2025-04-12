@@ -20,6 +20,7 @@ public class ControlAgendarCita {
      *
      * Qué determina el horario del psicológo: 
      * - Horas del día seleccionado donde el psicólogo no tiene ninguna cita agendada.
+     * - Si las cita es para el día actual que las horas esten después de la hora actual.
      *
      * @param fechaCita Fecha de la cita seleccionada.
      * @return Lista de todos los psicólogos registrados y sus horarios.
