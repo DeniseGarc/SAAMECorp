@@ -2,20 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.objetos_negocio;
+package BO;
 
 import dto.PsicologoDTO;
+import interfaces.IPsicologoBO;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
- * @author alexnieblas
+ * Clase que define la logica de negocio para psicologos
+ * @author erika
  */
-public class Psicologo {
-    public List<PsicologoDTO> obtenerPsicologos(){
+public class PsicologoBO implements IPsicologoBO{
+    /**
+     * Metodo para obtener todos los psicologos registrados
+     * @return Lista de psicolos registrados
+     */
+    @Override
+    public List<PsicologoDTO> obtenerPsicologos() {
         List<PsicologoDTO> lista = new LinkedList<>();
         List<LocalTime> horario = new LinkedList<>();
         horario.add(LocalTime.of(8, 0));   // 08:00 AM
@@ -30,4 +35,5 @@ public class Psicologo {
         
         return lista;
     }
+    
 }

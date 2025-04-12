@@ -6,6 +6,7 @@ package gestionPsicologos;
 
 import com.objetos_negocio.Cita;
 import com.objetos_negocio.Psicologo;
+import dto.CitaRegistradaDTO;
 import dto.PsicologoDTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,8 +20,8 @@ import java.util.List;
  */
 public class FGestionPsicologos implements IGestionPsicologos {
     List<PsicologoDTO> listaPsicologos = new ArrayList<>();
-    Psicologo psicologo = new Psicologo();
-    Cita cita = new Cita();
+    PsicologoDTO psicologo = new PsicologoDTO();
+    CitaRegistradaDTO cita = new CitaRegistradaDTO();
    
     public FGestionPsicologos(){
     
