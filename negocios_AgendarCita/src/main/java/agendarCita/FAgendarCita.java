@@ -4,7 +4,7 @@ import agendarCita.control.ControlAgendarCita;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import java.util.List;
 import java.util.Calendar;
 
@@ -30,7 +30,7 @@ public class FAgendarCita implements IAgendarCita {
      * seleccionada.
      */
     @Override
-    public List<PsicologoDTO> mandarPsicologos(Calendar fecha) {
+    public List<PsicologoCitaDTO> mandarPsicologos(Calendar fecha) {
         return control.obtenerPsicologos(fecha);
     }
 
@@ -44,7 +44,7 @@ public class FAgendarCita implements IAgendarCita {
      * @return true si el adeudo es menor a 500, false si es mayor o igual.
      */
     @Override
-    public boolean validarAdeudoPsicologo(PsicologoDTO psicologo) {
+    public boolean validarAdeudoPsicologo(PsicologoCitaDTO psicologo) {
         return control.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
 
     }
@@ -123,8 +123,8 @@ public class FAgendarCita implements IAgendarCita {
      * @throws excepciones.AgendarCitaException
      */
     @Override
-    public PsicologoDTO obtenerPsicologo(String identificador) throws AgendarCitaException {
-        PsicologoDTO psicologo = control.obtenerPsicologo(identificador);
+    public PsicologoCitaDTO obtenerPsicologo(String identificador) throws AgendarCitaException {
+        PsicologoCitaDTO psicologo = control.obtenerPsicologo(identificador);
         if (psicologo.getHorarioDia().isEmpty()) {
             throw new AgendarCitaException("El psicologo obtenido no tiene horario disponible por el momento");
         }

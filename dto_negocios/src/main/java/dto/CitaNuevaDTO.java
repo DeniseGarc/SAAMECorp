@@ -4,10 +4,10 @@
  */
 package dto;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 /**
+ * DTO que se utiliza para registrar una nueva cita dentro del sistema.
  *
  * @author Alici
  */
@@ -19,17 +19,19 @@ public class CitaNuevaDTO {
     private String nombrePaciente;
     private String telefonoPaciente;
     private String correoPaciente;
+    private AdeudoCitaDTO adeudo;
 
     public CitaNuevaDTO() {
     }
 
-    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
+    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
         this.psicologo = psicologo;
         this.nombrePaciente = nombrePaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.correoPaciente = correoPaciente;
+        this.adeudo = adeudo;
     }
 
     public Calendar getFechaHora() {
@@ -78,6 +80,14 @@ public class CitaNuevaDTO {
 
     public void setCorreoPaciente(String correoPaciente) {
         this.correoPaciente = correoPaciente;
+    }
+
+    public AdeudoCitaDTO getAdeudo() {
+        return adeudo;
+    }
+
+    public void setAdeudo(AdeudoCitaDTO adeudo) {
+        this.adeudo = adeudo;
     }
 
 }

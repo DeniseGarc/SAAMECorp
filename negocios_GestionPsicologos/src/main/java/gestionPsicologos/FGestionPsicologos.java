@@ -7,7 +7,7 @@ package gestionPsicologos;
 import com.objetos_negocio.Cita;
 import com.objetos_negocio.Psicologo;
 import dto.CitaRegistradaDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ import java.util.List;
  * @author Alici
  */
 public class FGestionPsicologos implements IGestionPsicologos {
-    List<PsicologoDTO> listaPsicologos = new ArrayList<>();
-    PsicologoDTO psicologo = new PsicologoDTO();
+    List<PsicologoCitaDTO> listaPsicologos = new ArrayList<>();
+    PsicologoCitaDTO psicologo = new PsicologoCitaDTO();
     CitaRegistradaDTO cita = new CitaRegistradaDTO();
    
     public FGestionPsicologos(){
@@ -43,9 +43,9 @@ public class FGestionPsicologos implements IGestionPsicologos {
         listaHoras3.add(LocalTime.of(12, 15));
         listaHoras3.add(LocalTime.of(14, 45));
 
-        listaPsicologos.add(new PsicologoDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras1));
-        listaPsicologos.add(new PsicologoDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
-        listaPsicologos.add(new PsicologoDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
+        listaPsicologos.add(new PsicologoCitaDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras1));
+        listaPsicologos.add(new PsicologoCitaDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
+        listaPsicologos.add(new PsicologoCitaDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
     }
     
     /**
@@ -54,10 +54,10 @@ public class FGestionPsicologos implements IGestionPsicologos {
      * @return  lista de PsicologosDTO
      */
     @Override
-    public List<PsicologoDTO> obtenerPsicologosDisponibles(Date fecha) {
-        List<PsicologoDTO> disponibles = new ArrayList<>();
-        List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
-        for (PsicologoDTO psic : psicologos) {
+    public List<PsicologoCitaDTO> obtenerPsicologosDisponibles(Date fecha) {
+        List<PsicologoCitaDTO> disponibles = new ArrayList<>();
+        List<PsicologoCitaDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoCitaDTO psic : psicologos) {
             List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
             if (!horas.isEmpty()) {
                 disponibles.add(psic);
@@ -74,8 +74,8 @@ public class FGestionPsicologos implements IGestionPsicologos {
      */
     @Override
     public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
-        List<PsicologoDTO> psicologos = psicologo.obtenerPsicologos();
-        for (PsicologoDTO psic : psicologos) {
+        List<PsicologoCitaDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoCitaDTO psic : psicologos) {
             if (psic.getCorreo().equals(identificadorPsicologo)) {
                 List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
                 if (!horas.isEmpty()) {
@@ -94,7 +94,7 @@ public class FGestionPsicologos implements IGestionPsicologos {
      * @return psicologoDTO 
      */
     @Override
-    public PsicologoDTO obtenerPsicologoPorID(String identificador){
+    public PsicologoCitaDTO obtenerPsicologoPorID(String identificador){
         return listaPsicologos.getLast();
     }
 

@@ -2,7 +2,7 @@ package agendarCita.control;
 
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ControlAgendarCita {
      * @param fechaCita Fecha de la cita seleccionada.
      * @return Lista de todos los psicólogos registrados y sus horarios.
      */
-    public List<PsicologoDTO> obtenerPsicologos(Calendar fechaCita) {
+    public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class ControlAgendarCita {
      * @return Regresa la cantidad total de adeudo que tiene el psicólogo
      * indicado.
      */
-    public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologo) {
+    public double obtenerCantidadAdeudoPsicologo(PsicologoCitaDTO psicologo) {
         return 0;
     }
 
@@ -89,7 +89,7 @@ public class ControlAgendarCita {
      * psicologo correspondiente.
      * @return Datos y horarios del psicólogo encontrado.
      */
-    public PsicologoDTO obtenerPsicologo(String identificador) {
+    public PsicologoCitaDTO obtenerPsicologo(String identificador) {
         return null;
     }
 
@@ -106,7 +106,7 @@ public class ControlAgendarCita {
      * @return Lista de horas en las que el psicólogo se encuentra disponible en
      * la fecha indicada.
      */
-    public List<LocalTime> obtenerHorariosDisponiblePsicologo(PsicologoDTO psicologo, Calendar fechaCita) {
+    public List<LocalTime> obtenerHorariosDisponiblePsicologo(PsicologoCitaDTO psicologo, Calendar fechaCita) {
         return null;
     }
 }

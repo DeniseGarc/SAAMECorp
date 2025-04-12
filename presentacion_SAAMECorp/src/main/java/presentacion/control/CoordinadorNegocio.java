@@ -12,7 +12,7 @@ import calendario.configuracion.PintorFechas;
 import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
 import gestorCalendario.FGestorCalendario;
@@ -38,7 +38,7 @@ public class CoordinadorNegocio {
     private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
 
-    public PsicologoDTO mostrarPsicologo(String identificadorPsicologo) throws CoordinadorException {
+    public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo) throws CoordinadorException {
         try {
             return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo);
         } catch (AgendarCitaException ex) {
@@ -47,15 +47,15 @@ public class CoordinadorNegocio {
         }
     }
 
-    public boolean validarAdeudoPsicologoSeleccionado(PsicologoDTO psicologo) {
+    public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) {
         return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
     }
 
-    public List<PsicologoDTO> mostrarPsicologos(Calendar fecha) {
+    public List<PsicologoCitaDTO> mostrarPsicologos(Calendar fecha) {
         return sistemaAgendarCita.mandarPsicologos(fecha);
     }
 
-    public List<LocalTime> mostrarHorarios(PsicologoDTO psicologo) {
+    public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) {
         return psicologo.getHorarioDia();
     }
 
