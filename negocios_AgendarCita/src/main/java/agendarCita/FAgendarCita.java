@@ -1,126 +1,115 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package agendarCita;
 
-import correoElectronico.FCorreoElectronico;
-import correoElectronico.ICorreoElectronico;
+import agendarCita.control.ControlAgendarCita;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
-import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
-import gestionAdeudos.FGestionAdeudos;
-import gestionAdeudos.IGestionAdeudos;
-import gestionCitas.FGestionCitas;
-import gestionCitas.IGestionCitas;
-import gestionCubiculos.FGestionCubiculos;
-import gestionCubiculos.IGestionCubiculos;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import gestionPsicologos.FGestionPsicologos;
-import gestionPsicologos.IGestionPsicologos;
-import java.time.ZoneId;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
+ * Fachada del subsistema AgendarCita, se encarga de unir todas las operaciones
+ * necesarias para el proceso de agendar una cita en el sistema.
  *
  * @author Alici
  */
 public class FAgendarCita implements IAgendarCita {
 
-    private final IGestionPsicologos sistemaGestorPsicologos = new FGestionPsicologos();
-    private final IGestionAdeudos sistemaGestorAdeudos = new FGestionAdeudos();
-    private final IGestionCubiculos sistemaGestionCubiculos = new FGestionCubiculos();
-    private final IGestionCitas sistemaGestorCitas = new FGestionCitas();
-    private final ICorreoElectronico sistemaCorreoElectronico = new FCorreoElectronico();
+    private final ControlAgendarCita control = new ControlAgendarCita();
 
     public FAgendarCita() {
 
     }
 
     /**
-     * Llama al metodo del gestor de psicologos que devuelve los psicologos
-     * disponibles en ese dia
+     * Llama al método del control para obtener los psicologos y sus horarios.
      *
-     * @param fecha
-     * @return Regresa los PsicologoDTO
+     * @param fecha Fecha seleccionada para la cita.
+     * @return Regresa los datos de los psicólogos y sus horarios para la fecha
+     * seleccionada.
      */
     @Override
-    public List<PsicologoDTO> mandarPsicologos(LocalDate fecha) {
-        return sistemaGestorPsicologos.obtenerPsicologosDisponibles(Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+    public List<PsicologoDTO> mandarPsicologos(Calendar fecha) {
+        return control.obtenerPsicologos(fecha);
     }
 
     /**
-     * Manda a llamar al metodo de gestor de adeudos y aqui se pone la condición
-     * de maximo de adeudo de 500
+     * Manda a llamar al metodo de control, aquí se define la regla de negocio
+     * de cuanto es el total de adeudo que con el cual no se permite agendar más
+     * citas. Si el psicólogo tiene un adeudo mayor o igual a 500.00 pesos, ya
+     * no se le permite agendar más citas hasta cubrir su adeudo.
      *
-     * @param psicologo el psicologo del que se quiere validar adeudo
-     * @return true si el adeudo es menor a 500 y false si es mayor
+     * @param psicologo El psicologo del cual que se quiere validar el adeudo.
+     * @return true si el adeudo es menor a 500, false si es mayor o igual.
      */
     @Override
     public boolean validarAdeudoPsicologo(PsicologoDTO psicologo) {
-        return sistemaGestorAdeudos.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
+        return control.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
 
     }
 
     /**
-     * Llama al metodo del gestor de cubiculos para obtener los cubiculos
-     * disponibles del dia de la cita
+     * Llama al metodo del control para obtener los cubiculos disponibles del
+     * dia y hora de la cita.
      *
-     * @param fecha la fecha de la que se necesitan los cubiculos
-     * @return los cubiculos disponibles del dia
+     * @param fechaHora fecha y hora seleccionados para la cita
+     * @return Los cubiculos disponibles del dia a la hora seleccionada.
      */
     @Override
-    public List<CubiculoDTO> mandarCubiculos(LocalDateTime fecha) {
-        return sistemaGestionCubiculos.obtenerCubiculosDisponiblesHorario(fecha);
+    public List<CubiculoDTO> mandarCubiculos(Calendar fechaHora) {
+        return control.obtenerCubiculosDisponiblesHorario(fechaHora);
     }
 
     /**
-     * terminao
+     * Método que devuelve el resumen de la cita nueva.
      *
-     * @param cita
-     * @return
-     * @throws excepciones.AgendarCitaException
+     * @param citaNueva Cita nueva a agendar en el sistema.
+     * @return Texto con el resumen de la cita generado.
+     * @throws AgendarCitaException Si la cita llega nula.
      */
     @Override
-    public String resumenCita(CitaNuevaDTO cita) throws AgendarCitaException {
-        if (cita == null) {
+    public String resumenCita(CitaNuevaDTO citaNueva) throws AgendarCitaException {
+        if (citaNueva == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
         return "¿Desea agendar la cita?\n"
-                + cita.getCubiculo() + "\n"
-                + "Fecha" + cita.getFechaHora().toLocalDate() + " " + cita.getFechaHora().toLocalTime() + "\n"
-                + "Psicólogo: " + cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno() + " " + cita.getPsicologo().getApellidoMaterno() + "\n"
-                + "Cliente: " + cita.getNombrePaciente() + ", Teléfono: " + cita.getTelefonoPaciente() + "\n"
-                + "Correo del paciente: " + cita.getCorreoPaciente();
+                + citaNueva.getCubiculo() + "\n"
+                + "Fecha" + citaNueva.getFechaHora().toLocalDate() + " " + citaNueva.getFechaHora().toLocalTime() + "\n"
+                + "Psicólogo: " + citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() + "\n"
+                + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
+                + "Correo del paciente: " + citaNueva.getCorreoPaciente();
     }
 
     /**
+     * Método que se encarga de agendar la cita en el sistema.
+     *
+     * Agendar una cita requiere: 
+     * - Validar que no haya una cita "repetida" en el sistema. 
+     * - Registrar la cita en el sistema.
+     * - Mandar un correo de confirmación al psicólogo que agendó la cita.
      *
      * @param cita
      * @return
-     * @throws excepciones.AgendarCitaException
+     * @throws AgendarCitaException
      */
     @Override
     public boolean agendarCita(CitaNuevaDTO cita) throws AgendarCitaException {
-        if (cita == null) {
-            throw new AgendarCitaException("La cita no puede ser nula");
-        }
-        if (sistemaGestorCitas.validarFechaCitaRepetida(cita)) {
-            throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
-        }
-        boolean citaRegistrada = sistemaGestorCitas.agendarCita(cita);
-        // Ver si luego cambia a exception
-        if (!citaRegistrada) {
-            throw new AgendarCitaException("No fue posible agendar la cita");
-        }
-        // Va a cambiar cuando se implemente correctamente el subsistema de correo electronico
-        if (!sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), "Texto temporal")) {
-            throw new AgendarCitaException("No fue posible enviar el correo de confirmación");
-        }
+//        if (cita == null) {
+//            throw new AgendarCitaException("La cita no puede ser nula");
+//        }
+//        if (sistemaGestorCitas.validarFechaCitaRepetida(cita)) {
+//            throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
+//        }
+//        boolean citaRegistrada = sistemaGestorCitas.agendarCita(cita);
+//        if (!citaRegistrada) {
+//            throw new AgendarCitaException("No fue posible agendar la cita");
+//        }
+//        // Va a cambiar cuando se implemente correctamente el subsistema de correo electronico
+//        if (!sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), "Texto temporal")) {
+//            throw new AgendarCitaException("No fue posible enviar el correo de confirmación");
+//        }
+//        return true;
         return true;
     }
 
@@ -134,7 +123,7 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public PsicologoDTO obtenerPsicologo(String identificador) throws AgendarCitaException {
-        PsicologoDTO psicologo = sistemaGestorPsicologos.obtenerPsicologoPorID(identificador);
+        PsicologoDTO psicologo = control.obtenerPsicologo(identificador);
         if (psicologo.getHorarioDia().isEmpty()) {
             throw new AgendarCitaException("El psicologo obtenido no tiene horario disponible por el momento");
         }

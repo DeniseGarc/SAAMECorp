@@ -16,8 +16,6 @@ import excepciones.CoordinadorException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +52,7 @@ public class CoordinadorNegocio {
         return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
     }
 
-    public List<PsicologoDTO> mostrarPsicologos(LocalDate fecha) {
+    public List<PsicologoDTO> mostrarPsicologos(Calendar fecha) {
         return sistemaAgendarCita.mandarPsicologos(fecha);
     }
 
@@ -62,7 +60,7 @@ public class CoordinadorNegocio {
         return psicologo.getHorarioDia();
     }
 
-    public List<String> mostrarCubiculos(LocalDateTime fechaHoraCita) {
+    public List<String> mostrarCubiculos(Calendar fechaHoraCita) {
         List<String> nombresCubiculos = new ArrayList<>();
         for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
             nombresCubiculos.add(cubiculo.getNombre());

@@ -32,6 +32,7 @@ public class FGestionCitas implements IGestionCitas {
      * error
      */
     @Override
+    // tiene que devolver una cita registrada
     public boolean agendarCita(CitaNuevaDTO cita) {
         if (cita == null || cita.getFechaHora() == null || cita.getPsicologo() == null || cita.getCubiculo() == null) {
             return false;
