@@ -3,6 +3,7 @@ package agendarCita.control;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,10 +18,6 @@ public class ControlAgendarCita {
     /**
      * Método que obtiene a los psicologos registrados y sus horarios
      * disponibles para el día de la cita seleccionada.
-     *
-     * Qué determina el horario del psicológo: 
-     * - Horas del día seleccionado donde el psicólogo no tiene ninguna cita agendada.
-     * - Si las cita es para el día actual que las horas esten después de la hora actual.
      *
      * @param fechaCita Fecha de la cita seleccionada.
      * @return Lista de todos los psicólogos registrados y sus horarios.
@@ -93,6 +90,23 @@ public class ControlAgendarCita {
      * @return Datos y horarios del psicólogo encontrado.
      */
     public PsicologoDTO obtenerPsicologo(String identificador) {
+        return null;
+    }
+
+    /**
+     * Método que obtiene los horarios del día indicado en los que el psicólogo
+     * tiene disponibilidad para una cita.
+     * 
+     * Qué determina el horario del psicológo: 
+     * - Horas del día seleccionado donde el psicólogo no tiene ninguna cita agendada. 
+     * - Si las cita es para el día actual que las horas esten después de la hora actual.
+     * 
+     * @param psicologo Psicólogo del cual se deben obtener los horarios.
+     * @param fechaCita Fecha seleccionada de la cita.
+     * @return Lista de horas en las que el psicólogo se encuentra disponible en
+     * la fecha indicada.
+     */
+    public List<LocalTime> obtenerHorariosDisponiblePsicologo(PsicologoDTO psicologo, Calendar fechaCita) {
         return null;
     }
 }
