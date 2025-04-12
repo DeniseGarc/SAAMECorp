@@ -92,21 +92,4 @@ public class ControlAgendarCita {
     public PsicologoCitaDTO obtenerPsicologo(String identificador) {
         return null;
     }
-
-    /**
-     * Método que obtiene los horarios del día indicado en los que el psicólogo
-     * tiene disponibilidad para una cita.
-     * 
-     * Qué determina el horario del psicológo: 
-     * - Horas del día seleccionado donde el psicólogo no tiene ninguna cita agendada. 
-     * - Si las cita es para el día actual que las horas esten después de la hora actual.
-     * 
-     * @param psicologo Psicólogo del cual se deben obtener los horarios.
-     * @param fechaCita Fecha seleccionada de la cita.
-     * @return Lista de horas en las que el psicólogo se encuentra disponible en
-     * la fecha indicada.
-     */
-    public List<LocalTime> obtenerHorariosDisponiblePsicologo(PsicologoCitaDTO psicologo, Calendar fechaCita) {
-        return null;
-    }
 }
