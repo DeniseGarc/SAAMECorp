@@ -88,7 +88,27 @@ public class ControlAgendarCita {
      * seleccionados.
      */
     public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(Calendar fechaHoraCita) {
-       return null;
+        List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
+        List<CitaNuevaDTO> citasRegistradas = citaBO.obtenerCitas();
+        List<CubiculoDTO> cubiculosFiltrados = new LinkedList<>();
+        for (CubiculoDTO cubiculo : cubiculosDisponibles) {
+            boolean cubiculoOcupado = false;
+            for (CitaNuevaDTO cita : citasRegistradas) {
+                if (cubiculo.getNombre().equals(cita.getCubiculo())
+                        && cita.getFechaHora().get(Calendar.YEAR) == fechaHoraCita.get(Calendar.YEAR)
+                        && cita.getFechaHora().get(Calendar.MONTH) == fechaHoraCita.get(Calendar.MONTH)
+                        && cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == fechaHoraCita.get(Calendar.DAY_OF_MONTH)
+                        && cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == fechaHoraCita.get(Calendar.HOUR_OF_DAY)
+                        && cita.getFechaHora().get(Calendar.MINUTE) == fechaHoraCita.get(Calendar.MINUTE)) {
+                    cubiculoOcupado = true;
+                    break;
+                }
+            }
+            if (!cubiculoOcupado) {
+                cubiculosFiltrados.add(cubiculo);
+            }
+        }
+        return cubiculosFiltrados;
     }
 
     /**
@@ -123,8 +143,8 @@ public class ControlAgendarCita {
      */
     public boolean mandarCorreo(String mensaje, String correo) {
         try {
-            FCorreoElectronico correito = new FCorreoElectronico();
-            boolean enviado = correito.mandarCorreo(correo, mensaje);
+            FCorreoElectronico correoInfra = new FCorreoElectronico();
+            boolean enviado = correoInfra.mandarCorreo(correo, mensaje);
             return enviado;
         } catch (Exception e) {
             System.err.println("Error al enviar el correo a " + correo + ": " + e.getMessage());
