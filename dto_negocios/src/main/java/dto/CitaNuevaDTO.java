@@ -15,7 +15,7 @@ public class CitaNuevaDTO {
 
     private Calendar fechaHora;
     private String cubiculo;
-    private PsicologoDTO psicologo;
+    private PsicologoCitaDTO psicologo;
     private String nombrePaciente;
     private String telefonoPaciente;
     private String correoPaciente;
@@ -24,7 +24,7 @@ public class CitaNuevaDTO {
     public CitaNuevaDTO() {
     }
 
-    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
+    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoCitaDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
         this.psicologo = psicologo;
@@ -50,11 +50,11 @@ public class CitaNuevaDTO {
         this.cubiculo = cubiculo;
     }
 
-    public PsicologoDTO getPsicologo() {
+    public PsicologoCitaDTO getPsicologo() {
         return psicologo;
     }
 
-    public void setPsicologo(PsicologoDTO psicologo) {
+    public void setPsicologo(PsicologoCitaDTO psicologo) {
         this.psicologo = psicologo;
     }
 

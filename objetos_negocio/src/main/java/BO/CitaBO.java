@@ -21,17 +21,20 @@ import java.util.UUID;
 
 /**
  * Clase que implementa la logica de negocio para las citas
+ *
  * @author erika
  */
 public class CitaBO implements ICitaBO {
+
     /**
-     * Metodo que obtiene la disponibilidad de un psicolo en un dia dado
+     * Metodo que obtiene la disponibilidad de un psicólogo en un dia dado
+     *
      * @param fecha fecha a consultar
      * @param psicologo psicologo a consultar
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<Calendar> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) {
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) {
         List<Calendar> horasDisponibles = new LinkedList<>();
 
         int year = fecha.get(Calendar.YEAR);
@@ -55,8 +58,11 @@ public class CitaBO implements ICitaBO {
 
         return horasDisponibles;
     }
+
     /**
-     * Obtiene los cubiculos que tienen citas registradas en la fecha y hora dada
+     * Obtiene los cubiculos que tienen citas registradas en la fecha y hora
+     * dada
+     *
      * @param fecha fecha y hora a consultar
      * @return Lista de cubiculos ya ocupados
      */
@@ -69,8 +75,10 @@ public class CitaBO implements ICitaBO {
         listaCubiculos.add(new CubiculoDTO("Cubiculo 4", true));
         return listaCubiculos;
     }
+
     /**
      * Metodo para guardar una cita
+     *
      * @param cita Cita a guardar
      * @return Cita registrada
      */
@@ -79,19 +87,21 @@ public class CitaBO implements ICitaBO {
         String idGenerado = UUID.randomUUID().toString();
 
         return new CitaRegistradaDTO(
-            idGenerado,
-            cita.getFechaHora(),
-            cita.getCubiculo(),
-            cita.getPsicologo(),
-            cita.getNombrePaciente(),
-            cita.getTelefonoPaciente(),
-            cita.getCorreoPaciente(),
-            null // Adeudo inicializado como null
+                idGenerado,
+                cita.getFechaHora(),
+                cita.getCubiculo(),
+                cita.getPsicologo(),
+                cita.getNombrePaciente(),
+                cita.getTelefonoPaciente(),
+                cita.getCorreoPaciente(),
+                null // Adeudo inicializado como null
         );
     }
-     /**
+
+    /**
      * Obtiene las fechas que ya tienen citas agendadas
-     * @return 
+     *
+     * @return
      */
     @Override
     public List<Calendar> obtenerFechasConCitaAgendada() {
@@ -104,8 +114,11 @@ public class CitaBO implements ICitaBO {
 
         return fechasAgendadas;
     }
+
     /**
-     * Metodo para consultar si un cubiculo ya tiene citas registradas en un dia dao
+     * Metodo para consultar si un cubiculo ya tiene citas registradas en un dia
+     * dao
+     *
      * @param cubiculo Cubiculo a consultar
      * @param fecha Fecha a consult
      * @return True hay horas disponibles
@@ -115,8 +128,10 @@ public class CitaBO implements ICitaBO {
         // Simulación de disponibilidad
         return true;
     }
+
     /**
      * Metodo para obtener todas la citas agendadas
+     *
      * @return Lista de citas registradas
      */
     @Override
@@ -124,11 +139,11 @@ public class CitaBO implements ICitaBO {
         List<CitaRegistradaDTO> citas = new LinkedList<>();
 
         List<LocalTime> horario = List.of(
-            LocalTime.of(8, 0),
-            LocalTime.of(10, 30),
-            LocalTime.of(13, 15),
-            LocalTime.of(16, 45),
-            LocalTime.of(19, 0)
+                LocalTime.of(8, 0),
+                LocalTime.of(10, 30),
+                LocalTime.of(13, 15),
+                LocalTime.of(16, 45),
+                LocalTime.of(19, 0)
         );
 
         PsicologoDTO jose = new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario);

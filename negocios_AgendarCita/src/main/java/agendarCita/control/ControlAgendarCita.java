@@ -3,9 +3,16 @@ package agendarCita.control;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
+import dto.PsicologoDTO;
+import excepciones.AgendarCitaException;
+import interfaces.ICitaBO;
+import interfaces.IPsicologoBO;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import manejadorBO.ManejadorBO;
 
 /**
  * Clase control que se encarga de la comunicación entre la fachada del
@@ -14,6 +21,9 @@ import java.util.List;
  * @author Alici
  */
 public class ControlAgendarCita {
+
+    IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
+    ICitaBO citaBO = ManejadorBO.crearCitaBO();
 
     /**
      * Método que obtiene a los psicologos registrados y sus horarios
@@ -54,10 +64,11 @@ public class ControlAgendarCita {
      * realizado todas las válidaciones necesarias.
      *
      * @param citaNueva Cita nueva a registrar en el sistema.
-     * @return true si la operación fue exitosa, false en caso contrario.
+     * @return regresa los datos de la cita agendada, null en caso de no ser
+     * posible agendar la cita.
      */
-    public boolean agendarCita(CitaNuevaDTO citaNueva) {
-        return false;
+    public CitaNuevaDTO agendarCita(CitaNuevaDTO citaNueva) {
+        return null;
     }
 
     /**
@@ -83,13 +94,23 @@ public class ControlAgendarCita {
     }
 
     /**
-     * Método que se utiliza para obtener al psicólogo por un identificador.
+     * Método que se utiliza para obtener los datos del psicólogo y sus horarios
+     * a partir de un identificador.
      *
      * @param identificador Identificador por el cual se va a obtener al
      * psicologo correspondiente.
+     * @param fechaCita Fecha de la cita seleccionada
      * @return Datos y horarios del psicólogo encontrado.
+     * @throws AgendarCitaException Si ocurre un error al consultar los datos.
      */
-    public PsicologoCitaDTO obtenerPsicologo(String identificador) {
-        return null;
+    public PsicologoCitaDTO obtenerPsicologo(String identificador, Calendar fechaCita) throws AgendarCitaException {
+        try {
+            PsicologoDTO psicologoEncontrado = psicologoBO.obtenerPsicologoPorIdentificador(identificador);
+            List<LocalTime> horasPsicologo = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologoEncontrado);
+            return new PsicologoCitaDTO(psicologoEncontrado, horasPsicologo);
+        } catch (Exception e) {
+            Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new AgendarCitaException("Ha ocurrido un error al intentar consultar si psicólogo y sus horas disponibles", e);
+        }
     }
 }

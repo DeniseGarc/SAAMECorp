@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package gestorCalendario;
 
+import excepciones.GestorCalendarioException;
 import java.util.Calendar;
 import java.util.List;
 
 /**
+ * Interfaz que representa un gestor de calendario el cual se encarga de
+ * acciones para administrar las fechas y eventos relacionados a fechas.
  *
  * @author Alici
  */
 public interface IGestorCalendario {
 
-    public List<Calendar> diasAgendaLlena();
+    public List<Calendar> diasAgendaLlena() throws GestorCalendarioException;
 
-    public List<Calendar> diasConReservas();
+    public List<Calendar> diasConReservas() throws GestorCalendarioException;
 
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha);
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha) throws GestorCalendarioException;
 }

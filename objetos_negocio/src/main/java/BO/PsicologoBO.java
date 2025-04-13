@@ -12,11 +12,14 @@ import java.util.List;
 
 /**
  * Clase que define la logica de negocio para psicologos
+ *
  * @author erika
  */
-public class PsicologoBO implements IPsicologoBO{
+public class PsicologoBO implements IPsicologoBO {
+
     /**
      * Metodo para obtener todos los psicologos registrados
+     *
      * @return Lista de psicolos registrados
      */
     @Override
@@ -32,8 +35,13 @@ public class PsicologoBO implements IPsicologoBO{
         lista.add(new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario));
         lista.add(new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", horario));
         lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "maria@gmail.com", horario));
-        
+
         return lista;
     }
-    
+
+    @Override
+    public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) {
+        return new PsicologoDTO("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
+    }
+
 }

@@ -1,8 +1,13 @@
 package gestorCalendario;
 
+import excepciones.GestorCalendarioException;
 import gestorCalendario.control.ControlGestorCalendario;
+import interfaces.IPsicologoBO;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import manejadorBO.ManejadorBO;
 
 /**
  * Clase fachada del subsistema GestorCalendario, se encarga de todas las
@@ -48,7 +53,12 @@ public class FGestorCalendario implements IGestorCalendario {
      * en caso contrario.
      */
     @Override
-    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha) {
-        return control.diaDisponiblePsicologo(identificadorPsicologo, fecha);
+    public boolean diaDisponiblePsicologo(String identificadorPsicologo, Calendar fecha) throws GestorCalendarioException {
+        try {
+            return control.diaDisponiblePsicologo(identificadorPsicologo, fecha);
+        } catch (GestorCalendarioException ex) {
+            Logger.getLogger(FGestorCalendario.class.getName()).log(Level.SEVERE, null, ex);
+            throw new GestorCalendarioException(ex.getMessage(), ex);
+        }
     }
 }

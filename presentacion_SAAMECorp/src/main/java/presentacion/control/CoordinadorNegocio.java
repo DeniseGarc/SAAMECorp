@@ -13,8 +13,10 @@ import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
+import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
+import excepciones.GestorCalendarioException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import java.awt.Color;
@@ -38,9 +40,9 @@ public class CoordinadorNegocio {
     private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
 
-    public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo) throws CoordinadorException {
+    public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo, Calendar fechaCita) throws CoordinadorException {
         try {
-            return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo);
+            return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo, fechaCita);
         } catch (AgendarCitaException ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("El psicologo no se encuentra con disponiblidad de horario");
@@ -80,9 +82,16 @@ public class CoordinadorNegocio {
         }
     }
 
-    public boolean agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
+    public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
         try {
-            return sistemaAgendarCita.agendarCita(cita);
+            ResultadoAgendarCita resultadoOperacion = sistemaAgendarCita.agendarCita(cita);
+            if (!resultadoOperacion.isCitaAgendada()) {
+                throw new CoordinadorException("No fue posible agendar la cita");
+            }
+            if (!resultadoOperacion.isCorreoEnviado()) {
+                return resultadoOperacion.getMensajeAdvertencia();
+            }
+            return "El correo de confirmación ha sido enviado al correo asociado al psicólogo";
         } catch (AgendarCitaException ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException(ex.getMessage());
@@ -107,24 +116,32 @@ public class CoordinadorNegocio {
     }
 
     public void pintarDiasCalendario(JCalendar calendario) {
-        List<Calendar> diasConReservas = sistemaGestorCalendario.diasConReservas();
-        List<Calendar> diasAgendaLlena = sistemaGestorCalendario.diasAgendaLlena();
-        PintorFechas diasConCita = new PintorFechas(diasConReservas, Color.white, new Color(233, 69, 191), false, "Hay citas agendadas este día");
-        PintorFechas diasSinDisponibilidad = new PintorFechas(diasAgendaLlena, Color.white, new Color(138, 34, 111), true, "La agenda del consultorio esta llena para este día");
+        try {
+            List<Calendar> diasConReservas = sistemaGestorCalendario.diasConReservas();
+            List<Calendar> diasAgendaLlena = sistemaGestorCalendario.diasAgendaLlena();
+            PintorFechas diasConCita = new PintorFechas(diasConReservas, Color.white, new Color(233, 69, 191), false, "Hay citas agendadas este día");
+            PintorFechas diasSinDisponibilidad = new PintorFechas(diasAgendaLlena, Color.white, new Color(138, 34, 111), true, "La agenda del consultorio esta llena para este día");
 
-        calendario.getDayChooser().addDateEvaluator(diasConCita);
-        calendario.getDayChooser().addDateEvaluator(diasSinDisponibilidad);
-        calendario.getDayChooser().updateUI();
-        // Cada que se seleccione una nueva fecha se vuelve a pintar el calendario
-        calendario.getDayChooser().addPropertyChangeListener("day", evt -> {
+            calendario.getDayChooser().addDateEvaluator(diasConCita);
+            calendario.getDayChooser().addDateEvaluator(diasSinDisponibilidad);
             calendario.getDayChooser().updateUI();
-        });
+            // Cada que se seleccione una nueva fecha se vuelve a pintar el calendario
+            calendario.getDayChooser().addPropertyChangeListener("day", evt -> {
+                calendario.getDayChooser().updateUI();
+            });
+        } catch (GestorCalendarioException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
         if (GestorSesion.getTipoUsuario().equals(TipoUsuario.PSICOLOGO)) {
-            if (!sistemaGestorCalendario.diaDisponiblePsicologo(GestorSesion.getIdentificadorUsuario(), diaSeleccionado)) {
-                return false;
+            try {
+                if (!sistemaGestorCalendario.diaDisponiblePsicologo(GestorSesion.getIdentificadorUsuario(), diaSeleccionado)) {
+                    return false;
+                }
+            } catch (GestorCalendarioException ex) {
+                Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return true;

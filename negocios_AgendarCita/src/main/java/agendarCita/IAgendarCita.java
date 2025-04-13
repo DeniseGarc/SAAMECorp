@@ -8,6 +8,7 @@ import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
+import dto.ResultadoAgendarCita;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public interface IAgendarCita {
 
     public String resumenCita(CitaNuevaDTO cita) throws AgendarCitaException;
 
-    public boolean agendarCita(CitaNuevaDTO cita) throws AgendarCitaException;
+    public ResultadoAgendarCita agendarCita(CitaNuevaDTO cita) throws AgendarCitaException;
 
-    public PsicologoCitaDTO obtenerPsicologo(String identificador) throws AgendarCitaException;
+    public PsicologoCitaDTO obtenerPsicologo(String identificador, Calendar fechaCita) throws AgendarCitaException;
 
 }

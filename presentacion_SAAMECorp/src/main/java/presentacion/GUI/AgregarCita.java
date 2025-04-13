@@ -4,12 +4,8 @@ import dto.CitaNuevaDTO;
 import dto.PsicologoCitaDTO;
 import excepciones.CoordinadorException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -23,17 +19,24 @@ import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
 /**
+ * Frame que representa la pantalla donde el usuario ingresa los datos
+ * necesarios para agendar una cita en el sistema.
  *
  * @author Alici
  */
 public class AgregarCita extends javax.swing.JFrame {
 
     private final Calendar fechaCita;
-    //crear instancia del control de la aplicacion para poder usar los metodos
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
     CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
     private final List<PsicologoCitaDTO> psicologos;
 
+    /**
+     * Constructor que recibe la fecha seleccionada para la cita, inicializa los
+     * componentes del panel.
+     *
+     * @param fechaSeleccionada
+     */
     public AgregarCita(Calendar fechaSeleccionada) {
         this.fechaCita = fechaSeleccionada;
         this.psicologos = controlNegocio.mostrarPsicologos(fechaSeleccionada);
@@ -402,6 +405,12 @@ public class AgregarCita extends javax.swing.JFrame {
         control.pantallaCalendarioCitas(this);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    /**
+     * Método que obtiene los datos para registrar la cita y genera el DTO
+     * necesario para mandar agendar la cita.
+     *
+     * @return CitaNuevaDTO con los datos ingresados por el usuario.
+     */
     private CitaNuevaDTO obtenerDatosCita() {
         PsicologoCitaDTO psicologo = (PsicologoCitaDTO) cmbPsicologos.getSelectedItem();
         return new CitaNuevaDTO(
@@ -410,13 +419,18 @@ public class AgregarCita extends javax.swing.JFrame {
                 psicologo,
                 txtNombrePaciente.getText(),
                 txtTelefonoPaciente.getText(),
-                txtCorreoPaciente.getText()
+                txtCorreoPaciente.getText(),
+                null
         );
     }
 
+    /**
+     * Método que selecciona automáticamente el nombre del psicólogo de la
+     * sesión en el combo box cuando el usuario es de tipo psicólogo.
+     */
     private void seleccionarPsicologoUsuario() {
         try {
-            PsicologoCitaDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario());
+            PsicologoCitaDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario(), fechaCita);
             cmbPsicologos.addItem(psicologoUsuario);
             cmbPsicologos.setEnabled(false);
         } catch (CoordinadorException ex) {
@@ -425,6 +439,9 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que muestra el resumen de la cita a agendar.
+     */
     private void mostrarResumenCita() {
         try {
             CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
@@ -447,15 +464,9 @@ public class AgregarCita extends javax.swing.JFrame {
             );
 
             if (opcion == 1) {
-                try {
-                    if (controlNegocio.agendarCita(cita)) {
-                        JOptionPane.showMessageDialog(null, "La cita ha sido agendada, se ha mandado un correo al psicológo para su confirmación", "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
-                        control.pantallaCalendarioCitas(this);
-                    }
-                } catch (CoordinadorException ex) {
-                    Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
-
-                }
+                String resultado = controlNegocio.agendarCita(cita);
+                JOptionPane.showMessageDialog(null, "¡Cita agendada exitosamente!, " + resultado, "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
+                control.pantallaCalendarioCitas(this);
             }
         } catch (CoordinadorException ex) {
             Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
@@ -463,6 +474,10 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que llena el combo box de los psicólogos registrados en el
+     * sistema.
+     */
     private void llenarComboPsicologos() {
         cmbPsicologos.removeAllItems();
         for (PsicologoCitaDTO psicologo : psicologos) {
@@ -470,6 +485,12 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que llena el combo box con los horarios disponibles del psicólogo
+     * seleccionado.
+     *
+     * @param psicologoSeleccionado Psicólogo que ha sido seleccionado
+     */
     private void llenarComboHorariosPsicologo(PsicologoCitaDTO psicologoSeleccionado) {
         cmbHorarios.removeAllItems();
         cmbHorarios.setEnabled(true);
@@ -478,6 +499,12 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que obtiene la fecha y hora de la cita a partir del día y el
+     * horario seleccionados.
+     *
+     * @return Regresa un Calendar con la fecha y hora de la cita.
+     */
     private Calendar obtenerFechaHoraCita() {
         LocalTime horaSeleccionada = (LocalTime) cmbHorarios.getSelectedItem();
         fechaCita.set(Calendar.HOUR_OF_DAY, horaSeleccionada.getHour());
@@ -485,6 +512,10 @@ public class AgregarCita extends javax.swing.JFrame {
         return fechaCita;
     }
 
+    /**
+     * Método que llena el combo box con los cubículos que se encuentran
+     * disponibles en el horario seleccionado.
+     */
     private void llenarComboCubiculos() {
         cmbCubiculo.removeAllItems();
         cmbCubiculo.setEnabled(true);
@@ -497,6 +528,10 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que habilita el botón para registrar la cita cuando todos los
+     * campos han sido llenados.
+     */
     private void actualizarEstadoBoton() {
         boolean camposLlenos = !txtNombrePaciente.getText().trim().isEmpty()
                 && !txtCorreoPaciente.getText().trim().isEmpty()
@@ -509,6 +544,10 @@ public class AgregarCita extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Método que agrega los listener a los componentes que solicitan
+     * información al usuario.
+     */
     private void agregarListeners() {
         DocumentListener listener = new DocumentListener() {
             @Override
@@ -559,9 +598,6 @@ public class AgregarCita extends javax.swing.JFrame {
             }
         });
     }
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCitas;

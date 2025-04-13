@@ -10,10 +10,6 @@
         <module>dto_negocios</module>
         <module>negocios_AgendarCita</module>
         <module>negocios_GestorCalendario</module>
-        <module>negocios_GestionPsicologos</module>
-        <module>negocios_GestionCitas</module>
-        <module>negocios_GestionCubiculos</module>
-        <module>negocios_GestionAdeudos</module>
         <module>infraestructura_CorreoElectronico</module>
         <module>objetos_negocio</module>
     </modules>
