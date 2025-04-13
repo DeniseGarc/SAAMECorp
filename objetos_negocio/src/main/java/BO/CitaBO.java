@@ -5,14 +5,15 @@
 package BO;
 
 import dto.CitaNuevaDTO;
-import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
+import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import interfaces.ICitaBO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -35,26 +36,12 @@ public class CitaBO implements ICitaBO {
      */
     @Override
     public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) {
-        List<Calendar> horasDisponibles = new LinkedList<>();
+        List<LocalTime> horasDisponibles = new LinkedList<>();
 
-        int year = fecha.get(Calendar.YEAR);
-        int month = fecha.get(Calendar.MONTH);
-        int day = fecha.get(Calendar.DAY_OF_MONTH);
-
-        // Simulamos las horas disponibles del psicólogo en el día dado
-        int[][] horas = {
-            {9, 0},
-            {11, 0},
-            {14, 0},
-            {17, 30}
-        };
-
-        for (int[] horaMinuto : horas) {
-            Calendar hora = Calendar.getInstance();
-            hora.set(year, month, day, horaMinuto[0], horaMinuto[1], 0);
-            hora.set(Calendar.MILLISECOND, 0);
-            horasDisponibles.add(hora);
-        }
+        horasDisponibles.add(LocalTime.of(9, 0));
+        horasDisponibles.add(LocalTime.of(11, 0));
+        horasDisponibles.add(LocalTime.of(14, 0));
+        horasDisponibles.add(LocalTime.of(17, 30));
 
         return horasDisponibles;
     }
@@ -83,19 +70,8 @@ public class CitaBO implements ICitaBO {
      * @return Cita registrada
      */
     @Override
-    public CitaRegistradaDTO guardarCita(CitaNuevaDTO cita) {
-        String idGenerado = UUID.randomUUID().toString();
-
-        return new CitaRegistradaDTO(
-                idGenerado,
-                cita.getFechaHora(),
-                cita.getCubiculo(),
-                cita.getPsicologo(),
-                cita.getNombrePaciente(),
-                cita.getTelefonoPaciente(),
-                cita.getCorreoPaciente(),
-                null // Adeudo inicializado como null
-        );
+    public CitaNuevaDTO guardarCita(CitaNuevaDTO cita) {
+        return cita;
     }
 
     /**
@@ -135,27 +111,31 @@ public class CitaBO implements ICitaBO {
      * @return Lista de citas registradas
      */
     @Override
-    public List<CitaRegistradaDTO> obtenerCitas() {
-        List<CitaRegistradaDTO> citas = new LinkedList<>();
+    public List<CitaNuevaDTO> obtenerCitas() {
+        List<CitaNuevaDTO> citas = new LinkedList<>();
 
-        List<LocalTime> horario = List.of(
-                LocalTime.of(8, 0),
-                LocalTime.of(10, 30),
-                LocalTime.of(13, 15),
-                LocalTime.of(16, 45),
-                LocalTime.of(19, 0)
+        // Lista de horarios de atención
+        List<LocalTime> horario = Arrays.asList(
+            LocalTime.of(8, 0),
+            LocalTime.of(10, 30),
+            LocalTime.of(13, 15),
+            LocalTime.of(16, 45),
+            LocalTime.of(19, 0)
         );
 
-        PsicologoDTO jose = new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario);
-        PsicologoDTO jorge = new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", horario);
+        // Psicólogos simulados
+        PsicologoCitaDTO jose = new PsicologoCitaDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario);
+        PsicologoCitaDTO jorge = new PsicologoCitaDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", horario);
 
-        citas.add(new CitaRegistradaDTO("1", toCalendar(LocalDateTime.of(2025, 4, 1, 9, 0)), "Cubiculo 1", jose, "Paciente 1", "123456789", "paciente1@email.com", null));
-        citas.add(new CitaRegistradaDTO("2", toCalendar(LocalDateTime.of(2025, 4, 5, 11, 0)), "Cubiculo 2", jorge, "Paciente 2", "987654321", "paciente2@email.com", null));
-        citas.add(new CitaRegistradaDTO("3", toCalendar(LocalDateTime.of(2025, 4, 10, 14, 0)), "Cubiculo 3", jorge, "Paciente 3", "456123789", "paciente3@email.com", null));
-        citas.add(new CitaRegistradaDTO("4", toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4", jose, "Paciente 4", "789321654", "paciente4@email.com", null));
+        // Citas simuladas
+        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 1, 9, 0)), "Cubiculo 1", jose, "Paciente 1", "123456789", "paciente1@email.com", null));
+        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 5, 11, 0)), "Cubiculo 2", jorge, "Paciente 2", "987654321", "paciente2@email.com", null));
+        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 10, 14, 0)), "Cubiculo 3", jorge, "Paciente 3", "456123789", "paciente3@email.com", null));
+        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4", jose, "Paciente 4", "789321654", "paciente4@email.com", null));
 
         return citas;
     }
+
 
     // Métodos auxiliares
     private Calendar toCalendar(LocalDateTime dateTime) {

@@ -4,7 +4,8 @@
  */
 package BO;
 
-import dto.AdeudoDTO;
+
+import dto.AdeudoCitaDTO;
 import dto.PsicologoDTO;
 import interfaces.IAdeudoBO;
 
@@ -30,7 +31,7 @@ public class AdeudoBO implements IAdeudoBO{
      * @return True si el adeudo se genero correctamente
      */
     @Override
-    public boolean generarAdeudo(AdeudoDTO adeudo){
+    public boolean generarAdeudo(AdeudoCitaDTO adeudo){
         //Logica
         return true;
     }

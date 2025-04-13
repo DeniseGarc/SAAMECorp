@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import dto.AdeudoDTO;
+import dto.AdeudoCitaDTO;
 import dto.PsicologoDTO;
 
 /**
@@ -13,5 +13,5 @@ import dto.PsicologoDTO;
  */
 public interface IAdeudoBO {
     public boolean consultarAdeudoPsicologo(PsicologoDTO psicologo);
-    public boolean generarAdeudo(AdeudoDTO adeudo);
+    public boolean generarAdeudo(AdeudoCitaDTO adeudo);
 }

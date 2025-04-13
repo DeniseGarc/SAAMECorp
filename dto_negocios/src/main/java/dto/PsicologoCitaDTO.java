@@ -19,6 +19,14 @@ public class PsicologoCitaDTO {
     public PsicologoCitaDTO() {
     }
 
+    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horarioDia) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+        this.horarioDia = horarioDia;
+    }
+    
     public PsicologoCitaDTO(PsicologoDTO psicologo, List<LocalTime> horarioDia) {
         this.nombre = psicologo.getNombre();
         this.apellidoPaterno = psicologo.getApellidoPaterno();

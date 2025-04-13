@@ -25,19 +25,14 @@ public class PsicologoBO implements IPsicologoBO {
     @Override
     public List<PsicologoDTO> obtenerPsicologos() {
         List<PsicologoDTO> lista = new LinkedList<>();
-        List<LocalTime> horario = new LinkedList<>();
-        horario.add(LocalTime.of(8, 0));   // 08:00 AM
-        horario.add(LocalTime.of(10, 30)); // 10:30 AM
-        horario.add(LocalTime.of(13, 15)); // 01:15 PM
-        horario.add(LocalTime.of(16, 45)); // 04:45 PM
-        horario.add(LocalTime.of(19, 0));  // 07:00 PM
 
-        lista.add(new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario));
-        lista.add(new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", horario));
-        lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "maria@gmail.com", horario));
+        lista.add(new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
+        lista.add(new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
+        lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "maria@gmail.com"));
 
         return lista;
     }
+
 
     @Override
     public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) {

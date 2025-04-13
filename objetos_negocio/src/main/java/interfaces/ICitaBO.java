@@ -5,7 +5,6 @@
 package interfaces;
 
 import dto.CitaNuevaDTO;
-import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import java.time.LocalDateTime;
@@ -46,7 +45,7 @@ public interface ICitaBO {
      * @param cita Cita a guardar
      * @return Cita registrada
      */
-    public CitaRegistradaDTO guardarCita(CitaNuevaDTO cita);
+    public CitaNuevaDTO guardarCita(CitaNuevaDTO cita);
 
     /**
      * Obtiene las fechas que ya tienen citas agendadas
@@ -70,5 +69,5 @@ public interface ICitaBO {
      *
      * @return Lista de citas registradas
      */
-    public List<CitaRegistradaDTO> obtenerCitas();
+    public List<CitaNuevaDTO> obtenerCitas();
 }
