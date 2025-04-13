@@ -4,7 +4,10 @@
  */
 package gestionPsicologos;
 
-import dto.PsicologoDTO;
+import com.objetos_negocio.Cita;
+import com.objetos_negocio.Psicologo;
+import dto.CitaRegistradaDTO;
+import dto.PsicologoCitaDTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,9 +19,9 @@ import java.util.List;
  * @author Alici
  */
 public class FGestionPsicologos implements IGestionPsicologos {
-    List<PsicologoDTO> listaPsicologos = new ArrayList<>();
-    
-    
+    List<PsicologoCitaDTO> listaPsicologos = new ArrayList<>();
+    PsicologoCitaDTO psicologo = new PsicologoCitaDTO();
+    CitaRegistradaDTO cita = new CitaRegistradaDTO();
    
     public FGestionPsicologos(){
     
@@ -40,31 +43,58 @@ public class FGestionPsicologos implements IGestionPsicologos {
         listaHoras3.add(LocalTime.of(12, 15));
         listaHoras3.add(LocalTime.of(14, 45));
 
-        listaPsicologos.add(new PsicologoDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras1));
-        listaPsicologos.add(new PsicologoDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
-        listaPsicologos.add(new PsicologoDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
+        listaPsicologos.add(new PsicologoCitaDTO("Jorge", "Ramirez", "Verdugo", "jorgeramirez@gmail.com", listaHoras1));
+        listaPsicologos.add(new PsicologoCitaDTO("María", "López", "Hernández", "marialopez@gmail.com", listaHoras2));
+        listaPsicologos.add(new PsicologoCitaDTO("Carlos", "Gómez", "Santos", "carlosgomez@gmail.com", listaHoras3));
     }
+    
     /**
      * regresa la lista de psicologos disponibles en la fecha dada
      * @param fecha dia de la cita
      * @return  lista de PsicologosDTO
      */
     @Override
-    public List<PsicologoDTO> obtenerPsicologosDisponibles(LocalDate fecha) {
-        return listaPsicologos;
+    public List<PsicologoCitaDTO> obtenerPsicologosDisponibles(Date fecha) {
+        List<PsicologoCitaDTO> disponibles = new ArrayList<>();
+        List<PsicologoCitaDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoCitaDTO psic : psicologos) {
+            List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
+            if (!horas.isEmpty()) {
+                disponibles.add(psic);
+            }
+        }
+        return disponibles;
     }
 
-    // mock del metodo
+    /**
+     * 
+     * @param identificadorPsicologo
+     * @param fecha
+     * @return 
+     */
     @Override
     public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha) {
-        return true;
+        List<PsicologoCitaDTO> psicologos = psicologo.obtenerPsicologos();
+        for (PsicologoCitaDTO psic : psicologos) {
+            if (psic.getCorreo().equals(identificadorPsicologo)) {
+                List<LocalTime> horas = cita.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psic);
+                if (!horas.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+    
+    //Este iría en el objeto negocio pq el subsistema no se comunica con la base no?
+    // Este metodo le debe de llamar al de objeto negocio
     /**
-     * Metodo para obtener un psicologo de la base de datos usando su identificasdor
+     *
      * @param identificador del psicologo
      * @return psicologoDTO 
      */
-    public PsicologoDTO obtenerPsicologoPorID(String identificador){
+    @Override
+    public PsicologoCitaDTO obtenerPsicologoPorID(String identificador){
         return listaPsicologos.getLast();
     }
 

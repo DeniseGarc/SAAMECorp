@@ -1,17 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion.GUI;
 
 import dto.CitaNuevaDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import excepciones.CoordinadorException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,15 +28,15 @@ import presentacion.sesion.TipoUsuario;
  */
 public class AgregarCita extends javax.swing.JFrame {
 
-    private final Date fechaCita;
+    private final Calendar fechaCita;
     //crear instancia del control de la aplicacion para poder usar los metodos
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
     CoordinadorNegocio controlNegocio = new CoordinadorNegocio();
-    private final List<PsicologoDTO> psicologos;
+    private final List<PsicologoCitaDTO> psicologos;
 
-    public AgregarCita(Date fechaSeleccionada) {
+    public AgregarCita(Calendar fechaSeleccionada) {
         this.fechaCita = fechaSeleccionada;
-        this.psicologos = controlNegocio.mostrarPsicologos(fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        this.psicologos = controlNegocio.mostrarPsicologos(fechaSeleccionada);
         initComponents();
         btnConfirmar.setEnabled(false);
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
@@ -406,7 +403,7 @@ public class AgregarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private CitaNuevaDTO obtenerDatosCita() {
-        PsicologoDTO psicologo = (PsicologoDTO) cmbPsicologos.getSelectedItem();
+        PsicologoCitaDTO psicologo = (PsicologoCitaDTO) cmbPsicologos.getSelectedItem();
         return new CitaNuevaDTO(
                 obtenerFechaHoraCita(),
                 cmbCubiculo.getSelectedItem().toString(),
@@ -419,7 +416,7 @@ public class AgregarCita extends javax.swing.JFrame {
 
     private void seleccionarPsicologoUsuario() {
         try {
-            PsicologoDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario());
+            PsicologoCitaDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario());
             cmbPsicologos.addItem(psicologoUsuario);
             cmbPsicologos.setEnabled(false);
         } catch (CoordinadorException ex) {
@@ -468,12 +465,12 @@ public class AgregarCita extends javax.swing.JFrame {
 
     private void llenarComboPsicologos() {
         cmbPsicologos.removeAllItems();
-        for (PsicologoDTO psicologo : psicologos) {
+        for (PsicologoCitaDTO psicologo : psicologos) {
             cmbPsicologos.addItem(psicologo);
         }
     }
 
-    private void llenarComboHorariosPsicologo(PsicologoDTO psicologoSeleccionado) {
+    private void llenarComboHorariosPsicologo(PsicologoCitaDTO psicologoSeleccionado) {
         cmbHorarios.removeAllItems();
         cmbHorarios.setEnabled(true);
         for (LocalTime hora : psicologoSeleccionado.getHorarioDia()) {
@@ -481,10 +478,11 @@ public class AgregarCita extends javax.swing.JFrame {
         }
     }
 
-    private LocalDateTime obtenerFechaHoraCita() {
+    private Calendar obtenerFechaHoraCita() {
         LocalTime horaSeleccionada = (LocalTime) cmbHorarios.getSelectedItem();
-        LocalDate fechaCitaLocal = fechaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return LocalDateTime.of(fechaCitaLocal, horaSeleccionada);
+        fechaCita.set(Calendar.HOUR_OF_DAY, horaSeleccionada.getHour());
+        fechaCita.set(Calendar.MINUTE, horaSeleccionada.getMinute());
+        return fechaCita;
     }
 
     private void llenarComboCubiculos() {
@@ -535,7 +533,7 @@ public class AgregarCita extends javax.swing.JFrame {
         // Listener para cBoxEspecialidad
         cmbPsicologos.addItemListener(e -> {
             if (cmbPsicologos.getSelectedIndex() != -1) {
-                PsicologoDTO psicologoSeleccionado = (PsicologoDTO) cmbPsicologos.getSelectedItem();
+                PsicologoCitaDTO psicologoSeleccionado = (PsicologoCitaDTO) cmbPsicologos.getSelectedItem();
                 if (controlNegocio.validarAdeudoPsicologoSeleccionado(psicologoSeleccionado)) {
                     llenarComboHorariosPsicologo(psicologoSeleccionado);
                 } else {
@@ -573,7 +571,7 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JButton btnReportes;
     private javax.swing.JComboBox<String> cmbCubiculo;
     private javax.swing.JComboBox<LocalTime> cmbHorarios;
-    private javax.swing.JComboBox<PsicologoDTO> cmbPsicologos;
+    private javax.swing.JComboBox<PsicologoCitaDTO> cmbPsicologos;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

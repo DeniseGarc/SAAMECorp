@@ -4,7 +4,7 @@
  */
 package gestionPsicologos;
 
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.List;
 public interface IGestionPsicologos {
    
 
-    public List<PsicologoDTO> obtenerPsicologosDisponibles(LocalDate fecha);
+    public List<PsicologoCitaDTO> obtenerPsicologosDisponibles(Date fecha);
 
     public boolean diaDisponiblePsicologo(String identificadorPsicologo, Date fecha);
     
-    public PsicologoDTO obtenerPsicologoPorID(String identificador);
+    public PsicologoCitaDTO obtenerPsicologoPorID(String identificador);
 }

@@ -4,9 +4,10 @@
  */
 package gestionCubiculos;
 
+import com.objetos_negocio.Cita;
+import com.objetos_negocio.Cubiculo;
 import dto.CubiculoDTO;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ import java.util.List;
  * @author erika
  */
 public class FGestionCubiculos implements IGestionCubiculos{
-
+    Cubiculo cubiculo = new Cubiculo();
+    Cita cita = new Cita();
     
     /**
      * Obtiene una lista de cubiculos disponibles en la fecha y hora dada
@@ -23,12 +25,10 @@ public class FGestionCubiculos implements IGestionCubiculos{
      */
     @Override
     public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(LocalDateTime fecha) {
-        
-        List<CubiculoDTO> cubiculos = new ArrayList<>();
-        cubiculos.add(new CubiculoDTO("Cubiculo 1", true));
-        cubiculos.add(new CubiculoDTO("Cubiculo 2", true));
-        cubiculos.add(new CubiculoDTO("Cubiculo 3", true));
-        return cubiculos;
+        List<CubiculoDTO> cubiculosDisponibles = cubiculo.obtenerCubiculosEstadoDisponible();
+        List<CubiculoDTO> cubiculosOcupadosFecha = cita.obtenerCubiculosNoDisponibles(fecha);
+        cubiculosDisponibles.removeAll(cubiculosOcupadosFecha);
+        return cubiculosDisponibles;
     }
     
 }

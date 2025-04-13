@@ -2,18 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.objetos_negocio;
+package BO;
 
 import dto.CubiculoDTO;
+import interfaces.ICubiculoBO;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
- * @author alexnieblas
+ * Clase que define la logica de negocio para Cubiculos
+ * @author erika
  */
-public class Cubiculo {
-    List<CubiculoDTO> obtenerCubiculosEstadoDisponible(){
+public class CubiculoBO implements ICubiculoBO{
+    /**
+     * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
+     * @return Lista de cubiculosDTO disponibles
+     */
+    @Override
+    public List<CubiculoDTO> obtenerCubiculosEstadoDisponible() {
         List<CubiculoDTO> cubiculos = new LinkedList<>();
         cubiculos.add(new CubiculoDTO("Cubiculo 1", true));
         cubiculos.add(new CubiculoDTO("Cubiculo 2", true));
@@ -21,4 +27,5 @@ public class Cubiculo {
 
         return cubiculos;
     }
+    
 }
