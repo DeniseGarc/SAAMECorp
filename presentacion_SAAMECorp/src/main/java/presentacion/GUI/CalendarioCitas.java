@@ -4,8 +4,6 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
-import presentacion.sesion.GestorSesion;
-import presentacion.sesion.TipoUsuario;
 
 /**
  * Clase que representa el frame el cual muestra el calendario para seleccionar
@@ -236,11 +234,9 @@ public class CalendarioCitas extends javax.swing.JFrame {
 
     private void btnSeleccionarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarDiaActionPerformed
         Calendar diaSeleccionado = calendarioCitas.getCalendar();
-        if (GestorSesion.getTipoUsuario() == TipoUsuario.PSICOLOGO) {
-            if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
-                JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
-                return;
-            }
+        if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
+            JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
+            return;
         }
         // Llama al método para pasar a la siguente pantalla 
         control.pantallaAgregarCita(this, diaSeleccionado);

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package agendarCita;
 
 import excepciones.AgendarCitaException;
@@ -13,6 +9,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
+ * Interfaz que representa el proceso de agendar cita el cual se encarga de
+ * acciones necesarias para agendar una cita en el sistema.
  *
  * @author Alici
  */
@@ -25,7 +23,7 @@ public interface IAgendarCita {
      * @return Regresa los datos de los psicólogos y sus horarios para la fecha
      * seleccionada.
      */
-    public List<PsicologoCitaDTO> mandarPsicologos(Calendar fecha);
+    public List<PsicologoCitaDTO> mandarPsicologos(Calendar fecha) throws AgendarCitaException;
 
     /**
      * Manda a llamar al metodo de control, aquí se define la regla de negocio
@@ -36,7 +34,7 @@ public interface IAgendarCita {
      * @param psicologo El psicologo del cual que se quiere validar el adeudo.
      * @return true si el adeudo es menor a 500, false si es mayor o igual.
      */
-    public boolean validarAdeudoPsicologo(PsicologoCitaDTO psicologo);
+    public boolean validarAdeudoPsicologo(PsicologoCitaDTO psicologo) throws AgendarCitaException;
 
     /**
      * Llama al metodo del control para obtener los cubiculos disponibles del
@@ -45,7 +43,7 @@ public interface IAgendarCita {
      * @param fecha fecha y hora seleccionados para la cita
      * @return Los cubiculos disponibles del dia a la hora seleccionada.
      */
-    public List<CubiculoDTO> mandarCubiculos(Calendar fecha);
+    public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws AgendarCitaException;
 
     /**
      * Método que devuelve el resumen de la cita nueva.

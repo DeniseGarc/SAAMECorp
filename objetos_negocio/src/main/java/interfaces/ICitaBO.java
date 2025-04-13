@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
@@ -69,8 +70,8 @@ public interface ICitaBO {
      *
      * @return Lista de citas registradas
      */
-    public List<CitaNuevaDTO> obtenerCitas();
-    
+    public List<CitaDTO> obtenerCitas();
+
     /**
      * Metodo para validar que no exista otra cita que tenga la misma fechaHora
      * y cubiculo igual

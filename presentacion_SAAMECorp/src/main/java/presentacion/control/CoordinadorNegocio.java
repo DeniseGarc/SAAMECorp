@@ -52,11 +52,17 @@ public class CoordinadorNegocio {
      * @throws CoordinadorException Si ocurre un error al obtener los datos
      */
     public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo, Calendar fechaCita) throws CoordinadorException {
+        if (identificadorPsicologo == null || identificadorPsicologo.trim().isEmpty()) {
+            throw new CoordinadorException("El identificador del psicólogo es inválido.");
+        }
+        if (fechaCita == null) {
+            throw new CoordinadorException("La fecha seleccionada es inválida.");
+        }
         try {
             return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo, fechaCita);
         } catch (AgendarCitaException ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("El psicologo no se encuentra con disponiblidad de horario");
+            throw new CoordinadorException("El psicólogo no se encuentra", ex);
         }
     }
 
@@ -68,9 +74,18 @@ public class CoordinadorNegocio {
      * adeudo.
      * @return true si el psicólogo presenta una cantidad de adeudo que aun le
      * premite agendar´más citas, false en caso contrario.
+     * @throws excepciones.CoordinadorException
      */
-    public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) {
-        return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
+    public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) throws CoordinadorException {
+        if (psicologo == null) {
+            throw new CoordinadorException("El psicólogo proporcionado es nulo.");
+        }
+        try {
+            return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al validar el adeudo del psicólogo.", ex);
+        }
     }
 
     /**
@@ -79,9 +94,18 @@ public class CoordinadorNegocio {
      *
      * @param fecha Fecha seleccionada de la cita.
      * @return lista de psicólogos junto a sus horas disponibles.
+     * @throws excepciones.CoordinadorException
      */
-    public List<PsicologoCitaDTO> mostrarPsicologos(Calendar fecha) {
-        return sistemaAgendarCita.mandarPsicologos(fecha);
+    public List<PsicologoCitaDTO> mostrarPsicologos(Calendar fecha) throws CoordinadorException {
+        if (fecha == null) {
+            throw new CoordinadorException("La fecha proporcionada es inválida.");
+        }
+        try {
+            return sistemaAgendarCita.mandarPsicologos(fecha);
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al obtener la lista de psicólogos.", ex);
+        }
     }
 
     /**
@@ -90,8 +114,12 @@ public class CoordinadorNegocio {
      * @param psicologo Psicólogo que ha sido seleccionado.
      * @return lista de horas en las que el psicólogo esta disponible para
      * agendar una cita.
+     * @throws excepciones.CoordinadorException
      */
-    public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) {
+    public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) throws CoordinadorException {
+        if (psicologo == null) {
+            throw new CoordinadorException("El psicólogo seleccionado es inválido.");
+        }
         return psicologo.getHorarioDia();
     }
 
@@ -102,13 +130,22 @@ public class CoordinadorNegocio {
      * @param fechaHoraCita fecha y hora que han sido seleccionados para la
      * cita.
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
+     * @throws excepciones.CoordinadorException
      */
-    public List<String> mostrarCubiculos(Calendar fechaHoraCita) {
-        List<String> nombresCubiculos = new ArrayList<>();
-        for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
-            nombresCubiculos.add(cubiculo.getNombre());
+    public List<String> mostrarCubiculos(Calendar fechaHoraCita) throws CoordinadorException {
+        if (fechaHoraCita == null) {
+            throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
         }
-        return nombresCubiculos;
+        try {
+            List<String> nombresCubiculos = new ArrayList<>();
+            for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
+                nombresCubiculos.add(cubiculo.getNombre());
+            }
+            return nombresCubiculos;
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al obtener los cubículos disponibles.", ex);
+        }
     }
 
     /**
@@ -119,6 +156,9 @@ public class CoordinadorNegocio {
      * @throws CoordinadorException Si ocurre un problema al obtener el resumen
      */
     public String obtenerResumenCita(CitaNuevaDTO cita) throws CoordinadorException {
+        if (cita == null) {
+            throw new CoordinadorException("Los datos de la cita son nulos.");
+        }
         String error = Validadores.validarCita(cita);
         if (error != null) {
             return error;
@@ -127,7 +167,7 @@ public class CoordinadorNegocio {
             return sistemaAgendarCita.resumenCita(cita);
         } catch (AgendarCitaException ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Error al generar resumen de la cita.");
+            throw new CoordinadorException("Error al generar resumen de la cita.", ex);
         }
     }
 
@@ -140,6 +180,9 @@ public class CoordinadorNegocio {
      * cita.
      */
     public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
+        if (cita == null) {
+            throw new CoordinadorException("Los datos de la cita son inválidos.");
+        }
         try {
             ResultadoAgendarCita resultadoOperacion = sistemaAgendarCita.agendarCita(cita);
             if (!resultadoOperacion.isCitaAgendada()) {
@@ -208,6 +251,9 @@ public class CoordinadorNegocio {
      * seleccionada, false en caso contrario
      */
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
+        if (diaSeleccionado == null) {
+            return false;
+        }
         if (GestorSesion.getTipoUsuario().equals(TipoUsuario.PSICOLOGO)) {
             try {
                 if (!sistemaGestorCalendario.diaDisponiblePsicologo(GestorSesion.getIdentificadorUsuario(), diaSeleccionado)) {
