@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import manejadorBO.ManejadorBO;
 
 /**
+ * Clase control que se encarga de la comunicación entre la fachada del
+ * subsistema GestorCalendario y los objetos negocio.
  *
  * @author Alici
  */
@@ -41,30 +43,29 @@ public class ControlGestorCalendario {
     public List<Calendar> obtenerDiasConCita() {
         List<CitaNuevaDTO> citas = citaBO.obtenerCitas();
         Calendar hoy = Calendar.getInstance();
-   
+
         hoy.set(Calendar.HOUR_OF_DAY, 0);
         hoy.set(Calendar.MINUTE, 0);
         hoy.set(Calendar.SECOND, 0);
         hoy.set(Calendar.MILLISECOND, 0);
-        
+
         Set<Calendar> diasConCita = new HashSet<>();
-        
+
         for (CitaNuevaDTO cita : citas) {
             Calendar fecha = (Calendar) cita.getFechaHora().clone();
             fecha.set(Calendar.HOUR_OF_DAY, 0);
             fecha.set(Calendar.MINUTE, 0);
             fecha.set(Calendar.SECOND, 0);
             fecha.set(Calendar.MILLISECOND, 0);
-            
+
             if (!fecha.before(hoy)) {
                 diasConCita.add(fecha);
             }
         }
-        
-        
+
         List<Calendar> diasAgendaLlena = obtenerDiasConAgendaLlena();
         diasConCita.removeAll(diasAgendaLlena);
-        
+
         return new ArrayList<>(diasConCita);
     }
 
@@ -81,9 +82,9 @@ public class ControlGestorCalendario {
     public List<Calendar> obtenerDiasConAgendaLlena() {
         List<CitaNuevaDTO> citas = citaBO.obtenerCitas();
         int totalCubiculos = cubiculoBO.obtenerCubiculosEstadoDisponible().size();
-        
+
         Map<String, Set<String>> cubiculosUsadosPorDia = new HashMap<>();
-   
+
         Map<String, Calendar> fechaReferencia = new HashMap<>();
         for (CitaNuevaDTO cita : citas) {
             Calendar fecha = (Calendar) cita.getFechaHora().clone();
@@ -105,7 +106,7 @@ public class ControlGestorCalendario {
         }
         return diasAgendaLlena;
     }
-    
+
     /**
      * Método que valida si el psicologo con el identificador dado tiene horas
      * disponibles para el día seleccionado.
