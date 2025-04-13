@@ -15,6 +15,7 @@
         <module>negocios_GestionCubiculos</module>
         <module>negocios_GestionAdeudos</module>
         <module>infraestructura_CorreoElectronico</module>
+        <module>objetos_negocio</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
