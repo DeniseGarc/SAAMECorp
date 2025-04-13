@@ -135,27 +135,6 @@ public class CitaBO implements ICitaBO {
 
         return citas;
     }
-    
-    /**
-     * Metodo para validar que no exista otra cita que tenga la misma fechaHora
-     * y cubiculo igual
-     *
-     * @param citaARegistrar
-     * @return true si no existe otra cita igual, false si existe otra
-     */
-    @Override
-    public boolean validarExistenciaCitaRepetida(CitaNuevaDTO citaARegistrar) {
-        //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
-        //si es que se encuentran resultados con la misma informacion
-        List<CitaNuevaDTO> citasRegistradas = obtenerCitas();
-        for (CitaNuevaDTO cita : citasRegistradas) {
-            if (cita.getFechaHora().equals(citaARegistrar.getFechaHora())
-                    && cita.getCubiculo().equals(citaARegistrar.getCubiculo())) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     // Métodos auxiliares

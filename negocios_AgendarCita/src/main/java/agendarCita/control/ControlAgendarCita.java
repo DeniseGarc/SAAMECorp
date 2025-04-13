@@ -120,18 +120,17 @@ public class ControlAgendarCita {
      * posible agendar la cita.
      */
     public CitaNuevaDTO agendarCita(CitaNuevaDTO citaNueva) {
-       return citaBO.guardarCita(citaNueva);
+        return null;
     }
 
     /**
      * Método que valida que no exista una cita registrada dentro del sistema
-     * que tenga misma fecha, hora y cubiculo igual
      *
      * @param citaARegistrar
      * @return
      */
     public boolean validarFechaCitaRepetida(CitaNuevaDTO citaARegistrar) {
-        return citaBO.validarExistenciaCitaRepetida(citaARegistrar);
+        return false;
     }
 
     /**
