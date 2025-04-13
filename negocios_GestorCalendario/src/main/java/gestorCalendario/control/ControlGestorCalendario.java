@@ -1,11 +1,18 @@
 package gestorCalendario.control;
 
+import dto.CitaNuevaDTO;
 import dto.PsicologoDTO;
 import excepciones.GestorCalendarioException;
 import interfaces.ICitaBO;
+import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import manejadorBO.ManejadorBO;
@@ -18,6 +25,7 @@ public class ControlGestorCalendario {
 
     IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
     ICitaBO citaBO = ManejadorBO.crearCitaBO();
+    ICubiculoBO cubiculoBO = ManejadorBO.crearCubiculoBO();
 
     /**
      * Método que regresa los días que se encuentran con citas agendadas.
@@ -31,13 +39,33 @@ public class ControlGestorCalendario {
      * @return Lista de días los cuales tienen cita agendada.
      */
     public List<Calendar> obtenerDiasConCita() {
-        /*Ejemplo de lo que deberia de realizar el método*/
-        //           // Se obtiene la lista de días con citas y se crea una copia mutable
-        //              List<Calendar> diasConReserva = new ArrayList<>(control.obtenerDiasConCita());
-        //          // Se remueven los días con agenda llena
-        //              diasConReserva.removeAll(diasAgendaLlena());
-        //              return diasConReserva;
-        return null;
+        List<CitaNuevaDTO> citas = citaBO.obtenerCitas();
+        Calendar hoy = Calendar.getInstance();
+   
+        hoy.set(Calendar.HOUR_OF_DAY, 0);
+        hoy.set(Calendar.MINUTE, 0);
+        hoy.set(Calendar.SECOND, 0);
+        hoy.set(Calendar.MILLISECOND, 0);
+        
+        Set<Calendar> diasConCita = new HashSet<>();
+        
+        for (CitaNuevaDTO cita : citas) {
+            Calendar fecha = (Calendar) cita.getFechaHora().clone();
+            fecha.set(Calendar.HOUR_OF_DAY, 0);
+            fecha.set(Calendar.MINUTE, 0);
+            fecha.set(Calendar.SECOND, 0);
+            fecha.set(Calendar.MILLISECOND, 0);
+            
+            if (!fecha.before(hoy)) {
+                diasConCita.add(fecha);
+            }
+        }
+        
+        
+        List<Calendar> diasAgendaLlena = obtenerDiasConAgendaLlena();
+        diasConCita.removeAll(diasAgendaLlena);
+        
+        return new ArrayList<>(diasConCita);
     }
 
     /**
@@ -51,9 +79,33 @@ public class ControlGestorCalendario {
      * ni horarios disponibles.
      */
     public List<Calendar> obtenerDiasConAgendaLlena() {
-        return null;
+        List<CitaNuevaDTO> citas = citaBO.obtenerCitas();
+        int totalCubiculos = cubiculoBO.obtenerCubiculosEstadoDisponible().size();
+        
+        Map<String, Set<String>> cubiculosUsadosPorDia = new HashMap<>();
+   
+        Map<String, Calendar> fechaReferencia = new HashMap<>();
+        for (CitaNuevaDTO cita : citas) {
+            Calendar fecha = (Calendar) cita.getFechaHora().clone();
+            fecha.set(Calendar.HOUR_OF_DAY, 0);
+            fecha.set(Calendar.MINUTE, 0);
+            fecha.set(Calendar.SECOND, 0);
+            fecha.set(Calendar.MILLISECOND, 0);
+            String clave = fecha.get(Calendar.YEAR) + "-" + fecha.get(Calendar.MONTH) + "-" + fecha.get(Calendar.DAY_OF_MONTH);
+            cubiculosUsadosPorDia
+                    .computeIfAbsent(clave, k -> new HashSet<>())
+                    .add(cita.getCubiculo());
+            fechaReferencia.putIfAbsent(clave, fecha); // Para recuperar el Calendar
+        }
+        List<Calendar> diasAgendaLlena = new ArrayList<>();
+        for (Map.Entry<String, Set<String>> entry : cubiculosUsadosPorDia.entrySet()) {
+            if (entry.getValue().size() >= totalCubiculos) {
+                diasAgendaLlena.add(fechaReferencia.get(entry.getKey()));
+            }
+        }
+        return diasAgendaLlena;
     }
-
+    
     /**
      * Método que valida si el psicologo con el identificador dado tiene horas
      * disponibles para el día seleccionado.
