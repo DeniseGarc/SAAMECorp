@@ -1,21 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.utilerias;
 
 import dto.CitaNuevaDTO;
 
 /**
+ * Clase de validadores para determinados campos del sistema.
  *
  * @author Alici
  */
 public class Validadores {
 
+    /**
+     * Método que válida el formato de teléfono ingresado.
+     *
+     * @param telefono cadena de texto con el teléfono ingresado.
+     * @return true si el formato es de minimo 1 digito y máximo 10, false en
+     * caso contrario.
+     */
     public static boolean validarTelefono(String telefono) {
         return telefono.matches("\\d{1,10}");
     }
 
+    /**
+     * Método que valida el formato del correo electrónico ingresado.
+     *
+     * @param correo cadena de texto con el correo ingresado.
+     * @return true si el correo esta en formato nombreusuario@dominio.algo,
+     * false en caso contrario
+     */
     public static boolean validarCorreo(String correo) {
         if (correo.length() > 100) {
             return false;
@@ -23,6 +34,13 @@ public class Validadores {
         return correo.matches("^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
+    /**
+     * Método que valida el nombre completo del paciente.
+     *
+     * @param nombrePaciente cadena de texto con el nombre completo del paciente
+     * @return true si el nombre no excede los 100 caracteres y esta compuesto
+     * por letras mayúsculas, minúsculas y acentos, false en caso contrario.
+     */
     public static boolean validarNombrePaciente(String nombrePaciente) {
         if (nombrePaciente.length() > 100) {
             return false;
@@ -30,6 +48,14 @@ public class Validadores {
         return nombrePaciente.matches("[a-zA-ZÁ-Ýá-ý\u00f1\u00d1 ]+");
     }
 
+    /**
+     * Método que valida que la cita tenga todos los campos ingresados y que
+     * dichos campos cumplan con los formatos adecuados.
+     *
+     * @param cita cita a registrar.
+     * @return String con el mensaje correspondiente si es que falló en alguna
+     * validación.
+     */
     public static String validarCita(CitaNuevaDTO cita) {
         if (cita.getPsicologo() == null) {
             return "Debe de seleccionar un psicólogo";

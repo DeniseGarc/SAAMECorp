@@ -3,13 +3,16 @@ package agendarCita;
 import agendarCita.control.ControlAgendarCita;
 import correoElectronico.FCorreoElectronico;
 import correoElectronico.ICorreoElectronico;
+import dto.AdeudoCitaDTO;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.ResultadoAgendarCita;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,9 +82,12 @@ public class FAgendarCita implements IAgendarCita {
         if (citaNueva == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String fechaCita = formato.format(citaNueva.getFechaHora().getTime());
+
         return "¿Desea agendar la cita?\n"
                 + citaNueva.getCubiculo() + "\n"
-                + "Fecha" + citaNueva.getFechaHora() + " " + citaNueva.getFechaHora() + "\n"
+                + "Fecha: " + fechaCita + "\n"
                 + "Psicólogo: " + citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() + "\n"
                 + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + citaNueva.getCorreoPaciente();
@@ -105,6 +111,8 @@ public class FAgendarCita implements IAgendarCita {
         if (cita == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
+        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false);
+        cita.setAdeudo(adeudo);
 
         if (control.validarFechaCitaRepetida(cita)) {
             throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
@@ -118,7 +126,7 @@ public class FAgendarCita implements IAgendarCita {
         String mensajeAdvertencia = null;
         if (!resultadoMandarCorreo) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.WARNING, "No fue posible mandar el correo de confirmación");
-            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación";
+            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación a " + cita.getPsicologo().getCorreo();
         }
         return new ResultadoAgendarCita(resultadoAgendarCita, resultadoAgendarCita, mensajeAdvertencia);
     }

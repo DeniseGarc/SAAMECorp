@@ -43,7 +43,7 @@ public class AgregarCita extends javax.swing.JFrame {
         initComponents();
         btnConfirmar.setEnabled(false);
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
-        lblFechaCita.setText(formato.format(fechaCita));
+        lblFechaCita.setText(formato.format(fechaCita.getTime()));
         if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
             llenarComboPsicologos();
             agregarListeners();

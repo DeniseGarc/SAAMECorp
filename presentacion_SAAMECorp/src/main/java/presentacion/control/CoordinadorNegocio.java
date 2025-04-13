@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package presentacion.control;
 
 import presentacion.utilerias.Validadores;
@@ -30,16 +26,31 @@ import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
 /**
+ * Clase que se encarga de la comunicación entre presentación y los subsistemas
+ * necesarios.
  *
- * clase que se va a encarga de acciones/metodos que conectan con negocio sigue
- * siendo el controlador de aplicación pero con el fin de no sobre cargar el
- * controlador con metodos que permiten mover de pantallas y funcionalidades
+ * @author Alici
  */
 public class CoordinadorNegocio {
 
+    /**
+     * Subsistema para agendar cita
+     */
     private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
+    /**
+     * Subsistema para gestionar el calendario de citas
+     */
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
 
+    /**
+     * Método que devuelve el psicólogo al cual pertenece el identificador junto
+     * a los horas disponibles para cita que tiene en el día seleccionado.
+     *
+     * @param identificadorPsicologo Identificador único del psicólogo.
+     * @param fechaCita Fecha seleccionada para la cita
+     * @return datos del psicólogo junto a sus horas disponible
+     * @throws CoordinadorException Si ocurre un error al obtener los datos
+     */
     public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo, Calendar fechaCita) throws CoordinadorException {
         try {
             return sistemaAgendarCita.obtenerPsicologo(identificadorPsicologo, fechaCita);
@@ -49,18 +60,49 @@ public class CoordinadorNegocio {
         }
     }
 
+    /**
+     * Método para validar si el psicólogo presenta una cantidad aceptable de
+     * adeudo al momento de seleccionar un psicólogo.
+     *
+     * @param psicologo datos del psicólogo a validar su cantidad total de
+     * adeudo.
+     * @return true si el psicólogo presenta una cantidad de adeudo que aun le
+     * premite agendar´más citas, false en caso contrario.
+     */
     public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) {
         return sistemaAgendarCita.validarAdeudoPsicologo(psicologo);
     }
 
+    /**
+     * Método para obtener los datos de los psicólogos registrados en el sistema
+     * y los horarios disponibles de cada uno de ellos.
+     *
+     * @param fecha Fecha seleccionada de la cita.
+     * @return lista de psicólogos junto a sus horas disponibles.
+     */
     public List<PsicologoCitaDTO> mostrarPsicologos(Calendar fecha) {
         return sistemaAgendarCita.mandarPsicologos(fecha);
     }
 
+    /**
+     * Método obtener las horas disponibles del psicólogo seleccionado.
+     *
+     * @param psicologo Psicólogo que ha sido seleccionado.
+     * @return lista de horas en las que el psicólogo esta disponible para
+     * agendar una cita.
+     */
     public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) {
         return psicologo.getHorarioDia();
     }
 
+    /**
+     * Método para mostrar los cubiculos que se encuentran disponibles para la
+     * fecha y hora seleccionadas para agendar cita.
+     *
+     * @param fechaHoraCita fecha y hora que han sido seleccionados para la
+     * cita.
+     * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
+     */
     public List<String> mostrarCubiculos(Calendar fechaHoraCita) {
         List<String> nombresCubiculos = new ArrayList<>();
         for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
@@ -69,6 +111,13 @@ public class CoordinadorNegocio {
         return nombresCubiculos;
     }
 
+    /**
+     * Método para obtener el texto con el resumen de la cita.
+     *
+     * @param cita Datos de la cita a agendar
+     * @return regresa el texto con el resumen de la cita.
+     * @throws CoordinadorException Si ocurre un problema al obtener el resumen
+     */
     public String obtenerResumenCita(CitaNuevaDTO cita) throws CoordinadorException {
         String error = Validadores.validarCita(cita);
         if (error != null) {
@@ -82,6 +131,14 @@ public class CoordinadorNegocio {
         }
     }
 
+    /**
+     * Método para mandar a agendar la cita al sistema.
+     *
+     * @param cita Datos de la cita a agendar.
+     * @return regresa una cadena de texto con el resultado de la operación
+     * @throws CoordinadorException Si sucede un error al intentar registrar la
+     * cita.
+     */
     public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
         try {
             ResultadoAgendarCita resultadoOperacion = sistemaAgendarCita.agendarCita(cita);
@@ -115,6 +172,13 @@ public class CoordinadorNegocio {
         calendario.getDayChooser().updateUI();
     }
 
+    /**
+     * Método que le define al calendario los días que debe pintar y el color de
+     * los días.
+     *
+     * @param calendario Calendario de la intefaz gráfica donde se selecciona la
+     * fecha para la cita.
+     */
     public void pintarDiasCalendario(JCalendar calendario) {
         try {
             List<Calendar> diasConReservas = sistemaGestorCalendario.diasConReservas();
@@ -134,6 +198,15 @@ public class CoordinadorNegocio {
         }
     }
 
+    /**
+     * Método para validar, cuando el usuario es un psicólogo, si el día
+     * seleccionado el psicólogo usuario tiene disponibilidad de horario para
+     * agendar un cita.
+     *
+     * @param diaSeleccionado Dia seleccionado del calendario.
+     * @return true si el psicólogo aun tiene horas de atencion para la fecha
+     * seleccionada, false en caso contrario
+     */
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
         if (GestorSesion.getTipoUsuario().equals(TipoUsuario.PSICOLOGO)) {
             try {

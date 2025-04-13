@@ -120,15 +120,15 @@ public class ControlAgendarCita {
      * posible agendar la cita.
      */
     public CitaNuevaDTO agendarCita(CitaNuevaDTO citaNueva) {
-       return citaBO.guardarCita(citaNueva);
+        return citaBO.guardarCita(citaNueva);
     }
 
     /**
      * Método que valida que no exista una cita registrada dentro del sistema
-     * que tenga misma fecha, hora y cubiculo igual
+     * que tenga misma fecha, hora y cubiculo.
      *
-     * @param citaARegistrar
-     * @return
+     * @param citaARegistrar Cita a registrar dentro del sistema
+     * @return true si no existe una cita repetida, false en caso contrario.
      */
     public boolean validarFechaCitaRepetida(CitaNuevaDTO citaARegistrar) {
         return citaBO.validarExistenciaCitaRepetida(citaARegistrar);
@@ -148,6 +148,7 @@ public class ControlAgendarCita {
             boolean enviado = correoInfra.mandarCorreo(correo, mensaje);
             return enviado;
         } catch (Exception e) {
+            Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, "Error al enviar el correo a " + correo, e);
             System.err.println("Error al enviar el correo a " + correo + ": " + e.getMessage());
             return false;
         }
@@ -171,7 +172,7 @@ public class ControlAgendarCita {
             return new PsicologoCitaDTO(psicologoEncontrado, horasPsicologo);
         } catch (Exception e) {
             Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, null, e);
-            throw new AgendarCitaException("Ha ocurrido un error al intentar consultar si psicólogo y sus horas disponibles", e);
+            throw new AgendarCitaException("Ha ocurrido un error al intentar consultar el psicólogo y sus horas disponibles", e);
         }
     }
 }
