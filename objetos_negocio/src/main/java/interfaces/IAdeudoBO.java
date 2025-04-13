@@ -12,6 +12,11 @@ import dto.PsicologoDTO;
  * @author erika
  */
 public interface IAdeudoBO {
-    public boolean consultarAdeudoPsicologo(PsicologoDTO psicologo);
-    public boolean generarAdeudo(AdeudoCitaDTO adeudo);
+    /**
+     * Metodo que regresa el adeudo total de un psicologo dado
+     * @param psicologo Psicologo a consultar
+     * @return Total del adeudo del psicologo
+     */
+    public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo);
+    
 }

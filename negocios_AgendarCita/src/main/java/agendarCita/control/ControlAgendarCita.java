@@ -5,10 +5,12 @@ import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import excepciones.AgendarCitaException;
+import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.IPsicologoBO;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +26,10 @@ public class ControlAgendarCita {
 
     IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
     ICitaBO citaBO = ManejadorBO.crearCitaBO();
-
+    IAdeudoBO adeudoBO = ManejadorBO.crearAdeudoBO();
+    
+    
+    
     /**
      * Método que obtiene a los psicologos registrados y sus horarios
      * disponibles para el día de la cita seleccionada.
@@ -33,7 +38,26 @@ public class ControlAgendarCita {
      * @return Lista de todos los psicólogos registrados y sus horarios.
      */
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) {
-        return null;
+      List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
+        List<PsicologoDTO> psicologos = psicologoBO.obtenerPsicologos();
+
+        for (PsicologoDTO psicologo : psicologos) {
+            // Obtener horas disponibles de este psicólogo para la fecha seleccionada
+            List<LocalTime> horasDisponibles = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologo);
+
+            // Crear el DTO extendido con las horas disponibles
+            PsicologoCitaDTO dto = new PsicologoCitaDTO(
+                psicologo.getNombre(),
+                psicologo.getApellidoPaterno(),
+                psicologo.getApellidoMaterno(),
+                psicologo.getCorreo(),
+                horasDisponibles
+            );
+
+            psicologosDisponibles.add(dto);
+        }
+
+        return psicologosDisponibles;  
     }
 
     /**
@@ -44,7 +68,14 @@ public class ControlAgendarCita {
      * indicado.
      */
     public double obtenerCantidadAdeudoPsicologo(PsicologoCitaDTO psicologo) {
-        return 0;
+        PsicologoDTO dto = new PsicologoDTO(
+        psicologo.getNombre(),
+        psicologo.getApellidoPaterno(),
+        psicologo.getApellidoMaterno(),
+        psicologo.getCorreo()
+    );
+
+    return adeudoBO.consultarAdeudoTotalPsicologo(dto);
     }
 
     /**

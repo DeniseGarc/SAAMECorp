@@ -15,24 +15,14 @@ import interfaces.IAdeudoBO;
  */
 public class AdeudoBO implements IAdeudoBO{
     
+    
     /**
-     * Metodo que consulta el adeudo del psicologo para compronbar si este es menor o mayor a 500
-     * @param psicologo psicologo a consultar
-     * @return True si el adeudo es menor a 500, false si no
+     * Metodo que regresa el adeudo total de un psicologo dado
+     * @param psicologo Psicologo a consultar
+     * @return Total del adeudo del psicologo
      */
     @Override
-    public boolean consultarAdeudoPsicologo(PsicologoDTO psicologo){
-        
-        return false;
-    }
-    /**
-     * Metodo para generar el adeudo al agendar una cita
-     * @param adeudo Adeudo a generar
-     * @return True si el adeudo se genero correctamente
-     */
-    @Override
-    public boolean generarAdeudo(AdeudoCitaDTO adeudo){
-        //Logica
-        return true;
+    public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo) {
+       return 100.0;
     }
 }
