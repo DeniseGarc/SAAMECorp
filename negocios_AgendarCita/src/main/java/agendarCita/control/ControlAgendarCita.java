@@ -1,5 +1,6 @@
 package agendarCita.control;
 
+import correoElectronico.FCorreoElectronico;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
@@ -7,6 +8,7 @@ import dto.PsicologoDTO;
 import excepciones.AgendarCitaException;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
+import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
 import java.time.LocalTime;
 import java.util.Calendar;
@@ -27,9 +29,8 @@ public class ControlAgendarCita {
     IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
     ICitaBO citaBO = ManejadorBO.crearCitaBO();
     IAdeudoBO adeudoBO = ManejadorBO.crearAdeudoBO();
-    
-    
-    
+    ICubiculoBO cubiculoBO = ManejadorBO.crearCubiculoBO();
+
     /**
      * Método que obtiene a los psicologos registrados y sus horarios
      * disponibles para el día de la cita seleccionada.
@@ -38,7 +39,7 @@ public class ControlAgendarCita {
      * @return Lista de todos los psicólogos registrados y sus horarios.
      */
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) {
-      List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
+        List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
         List<PsicologoDTO> psicologos = psicologoBO.obtenerPsicologos();
 
         for (PsicologoDTO psicologo : psicologos) {
@@ -47,17 +48,17 @@ public class ControlAgendarCita {
 
             // Crear el DTO extendido con las horas disponibles
             PsicologoCitaDTO dto = new PsicologoCitaDTO(
-                psicologo.getNombre(),
-                psicologo.getApellidoPaterno(),
-                psicologo.getApellidoMaterno(),
-                psicologo.getCorreo(),
-                horasDisponibles
+                    psicologo.getNombre(),
+                    psicologo.getApellidoPaterno(),
+                    psicologo.getApellidoMaterno(),
+                    psicologo.getCorreo(),
+                    horasDisponibles
             );
 
             psicologosDisponibles.add(dto);
         }
 
-        return psicologosDisponibles;  
+        return psicologosDisponibles;
     }
 
     /**
@@ -69,13 +70,13 @@ public class ControlAgendarCita {
      */
     public double obtenerCantidadAdeudoPsicologo(PsicologoCitaDTO psicologo) {
         PsicologoDTO dto = new PsicologoDTO(
-        psicologo.getNombre(),
-        psicologo.getApellidoPaterno(),
-        psicologo.getApellidoMaterno(),
-        psicologo.getCorreo()
-    );
+                psicologo.getNombre(),
+                psicologo.getApellidoPaterno(),
+                psicologo.getApellidoMaterno(),
+                psicologo.getCorreo()
+        );
 
-    return adeudoBO.consultarAdeudoTotalPsicologo(dto);
+        return adeudoBO.consultarAdeudoTotalPsicologo(dto);
     }
 
     /**
@@ -87,7 +88,7 @@ public class ControlAgendarCita {
      * seleccionados.
      */
     public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(Calendar fechaHoraCita) {
-        return null;
+       return null;
     }
 
     /**
@@ -121,7 +122,15 @@ public class ControlAgendarCita {
      * @return true si la operación fue exitosa, false en caso contrario.
      */
     public boolean mandarCorreo(String mensaje, String correo) {
-        return true;
+        try {
+            FCorreoElectronico correito = new FCorreoElectronico();
+            boolean enviado = correito.mandarCorreo(correo, mensaje);
+            return enviado;
+        } catch (Exception e) {
+            System.err.println("Error al enviar el correo a " + correo + ": " + e.getMessage());
+            return false;
+        }
+
     }
 
     /**

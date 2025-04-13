@@ -2,12 +2,10 @@ package gestorCalendario;
 
 import excepciones.GestorCalendarioException;
 import gestorCalendario.control.ControlGestorCalendario;
-import interfaces.IPsicologoBO;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import manejadorBO.ManejadorBO;
 
 /**
  * Clase fachada del subsistema GestorCalendario, se encarga de todas las
