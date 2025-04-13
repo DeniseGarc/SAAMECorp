@@ -12,7 +12,6 @@ import dto.ResultadoAgendarCita;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
