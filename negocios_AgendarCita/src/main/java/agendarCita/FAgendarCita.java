@@ -142,12 +142,12 @@ public class FAgendarCita implements IAgendarCita {
         AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false);
         cita.setAdeudo(adeudo);
 
-        if (control.validarFechaCitaRepetida(cita)) {
+        if (!control.validarFechaCitaRepetida(cita)) {
             throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
         }
         CitaNuevaDTO citaAgendada = control.agendarCita(cita);
-        boolean resultadoAgendarCita = citaAgendada == null;
-        if (resultadoAgendarCita) {
+        boolean resultadoAgendarCita = citaAgendada != null;
+        if (!resultadoAgendarCita) {
             throw new AgendarCitaException("No ha sido posible agendar la cita");
         }
         boolean resultadoMandarCorreo = sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), "Cita exitosa");

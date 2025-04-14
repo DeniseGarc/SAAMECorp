@@ -115,9 +115,9 @@ public class CitaBO implements ICitaBO {
     public List<CitaDTO> obtenerCitas() {
         List<CitaDTO> citas = new LinkedList<>();
         // Citas simuladas
-        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 4, 1, 9, 0)), "Cubiculo 1"));
-        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 4, 5, 11, 0)), "Cubiculo 2"));
-        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 4, 10, 14, 0)), "Cubiculo 3"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 5, 11, 0)), "Cubiculo 2"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 10, 14, 0)), "Cubiculo 3"));
         citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4"));
 
         return citas;
