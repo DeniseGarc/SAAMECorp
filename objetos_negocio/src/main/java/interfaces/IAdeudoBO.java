@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-import dto.AdeudoCitaDTO;
 import dto.PsicologoDTO;
 
 /**
