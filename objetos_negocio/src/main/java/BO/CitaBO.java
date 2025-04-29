@@ -4,6 +4,7 @@
  */
 package BO;
 
+import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
@@ -111,29 +112,36 @@ public class CitaBO implements ICitaBO {
      * @return Lista de citas registradas
      */
     @Override
-    public List<CitaNuevaDTO> obtenerCitas() {
-        List<CitaNuevaDTO> citas = new LinkedList<>();
-
-        // Lista de horarios de atención
-        List<LocalTime> horario = Arrays.asList(
-            LocalTime.of(8, 0),
-            LocalTime.of(10, 30),
-            LocalTime.of(13, 15),
-            LocalTime.of(16, 45),
-            LocalTime.of(19, 0)
-        );
-
-        // Psicólogos simulados
-        PsicologoCitaDTO jose = new PsicologoCitaDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", horario);
-        PsicologoCitaDTO jorge = new PsicologoCitaDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", horario);
-
+    public List<CitaDTO> obtenerCitas() {
+        List<CitaDTO> citas = new LinkedList<>();
         // Citas simuladas
-        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 1, 9, 0)), "Cubiculo 1", jose, "Paciente 1", "123456789", "paciente1@email.com", null));
-        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 5, 11, 0)), "Cubiculo 2", jorge, "Paciente 2", "987654321", "paciente2@email.com", null));
-        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 10, 14, 0)), "Cubiculo 3", jorge, "Paciente 3", "456123789", "paciente3@email.com", null));
-        citas.add(new CitaNuevaDTO(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4", jose, "Paciente 4", "789321654", "paciente4@email.com", null));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 5, 11, 0)), "Cubiculo 2"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 5, 10, 14, 0)), "Cubiculo 3"));
+        citas.add(new CitaDTO(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4"));
 
         return citas;
+    }
+    
+    /**
+     * Metodo para validar que no exista otra cita que tenga la misma fechaHora
+     * y cubiculo igual
+     *
+     * @param citaARegistrar
+     * @return true si no existe otra cita igual, false si existe otra
+     */
+    @Override
+    public boolean validarExistenciaCitaRepetida(CitaNuevaDTO citaARegistrar) {
+        //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
+        //si es que se encuentran resultados con la misma informacion
+        List<CitaDTO> citasRegistradas = obtenerCitas();
+        for (CitaDTO cita : citasRegistradas) {
+            if (cita.getFechaHora().equals(citaARegistrar.getFechaHora())
+                    && cita.getCubiculo().equals(citaARegistrar.getCubiculo())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

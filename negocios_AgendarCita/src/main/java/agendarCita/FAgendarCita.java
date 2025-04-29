@@ -3,11 +3,13 @@ package agendarCita;
 import agendarCita.control.ControlAgendarCita;
 import correoElectronico.FCorreoElectronico;
 import correoElectronico.ICorreoElectronico;
+import dto.AdeudoCitaDTO;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.ResultadoAgendarCita;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -34,10 +36,19 @@ public class FAgendarCita implements IAgendarCita {
      * @param fecha Fecha seleccionada para la cita.
      * @return Regresa los datos de los psicólogos y sus horarios para la fecha
      * seleccionada.
+     * @throws excepciones.AgendarCitaException
      */
     @Override
-    public List<PsicologoCitaDTO> mandarPsicologos(Calendar fecha) {
-        return control.obtenerPsicologos(fecha);
+    public List<PsicologoCitaDTO> mandarPsicologos(Calendar fecha) throws AgendarCitaException {
+        if (fecha == null) {
+            throw new AgendarCitaException("La fecha ingresada es invalida");
+        }
+        try {
+            return control.obtenerPsicologos(fecha);
+        } catch (Exception e) {
+            Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new AgendarCitaException("Error al obtener los psicólogos", e);
+        }
     }
 
     /**
@@ -51,8 +62,16 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public boolean validarAdeudoPsicologo(PsicologoCitaDTO psicologo) {
-        return control.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
-
+        if (psicologo == null) {
+            Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, "Psicólogo nulo");
+            return false;
+        }
+        try {
+            return control.obtenerCantidadAdeudoPsicologo(psicologo) < 500.00;
+        } catch (AgendarCitaException ex) {
+            Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, "Error al obtener adeudo", ex);
+            return false;
+        }
     }
 
     /**
@@ -61,10 +80,19 @@ public class FAgendarCita implements IAgendarCita {
      *
      * @param fechaHora fecha y hora seleccionados para la cita
      * @return Los cubiculos disponibles del dia a la hora seleccionada.
+     * @throws excepciones.AgendarCitaException
      */
     @Override
-    public List<CubiculoDTO> mandarCubiculos(Calendar fechaHora) {
-        return control.obtenerCubiculosDisponiblesHorario(fechaHora);
+    public List<CubiculoDTO> mandarCubiculos(Calendar fechaHora) throws AgendarCitaException {
+        if (fechaHora == null) {
+            throw new AgendarCitaException("La fecha ingresada no es valida");
+        }
+        try {
+            return control.obtenerCubiculosDisponiblesHorario(fechaHora);
+        } catch (Exception e) {
+            Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, "Error al obtener adeudo", e);
+            throw new AgendarCitaException("Error al recuperar los cubiculos disponibles",e);
+        }
     }
 
     /**
@@ -79,9 +107,12 @@ public class FAgendarCita implements IAgendarCita {
         if (citaNueva == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String fechaCita = formato.format(citaNueva.getFechaHora().getTime());
+
         return "¿Desea agendar la cita?\n"
                 + citaNueva.getCubiculo() + "\n"
-                + "Fecha" + citaNueva.getFechaHora() + " " + citaNueva.getFechaHora() + "\n"
+                + "Fecha: " + fechaCita + "\n"
                 + "Psicólogo: " + citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() + "\n"
                 + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + citaNueva.getCorreoPaciente();
@@ -105,20 +136,25 @@ public class FAgendarCita implements IAgendarCita {
         if (cita == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
+        if (cita == null || cita.getPsicologo() == null || cita.getCubiculo() == null) {
+            throw new AgendarCitaException("Datos incompletos de la cita");
+        }
+        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false);
+        cita.setAdeudo(adeudo);
 
-        if (control.validarFechaCitaRepetida(cita)) {
+        if (!control.validarFechaCitaRepetida(cita)) {
             throw new AgendarCitaException("No fue posible agendar la cita debido a que ya existe otra cita agendada el mismo día a la misma hora y en el mismo cubiculo");
         }
         CitaNuevaDTO citaAgendada = control.agendarCita(cita);
-        boolean resultadoAgendarCita = citaAgendada == null;
-        if (resultadoAgendarCita) {
+        boolean resultadoAgendarCita = citaAgendada != null;
+        if (!resultadoAgendarCita) {
             throw new AgendarCitaException("No ha sido posible agendar la cita");
         }
         boolean resultadoMandarCorreo = sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), "Cita exitosa");
         String mensajeAdvertencia = null;
         if (!resultadoMandarCorreo) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.WARNING, "No fue posible mandar el correo de confirmación");
-            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación";
+            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación a " + cita.getPsicologo().getCorreo();
         }
         return new ResultadoAgendarCita(resultadoAgendarCita, resultadoAgendarCita, mensajeAdvertencia);
     }
@@ -134,11 +170,17 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public PsicologoCitaDTO obtenerPsicologo(String identificador, Calendar fechaCita) throws AgendarCitaException {
-        PsicologoCitaDTO psicologo = control.obtenerPsicologo(identificador, fechaCita);
-        if (psicologo.getHorarioDia().isEmpty()) {
-            throw new AgendarCitaException("El psicologo obtenido no tiene horario disponible por el momento");
+        try {
+            PsicologoCitaDTO psicologo = control.obtenerPsicologo(identificador, fechaCita);
+            if (psicologo.getHorarioDia().isEmpty()) {
+                throw new AgendarCitaException("El psicólogo obtenido no tiene horario disponible por el momento");
+            }
+            return psicologo;
+        } catch (Exception e) {
+            Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new AgendarCitaException("Error al obtener el psicólogo", e);
         }
-        return psicologo;
+
     }
 
 }
