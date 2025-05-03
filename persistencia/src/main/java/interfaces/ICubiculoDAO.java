@@ -4,10 +4,17 @@
  */
 package interfaces;
 
+import entidades.Cubiculo;
+import java.util.List;
+
 /**
- *
+ * Interfaz que define los metodos para la clase CubiculoDAO
  * @author erika
  */
 public interface ICubiculoDAO {
-    
+    /**
+     * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
+     * @return Lista de cubiculosDTO disponibles
+     */
+     public List<Cubiculo> obtenerCubiculosEstadoDisponible();
 }
