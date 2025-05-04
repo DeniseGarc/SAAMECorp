@@ -4,10 +4,12 @@
  */
 package interfaces;
 
+import entidades.Psicologo;
+
 /**
- *Interfaz que implementa 
+ *Interfaz que para la clase de AdeudoDAO que implementa los metodos en persistencia.
  * @author erika
  */
 public interface IAdeudoDAO {
-    
+  public double consultarAdeudoTotalPsicologo(Psicologo psicologo);
 }
