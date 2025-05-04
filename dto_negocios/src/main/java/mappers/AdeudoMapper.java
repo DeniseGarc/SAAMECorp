@@ -4,10 +4,13 @@
  */
 package mappers;
 
+
+
 /**
  *
  * @author Maryr
  */
-public class PsicologoCitaMapper {
+public class AdeudoMapper {
+
     
 }
