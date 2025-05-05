@@ -5,10 +5,13 @@
 package BO;
 
 import dto.PsicologoDTO;
+import entidades.Psicologo;
 import interfaces.IPsicologoBO;
+import interfaces.IPsicologoDAO;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
+import mappers.PsicologoMapper;
 
 /**
  * Clase que define la logica de negocio para psicologos
@@ -16,7 +19,10 @@ import java.util.List;
  * @author erika
  */
 public class PsicologoBO implements IPsicologoBO {
-
+    
+    private static IPsicologoDAO psicologoDAO;
+    PsicologoMapper psicologoMapper = new PsicologoMapper();
+    
     /**
      * Metodo para obtener todos los psicologos registrados
      *
@@ -24,19 +30,19 @@ public class PsicologoBO implements IPsicologoBO {
      */
     @Override
     public List<PsicologoDTO> obtenerPsicologos() {
-        List<PsicologoDTO> lista = new LinkedList<>();
-
-        lista.add(new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
-        lista.add(new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
-        lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "mary.ruizp20@gmail.com"));
-
-        return lista;
+        List<Psicologo> psicologos = psicologoDAO.obtenerPsicologos();
+        return psicologoMapper.toDTOList2(psicologos);
     }
 
-
+    /**
+     * Metodo para obtener un psicolo en especifico dado su identificador unico
+     * @param identificador Identificador del psicologo a buscar
+     * @return Psicologo Encontrado 
+     */
     @Override
     public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) {
-        return new PsicologoDTO("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
+        Psicologo psicologoEncontrado = psicologoDAO.obtenerPsicologoPorIdentificador(identificador);
+        return psicologoMapper.toDTO2(psicologoEncontrado);
     }
 
 }
