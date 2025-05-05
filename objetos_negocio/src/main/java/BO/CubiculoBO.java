@@ -4,28 +4,33 @@
  */
 package BO;
 
+import DAOs.CubiculoDAO;
 import dto.CubiculoDTO;
+import entidades.Cubiculo;
 import interfaces.ICubiculoBO;
+import interfaces.ICubiculoDAO;
 import java.util.LinkedList;
 import java.util.List;
+import mappers.CubiculoMapper;
 
 /**
  * Clase que define la logica de negocio para Cubiculos
  * @author erika
  */
 public class CubiculoBO implements ICubiculoBO{
+    
+    private static ICubiculoDAO cubiculoDAO;
+    
+    
+    CubiculoMapper mapper = new CubiculoMapper();
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      * @return Lista de cubiculosDTO disponibles
      */
     @Override
     public List<CubiculoDTO> obtenerCubiculosEstadoDisponible() {
-        List<CubiculoDTO> cubiculos = new LinkedList<>();
-        cubiculos.add(new CubiculoDTO("Cubiculo 1", true));
-        cubiculos.add(new CubiculoDTO("Cubiculo 2", true));
-        cubiculos.add(new CubiculoDTO("Cubiculo 3", true));
-
-        return cubiculos;
-    }
+       List<Cubiculo> cubiculos =  cubiculoDAO.obtenerCubiculosEstadoDisponible();
+       return mapper.toDTOList(cubiculos);
+    }  
     
 }

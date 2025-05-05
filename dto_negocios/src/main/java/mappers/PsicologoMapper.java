@@ -34,4 +34,16 @@ public class PsicologoMapper {
         }
         return psicologosDTO;
     }
+    
+    public List<PsicologoDTO> toDTOList2(List<Psicologo> psicologos) {
+        List<PsicologoDTO> psicologosDTO = new ArrayList<>();
+        for (Psicologo psicologo : psicologos) {
+            psicologosDTO.add(new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo()));
+        }
+        return psicologosDTO;
+    }
+    
+    public PsicologoDTO toDTO2(Psicologo psicologo) {
+        return new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo());
+    }
 }

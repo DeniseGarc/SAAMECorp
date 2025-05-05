@@ -14,7 +14,18 @@ import java.util.List;
  * @author erika
  */
 public class CubiculoDAO implements ICubiculoDAO{
+    
+    private static CubiculoDAO instanciaCubiculoDAO;
 
+    public CubiculoDAO() {
+    }
+    
+    public static CubiculoDAO getInstanciaDAO(){
+        if (instanciaCubiculoDAO == null){
+            instanciaCubiculoDAO = new CubiculoDAO();
+        }
+        return instanciaCubiculoDAO;
+    }
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      * @return Lista de cubiculosDTO disponibles

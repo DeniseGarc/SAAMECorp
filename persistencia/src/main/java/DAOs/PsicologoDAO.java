@@ -14,7 +14,18 @@ import java.util.List;
  * @author erika
  */
 public class PsicologoDAO implements IPsicologoDAO{
+    private static PsicologoDAO instanciaPsicologoDAO;
 
+    public PsicologoDAO() {
+    }
+    
+    public static PsicologoDAO getInstanciaDAO (){
+        if(instanciaPsicologoDAO == null ){
+                instanciaPsicologoDAO = new PsicologoDAO();
+        }
+        return instanciaPsicologoDAO;
+        
+    }
     /**
      * Metodo para obtener todos los psicologos registrados
      *
