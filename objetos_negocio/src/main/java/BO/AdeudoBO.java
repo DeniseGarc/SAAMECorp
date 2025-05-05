@@ -5,17 +5,21 @@
 package BO;
 
 
-import dto.AdeudoCitaDTO;
+import DAOs.AdeudoDAO;
 import dto.PsicologoDTO;
+import entidades.Psicologo;
 import interfaces.IAdeudoBO;
+import interfaces.IAdeudoDAO;
+import mappers.AdeudoMapper;
+import mappers.PsicologoMapper;
 
 /**
  * Clase que implementa la logica de negocio para adeudo 
  * @author erika
  */
 public class AdeudoBO implements IAdeudoBO{
-    
-    
+    IAdeudoDAO adeudoDAO = new AdeudoDAO();
+    PsicologoMapper psicologoMapper = new PsicologoMapper();
     /**
      * Metodo que regresa el adeudo total de un psicologo dado
      * @param psicologo Psicologo a consultar
@@ -23,6 +27,7 @@ public class AdeudoBO implements IAdeudoBO{
      */
     @Override
     public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo) {
-       return 100.0;
+        Psicologo entidad = psicologoMapper.toEntity2(psicologo);
+        return adeudoDAO.consultarAdeudoTotalPsicologo(entidad);
     }
 }
