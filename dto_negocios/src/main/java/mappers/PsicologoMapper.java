@@ -5,6 +5,7 @@
 package mappers;
 
 import dto.PsicologoCitaDTO;
+import dto.PsicologoDTO;
 import entidades.Psicologo;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ public class PsicologoMapper {
     
     public Psicologo toEntity(PsicologoCitaDTO psicologo) {
         return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getHorarioDia());
+    }
+    public Psicologo toEntity2 (PsicologoDTO psicologo){
+        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo());
     }
     
     public List<PsicologoCitaDTO> toDTOList(List<Psicologo> psicologos) {
