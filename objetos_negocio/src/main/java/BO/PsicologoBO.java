@@ -28,7 +28,7 @@ public class PsicologoBO implements IPsicologoBO {
 
         lista.add(new PsicologoDTO("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
         lista.add(new PsicologoDTO("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
-        lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "maria@gmail.com"));
+        lista.add(new PsicologoDTO("Maria", "Felix", "Perez", "mary.ruizp20@gmail.com"));
 
         return lista;
     }
