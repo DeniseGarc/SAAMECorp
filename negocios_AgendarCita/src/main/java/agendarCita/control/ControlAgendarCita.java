@@ -11,6 +11,7 @@ import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -167,13 +168,31 @@ public class ControlAgendarCita {
      * Método que se conecta con el servicio externo para mandar un correo
      * electrónico al correo ingresado.
      *
+     * @param cita de la cual se enviará confirmación
      * @param correo Correo electrónico al que se le va a enviar el mensaje.
-     * @param mensaje Mensaje del correo.
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public boolean mandarCorreo(String mensaje, String correo) {
+    public boolean mandarCorreo(CitaNuevaDTO cita, String correo) {
         try {
             FCorreoElectronico correoInfra = new FCorreoElectronico();
+            String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
+            String mensaje = "<html>"
+                    + "<body style='font-family: Arial, sans-serif; background-color: #DDD4F0; padding: 20px;'>"
+                    + "<div style='max-width: 600px; margin: auto; background: #BCA3E2; padding: 15px; border-radius: 10px;'>"
+                    + "<h2 style='color: #562159; text-align: center;'>Detalles de la Cita</h2>"
+                    + "<p><b>Cubículo:</b> " + cita.getCubiculo() + "</p>"
+                    + "<p><b>Fecha:</b> " + fechaCitaFormateada + "</p>"
+                    + "<p><b>Psicólogo:</b> " + cita.getPsicologo().getNombre() + " "
+                    + cita.getPsicologo().getApellidoPaterno() + " "
+                    + cita.getPsicologo().getApellidoMaterno() + "</p>"
+                    + "<p><b>Cliente:</b> " + cita.getNombrePaciente() + "</p>"
+                    + "<p><b>Teléfono:</b> " + cita.getTelefonoPaciente() + "</p>"
+                    + "<p><b>Correo del paciente:</b> " + cita.getCorreoPaciente() + "</p>"
+                    + "<hr style='border: 1px solid #562159;'>"
+                    + "<p style='color: #562159; text-align: center;'>Este es un correo automático. Por favor, no respondas.</p>"
+                    + "</div>"
+                    + "</body>"
+                    + "</html>";
             boolean enviado = correoInfra.mandarCorreo(correo, mensaje);
             return enviado;
         } catch (Exception e) {

@@ -5,6 +5,7 @@
 package DAOs;
 
 import entidades.Cubiculo;
+import excepciones.PersistenciaException;
 import interfaces.ICubiculoDAO;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,12 +32,11 @@ public class CubiculoDAO implements ICubiculoDAO{
      * @return Lista de cubiculosDTO disponibles
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosEstadoDisponible() {
+    public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException{
         List<Cubiculo> cubiculos = new LinkedList<>();
         cubiculos.add(new Cubiculo("Cubiculo 1", true));
         cubiculos.add(new Cubiculo("Cubiculo 2", true));
         cubiculos.add(new Cubiculo("Cubiculo 3", true));
-
         return cubiculos;
     }
     
