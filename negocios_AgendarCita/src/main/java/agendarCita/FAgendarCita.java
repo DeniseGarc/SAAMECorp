@@ -150,32 +150,13 @@ public class FAgendarCita implements IAgendarCita {
         if (!resultadoAgendarCita) {
             throw new AgendarCitaException("No ha sido posible agendar la cita");
         }
-        String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
-        String mensaje = "<html>"
-                + "<body style='font-family: Arial, sans-serif; background-color: #DDD4F0; padding: 20px;'>"
-                + "<div style='max-width: 600px; margin: auto; background: #BCA3E2; padding: 15px; border-radius: 10px;'>"
-                + "<h2 style='color: #562159; text-align: center;'>Detalles de la Cita</h2>"
-                + "<p><b>Cubículo:</b> " + cita.getCubiculo() + "</p>"
-                + "<p><b>Fecha:</b> " + fechaCitaFormateada + "</p>"
-                + "<p><b>Psicólogo:</b> " + cita.getPsicologo().getNombre() + " "
-                + cita.getPsicologo().getApellidoPaterno() + " "
-                + cita.getPsicologo().getApellidoMaterno() + "</p>"
-                + "<p><b>Cliente:</b> " + cita.getNombrePaciente() + "</p>"
-                + "<p><b>Teléfono:</b> " + cita.getTelefonoPaciente() + "</p>"
-                + "<p><b>Correo del paciente:</b> " + cita.getCorreoPaciente() + "</p>"
-                + "<hr style='border: 1px solid #562159;'>"
-                + "<p style='color: #562159; text-align: center;'>Este es un correo automático. Por favor, no respondas.</p>"
-                + "</div>"
-                + "</body>"
-                + "</html>";
-
-        boolean resultadoMandarCorreo = sistemaCorreoElectronico.mandarCorreo(cita.getPsicologo().getCorreo(), mensaje);
+        boolean resultadoMandarCorreo = control.mandarCorreo(cita, cita.getPsicologo().getCorreo());
         String mensajeAdvertencia = null;
         if (!resultadoMandarCorreo) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.WARNING, "No fue posible mandar el correo de confirmación");
             mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación a " + cita.getPsicologo().getCorreo();
         }
-        return new ResultadoAgendarCita(resultadoAgendarCita, resultadoAgendarCita, mensajeAdvertencia);
+        return new ResultadoAgendarCita(resultadoAgendarCita, resultadoMandarCorreo, mensajeAdvertencia);
     }
 
     /**

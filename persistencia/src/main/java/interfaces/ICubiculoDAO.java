@@ -5,6 +5,7 @@
 package interfaces;
 
 import entidades.Cubiculo;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public interface ICubiculoDAO {
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      * @return Lista de cubiculosDTO disponibles
+     * @throws excepciones.PersistenciaException
      */
-     public List<Cubiculo> obtenerCubiculosEstadoDisponible();
+     public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException;
 }

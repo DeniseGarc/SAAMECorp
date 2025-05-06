@@ -5,6 +5,7 @@
 package DAOs;
 
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 import interfaces.IAdeudoDAO;
 
 /**
@@ -17,9 +18,10 @@ public class AdeudoDAO implements IAdeudoDAO{
      * Metodo que regresa el adeudo total de un psicologo dado
      * @param psicologo Psicologo a consultar
      * @return Total del adeudo del psicologo
+     * @throws excepciones.PersistenciaException
      */
     @Override
-    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) {
+    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) throws PersistenciaException{
          return 100.0;
     }
     

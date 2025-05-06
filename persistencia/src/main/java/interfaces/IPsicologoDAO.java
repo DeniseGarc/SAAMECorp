@@ -5,6 +5,7 @@
 package interfaces;
 
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -16,14 +17,16 @@ public interface IPsicologoDAO {
      * Metodo para obtener todos los psicologos registrados
      *
      * @return Lista de psicolos registrados
+     * @throws excepciones.PersistenciaException
      */
-    public List<Psicologo> obtenerPsicologos();
+    public List<Psicologo> obtenerPsicologos() throws PersistenciaException;
 
     /**
      * Método para obtener el psicólogo por su identificador dado.
      *
      * @param identificador Identificador único del psicólogo.
      * @return Datos del psicologo.
+     * @throws excepciones.PersistenciaException
      */
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador);
+    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException;
 }

@@ -5,6 +5,7 @@
 package DAOs;
 
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 import interfaces.IPsicologoDAO;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PsicologoDAO implements IPsicologoDAO{
      * @return Lista de psicolos registrados
      */
     @Override
-    public List<Psicologo> obtenerPsicologos() {
+    public List<Psicologo> obtenerPsicologos() throws PersistenciaException{
         List<Psicologo> lista = new LinkedList<>();
 
         lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
@@ -48,7 +49,7 @@ public class PsicologoDAO implements IPsicologoDAO{
     * @return Psicologo encontrado
     */
     @Override
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador) {
+    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException{
         return new Psicologo("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
     }
     

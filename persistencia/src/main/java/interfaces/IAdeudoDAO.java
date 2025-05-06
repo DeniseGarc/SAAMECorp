@@ -5,11 +5,12 @@
 package interfaces;
 
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 
 /**
  *Interfaz que para la clase de AdeudoDAO que implementa los metodos en persistencia.
  * @author erika
  */
 public interface IAdeudoDAO {
-  public double consultarAdeudoTotalPsicologo(Psicologo psicologo);
+  public double consultarAdeudoTotalPsicologo(Psicologo psicologo) throws PersistenciaException;
 }

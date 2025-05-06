@@ -7,6 +7,7 @@ package DAOs;
 import entidades.Cita;
 import entidades.Cubiculo;
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 import interfaces.ICitaDAO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) {
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) throws PersistenciaException{
         List<LocalTime> horasDisponibles = new LinkedList<>();
 
         horasDisponibles.add(LocalTime.of(9, 0));
@@ -50,7 +51,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de cubiculos ya ocupados
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha) {
+    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha) throws PersistenciaException{
         List<Cubiculo> listaCubiculos = new LinkedList<>();
         listaCubiculos.add(new Cubiculo("Cubiculo 1", true));
         listaCubiculos.add(new Cubiculo("Cubiculo 2", true));
@@ -66,7 +67,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Cita registrada
      */
     @Override
-    public Cita guardarCita(Cita cita) {
+    public Cita guardarCita(Cita cita) throws PersistenciaException{
         return cita;
     }
 
@@ -76,7 +77,7 @@ public class CitaDAO implements ICitaDAO{
      * @return
      */
     @Override
-    public List<Calendar> obtenerFechasConCitaAgendada() {
+    public List<Calendar> obtenerFechasConCitaAgendada() throws PersistenciaException{
         List<Calendar> fechasAgendadas = new LinkedList<>();
 
         fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 1)));
@@ -96,7 +97,7 @@ public class CitaDAO implements ICitaDAO{
      * @return True hay horas disponibles
      */
     @Override
-    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) {
+    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) throws PersistenciaException{
         // Simulación de disponibilidad
         return true;
     }
@@ -107,7 +108,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de citas registradas
      */
     @Override
-    public List<Cita> obtenerCitas() {
+    public List<Cita> obtenerCitas() throws PersistenciaException{
         List<Cita> citas = new LinkedList<>();
         // Citas simuladas
         citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
@@ -126,7 +127,7 @@ public class CitaDAO implements ICitaDAO{
      * @return true si no existe otra cita igual, false si existe otra
      */
     @Override
-    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) {
+    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException{
         //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
         //si es que se encuentran resultados con la misma informacion
         List<Cita> citasRegistradas = obtenerCitas();
