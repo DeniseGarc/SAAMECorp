@@ -1,5 +1,6 @@
 package correoElectronico;
 
+import dto.CorreoDTO;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -19,14 +20,14 @@ import java.util.Properties;
 public class FCorreoElectronico implements ICorreoElectronico {
 
     /**
-     * Metodo que usa SMTP para mandar un correo
+     * Método que envía un correo electrónico a la dirección de correo dada.
+     * Envia el mensaje ingresado.
      *
-     * @param correo el correo al cual se enviará la notificación
-     * @param mensaje el contenido del correo
-     * @return true si el correo se envió, false en caso de error
+     * @param correo dto con los datos que se necesitan para el correo
+     * @return true si el correo se envio exitosamente o false en caso contrario
      */
     @Override
-    public boolean mandarCorreo(String correo, String mensaje) {
+    public boolean mandarCorreo(CorreoDTO correo) {
         //correo remitente 
         final String user = "lolestutu@gmail.com";
         //contraseña de aplicacion que le da acceso a la cuenta
@@ -51,9 +52,9 @@ public class FCorreoElectronico implements ICorreoElectronico {
             // Creación del mensaje
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo.getCorreoDestino()));
             message.setSubject("Cita en Alleri");
-            message.setContent(mensaje, "text/html");
+            message.setContent(correo.getMensaje(), "text/html");
 
             // Envío del correo
             Transport.send(message);

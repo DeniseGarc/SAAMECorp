@@ -21,7 +21,7 @@ public class AdeudoDAO implements IAdeudoDAO{
      * @throws excepciones.PersistenciaException
      */
     @Override
-    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) throws PersistenciaException{
+    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) {
          return 100.0;
     }
     

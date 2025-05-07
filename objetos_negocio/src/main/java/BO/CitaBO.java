@@ -4,6 +4,7 @@
  */
 package BO;
 
+import DAOs.CitaDAO;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CubiculoDTO;
@@ -26,7 +27,7 @@ import mappers.PsicologoMapper;
  */
 public class CitaBO implements ICitaBO {
 
-    private static ICitaDAO citaDAO;
+    private static final ICitaDAO citaDAO = new CitaDAO();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
     CItaMapper cItaMapper = new CItaMapper();
     CubiculoMapper cubiculoMapper = new CubiculoMapper();

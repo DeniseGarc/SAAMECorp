@@ -18,5 +18,5 @@ public interface ICubiculoDAO {
      * @return Lista de cubiculosDTO disponibles
      * @throws excepciones.PersistenciaException
      */
-     public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException;
+     public List<Cubiculo> obtenerCubiculosEstadoDisponible() ;
 }
