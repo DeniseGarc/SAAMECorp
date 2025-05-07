@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author erika
  */
-public class CitaDAO implements ICitaDAO{
+public class CitaDAO implements ICitaDAO {
 
     /**
      * Metodo que obtiene la disponibilidad de un psicólogo en un dia dado
@@ -32,15 +32,17 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) {
-        List<LocalTime> horasDisponibles = new LinkedList<>();
-
-        horasDisponibles.add(LocalTime.of(9, 0));
-        horasDisponibles.add(LocalTime.of(11, 0));
-        horasDisponibles.add(LocalTime.of(14, 0));
-        horasDisponibles.add(LocalTime.of(17, 30));
-
-        return horasDisponibles;
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) throws PersistenciaException {
+        try {
+            List<LocalTime> horasDisponibles = new LinkedList<>();
+            horasDisponibles.add(LocalTime.of(9, 0));
+            horasDisponibles.add(LocalTime.of(11, 0));
+            horasDisponibles.add(LocalTime.of(14, 0));
+            horasDisponibles.add(LocalTime.of(17, 30));
+            return horasDisponibles;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener las horas disponibles: " + e.getMessage());
+        }
     }
 
     /**
@@ -51,13 +53,17 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de cubiculos ya ocupados
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha){
-        List<Cubiculo> listaCubiculos = new LinkedList<>();
-        listaCubiculos.add(new Cubiculo("Cubiculo 1", true));
-        listaCubiculos.add(new Cubiculo("Cubiculo 2", true));
-        listaCubiculos.add(new Cubiculo("Cubiculo 3", true));
-        listaCubiculos.add(new Cubiculo("Cubiculo 4", true));
-        return listaCubiculos;
+    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha) throws PersistenciaException {
+        try {
+            List<Cubiculo> listaCubiculos = new LinkedList<>();
+            listaCubiculos.add(new Cubiculo("Cubiculo 1", true));
+            listaCubiculos.add(new Cubiculo("Cubiculo 2", true));
+            listaCubiculos.add(new Cubiculo("Cubiculo 3", true));
+            listaCubiculos.add(new Cubiculo("Cubiculo 4", true));
+            return listaCubiculos;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener los cubiculos llenos: " + e.getMessage());
+        }
     }
 
     /**
@@ -67,8 +73,12 @@ public class CitaDAO implements ICitaDAO{
      * @return Cita registrada
      */
     @Override
-    public Cita guardarCita(Cita cita) {
-        return cita;
+    public Cita guardarCita(Cita cita) throws PersistenciaException {
+        try {
+            return cita;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al guardar la cita: " + e.getMessage());
+        }
     }
 
     /**
@@ -77,15 +87,17 @@ public class CitaDAO implements ICitaDAO{
      * @return
      */
     @Override
-    public List<Calendar> obtenerFechasConCitaAgendada() {
-        List<Calendar> fechasAgendadas = new LinkedList<>();
-
-        fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 1)));
-        fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 5)));
-        fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 10)));
-        fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 15)));
-
-        return fechasAgendadas;
+    public List<Calendar> obtenerFechasConCitaAgendada() throws PersistenciaException {
+        try {
+            List<Calendar> fechasAgendadas = new LinkedList<>();
+            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 1)));
+            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 5)));
+            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 10)));
+            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 15)));
+            return fechasAgendadas;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener las fechas con citas agendadas: " + e.getMessage());
+        }
     }
 
     /**
@@ -97,9 +109,13 @@ public class CitaDAO implements ICitaDAO{
      * @return True hay horas disponibles
      */
     @Override
-    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) {
-        // Simulación de disponibilidad
-        return true;
+    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) throws PersistenciaException {
+        try {
+            // Simulación de disponibilidad
+            return true;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener disponibilidad del cubiculo: " + e.getMessage());
+        }
     }
 
     /**
@@ -108,17 +124,20 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de citas registradas
      */
     @Override
-    public List<Cita> obtenerCitas() {
-        List<Cita> citas = new LinkedList<>();
-        // Citas simuladas
-        citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
-        citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 5, 11, 0)), "Cubiculo 2"));
-        citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 10, 14, 0)), "Cubiculo 3"));
-        citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4"));
-
-        return citas;
+    public List<Cita> obtenerCitas() throws PersistenciaException {
+        try {
+            List<Cita> citas = new LinkedList<>();
+            // Citas simuladas
+            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
+            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 5, 11, 0)), "Cubiculo 2"));
+            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 10, 14, 0)), "Cubiculo 3"));
+            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 4, 15, 17, 30)), "Cubiculo 4"));
+            return citas;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener las citas: " + e.getMessage());
+        }
     }
-    
+
     /**
      * Metodo para validar que no exista otra cita que tenga la misma fechaHora
      * y cubiculo igual
@@ -127,19 +146,22 @@ public class CitaDAO implements ICitaDAO{
      * @return true si no existe otra cita igual, false si existe otra
      */
     @Override
-    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) {
-        //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
-        //si es que se encuentran resultados con la misma informacion
-        List<Cita> citasRegistradas = obtenerCitas();
-        for (Cita cita : citasRegistradas) {
-            if (cita.getFechaHora().equals(citaARegistrar.getFechaHora())
-                    && cita.getCubiculo().equals(citaARegistrar.getCubiculo())) {
-                return false;
+    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException {
+        try {
+            //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
+            //si es que se encuentran resultados con la misma informacion
+            List<Cita> citasRegistradas = obtenerCitas();
+            for (Cita cita : citasRegistradas) {
+                if (cita.getFechaHora().equals(citaARegistrar.getFechaHora())
+                        && cita.getCubiculo().equals(citaARegistrar.getCubiculo())) {
+                    return false;
+                }
             }
+            return true;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al validar citas repetidas: " + e.getMessage());
         }
-        return true;
     }
-
 
     // Métodos auxiliares
     private Calendar toCalendar(LocalDateTime dateTime) {
@@ -149,5 +171,5 @@ public class CitaDAO implements ICitaDAO{
     private Calendar toCalendar(LocalDate date) {
         return GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
     }
-    
+
 }
