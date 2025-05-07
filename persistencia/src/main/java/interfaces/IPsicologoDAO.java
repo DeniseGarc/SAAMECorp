@@ -19,7 +19,7 @@ public interface IPsicologoDAO {
      * @return Lista de psicolos registrados
      * @throws excepciones.PersistenciaException
      */
-    public List<Psicologo> obtenerPsicologos() ;
+    public List<Psicologo> obtenerPsicologos() throws PersistenciaException;
 
     /**
      * Método para obtener el psicólogo por su identificador dado.
@@ -28,5 +28,5 @@ public interface IPsicologoDAO {
      * @return Datos del psicologo.
      * @throws excepciones.PersistenciaException
      */
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador) ;
+    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException;
 }

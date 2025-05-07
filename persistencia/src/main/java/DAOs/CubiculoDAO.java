@@ -12,32 +12,39 @@ import java.util.List;
 
 /**
  * Clase que define los metodos en Persistencia para Cubiculos
+ *
  * @author erika
  */
-public class CubiculoDAO implements ICubiculoDAO{
-    
+public class CubiculoDAO implements ICubiculoDAO {
+
     private static CubiculoDAO instanciaCubiculoDAO;
 
     public CubiculoDAO() {
     }
-    
-    public static CubiculoDAO getInstanciaDAO(){
-        if (instanciaCubiculoDAO == null){
+
+    public static CubiculoDAO getInstanciaDAO() {
+        if (instanciaCubiculoDAO == null) {
             instanciaCubiculoDAO = new CubiculoDAO();
         }
         return instanciaCubiculoDAO;
     }
+
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
+     *
      * @return Lista de cubiculosDTO disponibles
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosEstadoDisponible() {
-        List<Cubiculo> cubiculos = new LinkedList<>();
-        cubiculos.add(new Cubiculo("Cubiculo 1", true));
-        cubiculos.add(new Cubiculo("Cubiculo 2", true));
-        cubiculos.add(new Cubiculo("Cubiculo 3", true));
-        return cubiculos;
+    public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException {
+        try {
+            List<Cubiculo> cubiculos = new LinkedList<>();
+            cubiculos.add(new Cubiculo("Cubiculo 1", true));
+            cubiculos.add(new Cubiculo("Cubiculo 2", true));
+            cubiculos.add(new Cubiculo("Cubiculo 3", true));
+            return cubiculos;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener los cubiculos disponibles: " + e.getMessage());
+        }
     }
-    
+
 }
