@@ -32,7 +32,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) throws PersistenciaException{
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) {
         List<LocalTime> horasDisponibles = new LinkedList<>();
 
         horasDisponibles.add(LocalTime.of(9, 0));
@@ -51,7 +51,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de cubiculos ya ocupados
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha) throws PersistenciaException{
+    public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha){
         List<Cubiculo> listaCubiculos = new LinkedList<>();
         listaCubiculos.add(new Cubiculo("Cubiculo 1", true));
         listaCubiculos.add(new Cubiculo("Cubiculo 2", true));
@@ -67,7 +67,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Cita registrada
      */
     @Override
-    public Cita guardarCita(Cita cita) throws PersistenciaException{
+    public Cita guardarCita(Cita cita) {
         return cita;
     }
 
@@ -77,7 +77,7 @@ public class CitaDAO implements ICitaDAO{
      * @return
      */
     @Override
-    public List<Calendar> obtenerFechasConCitaAgendada() throws PersistenciaException{
+    public List<Calendar> obtenerFechasConCitaAgendada() {
         List<Calendar> fechasAgendadas = new LinkedList<>();
 
         fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 1)));
@@ -97,7 +97,7 @@ public class CitaDAO implements ICitaDAO{
      * @return True hay horas disponibles
      */
     @Override
-    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) throws PersistenciaException{
+    public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) {
         // Simulación de disponibilidad
         return true;
     }
@@ -108,7 +108,7 @@ public class CitaDAO implements ICitaDAO{
      * @return Lista de citas registradas
      */
     @Override
-    public List<Cita> obtenerCitas() throws PersistenciaException{
+    public List<Cita> obtenerCitas() {
         List<Cita> citas = new LinkedList<>();
         // Citas simuladas
         citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 1, 9, 0)), "Cubiculo 1"));
@@ -127,7 +127,7 @@ public class CitaDAO implements ICitaDAO{
      * @return true si no existe otra cita igual, false si existe otra
      */
     @Override
-    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException{
+    public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) {
         //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
         //si es que se encuentran resultados con la misma informacion
         List<Cita> citasRegistradas = obtenerCitas();

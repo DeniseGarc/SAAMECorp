@@ -33,12 +33,12 @@ public class PsicologoDAO implements IPsicologoDAO{
      * @return Lista de psicolos registrados
      */
     @Override
-    public List<Psicologo> obtenerPsicologos() throws PersistenciaException{
+    public List<Psicologo> obtenerPsicologos() {
         List<Psicologo> lista = new LinkedList<>();
 
         lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
         lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
-        lista.add(new Psicologo("Maria", "Felix", "Perez", "maria@gmail.com"));
+        lista.add(new Psicologo("Maria", "Felix", "Perez", "erikalucia005@gmail.com"));
 
         return lista;
     }
@@ -49,7 +49,7 @@ public class PsicologoDAO implements IPsicologoDAO{
     * @return Psicologo encontrado
     */
     @Override
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException{
+    public Psicologo obtenerPsicologoPorIdentificador(String identificador) {
         return new Psicologo("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
     }
     

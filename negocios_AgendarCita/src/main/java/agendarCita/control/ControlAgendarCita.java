@@ -3,6 +3,8 @@ package agendarCita.control;
 import correoElectronico.FCorreoElectronico;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
+import dto.CorreoCitaDTO;
+import dto.CorreoDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import manejadorBO.ManejadorBO;
+import mappers.CorreoMapper;
 
 /**
  * Clase control que se encarga de la comunicación entre la fachada del
@@ -176,24 +179,10 @@ public class ControlAgendarCita {
         try {
             FCorreoElectronico correoInfra = new FCorreoElectronico();
             String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
-            String mensaje = "<html>"
-                    + "<body style='font-family: Arial, sans-serif; background-color: #DDD4F0; padding: 20px;'>"
-                    + "<div style='max-width: 600px; margin: auto; background: #BCA3E2; padding: 15px; border-radius: 10px;'>"
-                    + "<h2 style='color: #562159; text-align: center;'>Detalles de la Cita</h2>"
-                    + "<p><b>Cubículo:</b> " + cita.getCubiculo() + "</p>"
-                    + "<p><b>Fecha:</b> " + fechaCitaFormateada + "</p>"
-                    + "<p><b>Psicólogo:</b> " + cita.getPsicologo().getNombre() + " "
-                    + cita.getPsicologo().getApellidoPaterno() + " "
-                    + cita.getPsicologo().getApellidoMaterno() + "</p>"
-                    + "<p><b>Cliente:</b> " + cita.getNombrePaciente() + "</p>"
-                    + "<p><b>Teléfono:</b> " + cita.getTelefonoPaciente() + "</p>"
-                    + "<p><b>Correo del paciente:</b> " + cita.getCorreoPaciente() + "</p>"
-                    + "<hr style='border: 1px solid #562159;'>"
-                    + "<p style='color: #562159; text-align: center;'>Este es un correo automático. Por favor, no respondas.</p>"
-                    + "</div>"
-                    + "</body>"
-                    + "</html>";
-            boolean enviado = correoInfra.mandarCorreo(correo, mensaje);
+            String nombrePsicologo = cita.getPsicologo().getNombre() + cita.getPsicologo().getApellidoPaterno() + cita.getPsicologo().getApellidoMaterno();
+            CorreoCitaDTO correoCita = new CorreoCitaDTO(correo, cita.getCubiculo(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
+            CorreoMapper correoMapper = new CorreoMapper();
+            boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO(correoCita));
             return enviado;
         } catch (Exception e) {
             Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.WARNING, "Error al enviar el correo a " + correo, e);

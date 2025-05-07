@@ -12,5 +12,5 @@ import excepciones.PersistenciaException;
  * @author erika
  */
 public interface IAdeudoDAO {
-  public double consultarAdeudoTotalPsicologo(Psicologo psicologo) throws PersistenciaException;
+  public double consultarAdeudoTotalPsicologo(Psicologo psicologo) ;
 }

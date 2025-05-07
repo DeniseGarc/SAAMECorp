@@ -32,7 +32,7 @@ public class CubiculoDAO implements ICubiculoDAO{
      * @return Lista de cubiculosDTO disponibles
      */
     @Override
-    public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException{
+    public List<Cubiculo> obtenerCubiculosEstadoDisponible() {
         List<Cubiculo> cubiculos = new LinkedList<>();
         cubiculos.add(new Cubiculo("Cubiculo 1", true));
         cubiculos.add(new Cubiculo("Cubiculo 2", true));

@@ -4,13 +4,17 @@
  */
 package BO;
 
+import DAOs.PsicologoDAO;
 import dto.PsicologoDTO;
 import entidades.Psicologo;
+import excepciones.PersistenciaException;
 import interfaces.IPsicologoBO;
 import interfaces.IPsicologoDAO;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mappers.PsicologoMapper;
 
 /**
@@ -20,7 +24,7 @@ import mappers.PsicologoMapper;
  */
 public class PsicologoBO implements IPsicologoBO {
     
-    private static IPsicologoDAO psicologoDAO;
+    private static final IPsicologoDAO psicologoDAO = new PsicologoDAO();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
     
     /**

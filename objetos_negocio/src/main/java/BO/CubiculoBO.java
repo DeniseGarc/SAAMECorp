@@ -17,9 +17,9 @@ import mappers.CubiculoMapper;
  * Clase que define la logica de negocio para Cubiculos
  * @author erika
  */
-public class CubiculoBO implements ICubiculoBO{
+public class CubiculoBO implements ICubiculoBO {
     
-    private static ICubiculoDAO cubiculoDAO;
+    private static final ICubiculoDAO cubiculoDAO = new CubiculoDAO();
     
     
     CubiculoMapper mapper = new CubiculoMapper();
