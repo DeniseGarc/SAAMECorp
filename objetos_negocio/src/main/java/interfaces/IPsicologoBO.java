@@ -5,6 +5,7 @@
 package interfaces;
 
 import dto.PsicologoDTO;
+import excepciones.NegocioException;
 import java.util.List;
 
 /**
@@ -18,15 +19,17 @@ public interface IPsicologoBO {
      * Metodo para obtener todos los psicologos registrados
      *
      * @return Lista de psicolos registrados
+     * @throws excepciones.NegocioException
      */
-    public List<PsicologoDTO> obtenerPsicologos();
+    public List<PsicologoDTO> obtenerPsicologos() throws NegocioException;
 
     /**
      * Método para obtener el psicólogo por su identificador dado.
      *
      * @param identificador Identificador único del psicólogo.
      * @return Datos del psicologo.
+     * @throws excepciones.NegocioException
      */
-    public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador);
+    public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) throws NegocioException;
 
 }

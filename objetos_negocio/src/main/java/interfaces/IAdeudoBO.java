@@ -5,17 +5,22 @@
 package interfaces;
 
 import dto.PsicologoDTO;
+import excepciones.NegocioException;
 
 /**
- * Interfaz de los medotos de Adeudo BO 
+ * Interfaz de los medotos de Adeudo BO
+ *
  * @author erika
  */
 public interface IAdeudoBO {
+
     /**
      * Metodo que regresa el adeudo total de un psicologo dado
+     *
      * @param psicologo Psicologo a consultar
      * @return Total del adeudo del psicologo
+     * @throws excepciones.NegocioException
      */
-    public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo);
-    
+    public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo) throws NegocioException;
+
 }

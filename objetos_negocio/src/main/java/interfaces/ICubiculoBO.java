@@ -5,6 +5,7 @@
 package interfaces;
 
 import dto.CubiculoDTO;
+import excepciones.NegocioException;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public interface ICubiculoBO {
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      * @return Lista de cubiculosDTO disponibles
+     * @throws excepciones.NegocioException
      */
-     public List<CubiculoDTO> obtenerCubiculosEstadoDisponible();
+     public List<CubiculoDTO> obtenerCubiculosEstadoDisponible() throws NegocioException;
 }
