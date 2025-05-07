@@ -21,8 +21,12 @@ public class AdeudoDAO implements IAdeudoDAO{
      * @throws excepciones.PersistenciaException
      */
     @Override
-    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) {
-         return 100.0;
+    public double consultarAdeudoTotalPsicologo(Psicologo psicologo) throws PersistenciaException{
+        try {
+            return 100.0;
+        } catch ( Exception e) {
+            throw new PersistenciaException("Error al consultar el adeudo total: " + e.getMessage());
+        }
     }
     
 }

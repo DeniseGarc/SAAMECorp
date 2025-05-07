@@ -179,7 +179,7 @@ public class ControlAgendarCita {
         try {
             FCorreoElectronico correoInfra = new FCorreoElectronico();
             String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
-            String nombrePsicologo = cita.getPsicologo().getNombre() + cita.getPsicologo().getApellidoPaterno() + cita.getPsicologo().getApellidoMaterno();
+            String nombrePsicologo = cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno() + " " + cita.getPsicologo().getApellidoMaterno();
             CorreoCitaDTO correoCita = new CorreoCitaDTO(correo, cita.getCubiculo(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
             CorreoMapper correoMapper = new CorreoMapper();
             boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO(correoCita));
