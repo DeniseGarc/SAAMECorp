@@ -21,11 +21,35 @@ import mappers.CubiculoMapper;
  * @author erika
  */
 public class CubiculoBO implements ICubiculoBO {
-
-    private static final ICubiculoDAO cubiculoDAO = new CubiculoDAO();
-
+    
+    /**
+     * Instancia unica de la clase 
+     */
+    private static CubiculoBO instancia; 
+    
+    private static final ICubiculoDAO cubiculoDAO = CubiculoDAO.getInstanciaDAO();
+    
     CubiculoMapper mapper = new CubiculoMapper();
-
+    
+    /**
+     * Constructor privado 
+     */
+    private CubiculoBO(){
+        
+    }
+    
+    /**
+     * Metodo para obtener la instancia unica de CubiculoBO
+     * Si no existe una la crea
+     * @return instancia unida de CubiculoBO
+     */
+    public static CubiculoBO getInstancia(){
+        if (instancia == null){
+            instancia= new CubiculoBO();
+        }
+        return instancia; 
+    }
+    
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      *

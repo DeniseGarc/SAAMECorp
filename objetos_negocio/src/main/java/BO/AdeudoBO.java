@@ -21,9 +21,30 @@ import mappers.PsicologoMapper;
  */
 public class AdeudoBO implements IAdeudoBO {
 
-    IAdeudoDAO adeudoDAO = new AdeudoDAO();
+    IAdeudoDAO adeudoDAO = AdeudoDAO.getInstancia();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
-
+    /**
+     * Instancia unica de la clase 
+     */
+    private static AdeudoBO instancia; 
+    
+    /**
+     * Constructor privado 
+     */
+    private AdeudoBO(){
+    }
+    /**
+     * Metodo para obtener la instancia unica de AdeudoBO
+     * Si no existe una la crea
+     * @return instancia unida de AdeudoBO
+     */
+    public static AdeudoBO getInstancia(){
+        if (instancia == null){
+            instancia= new AdeudoBO();
+        }
+        return instancia; 
+    }
+    
     /**
      * Metodo que regresa el adeudo total de un psicologo dado
      *

@@ -18,10 +18,15 @@ import java.util.List;
 public class PsicologoDAO implements IPsicologoDAO {
 
     private static PsicologoDAO instanciaPsicologoDAO;
-
-    public PsicologoDAO() {
+    /**
+     * Constructor privado
+     */
+    private PsicologoDAO() {
     }
-
+    /**
+     * Metodo para obtener la instancia unica de PsicologoDAO
+     * @return instancia unica de la clase PsicologoDAO
+     */
     public static PsicologoDAO getInstanciaDAO() {
         if (instanciaPsicologoDAO == null) {
             instanciaPsicologoDAO = new PsicologoDAO();

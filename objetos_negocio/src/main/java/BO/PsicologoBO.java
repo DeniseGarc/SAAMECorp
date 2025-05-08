@@ -24,10 +24,31 @@ import mappers.PsicologoMapper;
  * @author erika
  */
 public class PsicologoBO implements IPsicologoBO {
-
-    private static final IPsicologoDAO psicologoDAO = new PsicologoDAO();
+    
+    /**
+     * Instancia unica de la clase 
+     */
+    private static PsicologoBO instancia; 
+    
+    private static final IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
-
+    /**
+     * Constructor privado para evitar instancias externas
+     */
+    private PsicologoBO(){}
+    
+     /**
+     * Metodo para obtener la instancia unica de PsicologoBO
+     * Si no existe una la crea
+     * @return instancia unida de PsicologoBO
+     */
+    public static PsicologoBO getInstancia(){
+        if (instancia == null){
+            instancia= new PsicologoBO();
+        }
+        return instancia; 
+    }
+    
     /**
      * Metodo para obtener todos los psicologos registrados
      *

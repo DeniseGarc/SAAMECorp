@@ -25,7 +25,7 @@ public class ManejadorBO {
      * @return clase AdeudoBO que implementa la interfaz IAdeudoBO.
      */
     public static IAdeudoBO crearAdeudoBO(){
-        IAdeudoBO audeudoBO = new AdeudoBO();
+        IAdeudoBO audeudoBO = AdeudoBO.getInstancia();
         return audeudoBO;
     }
     
@@ -34,7 +34,7 @@ public class ManejadorBO {
      * @return clase CitaBO que implementa la interfaz ICitaBO.
      */
     public static ICitaBO crearCitaBO(){
-        ICitaBO citaBO = new CitaBO();
+        ICitaBO citaBO = CitaBO.getInstancia();
         return citaBO;
     }
     
@@ -43,7 +43,7 @@ public class ManejadorBO {
      * @return clase CubiculoBO que implementa la interfaz ICubiculoBO.
      */
     public static ICubiculoBO crearCubiculoBO(){
-        ICubiculoBO cubiculoBO = new CubiculoBO();
+        ICubiculoBO cubiculoBO = CubiculoBO.getInstancia();
         return cubiculoBO;
     }
     
@@ -52,7 +52,7 @@ public class ManejadorBO {
      * @return clase PsicologoBO que implementa la interfaz IPsicologoBO.
      */
     public static IPsicologoBO crearPsicologoBO(){
-        IPsicologoBO psicologoBO = new PsicologoBO();
+        IPsicologoBO psicologoBO = PsicologoBO.getInstancia();
         return psicologoBO;
     }
 }

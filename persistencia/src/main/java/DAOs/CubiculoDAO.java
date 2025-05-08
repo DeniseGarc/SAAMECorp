@@ -16,12 +16,19 @@ import java.util.List;
  * @author erika
  */
 public class CubiculoDAO implements ICubiculoDAO {
-
+    /**
+     * Instancia unica de la clase
+     */
     private static CubiculoDAO instanciaCubiculoDAO;
-
-    public CubiculoDAO() {
+    /**
+     * Constructor privado
+     */
+    private CubiculoDAO() {
     }
-
+    /**
+     * Metodo para obtener la instancia unica de la clase CubiculoDAO
+     * @return Instancia Unica de la clase CubiculoDAO
+     */
     public static CubiculoDAO getInstanciaDAO() {
         if (instanciaCubiculoDAO == null) {
             instanciaCubiculoDAO = new CubiculoDAO();
