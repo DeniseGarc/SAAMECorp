@@ -2,6 +2,7 @@ package gestorCalendario.control;
 
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
+import enumeradores.TipoBO;
 import excepciones.GestorCalendarioException;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
@@ -24,9 +25,9 @@ import manejadorBO.ManejadorBO;
  */
 public class ControlGestorCalendario {
 
-    IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
-    ICitaBO citaBO = ManejadorBO.crearCitaBO();
-    ICubiculoBO cubiculoBO = ManejadorBO.crearCubiculoBO();
+    IPsicologoBO psicologoBO = (IPsicologoBO) ManejadorBO.crearBO(TipoBO.PSICOLOGO);
+    ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(TipoBO.CITA);
+    ICubiculoBO cubiculoBO = (ICubiculoBO) ManejadorBO.crearBO(TipoBO.CUBICULO);
 
     /**
      * Método que regresa los días que se encuentran con citas agendadas.

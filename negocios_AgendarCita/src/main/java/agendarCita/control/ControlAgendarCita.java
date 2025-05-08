@@ -8,6 +8,7 @@ import dto.CorreoDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
+import static enumeradores.TipoBO.*;
 import excepciones.AgendarCitaException;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
@@ -31,10 +32,10 @@ import mappers.CorreoMapper;
  */
 public class ControlAgendarCita {
 
-    IPsicologoBO psicologoBO = ManejadorBO.crearPsicologoBO();
-    ICitaBO citaBO = ManejadorBO.crearCitaBO();
-    IAdeudoBO adeudoBO = ManejadorBO.crearAdeudoBO();
-    ICubiculoBO cubiculoBO = ManejadorBO.crearCubiculoBO();
+    IPsicologoBO psicologoBO = (IPsicologoBO) ManejadorBO.crearBO(PSICOLOGO);
+    ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(CITA);
+    IAdeudoBO adeudoBO = (IAdeudoBO) ManejadorBO.crearBO(ADEUDO);
+    ICubiculoBO cubiculoBO = (ICubiculoBO) ManejadorBO.crearBO(CUBICULO);
 
     /**
      * Método que obtiene a los psicologos registrados y sus horarios
