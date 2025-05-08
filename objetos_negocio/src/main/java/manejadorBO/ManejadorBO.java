@@ -8,6 +8,7 @@ import BO.AdeudoBO;
 import BO.CitaBO;
 import BO.CubiculoBO;
 import BO.PsicologoBO;
+import enumeradores.TipoBO;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
@@ -19,40 +20,28 @@ import interfaces.IPsicologoBO;
  */
 public class ManejadorBO {
     
-    /**
-     * Método que crea y regresa la instancia de AdeudoBO.
+     /**
+     * Método genérico que crea y retorna la instancia del BO correspondiente al tipo indicado.
      *
-     * @return clase AdeudoBO que implementa la interfaz IAdeudoBO.
+     * @param tipo el tipo de objeto BO requerido.
+     * @return una instancia Singleton del BO correspondiente.
      */
-    public static IAdeudoBO crearAdeudoBO(){
-        IAdeudoBO audeudoBO = AdeudoBO.getInstancia();
-        return audeudoBO;
-    }
-    
-    /**
-     * Método que crea y regresa la instancia de CitaBO.
-     * @return clase CitaBO que implementa la interfaz ICitaBO.
-     */
-    public static ICitaBO crearCitaBO(){
-        ICitaBO citaBO = CitaBO.getInstancia();
-        return citaBO;
-    }
-    
-    /**
-     * Método que crea y regresa la instancia de CubiculoBO.
-     * @return clase CubiculoBO que implementa la interfaz ICubiculoBO.
-     */
-    public static ICubiculoBO crearCubiculoBO(){
-        ICubiculoBO cubiculoBO = CubiculoBO.getInstancia();
-        return cubiculoBO;
-    }
-    
-    /**
-     *  Método que crea y regresa la instancia de PsicologoBO.
-     * @return clase PsicologoBO que implementa la interfaz IPsicologoBO.
-     */
-    public static IPsicologoBO crearPsicologoBO(){
-        IPsicologoBO psicologoBO = PsicologoBO.getInstancia();
-        return psicologoBO;
+    public static Object crearBO(TipoBO tipo) {
+        switch (tipo) {
+            case ADEUDO:
+                 IAdeudoBO audeudoBO = AdeudoBO.getInstancia();
+                return audeudoBO;
+            case CITA:
+                ICitaBO citaBO = CitaBO.getInstancia();
+                return citaBO;   
+            case CUBICULO:
+                ICubiculoBO cubiculoBO = CubiculoBO.getInstancia();
+                return cubiculoBO;
+            case PSICOLOGO:
+                IPsicologoBO psicologoBO = PsicologoBO.getInstancia();
+                return psicologoBO;
+            default:
+                throw new IllegalArgumentException("Tipo de BO no soportado: " + tipo);
+        }
     }
 }
