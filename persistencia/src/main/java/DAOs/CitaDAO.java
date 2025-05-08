@@ -23,7 +23,27 @@ import java.util.List;
  * @author erika
  */
 public class CitaDAO implements ICitaDAO {
-
+    
+    /**
+     * Instancia unica de la clase 
+     */
+    private static CitaDAO instancia; 
+    /**
+     * Constructor vacio
+     */
+    private CitaDAO(){}
+    
+    /**
+     * Metodo para obtener la instancia unica de CitaDAO
+     * Si no existe una la crea
+     * @return instancia unida de CitaDAO
+     */
+    public static CitaDAO getInstancia(){
+        if (instancia == null){
+            instancia= new CitaDAO();
+        }
+        return instancia; 
+    }
     /**
      * Metodo que obtiene la disponibilidad de un psicólogo en un dia dado
      *

@@ -29,11 +29,33 @@ import mappers.PsicologoMapper;
  */
 public class CitaBO implements ICitaBO {
 
-    private static final ICitaDAO citaDAO = new CitaDAO();
+    private static final ICitaDAO citaDAO = CitaDAO.getInstancia();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
     CItaMapper cItaMapper = new CItaMapper();
     CubiculoMapper cubiculoMapper = new CubiculoMapper();
-
+    
+     /**
+     * Instancia unica de la clase 
+     */
+    private static CitaBO instancia; 
+    
+    /**
+     * Constructor privado para evitar instanciacion externa
+     */
+    private CitaBO(){}
+    
+    /**
+     * Metodo para obtener la instancia unica de CitaBO
+     * Si no existe una la crea
+     * @return instancia unida de CitaBO
+     */
+    public static CitaBO getInstancia(){
+        if (instancia == null){
+            instancia= new CitaBO();
+        }
+        return instancia; 
+    }
+    
     /**
      * Metodo que obtiene la disponibilidad de un psicólogo en un dia dado
      *
