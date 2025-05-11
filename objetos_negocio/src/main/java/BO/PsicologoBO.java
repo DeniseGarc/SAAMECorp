@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mappers.PsicologoMapper;
+import mapper.PsicologoMapper;
 
 /**
  * Clase que define la logica de negocio para psicologos

@@ -2,15 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mappers;
+package mapper;
 
 import dto.CorreoCitaDTO;
 import dto.CorreoDTO;
-import java.text.SimpleDateFormat;
 
 /**
  *
- * @author Maryr
+ * @author erika
  */
 public class CorreoMapper {
 
@@ -33,3 +32,4 @@ public class CorreoMapper {
         return new CorreoDTO(correo.getCorreoDestino(), mensaje);
     }
 }
+

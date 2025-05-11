@@ -18,9 +18,9 @@ import interfaces.ICitaDAO;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
-import mappers.CubiculoMapper;
-import mappers.CItaMapper;
-import mappers.PsicologoMapper;
+import mapper.CubiculoMapper;
+import mapper.CitaMapper;
+import mapper.PsicologoMapper;
 
 /**
  * Clase que implementa la logica de negocio para las citas
@@ -31,7 +31,7 @@ public class CitaBO implements ICitaBO {
 
     private static final ICitaDAO citaDAO = CitaDAO.getInstancia();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
-    CItaMapper cItaMapper = new CItaMapper();
+    CitaMapper cItaMapper = new CitaMapper();
     CubiculoMapper cubiculoMapper = new CubiculoMapper();
     
      /**

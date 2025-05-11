@@ -2,8 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mappers;
+package mapper;
 
+/**
+ *Clase para definir los mapper de Adeudo
+ * 
+ * @author erika
+ */
 import dto.AdeudoCitaDTO;
 import entidades.Adeudo;
 import java.util.ArrayList;

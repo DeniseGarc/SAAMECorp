@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mappers;
+package mapper;
 
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Maryr
+ *Clase que define los metodos mapper para pasar de entidad a DTO de Psicologo
+ * @author erika
  */
 public class PsicologoMapper {
     

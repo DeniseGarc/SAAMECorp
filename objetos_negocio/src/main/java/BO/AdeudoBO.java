@@ -11,8 +11,8 @@ import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.IAdeudoBO;
 import interfaces.IAdeudoDAO;
-import mappers.AdeudoMapper;
-import mappers.PsicologoMapper;
+import mapper.AdeudoMapper;
+import mapper.PsicologoMapper;
 
 /**
  * Clase que implementa la logica de negocio para adeudo

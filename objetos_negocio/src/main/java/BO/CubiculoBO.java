@@ -13,7 +13,7 @@ import interfaces.ICubiculoBO;
 import interfaces.ICubiculoDAO;
 import java.util.LinkedList;
 import java.util.List;
-import mappers.CubiculoMapper;
+import mapper.CubiculoMapper;
 
 /**
  * Clase que define la logica de negocio para Cubiculos
