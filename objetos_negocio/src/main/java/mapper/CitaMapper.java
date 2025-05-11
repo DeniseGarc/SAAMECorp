@@ -2,8 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package mappers;
+package mapper;
 
+/**
+ *
+ * @author erika
+ */
 import dto.AdeudoCitaDTO;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
@@ -14,11 +18,7 @@ import entidades.Psicologo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Maryr
- */
-public class CItaMapper {
+public class CitaMapper {
 
     public CitaNuevaDTO toDTO(Cita cita) {
         return new CitaNuevaDTO(cita.getFechaHora(), cita.getCubiculo(), new PsicologoCitaDTO(cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), cita.getPsicologo().getHorarioDia()),

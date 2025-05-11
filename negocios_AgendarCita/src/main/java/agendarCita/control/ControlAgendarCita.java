@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import manejadorBO.ManejadorBO;
-import mappers.CorreoMapper;
+import mapper.CorreoMapper;
 
 /**
  * Clase control que se encarga de la comunicación entre la fachada del
