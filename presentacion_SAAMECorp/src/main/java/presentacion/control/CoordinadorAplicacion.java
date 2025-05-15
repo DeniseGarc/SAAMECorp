@@ -1,7 +1,7 @@
 package presentacion.control;
 
 import java.util.Calendar;
-import presentacion.GUI.IniciarSesion;
+import presentacion.GUI.PantallaIniciarSesion;
 import presentacion.GUI.CalendarioCitas;
 import presentacion.GUI.AgregarCita;
 import javax.swing.JFrame;
@@ -53,7 +53,7 @@ public class CoordinadorAplicacion {
      * Método para abrir la pantalla de inicio de sesión del sistema.
      */
     public void pantallaInicioSesion() {
-        IniciarSesion frmInicioSesion = new IniciarSesion();
+        PantallaIniciarSesion frmInicioSesion = new PantallaIniciarSesion();
         frmInicioSesion.setVisible(true);
     }
 

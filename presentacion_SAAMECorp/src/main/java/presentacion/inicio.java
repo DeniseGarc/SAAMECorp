@@ -1,19 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package presentacion;
 
 import presentacion.control.CoordinadorAplicacion;
 
 /**
+ * Clase principal que inicializa la pantalla de inicio del sistema.
  *
  * @author erika
  */
 public class inicio {
 
     /**
-     * @param args the command line arguments
+     * Método principal que le indica al coordinador de la aplicación que abra
+     * la pantalla de inicio de sesión.
+     *
+     * @param args
      */
     public static void main(String[] args) {
         CoordinadorAplicacion control = CoordinadorAplicacion.getInstance();

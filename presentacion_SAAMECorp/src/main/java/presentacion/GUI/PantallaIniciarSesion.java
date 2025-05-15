@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion.GUI;
 
 import presentacion.control.CoordinadorAplicacion;
@@ -13,14 +9,14 @@ import presentacion.sesion.TipoUsuario;
  *
  * @author Maryr
  */
-public class IniciarSesion extends javax.swing.JFrame {
+public class PantallaIniciarSesion extends javax.swing.JFrame {
 
     CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
 
     /**
      * Constructor que inicializa los componentes del frame
      */
-    public IniciarSesion() {
+    public PantallaIniciarSesion() {
         initComponents();
         CbBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Administrador", "Psicólogo"}));
     }
@@ -38,36 +34,31 @@ public class IniciarSesion extends javax.swing.JFrame {
         PwdField = new javax.swing.JPasswordField();
         CbBoxTipo = new javax.swing.JComboBox<>();
         btnIngresar = new javax.swing.JButton();
+        lblPwd1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 1100));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/457447018_933090465501059_6625935670983607402_n(1).png"))); // NOI18N
+        lblLogo.setMaximumSize(new java.awt.Dimension(279, 249));
+        lblLogo.setMinimumSize(new java.awt.Dimension(279, 249));
+        lblLogo.setName(""); // NOI18N
+        lblLogo.setPreferredSize(new java.awt.Dimension(279, 249));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(350, 300));
 
-        lblID.setForeground(new java.awt.Color(0, 0, 0));
-        lblID.setText("ID");
+        lblID.setText("Usuario");
 
-        txtID.setBackground(new java.awt.Color(255, 255, 255));
-        txtID.setForeground(new java.awt.Color(0, 0, 0));
+        lblPwd.setText("Tipo de usuario");
 
-        lblPwd.setForeground(new java.awt.Color(0, 0, 0));
-        lblPwd.setText("Password");
-
-        PwdField.setBackground(new java.awt.Color(255, 255, 255));
-        PwdField.setForeground(new java.awt.Color(0, 0, 0));
-
-        CbBoxTipo.setBackground(new java.awt.Color(255, 255, 255));
-        CbBoxTipo.setForeground(new java.awt.Color(0, 0, 0));
         CbBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnIngresar.setBackground(new java.awt.Color(86, 33, 89));
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("Sign in");
+        btnIngresar.setText("Iniciar sesión");
         btnIngresar.setAutoscrolls(true);
         btnIngresar.setBorder(null);
         btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,27 +67,23 @@ public class IniciarSesion extends javax.swing.JFrame {
             }
         });
 
+        lblPwd1.setText("Contraseña");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(lblPwd))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(lblID))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtID)
-                            .addComponent(PwdField)
-                            .addComponent(CbBoxTipo, 0, 296, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                    .addComponent(lblID)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtID)
+                        .addComponent(PwdField)
+                        .addComponent(CbBoxTipo, 0, 296, Short.MAX_VALUE))
+                    .addComponent(lblPwd)
+                    .addComponent(lblPwd1))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -106,15 +93,17 @@ public class IniciarSesion extends javax.swing.JFrame {
                 .addComponent(lblID)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblPwd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPwd1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PwdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(12, 12, 12)
+                .addComponent(lblPwd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CbBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(37, 37, 37)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -124,32 +113,32 @@ public class IniciarSesion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(372, 372, 372)
+                        .addGap(371, 371, 371)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(442, 442, 442)
-                        .addComponent(lblLogo)))
-                .addContainerGap(378, Short.MAX_VALUE))
+                        .addGap(399, 399, 399)
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(lblLogo)
-                .addGap(27, 27, 27)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
 
         pack();
@@ -174,6 +163,7 @@ public class IniciarSesion extends javax.swing.JFrame {
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblPwd;
+    private javax.swing.JLabel lblPwd1;
     private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }
