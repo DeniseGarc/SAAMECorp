@@ -13,6 +13,8 @@
         <module>infraestructura_CorreoElectronico</module>
         <module>objetos_negocio</module>
         <module>persistencia</module>
+        <module>GestorCubiculos</module>
+        <module>GestorReportes</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
