@@ -26,12 +26,35 @@ import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
 /**
- * Clase que se encarga de la comunicación entre presentación y los subsistemas
- * necesarios.
+ * Clase que aplica Singleton y se encarga de la comunicación entre presentación
+ * y los subsistemas necesarios.
  *
  * @author Alici
  */
 public class CoordinadorNegocio {
+
+    /**
+     * Instancia única del singleton
+     */
+    private static CoordinadorNegocio instancia;
+
+    /**
+     * Constructor privado para evitar la creación de múltiples instancias.
+     */
+    private CoordinadorNegocio() {
+    }
+
+    /**
+     * Método para obtener la instancia única de CoordinadorNegocio.
+     *
+     * @return Instancia única del coordinador.
+     */
+    public static CoordinadorNegocio getInstance() {
+        if (instancia == null) {
+            instancia = new CoordinadorNegocio();
+        }
+        return instancia;
+    }
 
     /**
      * Subsistema para agendar cita
