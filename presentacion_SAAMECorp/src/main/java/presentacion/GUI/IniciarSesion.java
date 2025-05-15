@@ -15,7 +15,7 @@ import presentacion.sesion.TipoUsuario;
  */
 public class IniciarSesion extends javax.swing.JFrame {
 
-    CoordinadorAplicacion control = new CoordinadorAplicacion();
+    CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
 
     /**
      * Constructor que inicializa los componentes del frame
@@ -162,7 +162,7 @@ public class IniciarSesion extends javax.swing.JFrame {
         } else {
             GestorSesion.setTipoUsuario(TipoUsuario.PSICOLOGO);
         }
-        control.pantallaPrincipal(this);
+        flujoPantallas.pantallaPrincipal(this);
     }//GEN-LAST:event_btnIngresarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

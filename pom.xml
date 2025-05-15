@@ -13,6 +13,8 @@
         <module>infraestructura_CorreoElectronico</module>
         <module>objetos_negocio</module>
         <module>persistencia</module>
+        <module>negocios_GenerarFactura</module>
+        <module>negocios_Pagos</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
