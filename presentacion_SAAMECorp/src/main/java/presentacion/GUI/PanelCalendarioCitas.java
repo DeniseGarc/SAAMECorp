@@ -11,7 +11,7 @@ import presentacion.control.CoordinadorNegocio;
  *
  * @author Alici
  */
-public class CalendarioCitas extends javax.swing.JPanel {
+public class PanelCalendarioCitas extends javax.swing.JPanel {
 
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
@@ -19,7 +19,7 @@ public class CalendarioCitas extends javax.swing.JPanel {
     /**
      * Constructor que inicializa los componentes del frame
      */
-    public CalendarioCitas() {
+    public PanelCalendarioCitas() {
         initComponents();
         controlNegocio.pintarDiasCalendario(calendarioCitas);
         controlNegocio.bloquearDiasNoDisponibles(calendarioCitas);
@@ -50,7 +50,7 @@ public class CalendarioCitas extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(188, 163, 226));
 
         lblTitulo.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
-        lblTitulo.setText("Cita");
+        lblTitulo.setText("Citas");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

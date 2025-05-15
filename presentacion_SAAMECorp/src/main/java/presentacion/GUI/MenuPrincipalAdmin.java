@@ -41,20 +41,20 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         panelLateral = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        btnCitas1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        btnReportes1 = new javax.swing.JButton();
-        btnCubiculos1 = new javax.swing.JButton();
-        lblCitas1 = new javax.swing.JLabel();
-        lblReportes1 = new javax.swing.JLabel();
-        lblPsicologos1 = new javax.swing.JLabel();
-        lblCubiculos2 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        btnPagos1 = new javax.swing.JButton();
-        lblCubiculos3 = new javax.swing.JLabel();
-        btnAjustes1 = new javax.swing.JButton();
-        lblCubiculos4 = new javax.swing.JLabel();
+        pnlFondoBarra = new javax.swing.JPanel();
+        btnCitas = new javax.swing.JButton();
+        btnPsicologos = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
+        btnCubiculos = new javax.swing.JButton();
+        lblCitas = new javax.swing.JLabel();
+        lblReportes = new javax.swing.JLabel();
+        lblPsicologos = new javax.swing.JLabel();
+        lblUsername = new javax.swing.JLabel();
+        lblIconoUsuario = new javax.swing.JLabel();
+        btnPagos = new javax.swing.JButton();
+        lblPagos = new javax.swing.JLabel();
+        btnAjustes = new javax.swing.JButton();
+        lblCubiculos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -65,138 +65,183 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
         panelLateral.setLayout(new java.awt.CardLayout());
         getContentPane().add(panelLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 1010, 680));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setVerifyInputWhenFocusTarget(false);
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlFondoBarra.setBackground(new java.awt.Color(255, 255, 255));
+        pnlFondoBarra.setVerifyInputWhenFocusTarget(false);
+        pnlFondoBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
-        btnCitas1.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
-        btnCitas1.setBorderPainted(false);
-        btnCitas1.setContentAreaFilled(false);
-        btnCitas1.setFocusPainted(false);
-        btnCitas1.addActionListener(new java.awt.event.ActionListener() {
+        btnCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-lista-50.png"))); // NOI18N
+        btnCitas.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
+        btnCitas.setBorderPainted(false);
+        btnCitas.setContentAreaFilled(false);
+        btnCitas.setFocusPainted(false);
+        btnCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCitas1ActionPerformed(evt);
+                btnCitasActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCitas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 70, 51));
+        pnlFondoBarra.add(btnCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 70, 51));
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/team.png"))); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setFocusPainted(false);
-        jButton5.setFocusable(false);
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 200, 80, -1));
-
-        btnReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
-        btnReportes1.setBorderPainted(false);
-        btnReportes1.setContentAreaFilled(false);
-        btnReportes1.setFocusable(false);
-        jPanel3.add(btnReportes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 297, 80, -1));
-
-        btnCubiculos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-estrella-50.png"))); // NOI18N
-        btnCubiculos1.setBorderPainted(false);
-        btnCubiculos1.setContentAreaFilled(false);
-        btnCubiculos1.setFocusPainted(false);
-        btnCubiculos1.setFocusable(false);
-        btnCubiculos1.setPreferredSize(new java.awt.Dimension(60, 60));
-        jPanel3.add(btnCubiculos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 70, 46));
-
-        lblCitas1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCitas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCitas1.setText("Citas");
-        jPanel3.add(lblCitas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 50, -1));
-
-        lblReportes1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblReportes1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblReportes1.setText("Reportes");
-        jPanel3.add(lblReportes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
-
-        lblPsicologos1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblPsicologos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPsicologos1.setText("Psicologos");
-        jPanel3.add(lblPsicologos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 70, -1));
-
-        lblCubiculos2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCubiculos2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCubiculos2.setText("Usuario");
-        jPanel3.add(lblCubiculos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 70, 70, -1));
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-user-50.png"))); // NOI18N
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 17, -1, -1));
-
-        btnPagos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/payment-icon-flatelements 1.png"))); // NOI18N
-        btnPagos1.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
-        btnPagos1.setBorderPainted(false);
-        btnPagos1.setContentAreaFilled(false);
-        btnPagos1.setFocusable(false);
-        btnPagos1.addActionListener(new java.awt.event.ActionListener() {
+        btnPsicologos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/gmail_groups.png"))); // NOI18N
+        btnPsicologos.setBorderPainted(false);
+        btnPsicologos.setContentAreaFilled(false);
+        btnPsicologos.setFocusPainted(false);
+        btnPsicologos.setFocusable(false);
+        btnPsicologos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagos1ActionPerformed(evt);
+                btnPsicologosActionPerformed(evt);
             }
         });
-        jPanel3.add(btnPagos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 70, -1));
+        pnlFondoBarra.add(btnPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 70, 60));
 
-        lblCubiculos3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCubiculos3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCubiculos3.setText("Pagos");
-        jPanel3.add(lblCubiculos3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 70, -1));
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
+        btnReportes.setBorderPainted(false);
+        btnReportes.setContentAreaFilled(false);
+        btnReportes.setFocusable(false);
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        pnlFondoBarra.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 70, -1));
 
-        btnAjustes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/container(1).png"))); // NOI18N
-        btnAjustes1.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
-        btnAjustes1.setBorderPainted(false);
-        btnAjustes1.setContentAreaFilled(false);
-        btnAjustes1.setFocusable(false);
-        jPanel3.add(btnAjustes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 70, 60));
+        btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono-cubiculo.png"))); // NOI18N
+        btnCubiculos.setBorderPainted(false);
+        btnCubiculos.setContentAreaFilled(false);
+        btnCubiculos.setFocusPainted(false);
+        btnCubiculos.setFocusable(false);
+        btnCubiculos.setPreferredSize(new java.awt.Dimension(60, 60));
+        pnlFondoBarra.add(btnCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 70, 46));
 
-        lblCubiculos4.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblCubiculos4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCubiculos4.setText("Cubiculos");
-        jPanel3.add(lblCubiculos4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 70, -1));
+        lblCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCitas.setText("Citas");
+        pnlFondoBarra.add(lblCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 50, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 680));
+        lblReportes.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblReportes.setText("Reportes");
+        pnlFondoBarra.add(lblReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
+
+        lblPsicologos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblPsicologos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPsicologos.setText("Psicologos");
+        pnlFondoBarra.add(lblPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 70, -1));
+
+        lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUsername.setText("Usuario");
+        pnlFondoBarra.add(lblUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 70, 70, -1));
+
+        lblIconoUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconoUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-user-50.png"))); // NOI18N
+        pnlFondoBarra.add(lblIconoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 17, -1, -1));
+
+        btnPagos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono-pagos.png"))); // NOI18N
+        btnPagos.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
+        btnPagos.setBorderPainted(false);
+        btnPagos.setContentAreaFilled(false);
+        btnPagos.setFocusable(false);
+        btnPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagosActionPerformed(evt);
+            }
+        });
+        pnlFondoBarra.add(btnPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 70, -1));
+
+        lblPagos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblPagos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPagos.setText("Pagos");
+        pnlFondoBarra.add(lblPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 70, -1));
+
+        btnAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono-ajustes.png"))); // NOI18N
+        btnAjustes.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
+        btnAjustes.setBorderPainted(false);
+        btnAjustes.setContentAreaFilled(false);
+        btnAjustes.setFocusable(false);
+        btnAjustes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAjustesActionPerformed(evt);
+            }
+        });
+        pnlFondoBarra.add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 70, 60));
+
+        lblCubiculos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblCubiculos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCubiculos.setText("Cubiculos");
+        pnlFondoBarra.add(lblCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 70, -1));
+
+        getContentPane().add(pnlFondoBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 680));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCitas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitas1ActionPerformed
+    private void btnCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitasActionPerformed
         flujoPantallas.pantallaCalendarioCitas(null);
-    }//GEN-LAST:event_btnCitas1ActionPerformed
+    }//GEN-LAST:event_btnCitasActionPerformed
 
-    private void btnPagos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagos1ActionPerformed
-    }//GEN-LAST:event_btnPagos1ActionPerformed
+    private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
+        flujoPantallas.pantallaRegistroPagos();
+    }//GEN-LAST:event_btnPagosActionPerformed
 
+    private void btnPsicologosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPsicologosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPsicologosActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAjustesActionPerformed
+
+    /**
+     * Método para agregar los paneles al CardLayout del panel lateral del menú.
+     */
     public void agregarPanelesLateral() {
         panelLateral.add(new PanelBienvenida(), "pantallaBienvenida");
-        panelLateral.add(new CalendarioCitas(), "pantallaCalendarioCitas");
+        panelLateral.add(new PanelCalendarioCitas(), "pantallaCalendarioCitas");
+        panelLateral.add(new PanelRegistroPagos(), "pantallaRegistroPagos");
     }
 
+    /**
+     * Método que regresa el panel lateral el cual tiene un CardLayout donde se
+     * muestran las pantallas del menú de la barra lateral izquierda.
+     *
+     * @return Panel lateral derecho donde aparecen las pantallas según lo
+     * seleccionado en el menú.
+     */
     public JPanel getPanelLateral() {
         return panelLateral;
     }
 
+    /**
+     * CardLayout del panel lateral donde aparecen las pantallas según lo
+     * seleccionado en el menú lateral izquierdo.
+     *
+     * @return CardLayout del panel.
+     */
     public CardLayout getCardLayout() {
         return cardLayout;
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAjustes1;
-    private javax.swing.JButton btnCitas1;
-    private javax.swing.JButton btnCubiculos1;
-    private javax.swing.JButton btnPagos1;
-    private javax.swing.JButton btnReportes1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lblCitas1;
-    private javax.swing.JLabel lblCubiculos2;
-    private javax.swing.JLabel lblCubiculos3;
-    private javax.swing.JLabel lblCubiculos4;
-    private javax.swing.JLabel lblPsicologos1;
-    private javax.swing.JLabel lblReportes1;
+    private javax.swing.JButton btnAjustes;
+    private javax.swing.JButton btnCitas;
+    private javax.swing.JButton btnCubiculos;
+    private javax.swing.JButton btnPagos;
+    private javax.swing.JButton btnPsicologos;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JLabel lblCitas;
+    private javax.swing.JLabel lblCubiculos;
+    private javax.swing.JLabel lblIconoUsuario;
+    private javax.swing.JLabel lblPagos;
+    private javax.swing.JLabel lblPsicologos;
+    private javax.swing.JLabel lblReportes;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel panelLateral;
+    private javax.swing.JPanel pnlFondoBarra;
     // End of variables declaration//GEN-END:variables
 }
