@@ -113,8 +113,13 @@ public class CubiculoBO implements ICubiculoBO {
     }
 
     @Override
-    public CubiculoDTO obtenerCubiculoPorID(Long id) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException {
+        try{
+            Cubiculo cubiculoEntidad = cubiculoDAO.buscarCubiculoPorNombre(nombre);
+            return mapper.toDTO(cubiculoEntidad);
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        }
     }
 
 }
