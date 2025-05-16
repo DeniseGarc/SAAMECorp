@@ -65,4 +65,34 @@ public class CubiculoBO implements ICubiculoBO {
         }
     }
 
+    @Override
+    public List<CubiculoDTO> obtenerCubiculosPorEstado(boolean estado) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<CubiculoDTO> obtenerCubiculos() throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean actualizarEstadoCubiculo(boolean estado, CubiculoDTO cubiculoAgregar) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean modificarCubiculo(CubiculoDTO cubiculoModificar) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public CubiculoDTO obtenerCubiculoPorID(Long id) throws NegocioException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

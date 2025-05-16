@@ -20,13 +20,28 @@ public class CubiculoDTO {
      * Nombre o identificador del cubículo.
      */
     private String nombre;
-
+    
     /**
      * Estado del cubículo: {@code true} si está disponible, {@code false} si
      * está ocupado.
      */
     private boolean estado;
-
+    
+    /**
+     * Numero de personas que admite el cubiculo
+     */
+    private int capacidad;
+    
+    /**
+     * Tipo de terapia para la que esta diseñada el cubiculo
+     */
+    private String tipoTerapia;
+    
+    /**
+     * Notas adicionales sobre el cubiculo
+     */
+    private String notas; 
+    
     /**
      * Constructor vacío. Crea un objeto {@code CubiculoDTO} sin valores
      * definidos.
@@ -82,5 +97,54 @@ public class CubiculoDTO {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+    /**
+     * Obtiene la capacidad del cubiculo
+     * @return Capacidad del cubiculo
+     */
+    public int getCapacidad() {
+        return capacidad;
+    }
+    
+    /**
+     * Establece la capacidad del cubiculo
+     * @param capacidad Capacidad del cubiculo
+     */
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+    /**
+     * Obtiene el tipo de terapia del cubiculo
+     * @return Tipo de terapia del cubiculo
+     */
+    public String getTipoTerapia() {
+        return tipoTerapia;
+    }
+    
+    /**
+     * Establece el tipo de terapia del cubiculo
+     * @param tipoTerapia Tipo de terapia del cubiculo
+     */
+    public void setTipoTerapia(String tipoTerapia) {
+        this.tipoTerapia = tipoTerapia;
+    }
+    
+    /**
+     * Obtien las notas del cubiculo
+     * @return Notas del cubiculo
+     */
+    public String getNotas() {
+        return notas;
+    }
+    
+    /**
+     * Establece las nota del cubiculo
+     * @param notas Notas del cubiculo
+     */
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+    
+    
 
 }
