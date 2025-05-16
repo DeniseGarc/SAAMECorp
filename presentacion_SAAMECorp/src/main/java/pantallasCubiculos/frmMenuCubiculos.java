@@ -41,8 +41,8 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         btnEditarCubiculos7 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
+        btnAgregarCubiculo = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
         btnRegresar7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,25 +72,35 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
             }
         });
 
-        jButton15.setBackground(new java.awt.Color(102, 0, 102));
-        jButton15.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("Agregar Cubiculo");
-        jButton15.setPreferredSize(new java.awt.Dimension(190, 170));
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarCubiculo.setBackground(new java.awt.Color(102, 0, 102));
+        btnAgregarCubiculo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnAgregarCubiculo.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarCubiculo.setText("Agregar Cubiculo");
+        btnAgregarCubiculo.setPreferredSize(new java.awt.Dimension(190, 170));
+        btnAgregarCubiculo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarCubiculoMouseClicked(evt);
+            }
+        });
+        btnAgregarCubiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
+                btnAgregarCubiculoActionPerformed(evt);
             }
         });
 
-        jButton16.setBackground(new java.awt.Color(102, 0, 102));
-        jButton16.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Reportes");
-        jButton16.setPreferredSize(new java.awt.Dimension(160, 160));
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
+        btnReportes.setBackground(new java.awt.Color(102, 0, 102));
+        btnReportes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setText("Reportes");
+        btnReportes.setPreferredSize(new java.awt.Dimension(160, 160));
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
+                btnReportesActionPerformed(evt);
             }
         });
 
@@ -115,8 +125,8 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(243, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditarCubiculos7, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(234, 234, 234))
         );
@@ -126,9 +136,9 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
                 .addGap(131, 131, 131)
                 .addComponent(btnEditarCubiculos7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
-                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(btnRegresar7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -180,13 +190,13 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarCubiculos7ActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+    private void btnAgregarCubiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCubiculoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
+    }//GEN-LAST:event_btnAgregarCubiculoActionPerformed
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton16ActionPerformed
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnRegresar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar7ActionPerformed
 
@@ -198,12 +208,21 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
         flujoPantallas.PantallaEditarCubiculos(frmPadre);
     }//GEN-LAST:event_btnEditarCubiculos7MouseClicked
 
+    private void btnAgregarCubiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCubiculoMouseClicked
+        flujoPantallas.pantallaAgregarCubiculo(frmPadre);
+    }//GEN-LAST:event_btnAgregarCubiculoMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        flujoPantallas.pantallaMenuReportes(frmPadre);
+    }//GEN-LAST:event_btnReportesMouseClicked
+
     /**
      * @param args the command line arguments
      */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarCubiculo;
     private javax.swing.JButton btnEditarCubiculos;
     private javax.swing.JButton btnEditarCubiculos1;
     private javax.swing.JButton btnEditarCubiculos2;
@@ -220,14 +239,13 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar5;
     private javax.swing.JButton btnRegresar6;
     private javax.swing.JButton btnRegresar7;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
