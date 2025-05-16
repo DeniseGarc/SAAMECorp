@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 public class FAgendarCita implements IAgendarCita {
 
     private final ControlAgendarCita control = new ControlAgendarCita();
-    private final ICorreoElectronico sistemaCorreoElectronico = new FCorreoElectronico();
 
     public FAgendarCita() {
 
