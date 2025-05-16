@@ -57,9 +57,9 @@ public interface ICubiculoBO {
      public boolean modificarCubiculo (CubiculoDTO cubiculoModificar) throws NegocioException;
      /**
       * Metodo para obtener un cubiculo dado su id
-      * @param id Id del cubiculo a obtener
+      * @param nombre Nombre del cubiculo a buscar
       * @return Cubiculo encontrado
       * @throws NegocioException 
       */
-     public CubiculoDTO obtenerCubiculoPorID(Long id) throws NegocioException;
+     public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException;
 }
