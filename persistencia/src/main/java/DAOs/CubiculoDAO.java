@@ -75,7 +75,7 @@ public class CubiculoDAO implements ICubiculoDAO {
     }
 
     @Override
-    public Cubiculo buscarCubiculoPorID(Long id) throws PersistenciaException {
+    public Cubiculo buscarCubiculoPorNombre(String nomrbe) throws PersistenciaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
