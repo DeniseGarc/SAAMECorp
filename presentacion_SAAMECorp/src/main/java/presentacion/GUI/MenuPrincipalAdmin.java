@@ -110,6 +110,11 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
         btnCubiculos.setFocusPainted(false);
         btnCubiculos.setFocusable(false);
         btnCubiculos.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnCubiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCubiculosMouseClicked(evt);
+            }
+        });
         pnlFondoBarra.add(btnCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 70, 46));
 
         lblCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -195,6 +200,10 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAjustesActionPerformed
+
+    private void btnCubiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCubiculosMouseClicked
+        flujoPantallas.PantallaGestionCubiculos(this);
+    }//GEN-LAST:event_btnCubiculosMouseClicked
 
     /**
      * Método para agregar los paneles al CardLayout del panel lateral del menú.
