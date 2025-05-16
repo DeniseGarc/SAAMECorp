@@ -24,11 +24,23 @@ import presentacion.sesion.TipoUsuario;
  *
  * @author Alici
  */
-public class AgregarCita extends javax.swing.JFrame {
+public class PantallaAgregarCita extends javax.swing.JFrame {
 
+    /**
+     * Fecha seleccionada en el calendario para la cita.
+     */
     private Calendar fechaCita;
+    /**
+     * Coordinador del flujo de las pantallas
+     */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    /**
+     * Coordinador entre aplicación y negocio
+     */
     CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
+    /**
+     * Lista de psicologos registrados en el consultorio
+     */
     private List<PsicologoCitaDTO> psicologos;
 
     /**
@@ -37,7 +49,7 @@ public class AgregarCita extends javax.swing.JFrame {
      *
      * @param fechaSeleccionada
      */
-    public AgregarCita(Calendar fechaSeleccionada) {
+    public PantallaAgregarCita(Calendar fechaSeleccionada) {
         try {
             this.fechaCita = fechaSeleccionada;
             this.psicologos = controlNegocio.mostrarPsicologos(fechaSeleccionada);
@@ -56,7 +68,7 @@ public class AgregarCita extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No hay psicologos disponibles en el momento", "Información", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (CoordinadorException ex) {
-            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar registrar la cita", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -80,19 +92,20 @@ public class AgregarCita extends javax.swing.JFrame {
         cmbHorarios = new javax.swing.JComboBox<>();
         cmbCubiculo = new javax.swing.JComboBox<>();
         lblCubiculo = new javax.swing.JLabel();
-        lblNombrePaciente = new javax.swing.JLabel();
-        txtNombrePaciente = new javax.swing.JTextField();
-        lblTelefonoPaciente = new javax.swing.JLabel();
-        txtTelefonoPaciente = new javax.swing.JTextField();
-        lblTelefonoPaciente1 = new javax.swing.JLabel();
-        txtCorreoPaciente = new javax.swing.JTextField();
         btnConfirmar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblFechaCita = new javax.swing.JLabel();
+        pnlDatosPaciente = new javax.swing.JPanel();
+        txtCorreoPaciente = new javax.swing.JTextField();
+        lblTelefonoPaciente1 = new javax.swing.JLabel();
+        txtTelefonoPaciente = new javax.swing.JTextField();
+        lblTelefonoPaciente = new javax.swing.JLabel();
+        txtNombrePaciente = new javax.swing.JTextField();
+        lblNombrePaciente = new javax.swing.JLabel();
+        lblDatosPaciente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(221, 212, 240));
-        setPreferredSize(new java.awt.Dimension(1101, 677));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -130,43 +143,30 @@ public class AgregarCita extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblPsicologo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblPsicologo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPsicologo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPsicologo.setText("Psicologo");
         jPanel4.add(lblPsicologo, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 40, 104, -1));
 
-        jPanel4.add(cmbPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 65, 602, -1));
+        cmbPsicologos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPsicologosActionPerformed(evt);
+            }
+        });
+        jPanel4.add(cmbPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 65, 602, 30));
 
         lblHorario.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblHorario.setText("Horario");
         jPanel4.add(lblHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 99, 104, -1));
 
-        jPanel4.add(cmbHorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 124, 602, -1));
+        jPanel4.add(cmbHorarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 124, 602, 30));
 
-        jPanel4.add(cmbCubiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 183, 602, -1));
+        jPanel4.add(cmbCubiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 183, 602, 30));
 
         lblCubiculo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblCubiculo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCubiculo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCubiculo.setText("Cubiculo");
         jPanel4.add(lblCubiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 158, 104, -1));
-
-        lblNombrePaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblNombrePaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNombrePaciente.setText("Nombre del Paciente");
-        jPanel4.add(lblNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 223, 192, -1));
-        jPanel4.add(txtNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 248, 602, -1));
-
-        lblTelefonoPaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblTelefonoPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTelefonoPaciente.setText("Telefono del Paciente");
-        jPanel4.add(lblTelefonoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 288, 192, -1));
-        jPanel4.add(txtTelefonoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 313, 602, -1));
-
-        lblTelefonoPaciente1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        lblTelefonoPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTelefonoPaciente1.setText("Correo del Paciente");
-        jPanel4.add(lblTelefonoPaciente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 347, 192, -1));
-        jPanel4.add(txtCorreoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 372, 602, -1));
 
         btnConfirmar.setBackground(new java.awt.Color(86, 33, 89));
         btnConfirmar.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -179,7 +179,7 @@ public class AgregarCita extends javax.swing.JFrame {
                 btnConfirmarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 412, 610, 30));
+        jPanel4.add(btnConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 610, 30));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -189,14 +189,55 @@ public class AgregarCita extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        jPanel4.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, -1, -1));
+        jPanel4.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, -1, -1));
 
-        lblFechaCita.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFechaCita.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblFechaCita.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFechaCita.setText("FECHA");
+        lblFechaCita.setText("<fecha de la cita>");
         jPanel4.add(lblFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 18, 602, -1));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 770, 500));
+        pnlDatosPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDatosPaciente.setBorder(new com.formdev.flatlaf.ui.FlatBorder());
+        pnlDatosPaciente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtCorreoPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoPacienteActionPerformed(evt);
+            }
+        });
+        pnlDatosPaciente.add(txtCorreoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 590, 30));
+
+        lblTelefonoPaciente1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTelefonoPaciente1.setText("Correo del Paciente");
+        pnlDatosPaciente.add(lblTelefonoPaciente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 192, -1));
+
+        txtTelefonoPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoPacienteActionPerformed(evt);
+            }
+        });
+        pnlDatosPaciente.add(txtTelefonoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 590, 30));
+
+        lblTelefonoPaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblTelefonoPaciente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTelefonoPaciente.setText("Telefono del Paciente");
+        pnlDatosPaciente.add(lblTelefonoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 192, -1));
+        pnlDatosPaciente.add(txtNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 590, 30));
+
+        lblNombrePaciente.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblNombrePaciente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNombrePaciente.setText("Nombre del Paciente");
+        pnlDatosPaciente.add(lblNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 192, -1));
+
+        lblDatosPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        lblDatosPaciente.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblDatosPaciente.setText("Datos del paciente");
+        pnlDatosPaciente.add(lblDatosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 200, -1));
+
+        jPanel4.add(pnlDatosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 610, 240));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 750, 550));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -209,8 +250,20 @@ public class AgregarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        flujoPantallas.pantallaCalendarioCitas(this);
+        flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void cmbPsicologosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPsicologosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPsicologosActionPerformed
+
+    private void txtCorreoPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoPacienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoPacienteActionPerformed
+
+    private void txtTelefonoPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoPacienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoPacienteActionPerformed
 
     /**
      * Método que obtiene los datos para registrar la cita y genera el DTO
@@ -241,7 +294,7 @@ public class AgregarCita extends javax.swing.JFrame {
             cmbPsicologos.addItem(psicologoUsuario);
             cmbPsicologos.setEnabled(false);
         } catch (CoordinadorException ex) {
-            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Usted no tiene disponibilidad de horarios para el día seleccionado", "No es posible agendar ninguna cita para el día seleccionado", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -276,7 +329,7 @@ public class AgregarCita extends javax.swing.JFrame {
                 flujoPantallas.pantallaCalendarioCitas(this);
             }
         } catch (CoordinadorException ex) {
-            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al agendar cita", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -335,7 +388,7 @@ public class AgregarCita extends javax.swing.JFrame {
                 cmbCubiculo.addItem(cubiculo);
             }
         } catch (CoordinadorException ex) {
-            Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error al obtener los cubiculos disponibles", "Error al obtener cubiculos", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -397,7 +450,7 @@ public class AgregarCita extends javax.swing.JFrame {
                         }
                     }
                 } catch (CoordinadorException ex) {
-                    Logger.getLogger(AgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "Error al obtener los cubiculos disponibles", "Error al obtener cubiculos", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -426,6 +479,7 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblCubiculo;
+    private javax.swing.JLabel lblDatosPaciente;
     private javax.swing.JLabel lblFechaCita;
     private javax.swing.JLabel lblHorario;
     private javax.swing.JLabel lblNombrePaciente;
@@ -433,6 +487,7 @@ public class AgregarCita extends javax.swing.JFrame {
     private javax.swing.JLabel lblTelefonoPaciente;
     private javax.swing.JLabel lblTelefonoPaciente1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnlDatosPaciente;
     private javax.swing.JTextField txtCorreoPaciente;
     private javax.swing.JTextField txtNombrePaciente;
     private javax.swing.JTextField txtTelefonoPaciente;

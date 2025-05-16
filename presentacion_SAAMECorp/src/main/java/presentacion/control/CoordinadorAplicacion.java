@@ -1,13 +1,14 @@
 package presentacion.control;
 
+import dto.PsicologoDTO;
 import java.util.Calendar;
 import presentacion.GUI.PantallaIniciarSesion;
-import presentacion.GUI.CalendarioCitas;
-import presentacion.GUI.AgregarCita;
+import presentacion.GUI.PantallaAgregarCita;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
+import presentacion.GUI.PantallaGenerarFactura;
+import presentacion.GUI.PantallaPagosAnteriores;
 import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
@@ -78,7 +79,8 @@ public class CoordinadorAplicacion {
      * Método para abrir la pantalla donde aparece el calendario de citas del
      * sistema.
      *
-     * @param frm Frame que mandó a llamar a la acción.
+     * @param frm Frame que mandó a llamar a la acción, null si no se desea
+     * cerrar dicho frame.
      */
     public void pantallaCalendarioCitas(JFrame frm) {
         if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
@@ -100,12 +102,68 @@ public class CoordinadorAplicacion {
      * @param fechaSeleccionada Fecha seleccionada de la cita.
      */
     public void pantallaAgregarCita(Calendar fechaSeleccionada) {
+        PantallaAgregarCita frmAgregarCita = new PantallaAgregarCita(fechaSeleccionada);
         if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
             menuAdmin.setVisible(false);
         } else {
             menuPsicologo.setVisible(false);
         }
-        AgregarCita frmAgregarCita = new AgregarCita(fechaSeleccionada);
         frmAgregarCita.setVisible(true);
+    }
+
+    /**
+     * Metodo para abrir la pantalla donde se pueden registrar pagos realizados
+     * en el mostrador del consultorio.
+     */
+    public void pantallaRegistroPagos() {
+        menuAdmin.getCardLayout().show(menuAdmin.getPanelLateral(), "pantallaRegistroPagos");
+    }
+
+    /**
+     * Método para regresar al menu principal haciendolo visible de nuevo
+     *
+     * @param frm Frame que manda a llamar a la acción y va a cerrarse.
+     */
+    public void regresarAlMenuPrincipal(JFrame frm) {
+        if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+            menuAdmin.setVisible(true);
+        } else {
+            menuPsicologo.setVisible(true);
+        }
+        frm.dispose();
+    }
+
+    /**
+     * Método para abrir la pantalla donde se muestran los pagos anteriores del
+     * psicologo seleccionado
+     *
+     * @param psicologo Psicologo seleccionado del cual se van a mostrar sus
+     * pagos anteriores.
+     * @param frm Frame que manda a llamar a la acción, null en caso de que sea
+     * llamado desde un panel.
+     */
+    public void pantallaPagosAnteriores(PsicologoDTO psicologo, JFrame frm) {
+        PantallaPagosAnteriores frmPantalla = new PantallaPagosAnteriores(psicologo);
+        menuAdmin.setVisible(false);
+        frmPantalla.setVisible(true);
+        if (frm != null) {
+            frm.dispose();
+        }
+    }
+
+    /**
+     * Método para abrir la pantalla donde se muestra el formulario para generar
+     * una factura de el pago seleccionado.
+     *
+     * @param frm Frame que mandó a llamar a la acción.
+     * @param pagoSeleccionado Pago seleccionado a facturar.
+     */
+    public void pantallaGenerarFactura(JFrame frm) {
+        PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
     }
 }
