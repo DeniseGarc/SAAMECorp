@@ -57,5 +57,14 @@ public interface ICubiculoDAO {
       * @return Cubiculo encontrado
       * @throws PersistenciaException 
       */
-     public Cubiculo buscarCubiculoPorID(Long id) throws PersistenciaException; 
+     public Cubiculo buscarCubiculoPorID(Long id) throws PersistenciaException;
+     
+     /**
+      * Metodo para obtener todos los cubiculos Registrados
+      * @return
+      * @throws PersistenciaException 
+      */
+    public List<Cubiculo> buscarCubiculos() throws PersistenciaException;
+
+
 }

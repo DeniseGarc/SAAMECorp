@@ -67,27 +67,49 @@ public class CubiculoBO implements ICubiculoBO {
 
     @Override
     public List<CubiculoDTO> obtenerCubiculosPorEstado(boolean estado) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            List<Cubiculo> cubiculos = cubiculoDAO.obtenerCubiculoPorEstado(estado);
+            return mapper.toDTOList(cubiculos);
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al obtener los cubibulos: "+ e.getMessage());
+        }
     }
 
     @Override
     public List<CubiculoDTO> obtenerCubiculos() throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            List<Cubiculo> cubiculos = cubiculoDAO.buscarCubiculos();
+            return mapper.toDTOList(cubiculos);
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al obtener los cubibulos: "+ e.getMessage());
+        }
     }
 
     @Override
     public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return cubiculoDAO.AgregarCubiculo(mapper.toEntity(cubiculo));
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al agregar el cubiculo: "+ e.getMessage());
+        }
     }
 
     @Override
-    public boolean actualizarEstadoCubiculo(boolean estado, CubiculoDTO cubiculoAgregar) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean actualizarEstadoCubiculo(CubiculoDTO cubiculoAgregar) throws NegocioException {
+         try{
+            return cubiculoDAO.ModificarEstadoCubiculo(mapper.toEntity(cubiculoAgregar));
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        }
     }
 
     @Override
     public boolean modificarCubiculo(CubiculoDTO cubiculoModificar) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            return cubiculoDAO.ModificarCubiculo(mapper.toEntity(cubiculoModificar));
+        }catch(PersistenciaException e){
+        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        }
     }
 
     @Override
