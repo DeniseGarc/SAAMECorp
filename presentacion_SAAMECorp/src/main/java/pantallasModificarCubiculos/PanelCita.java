@@ -4,18 +4,35 @@
  */
 package pantallasModificarCubiculos;
 
+import dto.CitaRegistradaDTO;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Maryr
  */
 public class PanelCita extends javax.swing.JPanel {
 
+    private final CitaRegistradaDTO cita;
     
     /**
      * Creates new form PanelCita
+     * @param cita
      */
-    public PanelCita() {
+    public PanelCita(CitaRegistradaDTO cita) {
+        this.cita = cita;
         initComponents();
+        cargarDatos();
+    }
+    
+    private void cargarDatos() {
+        String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
+        lblFecha.setText(fechaCitaFormateada);
+        lblDatos.setText("Cubiculo: " + cita.getCubiculo() + ", Paciente: " + cita.getNombrePaciente() + ", Psicologo: " + cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno());
+    }
+    
+    public CitaRegistradaDTO getCita() {
+        return cita;
     }
 
     /**
@@ -50,6 +67,11 @@ public class PanelCita extends javax.swing.JPanel {
         btnModificar.setBackground(new java.awt.Color(86, 33, 89));
         btnModificar.setText("Modificar");
         btnModificar.setBorder(null);
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,6 +118,10 @@ public class PanelCita extends javax.swing.JPanel {
                 .addGap(0, 200, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

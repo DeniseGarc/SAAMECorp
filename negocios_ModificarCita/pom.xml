@@ -8,6 +8,13 @@
     </parent>
     <artifactId>negocios_ModificarCita</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dto_negocios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>com.negocios_modificarcita.Negocios_ModificarCita</exec.mainClass>
