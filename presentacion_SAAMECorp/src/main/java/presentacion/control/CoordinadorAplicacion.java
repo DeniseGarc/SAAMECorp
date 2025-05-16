@@ -5,6 +5,10 @@ import java.util.Calendar;
 import presentacion.GUI.PantallaIniciarSesion;
 import presentacion.GUI.PantallaAgregarCita;
 import javax.swing.JFrame;
+import pantallasCubiculos.frmAgregarCubiculo;
+import pantallasCubiculos.frmEditarCubiculo;
+import pantallasCubiculos.frmMenuCubiculos;
+import pantallasCubiculos.frmMenuReportes;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
 import presentacion.GUI.PantallaGenerarFactura;
@@ -160,6 +164,54 @@ public class CoordinadorAplicacion {
      */
     public void pantallaGenerarFactura(JFrame frm) {
         PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     * @param frm  Frame que mando a llamar la accion
+     */
+    public void PantallaGestionCubiculos(JFrame frm){
+       frmMenuCubiculos frmPantalla = new frmMenuCubiculos(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     * @param frm  Frame que mando a llamar la accion
+     */
+    public void PantallaEditarCubiculos(JFrame frm){
+        frmEditarCubiculo frmPantalla = new frmEditarCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     * @param frm  Frame que mando a llamar la accion
+     */
+    public void pantallaAgregarCubiculo(JFrame frm){
+        frmAgregarCubiculo frmPantalla = new frmAgregarCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    public void pantallaMenuReportes (JFrame frm){
+        frmMenuReportes frmPantalla = new frmMenuReportes(frm);
         menuAdmin.setVisible(false);
         if (frm != null) {
             frm.setVisible(false);
