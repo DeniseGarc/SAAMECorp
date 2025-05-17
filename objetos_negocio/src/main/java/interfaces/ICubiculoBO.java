@@ -42,7 +42,6 @@ public interface ICubiculoBO {
      public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException; 
      /**
       * Metodo para actualizar el estado de un cubiculo
-      * @param estado estado nuevo a actualizar
       * @param cubiculoAgregar Cubiculo al que se le desea modificar el estado
       * @return True si se actualizo correctamente, False si no 
       * @throws NegocioException 
