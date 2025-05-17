@@ -45,7 +45,7 @@ public class PsicologoDAO implements IPsicologoDAO {
         try {
             List<Psicologo> lista = new LinkedList<>();
             lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
-            lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
+            lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "mary.ruizp20@gmail.com"));
             lista.add(new Psicologo("Maria", "Felix", "Perez", "erikalucia005@gmail.com"));
             return lista;
         } catch (Exception e) {

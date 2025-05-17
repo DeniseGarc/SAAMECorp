@@ -1,14 +1,25 @@
 package presentacion.control;
 
+import dto.CitaRegistradaDTO;
 import dto.PsicologoDTO;
+import static enumeradores.TipoBO.CITA;
+import excepciones.NegocioException;
+import interfaces.ICitaBO;
 import java.util.Calendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import presentacion.GUI.PantallaIniciarSesion;
 import presentacion.GUI.PantallaAgregarCita;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import manejadorBO.ManejadorBO;
 import pantallasCubiculos.frmAgregarCubiculo;
 import pantallasCubiculos.frmEditarCubiculo;
 import pantallasCubiculos.frmMenuCubiculos;
 import pantallasCubiculos.frmMenuReportes;
+import pantallasModificarCubiculos.PantallaSeleccionCitaModificar;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
 import presentacion.GUI.PantallaGenerarFactura;
@@ -170,25 +181,27 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para abrir el menu del subsistema de Cubiculos
-     * @param frm  Frame que mando a llamar la accion
+     *
+     * @param frm Frame que mando a llamar la accion
      */
-    public void PantallaGestionCubiculos(JFrame frm){
-       frmMenuCubiculos frmPantalla = new frmMenuCubiculos(frm);
+    public void PantallaGestionCubiculos(JFrame frm) {
+        frmMenuCubiculos frmPantalla = new frmMenuCubiculos(frm);
         menuAdmin.setVisible(false);
         if (frm != null) {
             frm.setVisible(false);
         }
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para abrir el menu del subsistema de Cubiculos
-     * @param frm  Frame que mando a llamar la accion
+     *
+     * @param frm Frame que mando a llamar la accion
      */
-    public void PantallaEditarCubiculos(JFrame frm){
+    public void PantallaEditarCubiculos(JFrame frm) {
         frmEditarCubiculo frmPantalla = new frmEditarCubiculo(frm);
         menuAdmin.setVisible(false);
         if (frm != null) {
@@ -196,12 +209,13 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para abrir el menu del subsistema de Cubiculos
-     * @param frm  Frame que mando a llamar la accion
+     *
+     * @param frm Frame que mando a llamar la accion
      */
-    public void pantallaAgregarCubiculo(JFrame frm){
+    public void pantallaAgregarCubiculo(JFrame frm) {
         frmAgregarCubiculo frmPantalla = new frmAgregarCubiculo(frm);
         menuAdmin.setVisible(false);
         if (frm != null) {
@@ -209,8 +223,8 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
-    
-    public void pantallaMenuReportes (JFrame frm){
+
+    public void pantallaMenuReportes(JFrame frm) {
         frmMenuReportes frmPantalla = new frmMenuReportes(frm);
         menuAdmin.setVisible(false);
         if (frm != null) {
@@ -218,4 +232,34 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
+    
+    /**
+     * Metodo para navegar a la pantalla de seleccion de citas
+     * aqui se filtran las citas dependiendo del dia que se selecciono en el calendario
+     * @param diaSeleccionado 
+     */
+    public void pantallaSeleccionCita(Calendar diaSeleccionado) {
+        PantallaSeleccionCitaModificar seleccionCitaModificar = new PantallaSeleccionCitaModificar();
+        ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(CITA);
+        try {
+            List<CitaRegistradaDTO> citas = citaBO.obtenerCitasCompletas();
+            List<CitaRegistradaDTO> citasDelDia = citas.stream()
+                    .filter(cita -> esMismaFecha(cita.getFechaHora(), diaSeleccionado))
+                    .collect(Collectors.toList());
+            seleccionCitaModificar.cargarCitas(citasDelDia);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        if (frame != null) {
+//            frame.setVisible(false);
+//        }
+        seleccionCitaModificar.setVisible(true);
+    }
+
+    private boolean esMismaFecha(Calendar fecha1, Calendar fecha2) {
+        return fecha1.get(Calendar.YEAR) == fecha2.get(Calendar.YEAR)
+                && fecha1.get(Calendar.MONTH) == fecha2.get(Calendar.MONTH)
+                && fecha1.get(Calendar.DAY_OF_MONTH) == fecha2.get(Calendar.DAY_OF_MONTH);
+    }
+
 }
