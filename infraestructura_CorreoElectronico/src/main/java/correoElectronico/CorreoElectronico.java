@@ -12,12 +12,12 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
- * Clase fachada que implementa la interfaz ICorreoElectrónico para el envío de
+ * Clase que implementa la interfaz ICorreoElectrónico para el envío de
  * correos,
  *
  * @author Alici
  */
-public class FCorreoElectronico implements ICorreoElectronico {
+public class CorreoElectronico implements ICorreoElectronico {
 
     /**
      * Método que envía un correo electrónico a la dirección de correo dada.

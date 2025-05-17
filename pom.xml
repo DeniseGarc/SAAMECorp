@@ -17,6 +17,7 @@
         <module>GestorReportes</module>
         <module>negocios_GenerarFactura</module>
         <module>negocios_Pagos</module>
+        <module>infraestructura_SistemaFacturas</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
