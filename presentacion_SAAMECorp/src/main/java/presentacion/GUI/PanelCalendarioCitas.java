@@ -87,6 +87,11 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         btnModificarCita.setForeground(new java.awt.Color(255, 255, 255));
         btnModificarCita.setText("Modificar cita");
         btnModificarCita.setBorder(null);
+        btnModificarCita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarCitaMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnModificarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 610, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -120,6 +125,11 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         // Llama al método para pasar a la siguente pantalla 
         flujoPantallas.pantallaAgregarCita(diaSeleccionado);;
     }//GEN-LAST:event_btnSeleccionarDiaActionPerformed
+
+    private void btnModificarCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarCitaMouseClicked
+        Calendar diaSeleccionado = calendarioCitas.getCalendar();
+        flujoPantallas.pantallaSeleccionCita(diaSeleccionado);
+    }//GEN-LAST:event_btnModificarCitaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,10 +8,16 @@ import java.util.Calendar;
 
 /**
  * Mock para la entidad de Cita
+ *
  * @author erika
  */
 public class Cita {
-   
+
+    /**
+     *
+     */
+    private String id;
+
     /**
      * Fecha y hora en que se llevará a cabo la cita.
      */
@@ -80,6 +86,14 @@ public class Cita {
     public Cita(Calendar fechaHora, String cubiculo) {
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
