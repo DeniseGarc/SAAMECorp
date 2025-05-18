@@ -6,6 +6,8 @@ package pantallasModificarCubiculos;
 
 import dto.CitaRegistradaDTO;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
+import presentacion.control.CoordinadorAplicacion;
 
 /**
  *
@@ -13,24 +15,28 @@ import java.text.SimpleDateFormat;
  */
 public class PanelCita extends javax.swing.JPanel {
 
-    private final CitaRegistradaDTO cita;
-    
+    private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private CitaRegistradaDTO cita;
+    private JFrame framePadre;
+
     /**
      * Creates new form PanelCita
+     *
      * @param cita
      */
-    public PanelCita(CitaRegistradaDTO cita) {
+    public PanelCita(CitaRegistradaDTO cita, JFrame framePadre) {
         this.cita = cita;
+        this.framePadre = framePadre;
         initComponents();
         cargarDatos();
     }
-    
+
     private void cargarDatos() {
         String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
         lblFecha.setText(fechaCitaFormateada);
         lblDatos.setText("Cubiculo: " + cita.getCubiculo() + ", Paciente: " + cita.getNombrePaciente() + ", Psicologo: " + cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno());
     }
-    
+
     public CitaRegistradaDTO getCita() {
         return cita;
     }
@@ -120,7 +126,7 @@ public class PanelCita extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnModificarMouseClicked
 
 

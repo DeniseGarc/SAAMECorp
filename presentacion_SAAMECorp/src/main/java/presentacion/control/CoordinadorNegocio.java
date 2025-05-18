@@ -7,12 +7,14 @@ import calendario.configuracion.ControlDiasCalendario;
 import calendario.configuracion.PintorFechas;
 import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
 import excepciones.GestorCalendarioException;
+import excepciones.ModificarCitaException;
 import excepciones.GestorCubiculosException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
@@ -25,6 +27,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modificarCita.FModificarCita;
+import modificarCita.IModificarCita;
 import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
@@ -68,6 +72,8 @@ public class CoordinadorNegocio {
      */
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
     
+    private final IModificarCita sistemaModificarCita = new FModificarCita();
+
     /**
      * Subsistema para gestionar cubiculos
      */
@@ -297,6 +303,21 @@ public class CoordinadorNegocio {
         return true;
     }
     
+    /**
+     * Metodo para filtrar las citas por el dia
+     *
+     * @param fecha de la cual se quieren mostrar las citas
+     * @return la lista con las citas filtradas
+     * @throws excepciones.CoordinadorException
+     */
+    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.obtenerCitasDia(fecha);
+        } catch (ModificarCitaException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
+
     public String AgregarCubiculo (CubiculoDTO cubiculo) throws CoordinadorException{
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");

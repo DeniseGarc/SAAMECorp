@@ -3,6 +3,7 @@ package presentacion.control;
 import dto.CitaRegistradaDTO;
 import dto.PsicologoDTO;
 import static enumeradores.TipoBO.CITA;
+import excepciones.CoordinadorException;
 import excepciones.NegocioException;
 import interfaces.ICitaBO;
 import java.util.Calendar;
@@ -13,12 +14,14 @@ import java.util.stream.Collectors;
 import presentacion.GUI.PantallaIniciarSesion;
 import presentacion.GUI.PantallaAgregarCita;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import manejadorBO.ManejadorBO;
 import pantallasCubiculos.frmAgregarCubiculo;
 import pantallasCubiculos.frmEditarCubiculo;
 import pantallasCubiculos.frmMenuCubiculos;
 import pantallasCubiculos.frmMenuReportes;
+import pantallasModificarCubiculos.PantallaActualizarCita;
 import pantallasModificarCubiculos.PantallaSeleccionCitaModificar;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
@@ -232,34 +235,32 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para navegar a la pantalla de seleccion de citas
-     * aqui se filtran las citas dependiendo del dia que se selecciono en el calendario
-     * @param diaSeleccionado 
+     *
+     * @param diaSeleccionado dia del cual se quieren consultar las citas
      */
     public void pantallaSeleccionCita(Calendar diaSeleccionado) {
         PantallaSeleccionCitaModificar seleccionCitaModificar = new PantallaSeleccionCitaModificar();
-        ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(CITA);
+        CoordinadorNegocio coordinadorNegocio = CoordinadorNegocio.getInstance();
         try {
-            List<CitaRegistradaDTO> citas = citaBO.obtenerCitasCompletas();
-            List<CitaRegistradaDTO> citasDelDia = citas.stream()
-                    .filter(cita -> esMismaFecha(cita.getFechaHora(), diaSeleccionado))
-                    .collect(Collectors.toList());
-            seleccionCitaModificar.cargarCitas(citasDelDia);
-        } catch (NegocioException ex) {
+            List<CitaRegistradaDTO> citas = coordinadorNegocio.obtenerCitasDia(diaSeleccionado);
+            if (citas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No hay citas registradas para este día.");
+                return;
+            }
+            menuAdmin.setVisible(false);
+            seleccionCitaModificar.cargarCitas(citas);
+        } catch (CoordinadorException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        if (frame != null) {
-//            frame.setVisible(false);
-//        }
         seleccionCitaModificar.setVisible(true);
     }
 
-    private boolean esMismaFecha(Calendar fecha1, Calendar fecha2) {
-        return fecha1.get(Calendar.YEAR) == fecha2.get(Calendar.YEAR)
-                && fecha1.get(Calendar.MONTH) == fecha2.get(Calendar.MONTH)
-                && fecha1.get(Calendar.DAY_OF_MONTH) == fecha2.get(Calendar.DAY_OF_MONTH);
+    public void pantallaModificarCita(CitaRegistradaDTO cita, JFrame frame) {
+        PantallaActualizarCita actualizarCita = new PantallaActualizarCita();
+        
     }
 
 }

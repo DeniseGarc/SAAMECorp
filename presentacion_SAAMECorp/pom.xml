@@ -53,6 +53,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>negocios_ModificarCita</artifactId>
             <artifactId>GestorCubiculos</artifactId>
             <version>${project.version}</version>
         </dependency>

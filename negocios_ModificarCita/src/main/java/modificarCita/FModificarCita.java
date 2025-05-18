@@ -10,12 +10,34 @@ import dto.CubiculoDTO;
 import excepciones.ModificarCitaException;
 import java.util.Calendar;
 import java.util.List;
+import modificarCita.control.ControlModificarCita;
 
 /**
  *
  * @author Maryr
  */
 public class FModificarCita implements IModificarCita {
+    
+    private final ControlModificarCita control = new ControlModificarCita();
+    
+    /**
+     * Metodo para filtrar las citas por el dia
+     *
+     * @param fecha de la cual se quieren mostrar las citas
+     * @return la lista con las citas filtradas
+     * @throws excepciones.ModificarCitaException
+     */
+    @Override
+    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) throws ModificarCitaException {
+        if (fecha == null) {
+            throw new ModificarCitaException("La fecha no es valida.");
+        }
+        try {
+            return control.obtenerCitasDia(fecha);
+        } catch (Exception e) {
+            throw new ModificarCitaException("Error al obtener las citas del dia: ", e);
+        }
+    }
 
     @Override
     public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException {
@@ -36,5 +58,7 @@ public class FModificarCita implements IModificarCita {
     public boolean aplicarCuota(CitaRegistradaDTO cita) throws ModificarCitaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
     
 }
