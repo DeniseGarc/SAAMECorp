@@ -4,7 +4,6 @@ import correoElectronico.FCorreoElectronico;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CorreoCitaDTO;
-import dto.CorreoDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
@@ -85,7 +84,8 @@ public class ControlAgendarCita {
                     psicologo.getNombre(),
                     psicologo.getApellidoPaterno(),
                     psicologo.getApellidoMaterno(),
-                    psicologo.getCorreo()
+                    psicologo.getCorreo(),
+                    null
             );
 
             return adeudoBO.consultarAdeudoTotalPsicologo(dto);

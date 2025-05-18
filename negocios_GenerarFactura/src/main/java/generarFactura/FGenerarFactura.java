@@ -8,6 +8,6 @@ package generarFactura;
  *
  * @author Alici
  */
-public class FGenerarFactura {
+public class FGenerarFactura implements IGenerarFactura{
     
 }

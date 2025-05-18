@@ -1,5 +1,6 @@
 package presentacion.control;
 
+import dto.PagoDTO;
 import dto.PsicologoDTO;
 import java.util.Calendar;
 import presentacion.GUI.PantallaIniciarSesion;
@@ -158,8 +159,8 @@ public class CoordinadorAplicacion {
      * @param frm Frame que mandó a llamar a la acción.
      * @param pagoSeleccionado Pago seleccionado a facturar.
      */
-    public void pantallaGenerarFactura(JFrame frm) {
-        PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm);
+    public void pantallaGenerarFactura(JFrame frm, PagoDTO pagoSeleccionado) {
+        PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm, pagoSeleccionado);
         menuAdmin.setVisible(false);
         if (frm != null) {
             frm.setVisible(false);

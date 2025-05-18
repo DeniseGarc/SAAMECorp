@@ -1,0 +1,4 @@
+exception\GestorReportesException.class
+gestorReportes\GestorReportesControl.class
+gestorReportes\IGestorReportes.class
+gestorReportes\FGestorReportes.class

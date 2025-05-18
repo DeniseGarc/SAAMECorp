@@ -82,7 +82,7 @@ public class SistemaFacturas implements ISistemaFacturas {
             DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
             LocalDateTime fechaHora = LocalDateTime.parse(facturaCfdi.getDate(), formatter);
             factura.setFechaHoraEmision(fechaHora);
-
+            factura.setFolio(facturaCfdi.getFolio());
             return factura;
         } catch (Exception e) {
             Logger.getLogger(SistemaFacturas.class.getName()).log(Level.SEVERE, null, e);

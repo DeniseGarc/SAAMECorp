@@ -1,6 +1,7 @@
 package presentacion;
 
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.utilerias.ClaveCFDI;
 
 /**
  * Clase principal que inicializa la pantalla de inicio del sistema.
@@ -18,6 +19,7 @@ public class inicio {
     public static void main(String[] args) {
         CoordinadorAplicacion control = CoordinadorAplicacion.getInstance();
         control.pantallaInicioSesion();
+
     }
 
 }

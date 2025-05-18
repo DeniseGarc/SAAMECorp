@@ -17,7 +17,7 @@ import java.util.Properties;
  *
  * @author Alici
  */
-public class CorreoElectronico implements ICorreoElectronico {
+public class FCorreoElectronico implements ICorreoElectronico {
 
     /**
      * Método que envía un correo electrónico a la dirección de correo dada.
