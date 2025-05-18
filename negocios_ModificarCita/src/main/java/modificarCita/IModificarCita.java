@@ -16,10 +16,22 @@ import java.util.List;
  * @author Maryr
  */
 public interface IModificarCita {
-   
+
+    /**
+     * Metodo para filtrar las citas por el dia
+     *
+     * @param fecha de la cual se quieren mostrar las citas
+     * @return la lista con las citas filtradas
+     * @throws excepciones.ModificarCitaException
+     */
+    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) throws ModificarCitaException;
+
     public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException;
+
     public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws ModificarCitaException;
+
     public AdeudoCitaDTO verificarAdeudoCita(CitaRegistradaDTO cita) throws ModificarCitaException;
+
     public boolean aplicarCuota(CitaRegistradaDTO cita) throws ModificarCitaException;
-    
+
 }

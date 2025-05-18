@@ -7,6 +7,7 @@ package pantallasModificarCubiculos;
 import dto.CitaRegistradaDTO;
 import java.util.List;
 import javax.swing.Box;
+import presentacion.control.CoordinadorAplicacion;
 
 /**
  *
@@ -14,6 +15,8 @@ import javax.swing.Box;
  */
 public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
 
+    private static List<CitaRegistradaDTO> citasPanel;
+    private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     /**
      * Creates new form PantallaSeleccionCitaModificar
      */
@@ -34,6 +37,7 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
         panelContenedorCitas = new javax.swing.JScrollPane();
         panelInternoCitas = new javax.swing.JPanel();
 
@@ -48,20 +52,40 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
         lblTitulo.setText("Modificar cita");
 
+        btnVolver.setBackground(new java.awt.Color(188, 163, 226));
+        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
+        btnVolver.setBorder(null);
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVolverMouseClicked(evt);
+            }
+        });
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(16, 16, 16)
+                .addComponent(btnVolver)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(959, Short.MAX_VALUE))
+                .addContainerGap(931, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnVolver))
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
@@ -79,7 +103,7 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+                .addGap(210, 210, 210)
                 .addComponent(panelContenedorCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -106,10 +130,23 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
+        flujoPantallas.pantallaCalendarioCitas(this);
+    }//GEN-LAST:event_btnVolverMouseClicked
+
+    /**
+     * Metodo para generar los paneles por cita en la pantalla
+     * @param citas la lista de las citas ya filtradas que se necesitaran
+     */
     public void cargarCitas(List<CitaRegistradaDTO> citas) {
+        citasPanel = citas;
         panelInternoCitas.removeAll();
         for (CitaRegistradaDTO cita : citas) {
-            PanelCita panelCita = new PanelCita(cita);
+            PanelCita panelCita = new PanelCita(cita, this);
             panelInternoCitas.add(panelCita);
         }
         panelInternoCitas.revalidate();
@@ -117,6 +154,7 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblTitulo;

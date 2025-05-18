@@ -4,24 +4,100 @@
  */
 package modificarCita.control;
 
+import dto.CitaDTO;
 import dto.CitaRegistradaDTO;
+import dto.CubiculoDTO;
+import static enumeradores.TipoBO.ADEUDO;
 import static enumeradores.TipoBO.CITA;
+import static enumeradores.TipoBO.CUBICULO;
+import static enumeradores.TipoBO.PSICOLOGO;
+import excepciones.ModificarCitaException;
+import excepciones.NegocioException;
+import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
+import interfaces.ICubiculoBO;
+import interfaces.IPsicologoBO;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import manejadorBO.ManejadorBO;
 
 /**
- * Clase control para la comunicacion entre el subsistema y objetos negocio
- * u otro servicio externo
+ * Clase control para la comunicacion entre el subsistema y objetos negocio u
+ * otro servicio externo
+ *
  * @author Maryr
  */
 public class ControlModificarCita {
-    
+
+    IPsicologoBO psicologoBO = (IPsicologoBO) ManejadorBO.crearBO(PSICOLOGO);
     ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(CITA);
-    
-//    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) {
-//        return;
-//    }
-    
+    IAdeudoBO adeudoBO = (IAdeudoBO) ManejadorBO.crearBO(ADEUDO);
+    ICubiculoBO cubiculoBO = (ICubiculoBO) ManejadorBO.crearBO(CUBICULO);
+
+    /**
+     * Metodo para filtrar las citas por el dia
+     *
+     * @param fecha de la cual se quieren mostrar las citas
+     * @return la lista con las citas filtradas
+     */
+    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) {
+        try {
+            List<CitaRegistradaDTO> citas = citaBO.obtenerCitasCompletas();
+            List<CitaRegistradaDTO> citasDelDia = citas.stream()
+                    .filter(cita -> esMismaFecha(cita.getFechaHora(), fecha))
+                    .collect(Collectors.toList());
+            return citasDelDia;
+        } catch (NegocioException ex) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    /**
+     * Metodo de apoyo para filtrar las citas por la fecha
+     *
+     * @param fecha1
+     * @param fecha2
+     * @return true si coinciden false en caso contrario
+     */
+    private boolean esMismaFecha(Calendar fecha1, Calendar fecha2) {
+        return fecha1.get(Calendar.YEAR) == fecha2.get(Calendar.YEAR)
+                && fecha1.get(Calendar.MONTH) == fecha2.get(Calendar.MONTH)
+                && fecha1.get(Calendar.DAY_OF_MONTH) == fecha2.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(Calendar fechaHoraCita) throws ModificarCitaException {
+        try {
+            List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
+            List<CitaRegistradaDTO> citasRegistradas = citaBO.obtenerCitasCompletas();
+            List<CubiculoDTO> cubiculosFiltrados = new LinkedList<>();
+            for (CubiculoDTO cubiculo : cubiculosDisponibles) {
+                boolean cubiculoOcupado = false;
+                for (CitaRegistradaDTO cita : citasRegistradas) {
+                    if (cubiculo.getNombre().equals(cita.getCubiculo())
+                            && cita.getFechaHora().get(Calendar.YEAR) == fechaHoraCita.get(Calendar.YEAR)
+                            && cita.getFechaHora().get(Calendar.MONTH) == fechaHoraCita.get(Calendar.MONTH)
+                            && cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == fechaHoraCita.get(Calendar.DAY_OF_MONTH)
+                            && cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == fechaHoraCita.get(Calendar.HOUR_OF_DAY)
+                            && cita.getFechaHora().get(Calendar.MINUTE) == fechaHoraCita.get(Calendar.MINUTE)) {
+                        cubiculoOcupado = true;
+                        break;
+                    }
+                }
+                if (!cubiculoOcupado) {
+                    cubiculosFiltrados.add(cubiculo);
+                }
+            }
+            return cubiculosFiltrados;
+        } catch (Exception e) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new ModificarCitaException("Ha ocurido un error al intentar obtener los cubiculos disponibles en el horario seleccionado", e);
+        }
+    }
+
 }
