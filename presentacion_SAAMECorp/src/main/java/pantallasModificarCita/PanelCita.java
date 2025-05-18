@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package pantallasModificarCubiculos;
+package pantallasModificarCita;
 
 import dto.CitaRegistradaDTO;
 import java.text.SimpleDateFormat;
@@ -126,7 +126,7 @@ public class PanelCita extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-
+        flujoPantallas.pantallaModificarCita(cita, framePadre);
     }//GEN-LAST:event_btnModificarMouseClicked
 
 
@@ -135,7 +135,6 @@ public class PanelCita extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblDatos;
     private javax.swing.JLabel lblFecha;
     // End of variables declaration//GEN-END:variables

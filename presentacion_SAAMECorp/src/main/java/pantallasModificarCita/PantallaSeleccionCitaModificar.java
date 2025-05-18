@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pantallasModificarCubiculos;
+package pantallasModificarCita;
 
 import dto.CitaRegistradaDTO;
 import java.util.List;
@@ -15,7 +15,8 @@ import presentacion.control.CoordinadorAplicacion;
  */
 public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
 
-    private static List<CitaRegistradaDTO> citasPanel;
+    
+    private List<CitaRegistradaDTO> citasPanel;
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     /**
      * Creates new form PantallaSeleccionCitaModificar
@@ -103,7 +104,7 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(210, 210, 210)
+                .addGap(262, 262, 262)
                 .addComponent(panelContenedorCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -111,9 +112,9 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addComponent(panelContenedorCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +144,7 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
      * @param citas la lista de las citas ya filtradas que se necesitaran
      */
     public void cargarCitas(List<CitaRegistradaDTO> citas) {
-        citasPanel = citas;
+        this.citasPanel = citas;
         panelInternoCitas.removeAll();
         for (CitaRegistradaDTO cita : citas) {
             PanelCita panelCita = new PanelCita(cita, this);

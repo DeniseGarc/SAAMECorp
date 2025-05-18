@@ -21,8 +21,8 @@ import pantallasCubiculos.frmAgregarCubiculo;
 import pantallasCubiculos.frmEditarCubiculo;
 import pantallasCubiculos.frmMenuCubiculos;
 import pantallasCubiculos.frmMenuReportes;
-import pantallasModificarCubiculos.PantallaActualizarCita;
-import pantallasModificarCubiculos.PantallaSeleccionCitaModificar;
+import pantallasModificarCita.PantallaActualizarCita;
+import pantallasModificarCita.PantallaSeleccionCitaModificar;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
 import presentacion.GUI.PantallaGenerarFactura;
@@ -259,8 +259,12 @@ public class CoordinadorAplicacion {
     }
 
     public void pantallaModificarCita(CitaRegistradaDTO cita, JFrame frame) {
-        PantallaActualizarCita actualizarCita = new PantallaActualizarCita();
-        
+        PantallaActualizarCita actualizarCita = new PantallaActualizarCita(cita);
+        actualizarCita.llenarCubiculos();
+        actualizarCita.setVisible(true);
+        if (frame != null) {
+            frame.setVisible(false);
+        }
     }
 
 }
