@@ -8,11 +8,13 @@ import BO.AdeudoBO;
 import BO.CitaBO;
 import BO.CubiculoBO;
 import BO.PsicologoBO;
+import BO.ReporteCubiculoBO;
 import enumeradores.TipoBO;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
+import interfaces.IReporteCubiculoBO;
 
 /**
  * Clase que funciona como fábrica de objetos negocio.
@@ -40,6 +42,9 @@ public class ManejadorBO {
             case PSICOLOGO:
                 IPsicologoBO psicologoBO = PsicologoBO.getInstancia();
                 return psicologoBO;
+            case REPORTE: 
+                IReporteCubiculoBO reporteBO = ReporteCubiculoBO.getInstancia();
+                
             default:
                 throw new IllegalArgumentException("Tipo de BO no soportado: " + tipo);
         }
