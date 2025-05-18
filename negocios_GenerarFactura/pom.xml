@@ -14,4 +14,21 @@
         <exec.mainClass>com.infraestructura_generarfactura.Infraestructura_GenerarFactura</exec.mainClass>
     </properties>
     <name>negocios_GenerarFactura</name>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dto_negocios</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>infraestructura_SistemaFacturas</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>objetos_negocio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
