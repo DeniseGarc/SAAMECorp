@@ -36,9 +36,31 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
     ICitaDAO citaDAO = CitaDAO.getInstancia();
     
     /**
+     * Instancia unica de la clase
+     */
+    private static ReporteCubiculoBO instancia;
+    
+    /**
      * Instancia de la clase CubiculoDAO
      */
     ICubiculoDAO cubiculoDAO = CubiculoDAO.getInstanciaDAO();
+    
+    /**
+     * Constructor privado para evitar instancias externas
+     */
+    private ReporteCubiculoBO(){}
+    
+    /**
+     * Metodo para obtener la instancia unica de CitaBO Si no existe una la crea
+     *
+     * @return instancia unida de CitaBO
+     */
+    public static ReporteCubiculoBO getInstancia() {
+        if (instancia == null) {
+            instancia = new ReporteCubiculoBO();
+        }
+        return instancia;
+    }
     
     /**
    * Metodo para ganerar un reporte de uso de cubiculos 
@@ -134,7 +156,7 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
                 if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
                     Adeudo adeudo = cita.getAdeudo();
                     if (adeudo != null) {
-                        if (adeudo.isEstado()) { // pagado
+                        if (adeudo.isEstado()) { 
                             ingreso += adeudo.getCantidad();
                             pagadas++;
                         } else {
