@@ -54,6 +54,10 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>negocios_ModificarCita</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>GestorCubiculos</artifactId>
             <version>${project.version}</version>
         </dependency>

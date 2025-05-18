@@ -7,6 +7,8 @@ package modificarCita.control;
 import dto.CitaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
+import dto.PsicologoCitaDTO;
+import dto.PsicologoDTO;
 import static enumeradores.TipoBO.ADEUDO;
 import static enumeradores.TipoBO.CITA;
 import static enumeradores.TipoBO.CUBICULO;
@@ -17,6 +19,7 @@ import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,6 +100,29 @@ public class ControlModificarCita {
         } catch (Exception e) {
             Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
             throw new ModificarCitaException("Ha ocurido un error al intentar obtener los cubiculos disponibles en el horario seleccionado", e);
+        }
+    }
+
+    public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws ModificarCitaException {
+        try {
+            List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
+            List<PsicologoDTO> psicologos = psicologoBO.obtenerPsicologos();
+
+            for (PsicologoDTO psicologo : psicologos) {
+                List<LocalTime> horasDisponibles = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologo);
+                PsicologoCitaDTO dto = new PsicologoCitaDTO(
+                        psicologo.getNombre(),
+                        psicologo.getApellidoPaterno(),
+                        psicologo.getApellidoMaterno(),
+                        psicologo.getCorreo(),
+                        horasDisponibles
+                );
+                psicologosDisponibles.add(dto);
+            }
+            return psicologosDisponibles;
+        } catch (Exception e) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new ModificarCitaException("Ha ocurrido un error al obtener los psicólogos y sus horarios", e);
         }
     }
 

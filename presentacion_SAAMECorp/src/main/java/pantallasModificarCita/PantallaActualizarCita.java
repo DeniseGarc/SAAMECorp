@@ -2,7 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pantallasModificarCubiculos;
+package pantallasModificarCita;
+
+import dto.CitaRegistradaDTO;
+import excepciones.CoordinadorException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import presentacion.GUI.PantallaAgregarCita;
+import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
@@ -10,11 +21,18 @@ package pantallasModificarCubiculos;
  */
 public class PantallaActualizarCita extends javax.swing.JFrame {
 
+    private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
+    private CitaRegistradaDTO cita;
     /**
      * Creates new form PantallaActualizarCita
+     * @param cita a actualizar
      */
-    public PantallaActualizarCita() {
+    public PantallaActualizarCita(CitaRegistradaDTO cita) {
+        this.cita = cita;
         initComponents();
+        setLocationRelativeTo(null);
+        datosCita();
     }
 
     /**
@@ -128,6 +146,11 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         btnVolver.setBackground(new java.awt.Color(86, 33, 89));
         btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
         btnVolver.setBorder(null);
+        btnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVolverMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -246,6 +269,38 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoPacienteActionPerformed
 
+    private void btnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVolverMouseClicked
+        flujoPantallas.pantallaCalendarioCitas(this);
+    }//GEN-LAST:event_btnVolverMouseClicked
+
+    public void llenarCubiculos() {
+        try {
+            CbBoxCubiculo.removeAllItems();
+            CbBoxCubiculo.setEnabled(true);
+            List<String> cubiculos = controlNegocio.mandarCubiculos(cita.getFechaHora());
+            if (cubiculos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No hay cubiculos disponibles para la fecha y hora seleccionadas", "Sin disponiblidad de cubiculos", JOptionPane.INFORMATION_MESSAGE);
+            }
+            for (String cubiculo : cubiculos) {
+                CbBoxCubiculo.addItem(cubiculo);
+            }
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al obtener los cubiculos disponibles", "Error al obtener cubiculos", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void llenarHorarios() {
+        
+    }
+    
+    public void datosCita() {
+        CbBoxCubiculo.setSelectedItem(cita.getCubiculo());
+        CbBoxHorario.setSelectedItem(cita.getFechaHora().getTime());
+        txtnombrePaciente.setText(cita.getNombrePaciente());
+        txtCorreoPaciente.setText(cita.getCorreoPaciente());
+        txtTelefonoPaciente.setText(cita.getTelefonoPaciente());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbBoxCubiculo;

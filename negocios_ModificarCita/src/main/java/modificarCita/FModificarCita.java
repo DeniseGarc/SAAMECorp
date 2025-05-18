@@ -17,9 +17,9 @@ import modificarCita.control.ControlModificarCita;
  * @author Maryr
  */
 public class FModificarCita implements IModificarCita {
-    
+
     private final ControlModificarCita control = new ControlModificarCita();
-    
+
     /**
      * Metodo para filtrar las citas por el dia
      *
@@ -39,13 +39,27 @@ public class FModificarCita implements IModificarCita {
         }
     }
 
+    /**
+     * Metodo para obtener los cubiculos disponibles
+     *
+     * @param fecha dia de la cita
+     * @return lista con los cubiculos disponibles
+     * @throws ModificarCitaException
+     */
     @Override
-    public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws ModificarCitaException {
+        if (fecha == null) {
+            throw new ModificarCitaException("La cita no es valida.");
+        }
+        try {
+            return control.obtenerCubiculosDisponiblesHorario(fecha);
+        } catch (ModificarCitaException e) {
+            throw new ModificarCitaException(e.getMessage());
+        }
     }
 
     @Override
-    public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws ModificarCitaException {
+    public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -59,6 +73,4 @@ public class FModificarCita implements IModificarCita {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
-    
 }

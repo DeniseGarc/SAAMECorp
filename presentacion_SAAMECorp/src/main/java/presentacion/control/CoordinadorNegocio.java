@@ -71,14 +71,14 @@ public class CoordinadorNegocio {
      * Subsistema para gestionar el calendario de citas
      */
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
-    
+
     private final IModificarCita sistemaModificarCita = new FModificarCita();
 
     /**
      * Subsistema para gestionar cubiculos
      */
-    private final IGestorCubiculos sistemaGestorCubiculoa= new FGestorCubiculos();
-    
+    private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
+
     /**
      * Método que devuelve el psicólogo al cual pertenece el identificador junto
      * a los horas disponibles para cita que tiene en el día seleccionado.
@@ -302,7 +302,7 @@ public class CoordinadorNegocio {
         }
         return true;
     }
-    
+
     /**
      * Metodo para filtrar las citas por el dia
      *
@@ -317,14 +317,30 @@ public class CoordinadorNegocio {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException(ex.getMessage());
         }
+    }
+    
+    public List<String> mandarCubiculos(Calendar fecha) throws CoordinadorException {
+        if (fecha == null) {
+            throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
+        }
+        try {
+            List<String> nombresCubiculos = new ArrayList<>();
+            for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(fecha)) {
+                nombresCubiculos.add(cubiculo.getNombre());
+            }
+            return nombresCubiculos;
+        } catch (ModificarCitaException ex) {
+            throw new CoordinadorException("Error al obtener los cubículos disponibles.", ex);
+        }
+    }
 
-    public String AgregarCubiculo (CubiculoDTO cubiculo) throws CoordinadorException{
+    public String AgregarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
         }
         try {
             boolean resultadoOperacion = sistemaGestorCubiculoa.agregarCubiculo(cubiculo);
-            if (resultadoOperacion== false) {
+            if (resultadoOperacion == false) {
                 throw new CoordinadorException("No fue posible agregar el cubiculo");
             }
         } catch (GestorCubiculosException ex) {
@@ -333,14 +349,14 @@ public class CoordinadorNegocio {
         }
         return "Se agrego el cubiculo con exito";
     }
-    
-    public String modificarCubiculo (CubiculoDTO cubiculo) throws CoordinadorException{
+
+    public String modificarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
         }
         try {
             boolean resultadoOperacion = sistemaGestorCubiculoa.modificarCubiculo(cubiculo);
-            if (resultadoOperacion== false) {
+            if (resultadoOperacion == false) {
                 throw new CoordinadorException("No fue posible modificar el cubiculo");
             }
         } catch (GestorCubiculosException ex) {
@@ -349,14 +365,14 @@ public class CoordinadorNegocio {
         }
         return "Se modifico el cubiculo con exito";
     }
-    
-    public String modificarEstadoCubiculo (CubiculoDTO cubiculo)throws CoordinadorException{
+
+    public String modificarEstadoCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("El estado es invalido.");
         }
         try {
             boolean resultadoOperacion = sistemaGestorCubiculoa.actualizarEstadoCubiculo(cubiculo);
-            if (resultadoOperacion== false) {
+            if (resultadoOperacion == false) {
                 throw new CoordinadorException("No fue posible modificar el estado del cubiculo");
             }
         } catch (GestorCubiculosException ex) {
