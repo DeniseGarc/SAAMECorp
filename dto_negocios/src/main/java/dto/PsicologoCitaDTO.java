@@ -4,41 +4,72 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * Clase DTO que representa la información de un psicólogo junto con su horario disponible en un día específico.
- * 
- * <p>Se utiliza para mostrar y registrar citas, incluyendo los datos personales del psicólogo
- * y los horarios en los que puede atender durante un día.</p>
- * 
- * <p>Este DTO se construye directamente o a partir de un objeto {@link PsicologoDTO} y una lista de horarios disponibles.</p>
- * 
+ * Clase DTO que representa la información de un psicólogo junto con su horario
+ * disponible en un día específico.
+ *
+ * <p>
+ * Se utiliza para mostrar y registrar citas, incluyendo los datos personales
+ * del psicólogo y los horarios en los que puede atender durante un día.</p>
+ *
+ * <p>
+ * Este DTO se construye directamente o a partir de un objeto
+ * {@link PsicologoDTO} y una lista de horarios disponibles.</p>
+ *
  * @author Alici
  */
 public class PsicologoCitaDTO {
 
-    /** Nombre del psicólogo. */
+    /**
+     * Nombre del psicólogo.
+     */
     private String nombre;
 
-    /** Apellido paterno del psicólogo. */
+    /**
+     * Apellido paterno del psicólogo.
+     */
     private String apellidoPaterno;
 
-    /** Apellido materno del psicólogo. */
+    /**
+     * Apellido materno del psicólogo.
+     */
     private String apellidoMaterno;
 
-    /** Correo electrónico del psicólogo. */
+    /**
+     * Correo electrónico del psicólogo.
+     */
     private String correo;
 
-    /** Lista de horarios (horas) disponibles del psicólogo durante un día. */
+    /**
+     * Lista de horarios (horas) disponibles del psicólogo durante un día.
+     */
     private List<LocalTime> horarioDia;
 
     /**
-     * Constructor vacío. Crea un objeto {@code PsicologoCitaDTO} sin valores definidos.
+     * Constructor vacío. Crea un objeto {@code PsicologoCitaDTO} sin valores
+     * definidos.
      */
     public PsicologoCitaDTO() {
     }
 
     /**
-     * Constructor que inicializa todos los campos del psicólogo y su horario disponible.
-     * 
+     * Constructor que inicializa los campos del psicólogo.
+     *
+     * @param nombre Nombre del psicólogo.
+     * @param apellidoPaterno Apellido paterno del psicólogo.
+     * @param apellidoMaterno Apellido materno del psicólogo.
+     * @param correo Correo electrónico del psicólogo.
+     */
+    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+    }
+
+    /**
+     * Constructor que inicializa todos los campos del psicólogo y su horario
+     * disponible.
+     *
      * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
@@ -54,8 +85,9 @@ public class PsicologoCitaDTO {
     }
 
     /**
-     * Constructor que crea un {@code PsicologoCitaDTO} a partir de un {@code PsicologoDTO} y una lista de horarios.
-     * 
+     * Constructor que crea un {@code PsicologoCitaDTO} a partir de un
+     * {@code PsicologoDTO} y una lista de horarios.
+     *
      * @param psicologo Objeto que contiene los datos personales del psicólogo.
      * @param horarioDia Lista de horarios disponibles en el día.
      */
@@ -69,7 +101,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Obtiene el nombre del psicólogo.
-     * 
+     *
      * @return Nombre del psicólogo.
      */
     public String getNombre() {
@@ -78,7 +110,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Establece el nombre del psicólogo.
-     * 
+     *
      * @param nombre Nuevo nombre del psicólogo.
      */
     public void setNombre(String nombre) {
@@ -87,7 +119,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Obtiene el apellido paterno del psicólogo.
-     * 
+     *
      * @return Apellido paterno del psicólogo.
      */
     public String getApellidoPaterno() {
@@ -96,7 +128,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Establece el apellido paterno del psicólogo.
-     * 
+     *
      * @param apellidoPaterno Nuevo apellido paterno del psicólogo.
      */
     public void setApellidoPaterno(String apellidoPaterno) {
@@ -105,7 +137,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Obtiene el apellido materno del psicólogo.
-     * 
+     *
      * @return Apellido materno del psicólogo.
      */
     public String getApellidoMaterno() {
@@ -114,7 +146,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Establece el apellido materno del psicólogo.
-     * 
+     *
      * @param apellidoMaterno Nuevo apellido materno del psicólogo.
      */
     public void setApellidoMaterno(String apellidoMaterno) {
@@ -123,7 +155,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Obtiene el correo electrónico del psicólogo.
-     * 
+     *
      * @return Correo electrónico del psicólogo.
      */
     public String getCorreo() {
@@ -132,7 +164,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Establece el correo electrónico del psicólogo.
-     * 
+     *
      * @param correo Nuevo correo electrónico del psicólogo.
      */
     public void setCorreo(String correo) {
@@ -141,7 +173,7 @@ public class PsicologoCitaDTO {
 
     /**
      * Obtiene la lista de horarios disponibles en el día para el psicólogo.
-     * 
+     *
      * @return Lista de horarios disponibles.
      */
     public List<LocalTime> getHorarioDia() {
@@ -150,21 +182,25 @@ public class PsicologoCitaDTO {
 
     /**
      * Establece la lista de horarios disponibles en el día para el psicólogo.
-     * 
+     *
      * @param horarioDia Nueva lista de horarios disponibles.
      */
     public void setHorarioDia(List<LocalTime> horarioDia) {
         this.horarioDia = horarioDia;
     }
 
+    
     /**
-     * Devuelve el nombre completo del psicólogo en formato: "Nombre ApellidoPaterno ApellidoMaterno".
-     * 
+     * Devuelve el nombre completo del psicólogo en formato: "Nombre
+     * ApellidoPaterno ApellidoMaterno".
+     *
      * @return Nombre completo del psicólogo como cadena de texto.
      */
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
+
+   
 
 }

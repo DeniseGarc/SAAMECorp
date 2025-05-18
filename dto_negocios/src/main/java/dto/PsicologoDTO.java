@@ -3,10 +3,16 @@ package dto;
 /**
  * Clase DTO que encapsula los datos personales básicos de un psicólogo.
  * 
- * <p>Este DTO se utiliza principalmente para representar al psicólogo sin información adicional,
- * como horarios o citas, permitiendo transportar los datos de manera simple entre capas del sistema.</p>
+ * <p>
+ * Este DTO se utiliza principalmente para representar al psicólogo sin
+ * información adicional,
+ * como horarios o citas, permitiendo transportar los datos de manera simple
+ * entre capas del sistema.
+ * </p>
  * 
- * <p>Incluye nombre, apellidos y correo electrónico del psicólogo.</p>
+ * <p>
+ * Incluye nombre, apellidos y correo electrónico del psicólogo.
+ * </p>
  * 
  * @author Alici
  */
@@ -24,19 +30,31 @@ public class PsicologoDTO {
     /** Correo electrónico del psicólogo. */
     private String correo;
 
+    /** RFC del psicólogo. */
+    private String rfc;
+
+    /**
+     * Constructor por defecto.
+     */
+    public PsicologoDTO() {
+        // Constructor vacío
+    }
+
     /**
      * Constructor que inicializa todos los atributos del psicólogo.
      *
-     * @param nombre Nombre del psicólogo.
+     * @param nombre          Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo Correo electrónico del psicólogo.
+     * @param correo          Correo electrónico del psicólogo.
+     * @param rfc             RFC del psicólogo.
      */
-    public PsicologoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo) {
+    public PsicologoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
+        this.rfc = rfc;
     }
 
     /**
@@ -109,6 +127,24 @@ public class PsicologoDTO {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    /**
+     * Obtiene el RFC del psicólogo.
+     *
+     * @return RFC del psicólogo.
+     */
+    public String getRfc() {
+        return rfc;
+    }
+
+    /**
+     * Establece el RFC del psicólogo.
+     *
+     * @param rfc Nuevo RFC del psicólogo.
+     */
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
 }

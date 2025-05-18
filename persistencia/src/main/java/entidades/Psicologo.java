@@ -1,81 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
-import java.time.LocalTime;
-import java.util.List;
-
 /**
- *
+ * Clase que representa a un psicólogo en el sistema.
+ * Contiene información básica como nombre, apellidos, correo y RFC.
+ * 
  * @author erika
  */
 public class Psicologo {
-    /** Nombre del psicólogo. */
+
+    /**
+     * Nombre del psicólogo.
+     */
     private String nombre;
 
-    /** Apellido paterno del psicólogo. */
+    /**
+     * Apellido paterno del psicólogo.
+     */
     private String apellidoPaterno;
 
-    /** Apellido materno del psicólogo. */
+    /**
+     * Apellido materno del psicólogo.
+     */
     private String apellidoMaterno;
 
-    /** Correo electrónico del psicólogo. */
+    /**
+     * Correo electrónico del psicólogo.
+     */
     private String correo;
-    
-   /** Lista de horarios (horas) disponibles del psicólogo durante un día. */
-    private List<LocalTime> horarioDia;
-    
-    
-    /**
-     * Constructor que inicializa todos los campos del psicólogo y su horario disponible.
-     * 
-     * @param nombre Nombre del psicólogo.
-     * @param apellidoPaterno Apellido paterno del psicólogo.
-     * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo Correo electrónico del psicólogo.
-     * @param horarioDia Lista de horarios disponibles en el día.
-     */
-    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horarioDia) {
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.correo = correo;
-        this.horarioDia = horarioDia;
-    }
 
     /**
-     * Constructor que inicializa todos los atributos del psicólogo.
+     * RFC del psicólogo.
+     */
+    private String rfc;
+
+    /**
+     * Constructor que inicializa todos los campos del psicólogo
      *
-     * @param nombre Nombre del psicólogo.
+     * @param nombre          Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo Correo electrónico del psicólogo.
+     * @param correo          Correo electrónico del psicólogo.
+     * @param rfc             RFC del psicólogo.
      */
-    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo) {
+    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-    }
-    
-    /**
-     * Obtiene la lista de horarios disponibles en el día para el psicólogo.
-     * 
-     * @return Lista de horarios disponibles.
-     */
-    public List<LocalTime> getHorarioDia() {
-        return horarioDia;
-    }
-
-    /**
-     * Establece la lista de horarios disponibles en el día para el psicólogo.
-     * 
-     * @param horarioDia Nueva lista de horarios disponibles.
-     */
-    public void setHorarioDia(List<LocalTime> horarioDia) {
-        this.horarioDia = horarioDia;
+        this.rfc = rfc;
     }
 
     /**
@@ -149,10 +121,29 @@ public class Psicologo {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
+
     /**
-     * Devuelve el nombre completo del psicólogo en formato: "Nombre ApellidoPaterno ApellidoMaterno".
-     * 
+     * Obtiene el RFC del psicólogo.
+     *
+     * @return RFC del psicólogo.
+     */
+    public String getRfc() {
+        return rfc;
+    }
+
+    /**
+     * Establece el RFC del psicólogo.
+     *
+     * @param rfc Nuevo RFC del psicólogo.
+     */
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+
+    /**
+     * Devuelve el nombre completo del psicólogo en formato: "Nombre
+     * ApellidoPaterno ApellidoMaterno".
+     *
      * @return Nombre completo del psicólogo como cadena de texto.
      */
     @Override

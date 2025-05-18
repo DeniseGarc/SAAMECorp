@@ -44,9 +44,9 @@ public class PsicologoDAO implements IPsicologoDAO {
     public List<Psicologo> obtenerPsicologos() throws PersistenciaException {
         try {
             List<Psicologo> lista = new LinkedList<>();
-            lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
-            lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "jorge@gmail.com"));
-            lista.add(new Psicologo("Maria", "Felix", "Perez", "erikalucia005@gmail.com"));
+            lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com", "FUNK671228PH6"));
+            lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "jorge@gmail.com", "FUNK671228PH6"));
+            lista.add(new Psicologo("Maria", "Felix", "Perez", "erikalucia005@gmail.com", "FUNK671228PH6"));
             return lista;
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener los psicologos: " + e.getMessage());
@@ -62,7 +62,7 @@ public class PsicologoDAO implements IPsicologoDAO {
     @Override
     public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException {
         try {
-            return new Psicologo("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
+            return new Psicologo("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com", "FUNK671228PH6");
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener psicologo por su identificador: " + e.getMessage());
         }

@@ -11,39 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Clase que define los metodos mapper para pasar de entidad a DTO de Psicologo
+ * Clase que define los metodos mapper para pasar de entidad a DTO de Psicologo
+ *
  * @author erika
  */
 public class PsicologoMapper {
-    
+
     public PsicologoCitaDTO toDTO(Psicologo psicologo) {
-        return new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getHorarioDia());
+        return new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo());
     }
-    
+
     public Psicologo toEntity(PsicologoCitaDTO psicologo) {
-        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getHorarioDia());
+        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), null);
     }
-    public Psicologo toEntity2 (PsicologoDTO psicologo){
-        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo());
+
+    public Psicologo toEntity2(PsicologoDTO psicologo) {
+        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
     }
-    
+
     public List<PsicologoCitaDTO> toDTOList(List<Psicologo> psicologos) {
         List<PsicologoCitaDTO> psicologosDTO = new ArrayList<>();
         for (Psicologo psicologo : psicologos) {
-            psicologosDTO.add(new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getHorarioDia()));
+            psicologosDTO.add(new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo()));
         }
         return psicologosDTO;
     }
-    
+
     public List<PsicologoDTO> toDTOList2(List<Psicologo> psicologos) {
         List<PsicologoDTO> psicologosDTO = new ArrayList<>();
         for (Psicologo psicologo : psicologos) {
-            psicologosDTO.add(new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo()));
+            psicologosDTO.add(new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc()));
         }
         return psicologosDTO;
     }
-    
+
     public PsicologoDTO toDTO2(Psicologo psicologo) {
-        return new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo());
+        return new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
     }
 }

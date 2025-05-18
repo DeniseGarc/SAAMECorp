@@ -1,37 +1,39 @@
-package DTO;
+package dto;
 
 import java.time.LocalDateTime;
 
 /**
- * Clase que representa un DTO de registro de factura, con los datos necesarios
- * para registrar una factura con la API Facturama. Esta clase se utiliza para
- * transferir datos a la capa de infraestructura.
+ *
+ * Clase que representa un DTO para factura, con los datos necesarios para
+ * registrar una factura. Esta clase se utiliza para transferir datos entre la
+ * capa de presentación y negocio.
  *
  * @author Alici
  */
-public class FacturaRegistroDTO {
+public class FacturaDTO {
 
     /**
      * Identificador único de la factura en el sistema de Facturama.
      */
     private String id;
-    /**
-     * Número de folio de la factura.
+    /*
+     * Folio de la factura.
      */
     private String folio;
     /*
      * Fecha de emisión de la factura.
      */
     private LocalDateTime fechaHoraEmision;
+
     /**
      * Moneda en la que se emite la factura. Por defecto es "MXN" (peso
      * mexicano).
      */
-    private String currency;
+    private final String currency = "MXN";
     /**
      * Codigo postal del lugar de expedición de la factura.
      */
-    private String expeditionPlace;
+    private final String expeditionPlace = "85019";
     /**
      * Condiciones del pago de la factura.
      */
@@ -40,7 +42,7 @@ public class FacturaRegistroDTO {
      * Tipo de comprobante fiscal digital por Internet (CFDI). Por defecto es
      * "I" (ingreso).
      */
-    private String cfdiType;
+    private final String cfdiType = "I";
     /**
      * Forma de pago de la factura.
      */
@@ -78,21 +80,21 @@ public class FacturaRegistroDTO {
      * catalogo de SAT. Por defecto es "801231502" (Arrendamiento de
      * instalaciones comerciales o industriales).
      */
-    private String productCode;
+    private final String productCode = "80131502";
     /**
      * Descripción del producto o servicio que se está facturando. Por defecto
      * es "Renta por de cubiculo psicologico por hora".
      */
-    private String description;
+    private final String description = "Renta de cubiculo psicologico por hora";
     /**
      * unidad de medida del producto o servicio que se está facturando.
      */
-    private String unit;
+    private final String unit = "Unidad de servicio";
     /**
      * Código de unidad de medida del producto o servicio según el catalogo de
      * SAT.
      */
-    private String unitCode;
+    private final String unitCode = "E48";
     /**
      * Valor unitario del producto o servicio que se está facturando.
      */
@@ -113,90 +115,24 @@ public class FacturaRegistroDTO {
      * Impuesto trasladado de la factura. Por defecto es (01) no objeto de
      * impuesto.
      */
-    private String taxObject;
+    private final String taxObject = "01";
 
     /**
      * Constructor por defecto de la clase FacturaRegistroDTO. Este constructor
      * inicializa los atributos de la clase con valores por defecto.
      */
-    public FacturaRegistroDTO() {
+    public FacturaDTO() {
     }
 
     /**
-     * Constructor de la clase FacturaRegistroDTO. Este constructor tiene todos
-     * los atributos de la clase como parámetros. Menos el id y la fecha de
-     * emisión de la factura.
-     *
-     * @param currency          Moneda en la que se emite la factura.
-     * @param expeditionPlace   Código postal del lugar de expedición de la
-     *                          factura.
-     * @param paymentConditions Condiciones de pago de la factura.
-     * @param cfdiType          Tipo de CFDI de la factura.
-     * @param paymentForm       Forma de pago de la factura.
-     * @param paymentMethod     Método de pago de la factura.
-     * @param rfcReceiver       RFC del receptor de la factura.
-     * @param nameReceiver      Nombre del receptor de la factura.
-     * @param emailReceiver     Correo electrónico del receptor de la factura.
-     * @param cfdiUse           Uso del CFDI por parte del receptor.
-     * @param fiscalRegime      Régimen fiscal del receptor de la factura.
-     * @param taxZipCode        Código postal del receptor de la factura.
-     * @param productCode       Número de identificación del tipo de producto o
-     *                          servicio según el catalogo de SAT.
-     * @param description       Descripción del producto o servicio que se está
-     *                          facturando.
-     * @param unit              Unidad de medida del producto o servicio que se está
-     *                          facturando.
-     * @param unitCode          Código de unidad de medida del producto o servicio
-     *                          según
-     *                          el catalogo de SAT.
-     * @param unitPrice         Valor unitario del producto o servicio que se está
-     *                          facturando.
-     * @param quantity          Cantidad del producto o servicio que se está
-     *                          facturando.
-     * @param subtotal          Subtotal de la factura.
-     * @param total             Precio total de la factura.
-     * @param taxObject         Impuesto trasladado de la factura.
-     */
-    public FacturaRegistroDTO(String currency, String expeditionPlace, String paymentConditions, String cfdiType,
-            String paymentForm, String paymentMethod, String rfcReceiver, String nameReceiver, String emailReceiver,
-            String cfdiUse, String fiscalRegime, String taxZipCode, String productCode, String description, String unit,
-            String unitCode, Double unitPrice, Double quantity, Double subtotal, Double total, String taxObject) {
-        this.currency = currency;
-        this.expeditionPlace = expeditionPlace;
-        this.paymentConditions = paymentConditions;
-        this.cfdiType = cfdiType;
-        this.paymentForm = paymentForm;
-        this.paymentMethod = paymentMethod;
-        this.rfcReceiver = rfcReceiver;
-        this.nameReceiver = nameReceiver;
-        this.emailReceiver = emailReceiver;
-        this.cfdiUse = cfdiUse;
-        this.fiscalRegime = fiscalRegime;
-        this.taxZipCode = taxZipCode;
-        this.productCode = productCode;
-        this.description = description;
-        this.unit = unit;
-        this.unitCode = unitCode;
-        this.unitPrice = unitPrice;
-        this.quantity = quantity;
-        this.subtotal = subtotal;
-        this.total = total;
-        this.taxObject = taxObject;
-    }
-
-    /**
-     * Constructor de la clase FacturaRegistroDTO. Este constructor tiene todos
-     * los atributos de la clase como parámetros.
-     *
+     * Constructor de la clase FacturaRegistroDTO. Este constructor permite
+     * inicializar los atributos de la clase con valores específicos.
+     * 
      * @param id                Identificador único de la factura en el sistema de
      *                          Facturama.
-     * @param folio             Número de folio de la factura.
+     * @param folio             Folio de la factura.
      * @param fechaHoraEmision  Fecha y hora de emisión de la factura.
-     * @param currency          Moneda en la que se emite la factura.
-     * @param expeditionPlace   Código postal del lugar de expedición de la
-     *                          factura.
      * @param paymentConditions Condiciones de pago de la factura.
-     * @param cfdiType          Tipo de CFDI de la factura.
      * @param paymentForm       Forma de pago de la factura.
      * @param paymentMethod     Método de pago de la factura.
      * @param rfcReceiver       RFC del receptor de la factura.
@@ -205,35 +141,22 @@ public class FacturaRegistroDTO {
      * @param cfdiUse           Uso del CFDI por parte del receptor.
      * @param fiscalRegime      Régimen fiscal del receptor de la factura.
      * @param taxZipCode        Código postal del receptor de la factura.
-     * @param productCode       Número de identificación del tipo de producto o
-     *                          servicio según el catalogo de SAT.
-     * @param description       Descripción del producto o servicio que se está
-     *                          facturando.
-     * @param unit              Unidad de medida del producto o servicio que se está
-     *                          facturando.
-     * @param unitCode          Código de unidad de medida del producto o servicio
-     *                          según
-     *                          el catalogo de SAT.
      * @param unitPrice         Valor unitario del producto o servicio que se está
      *                          facturando.
      * @param quantity          Cantidad del producto o servicio que se está
      *                          facturando.
      * @param subtotal          Subtotal de la factura.
      * @param total             Precio total de la factura.
-     * @param taxObject         Impuesto trasladado de la factura.
+     * 
      */
-    public FacturaRegistroDTO(String id, String folio, LocalDateTime fechaHoraEmision, String currency,
-            String expeditionPlace, String paymentConditions, String cfdiType,
-            String paymentForm, String paymentMethod, String rfcReceiver, String nameReceiver, String emailReceiver,
-            String cfdiUse, String fiscalRegime, String taxZipCode, String productCode, String description, String unit,
-            String unitCode, Double unitPrice, Double quantity, Double subtotal, Double total, String taxObject) {
+    public FacturaDTO(String id, String folio, LocalDateTime fechaHoraEmision, String paymentConditions,
+            String paymentForm, String paymentMethod, String rfcReceiver, String nameReceiver,
+            String emailReceiver, String cfdiUse, String fiscalRegime, String taxZipCode,
+            Double unitPrice, Double quantity, Double subtotal, Double total) {
         this.id = id;
         this.folio = folio;
         this.fechaHoraEmision = fechaHoraEmision;
-        this.currency = currency;
-        this.expeditionPlace = expeditionPlace;
         this.paymentConditions = paymentConditions;
-        this.cfdiType = cfdiType;
         this.paymentForm = paymentForm;
         this.paymentMethod = paymentMethod;
         this.rfcReceiver = rfcReceiver;
@@ -242,15 +165,10 @@ public class FacturaRegistroDTO {
         this.cfdiUse = cfdiUse;
         this.fiscalRegime = fiscalRegime;
         this.taxZipCode = taxZipCode;
-        this.productCode = productCode;
-        this.description = description;
-        this.unit = unit;
-        this.unitCode = unitCode;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.subtotal = subtotal;
         this.total = total;
-        this.taxObject = taxObject;
     }
 
     /**
@@ -273,18 +191,18 @@ public class FacturaRegistroDTO {
     }
 
     /**
-     * Método para obtener el número de folio de la factura.
+     * Método para obtener el folio de la factura.
      *
-     * @return El número de folio de la factura.
+     * @return El folio de la factura.
      */
     public String getFolio() {
         return folio;
     }
 
     /**
-     * Método para establecer el número de folio de la factura.
+     * Método para establecer el folio de la factura.
      *
-     * @param folio El número de folio de la factura.
+     * @param folio El folio de la factura.
      */
     public void setFolio(String folio) {
         this.folio = folio;
@@ -318,15 +236,6 @@ public class FacturaRegistroDTO {
     }
 
     /**
-     * Método para establecer la moneda en la que se emite la factura.
-     *
-     * @param currency La moneda en la que se emite la factura.
-     */
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    /**
      * Método para obtener el código postal del lugar de expedición de la
      * factura.
      *
@@ -334,17 +243,6 @@ public class FacturaRegistroDTO {
      */
     public String getExpeditionPlace() {
         return expeditionPlace;
-    }
-
-    /**
-     * Método para establecer el código postal del lugar de expedición de la
-     * factura.
-     *
-     * @param expeditionPlace El código postal del lugar de expedición de la
-     *                        factura.
-     */
-    public void setExpeditionPlace(String expeditionPlace) {
-        this.expeditionPlace = expeditionPlace;
     }
 
     /**
@@ -372,15 +270,6 @@ public class FacturaRegistroDTO {
      */
     public String getCfdiType() {
         return cfdiType;
-    }
-
-    /**
-     * Método para establecer el tipo de CFDI de la factura.
-     *
-     * @param cfdiType El tipo de CFDI de la factura.
-     */
-    public void setCfdiType(String cfdiType) {
-        this.cfdiType = cfdiType;
     }
 
     /**
@@ -538,17 +427,6 @@ public class FacturaRegistroDTO {
     }
 
     /**
-     * Método para establecer el código del producto o servicio que se está
-     * facturando.
-     *
-     * @param productCode El código del producto o servicio que se está
-     *                    facturando.
-     */
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
-    /**
      * Método para obtener la descripción del producto o servicio que se está
      * facturando.
      *
@@ -556,17 +434,6 @@ public class FacturaRegistroDTO {
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Método para establecer la descripción del producto o servicio que se está
-     * facturando.
-     *
-     * @param description La descripción del producto o servicio que se está
-     *                    facturando.
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -581,17 +448,6 @@ public class FacturaRegistroDTO {
     }
 
     /**
-     * Método para establecer la unidad de medida del producto o servicio que se
-     * está facturando.
-     *
-     * @param unit La unidad de medida del producto o servicio que se está
-     *             facturando.
-     */
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    /**
      * Método para obtener el código de unidad de medida del producto o servicio
      * según el catálogo de SAT.
      *
@@ -600,17 +456,6 @@ public class FacturaRegistroDTO {
      */
     public String getUnitCode() {
         return unitCode;
-    }
-
-    /**
-     * Método para establecer el código de unidad de medida del producto o
-     * servicio según el catálogo de SAT.
-     *
-     * @param unitCode El código de unidad de medida del producto o servicio
-     *                 según el catálogo de SAT.
-     */
-    public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
     }
 
     /**
@@ -699,14 +544,4 @@ public class FacturaRegistroDTO {
     public String getTaxObject() {
         return taxObject;
     }
-
-    /**
-     * Método para establecer el impuesto trasladado de la factura.
-     *
-     * @param taxObject El impuesto trasladado de la factura.
-     */
-    public void setTaxObject(String taxObject) {
-        this.taxObject = taxObject;
-    }
-
 }
