@@ -79,15 +79,21 @@ public class Cubiculo {
         this.tipoTerapia = tipoTerapia;
         this.notas = notas;
     }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
     
+    /**
+     * Devuelve el identificador en formato String (hexadecimal)
+     * @return Representacion textual del ObjectId.
+     */
+    public String getObjectString(){
+        return id != null ? id.toHexString(): null;
+    }
+    /**
+     * Asigna el identificador MongoBD a partir de una cadena hexadecimal.
+     * @param idStr Cadena con el valor de objectId. Si es null o vacio, no se asigna
+     */
+    public void setObjectString (String idStr){
+        this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
+    }
     
     /**
      * Obtieme la capacidad del cubiculo
