@@ -4,6 +4,11 @@
  */
 package DAOs;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import conexion.ConexionBD;
 import entidades.Cita;
 import entidades.Cubiculo;
 import entidades.Psicologo;
@@ -15,9 +20,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -31,9 +39,16 @@ public class CitaDAO implements ICitaDAO {
     private static CitaDAO instancia;
 
     /**
+     *
+     */
+    private final MongoCollection<Cita> coleccionCitas;
+
+    /**
      * Constructor vacio
      */
     private CitaDAO() {
+        MongoDatabase bd = ConexionBD.getDatabase();
+        coleccionCitas = bd.getCollection("citas", Cita.class);
     }
 
     /**
@@ -59,14 +74,22 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) throws PersistenciaException {
         try {
-            List<LocalTime> horasDisponibles = new LinkedList<>();
-            horasDisponibles.add(LocalTime.of(9, 0));
-            horasDisponibles.add(LocalTime.of(11, 0));
-            horasDisponibles.add(LocalTime.of(14, 0));
-            horasDisponibles.add(LocalTime.of(17, 30));
-            return horasDisponibles;
+            List<LocalTime> horasTotales = psicologo.getHorarioDia(); 
+            Date fechaConsulta = fecha.getTime();
+            List<Cita> citas = coleccionCitas.find(and(eq("psicologo.correo", psicologo.getCorreo()), eq("fechaHora", fechaConsulta))).into(new ArrayList<>());
+            Set<LocalTime> ocupadas = new HashSet<>();
+            for (Cita cita : citas) {
+                ocupadas.add(cita.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime());
+            }
+            List<LocalTime> disponibles = new ArrayList<>();
+            for (LocalTime hora : horasTotales) {
+                if (!ocupadas.contains(hora)) {
+                    disponibles.add(hora);
+                }
+            }
+            return disponibles;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener las horas disponibles: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener horas disponibles: " + e.getMessage(), e);
         }
     }
 
@@ -80,14 +103,19 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<Cubiculo> obtenerCubiculosNoDisponibles(Calendar fecha) throws PersistenciaException {
         try {
-            List<Cubiculo> listaCubiculos = new LinkedList<>();
-            listaCubiculos.add(new Cubiculo("Cubiculo 1", true));
-            listaCubiculos.add(new Cubiculo("Cubiculo 2", true));
-            listaCubiculos.add(new Cubiculo("Cubiculo 3", true));
-            listaCubiculos.add(new Cubiculo("Cubiculo 4", true));
-            return listaCubiculos;
+            Date fechaConsulta = fecha.getTime();
+            List<Cita> citas = coleccionCitas.find(eq("fechaHora", fechaConsulta)).into(new ArrayList<>());
+            Set<String> nombresCubiculos = new HashSet<>();
+            for (Cita cita : citas) {
+                nombresCubiculos.add(cita.getCubiculo());
+            }
+            List<Cubiculo> ocupados = new ArrayList<>();
+            for (String nombre : nombresCubiculos) {
+                ocupados.add(new Cubiculo(nombre, true));
+            }
+            return ocupados;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener los cubiculos llenos: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener cubículos ocupados: " + e.getMessage(), e);
         }
     }
 
@@ -100,9 +128,10 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public Cita guardarCita(Cita cita) throws PersistenciaException {
         try {
+            coleccionCitas.insertOne(cita);
             return cita;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al guardar la cita: " + e.getMessage());
+            throw new PersistenciaException("Error al guardar la cita: " + e.getMessage(), e);
         }
     }
 
@@ -114,14 +143,15 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<Calendar> obtenerFechasConCitaAgendada() throws PersistenciaException {
         try {
-            List<Calendar> fechasAgendadas = new LinkedList<>();
-            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 1)));
-            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 5)));
-            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 10)));
-            fechasAgendadas.add(toCalendar(LocalDate.of(2025, 4, 15)));
-            return fechasAgendadas;
+            List<Calendar> fechas = new ArrayList<>();
+
+            for (Cita cita : coleccionCitas.find()) {
+                fechas.add(cita.getFechaHora());
+            }
+
+            return fechas;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener las fechas con citas agendadas: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener fechas: " + e.getMessage(), e);
         }
     }
 
@@ -136,10 +166,11 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public boolean cubiculoTieneHorasDisponiblesDia(Cubiculo cubiculo, Calendar fecha) throws PersistenciaException {
         try {
-            // Simulación de disponibilidad
-            return true;
+            Date fechaConsulta = fecha.getTime();
+            List<Cita> citas = coleccionCitas.find(and(eq("cubiculo", cubiculo.getNombre()), eq("fechaHora", fechaConsulta))).into(new ArrayList<>());
+            return citas.size() < 12;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener disponibilidad del cubiculo: " + e.getMessage());
+            throw new PersistenciaException("Error al consultar disponibilidad del cubículo: " + e.getMessage(), e);
         }
     }
 
@@ -151,17 +182,10 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<Cita> obtenerCitas() throws PersistenciaException {
         try {
-            List<Cita> citas = new LinkedList<>();
-//            // Citas simuladas
-//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 17, 15, 37)), "Cubiculo 1", new Psicologo("Ana", "Perez", "Garcia", "ana.perez@gmail.com"), "Juan Perez", "1234567890", "juan.perez@gmail.com", null));
-//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 2", new Psicologo("Luis", "Ramirez", "Lopez", "luis.ramirez@gmail.com"), "Maria Lopez", "0987654321", "maria.lopez@gmail.com", null));
-//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 19, 9, 30)), "Cubiculo 3", new Psicologo("Marta", "Sanchez", "Diaz", "marta.sanchez@gmail.com"), "Carlos Gomez", "1122334455", "carlos.gomez@gmail.com", null));
-//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 20, 14, 15)), "Cubiculo 4", new Psicologo("Carlos", "Vega", "Mendoza", "carlos.vega@gmail.com"), "Laura Ruiz", "6677889900", "laura.ruiz@gmail.com", null));
-//            citas.add(new Cita(null,toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 3", new Psicologo("Sofia", "Martinez", "Lopez", "sofia.martinez@gmail.com"), "Pedro Sanchez", "5544332211", "pedro.sanchez@gmail.com", null));
 
-            return citas;
+            return coleccionCitas.find().into(new ArrayList<>());
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener las citas: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener las citas: " + e.getMessage(), e);
         }
     }
 
@@ -175,18 +199,11 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException {
         try {
-            //esto debería acceder a una dao, hacer una consulta y regresar un boolean 
-            //si es que se encuentran resultados con la misma informacion
-            List<Cita> citasRegistradas = obtenerCitas();
-            for (Cita cita : citasRegistradas) {
-                if (cita.getFechaHora().equals(citaARegistrar.getFechaHora())
-                        && cita.getCubiculo().equals(citaARegistrar.getCubiculo())) {
-                    return false;
-                }
-            }
-            return true;
+            Date fechaConsulta = citaARegistrar.getFechaHora().getTime();
+            Cita existente = coleccionCitas.find(and(eq("fechaHora", fechaConsulta), eq("cubiculo", citaARegistrar.getCubiculo()))).first();
+            return existente == null;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al validar citas repetidas: " + e.getMessage());
+            throw new PersistenciaException("Error al validar cita duplicada: " + e.getMessage(), e);
         }
     }
 

@@ -119,20 +119,7 @@ public class ControlModificarCita {
 
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws ModificarCitaException {
         try {
-            List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
-            List<PsicologoDTO> psicologos = psicologoBO.obtenerPsicologos();
-
-            for (PsicologoDTO psicologo : psicologos) {
-                List<LocalTime> horasDisponibles = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologo);
-                PsicologoCitaDTO dto = new PsicologoCitaDTO(
-                        psicologo.getNombre(),
-                        psicologo.getApellidoPaterno(),
-                        psicologo.getApellidoMaterno(),
-                        psicologo.getCorreo(),
-                        horasDisponibles
-                );
-                psicologosDisponibles.add(dto);
-            }
+            List<PsicologoCitaDTO> psicologosDisponibles = psicologoBO.obtenerPsicologos();
             return psicologosDisponibles;
         } catch (Exception e) {
             Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
