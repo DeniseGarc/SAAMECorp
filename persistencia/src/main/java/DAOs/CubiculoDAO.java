@@ -91,7 +91,9 @@ public class CubiculoDAO implements ICubiculoDAO {
     public boolean ModificarCubiculo(Cubiculo cubiculoModificar) throws PersistenciaException {
         try {
             UpdateResult result = coleccionCubiculos.replaceOne(
-                    eq("_id", cubiculoModificar.getId()), cubiculoModificar
+
+                eq("_id", cubiculoModificar.getObjectString()), cubiculoModificar
+
             );
             return result.getModifiedCount() > 0;
         } catch (Exception e) {
@@ -109,21 +111,25 @@ public class CubiculoDAO implements ICubiculoDAO {
     @Override
     public boolean ModificarEstadoCubiculo(Cubiculo CubiculoModificar) throws PersistenciaException {
         try {
-            // Buscar el cubículo actual por su ID
-            Cubiculo cubiculoActual = coleccionCubiculos.find(eq("_id", CubiculoModificar.getId())).first();
 
-            if (cubiculoActual == null) {
-                throw new PersistenciaException("No se encontró el cubículo con ID: " + CubiculoModificar.getId());
-            }
+        // Buscar el cubículo actual por su ID
+        Cubiculo cubiculoActual = coleccionCubiculos.find(eq("_id", CubiculoModificar.getObjectString())).first();
+
+        if (cubiculoActual == null) {
+            throw new PersistenciaException("No se encontró el cubículo con ID: " + CubiculoModificar.getObjectString());
+        }
+
 
             // Invertir el estado actual
             boolean nuevoEstado = !cubiculoActual.isEstado();
 
-            // Actualizar solo el campo "estado"
-            UpdateResult resultado = coleccionCubiculos.updateOne(
-                    eq("_id", CubiculoModificar.getId()),
-                    set("estado", nuevoEstado)
-            );
+
+        // Actualizar solo el campo "estado"
+        UpdateResult resultado = coleccionCubiculos.updateOne(
+            eq("_id", CubiculoModificar.getObjectString()),
+            set("estado", nuevoEstado)
+        );
+
 
             return resultado.getModifiedCount() > 0;
         } catch (Exception e) {
