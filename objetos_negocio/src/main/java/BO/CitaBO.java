@@ -7,6 +7,7 @@ package BO;
 import DAOs.CitaDAO;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import entidades.Cita;
@@ -16,8 +17,11 @@ import excepciones.PersistenciaException;
 import interfaces.ICitaBO;
 import interfaces.ICitaDAO;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mapper.CubiculoMapper;
 import mapper.CitaMapper;
 import mapper.PsicologoMapper;
@@ -33,29 +37,30 @@ public class CitaBO implements ICitaBO {
     PsicologoMapper psicologoMapper = new PsicologoMapper();
     CitaMapper cItaMapper = new CitaMapper();
     CubiculoMapper cubiculoMapper = new CubiculoMapper();
-    
-     /**
-     * Instancia unica de la clase 
+
+    /**
+     * Instancia unica de la clase
      */
-    private static CitaBO instancia; 
-    
+    private static CitaBO instancia;
+
     /**
      * Constructor privado para evitar instanciacion externa
      */
-    private CitaBO(){}
-    
+    private CitaBO() {
+    }
+
     /**
-     * Metodo para obtener la instancia unica de CitaBO
-     * Si no existe una la crea
+     * Metodo para obtener la instancia unica de CitaBO Si no existe una la crea
+     *
      * @return instancia unida de CitaBO
      */
-    public static CitaBO getInstancia(){
-        if (instancia == null){
-            instancia= new CitaBO();
+    public static CitaBO getInstancia() {
+        if (instancia == null) {
+            instancia = new CitaBO();
         }
-        return instancia; 
+        return instancia;
     }
-    
+
     /**
      * Metodo que obtiene la disponibilidad de un psicólogo en un dia dado
      *
@@ -149,6 +154,23 @@ public class CitaBO implements ICitaBO {
             return cItaMapper.toDTOList2(citas);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al obtener las citas: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Metodo para obtener las citas con todos sus datos
+     *
+     * @return una lista de las citas registradas y todos su datos
+     * @throws NegocioException
+     */
+    @Override
+    public List<CitaRegistradaDTO> obtenerCitasCompletas() throws NegocioException {
+        try {
+            List<Cita> citas = citaDAO.obtenerCitas();
+            return cItaMapper.toDTOList3(citas);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(CitaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al obtener las citas completas: ", ex);
         }
     }
 

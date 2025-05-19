@@ -7,6 +7,7 @@ import calendario.configuracion.ControlDiasCalendario;
 import calendario.configuracion.PintorFechas;
 import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.FacturaDTO;
 import dto.PsicologoCitaDTO;
@@ -16,8 +17,12 @@ import excepciones.CoordinadorException;
 import excepciones.GestorCalendarioException;
 import generarFactura.FGenerarFactura;
 import generarFactura.IGenerarFactura;
+import excepciones.ModificarCitaException;
+import excepciones.GestorCubiculosException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
+import gestorCubiculos.FGestorCubiculos;
+import gestorCubiculos.IGestorCubiculos;
 import java.awt.Color;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -25,6 +30,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modificarCita.FModificarCita;
+import modificarCita.IModificarCita;
 import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
@@ -48,8 +55,15 @@ public class CoordinadorNegocio {
      * Subsistema para gestionar el calendario de citas
      */
     private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
-    
+
     private final IGenerarFactura sistemaGenerarFactura = new FGenerarFactura();
+
+    private final IModificarCita sistemaModificarCita = new FModificarCita();
+
+    /**
+     * Subsistema para gestionar cubiculos
+     */
+    private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
 
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
@@ -74,7 +88,7 @@ public class CoordinadorNegocio {
      * a los horas disponibles para cita que tiene en el día seleccionado.
      *
      * @param identificadorPsicologo Identificador único del psicólogo.
-     * @param fechaCita Fecha seleccionada para la cita
+     * @param fechaCita              Fecha seleccionada para la cita
      * @return datos del psicólogo junto a sus horas disponible
      * @throws CoordinadorException Si ocurre un error al obtener los datos
      */
@@ -99,9 +113,9 @@ public class CoordinadorNegocio {
      * adeudo al momento de seleccionar un psicólogo.
      *
      * @param psicologo datos del psicólogo a validar su cantidad total de
-     * adeudo.
+     *                  adeudo.
      * @return true si el psicólogo presenta una cantidad de adeudo que aun le
-     * premite agendar´más citas, false en caso contrario.
+     *         premite agendar´más citas, false en caso contrario.
      * @throws excepciones.CoordinadorException
      */
     public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -141,7 +155,7 @@ public class CoordinadorNegocio {
      *
      * @param psicologo Psicólogo que ha sido seleccionado.
      * @return lista de horas en las que el psicólogo esta disponible para
-     * agendar una cita.
+     *         agendar una cita.
      * @throws excepciones.CoordinadorException
      */
     public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -156,7 +170,7 @@ public class CoordinadorNegocio {
      * fecha y hora seleccionadas para agendar cita.
      *
      * @param fechaHoraCita fecha y hora que han sido seleccionados para la
-     * cita.
+     *                      cita.
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
      * @throws excepciones.CoordinadorException
      */
@@ -205,7 +219,7 @@ public class CoordinadorNegocio {
      * @param cita Datos de la cita a agendar.
      * @return regresa una cadena de texto con el resultado de la operación
      * @throws CoordinadorException Si sucede un error al intentar registrar la
-     * cita.
+     *                              cita.
      */
     public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
         if (cita == null) {
@@ -232,7 +246,7 @@ public class CoordinadorNegocio {
      * agendar cita es de dos meses en adelato.
      *
      * @param calendario Calendario de la interfaz gráfica donde se va a aplicar
-     * el bloqueo de dias
+     *                   el bloqueo de dias
      */
     public void bloquearDiasNoDisponibles(JCalendar calendario) {
         Calendar fechaActual = Calendar.getInstance();
@@ -248,7 +262,7 @@ public class CoordinadorNegocio {
      * los días.
      *
      * @param calendario Calendario de la intefaz gráfica donde se selecciona la
-     * fecha para la cita.
+     *                   fecha para la cita.
      */
     public void pintarDiasCalendario(JCalendar calendario) {
         try {
@@ -278,7 +292,7 @@ public class CoordinadorNegocio {
      *
      * @param diaSeleccionado Dia seleccionado del calendario.
      * @return true si el psicólogo aun tiene horas de atencion para la fecha
-     * seleccionada, false en caso contrario
+     *         seleccionada, false en caso contrario
      */
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
         if (diaSeleccionado == null) {
@@ -317,10 +331,11 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("Error al generar la factura.", ex);
         }
     }
-    
+
     /**
      * Metodo para descargar el PDF de la factura.
-     * @param factura factura a descargar                    
+     * 
+     * @param factura  factura a descargar
      * @param filePath ruta donde se guardara el PDF
      * @return true si se descarga correctamente, false si se cancela la factura.
      * @throws CoordinadorException si ocurre un error al descargar el PDF.
@@ -333,17 +348,18 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("La ruta del archivo es inválida.");
         }
         try {
-            //return sistemaAgendarCita.descargarPDF(factura, filePath);
+            // return sistemaAgendarCita.descargarPDF(factura, filePath);
             return true;
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Error al descargar el PDF.", ex);
         }
     }
- 
+
     /**
      * Método para descargar el XML de la factura.
-     * @param factura factura a descargar
+     * 
+     * @param factura  factura a descargar
      * @param filePath ruta donde se guardara el XML
      * @return true si se descarga correctamente, false si se cancela la factura.
      * @throws CoordinadorException si ocurre un error al descargar el XML.
@@ -356,11 +372,90 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("La ruta del archivo es inválida.");
         }
         try {
-            //return sistemaAgendarCita.descargarXML(factura, filePath);
+            // return sistemaAgendarCita.descargarXML(factura, filePath);
             return true;
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Error al descargar el XML.", ex);
         }
+    }
+
+    /**
+     * Metodo para filtrar las citas por el dia
+     *
+     * @param fecha de la cual se quieren mostrar las citas
+     * @return la lista con las citas filtradas
+     * @throws excepciones.CoordinadorException
+     */
+    public List<CitaRegistradaDTO> obtenerCitasDia(Calendar fecha) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.obtenerCitasDia(fecha);
+        } catch (ModificarCitaException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+    public List<String> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
+        if (cita == null) {
+            throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
+        }
+        try {
+            List<String> nombresCubiculos = new ArrayList<>();
+            for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(cita)) {
+                nombresCubiculos.add(cubiculo.getNombre());
+            }
+            return nombresCubiculos;
+        } catch (ModificarCitaException ex) {
+            throw new CoordinadorException("Error al obtener los cubículos disponibles.", ex);
+        }
+    }
+
+    public String AgregarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
+        if (cubiculo == null) {
+            throw new CoordinadorException("Los datos del cubiculo son inválidos.");
+        }
+        try {
+            boolean resultadoOperacion = sistemaGestorCubiculoa.agregarCubiculo(cubiculo);
+            if (resultadoOperacion == false) {
+                throw new CoordinadorException("No fue posible agregar el cubiculo");
+            }
+        } catch (GestorCubiculosException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
+        return "Se agrego el cubiculo con exito";
+    }
+
+    public String modificarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
+        if (cubiculo == null) {
+            throw new CoordinadorException("Los datos del cubiculo son inválidos.");
+        }
+        try {
+            boolean resultadoOperacion = sistemaGestorCubiculoa.modificarCubiculo(cubiculo);
+            if (resultadoOperacion == false) {
+                throw new CoordinadorException("No fue posible modificar el cubiculo");
+            }
+        } catch (GestorCubiculosException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
+        return "Se modifico el cubiculo con exito";
+    }
+
+    public String modificarEstadoCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
+        if (cubiculo == null) {
+            throw new CoordinadorException("El estado es invalido.");
+        }
+        try {
+            boolean resultadoOperacion = sistemaGestorCubiculoa.actualizarEstadoCubiculo(cubiculo);
+            if (resultadoOperacion == false) {
+                throw new CoordinadorException("No fue posible modificar el estado del cubiculo");
+            }
+        } catch (GestorCubiculosException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException(ex.getMessage());
+        }
+        return "Se modifico el estado del cubiculo con exito";
     }
 }

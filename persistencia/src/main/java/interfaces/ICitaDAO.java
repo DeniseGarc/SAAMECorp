@@ -14,9 +14,11 @@ import java.util.List;
 
 /**
  * Interfaz que establece los metodos para la clase de CitaDAO
+ *
  * @author erika
  */
 public interface ICitaDAO {
+
     /**
      * Metodo que obtiene la disponibilidad de un psicolo en un dia dado
      *

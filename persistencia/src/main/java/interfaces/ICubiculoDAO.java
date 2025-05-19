@@ -52,10 +52,19 @@ public interface ICubiculoDAO {
      public boolean AgregarCubiculo(Cubiculo cubiculoAgregar) throws PersistenciaException;
      
      /**
-      * Metodo para buscar un cubiculo dado su id 
-      * @param id id del cubiculo a obtener
+      * Metodo para buscar un cubiculo dado su nombre
+     * @param nomrbe Nombre del cubiculo a buscar
       * @return Cubiculo encontrado
       * @throws PersistenciaException 
       */
-     public Cubiculo buscarCubiculoPorID(Long id) throws PersistenciaException; 
+     public Cubiculo buscarCubiculoPorNombre(String nomrbe) throws PersistenciaException;
+     
+     /**
+      * Metodo para obtener todos los cubiculos Registrados
+      * @return
+      * @throws PersistenciaException 
+      */
+    public List<Cubiculo> buscarCubiculos() throws PersistenciaException;
+
+
 }

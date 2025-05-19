@@ -34,6 +34,7 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         btnSeleccionarDia = new javax.swing.JButton();
+        btnModificarCita = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 680));
@@ -82,6 +83,17 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         });
         jPanel1.add(btnSeleccionarDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 610, 160, 30));
 
+        btnModificarCita.setBackground(new java.awt.Color(86, 33, 89));
+        btnModificarCita.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificarCita.setText("Modificar cita");
+        btnModificarCita.setBorder(null);
+        btnModificarCita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarCitaMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnModificarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 610, 160, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,8 +126,14 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         flujoPantallas.pantallaAgregarCita(diaSeleccionado);;
     }//GEN-LAST:event_btnSeleccionarDiaActionPerformed
 
+    private void btnModificarCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarCitaMouseClicked
+        Calendar diaSeleccionado = calendarioCitas.getCalendar();
+        flujoPantallas.pantallaSeleccionCita(diaSeleccionado);
+    }//GEN-LAST:event_btnModificarCitaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificarCita;
     private javax.swing.JButton btnSeleccionarDia;
     private com.toedter.calendar.JCalendar calendarioCitas;
     private javax.swing.JPanel jPanel1;

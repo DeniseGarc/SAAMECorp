@@ -8,9 +8,16 @@
     </parent>
     <artifactId>persistencia</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.11.0</version>
+        </dependency>
+    </dependencies>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <exec.mainClass>com.persistencia.Persistencia</exec.mainClass>
+        <exec.mainClass>com.persistencia.Pruebita</exec.mainClass>
     </properties>
 </project>

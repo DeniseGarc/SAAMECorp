@@ -1,5 +1,9 @@
 package entidades;
 
+import java.time.LocalTime;
+import java.util.List;
+import org.bson.types.ObjectId;
+
 /**
  * Clase que representa a un psicólogo en el sistema.
  * Contiene información básica como nombre, apellidos, correo y RFC.
@@ -7,6 +11,16 @@ package entidades;
  * @author erika
  */
 public class Psicologo {
+
+    /**
+     * Id del registro
+     */
+    private ObjectId id;
+
+    /**
+     * RFC del psicólogo.
+     */
+    private String rfc;
 
     /**
      * Nombre del psicólogo.
@@ -29,25 +43,47 @@ public class Psicologo {
     private String correo;
 
     /**
-     * RFC del psicólogo.
+     * Constructor por defecto.
      */
-    private String rfc;
+    public Psicologo() {
+    }
 
     /**
-     * Constructor que inicializa todos los campos del psicólogo
-     *
+     * Constructor que inicializa todos los campos del psicólogo.
+     * 
+     * @param id              Identificador único del psicólogo.
      * @param nombre          Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
      * @param correo          Correo electrónico del psicólogo.
      * @param rfc             RFC del psicólogo.
      */
-    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc) {
+    public Psicologo(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
+            String rfc) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.rfc = rfc;
+    }
+
+    /**
+     * Obtiene el identificador único del psicólogo.
+     * 
+     * @return Identificador único del psicólogo.
+     */
+    public ObjectId getId() {
+        return id;
+    }
+
+    /**
+     * Establece el identificador único del psicólogo.
+     * 
+     * @param id Nuevo identificador único del psicólogo.
+     */
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     /**
@@ -149,5 +185,24 @@ public class Psicologo {
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
+
+    /**
+     * Devuelve el identificador MongoDB como una cadena hexadecimal.
+     * 
+     * @return Cadena hexadecimal del ObjectId o null si el id es null.
+     */
+    public String getObjectString() {
+        return id != null ? id.toHexString() : null;
+    }
+
+    /**
+     * Asigna el identificador MongoDB a partir de una cadena hexadecimal.
+     *
+     * @param idStr Cadena con el valor del ObjectId. Si es null o vacío, no se
+     *              asigna.
+     */
+    public void setObjectString(String idStr) {
+        this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
     }
 }

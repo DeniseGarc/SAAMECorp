@@ -12,5 +12,6 @@ public enum TipoBO {
     ADEUDO,
     CITA,
     CUBICULO,
-    PSICOLOGO
+    PSICOLOGO,
+    REPORTE
 }

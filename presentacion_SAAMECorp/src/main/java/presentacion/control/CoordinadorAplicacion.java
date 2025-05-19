@@ -1,11 +1,32 @@
 package presentacion.control;
 
 import dto.PagoDTO;
+import dto.CitaRegistradaDTO;
 import dto.PsicologoDTO;
+import static enumeradores.TipoBO.CITA;
+import excepciones.CoordinadorException;
+import excepciones.NegocioException;
+import interfaces.ICitaBO;
 import java.util.Calendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import presentacion.GUI.PantallaIniciarSesion;
 import presentacion.GUI.PantallaAgregarCita;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import manejadorBO.ManejadorBO;
+import pantallasCubiculos.frmAgregarCubiculo;
+import pantallasCubiculos.frmEditarCubiculo;
+import pantallasCubiculos.frmMenuCubiculos;
+import pantallasCubiculos.frmMenuReportes;
+import pantallasModificarCita.PantallaActualizarCita;
+import pantallasModificarCita.PantallaSeleccionCitaModificar;
+import pantallasReportes.frmReporteIngresosCubiculo;
+import pantallasReportes.frmReporteUsoCubiculo;
+import pantallasReportes.frmrReporteEstadistico;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
 import presentacion.GUI.PantallaGenerarFactura;
@@ -32,7 +53,7 @@ public class CoordinadorAplicacion {
      * Referencia al menu principal cuando el usuario es un psicologo
      */
     private MenuPrincipalPsicologo menuPsicologo;
-
+    
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
      */
@@ -157,7 +178,6 @@ public class CoordinadorAplicacion {
      * una factura de el pago seleccionado.
      *
      * @param frm Frame que mandó a llamar a la acción.
-     * @param pagoSeleccionado Pago seleccionado a facturar.
      */
     public void pantallaGenerarFactura(JFrame frm, PagoDTO pagoSeleccionado) {
         PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm, pagoSeleccionado);
@@ -167,4 +187,124 @@ public class CoordinadorAplicacion {
         }
         frmPantalla.setVisible(true);
     }
+
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     *
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void PantallaGestionCubiculos(JFrame frm) {
+        frmMenuCubiculos frmPantalla = new frmMenuCubiculos(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     *
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void PantallaEditarCubiculos(JFrame frm) {
+        frmEditarCubiculo frmPantalla = new frmEditarCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+
+    /**
+     * Metodo para abrir el menu del subsistema de Cubiculos
+     *
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaAgregarCubiculo(JFrame frm) {
+        frmAgregarCubiculo frmPantalla = new frmAgregarCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+
+    public void pantallaMenuReportes(JFrame frm) {
+        frmMenuReportes frmPantalla = new frmMenuReportes(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+
+    /**
+     * Metodo para navegar a la pantalla de seleccion de citas
+     *
+     * @param diaSeleccionado dia del cual se quieren consultar las citas
+     */
+    public void pantallaSeleccionCita(Calendar diaSeleccionado) {
+        PantallaSeleccionCitaModificar seleccionCitaModificar = new PantallaSeleccionCitaModificar();
+        CoordinadorNegocio coordinadorNegocio = CoordinadorNegocio.getInstance();
+        try {
+            List<CitaRegistradaDTO> citas = coordinadorNegocio.obtenerCitasDia(diaSeleccionado);
+            if (citas.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No hay citas registradas para este día.");
+                return;
+            }
+            menuAdmin.setVisible(false);
+            seleccionCitaModificar.cargarCitas(citas);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        seleccionCitaModificar.setVisible(true);
+    }
+
+    public void pantallaModificarCita(CitaRegistradaDTO cita, JFrame frame) {
+        PantallaActualizarCita actualizarCita = new PantallaActualizarCita(cita);
+        actualizarCita.setVisible(true);
+        if (frame != null) {
+            frame.setVisible(false);
+        }
+    }
+    /**
+     * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteUsoCubiculo(JFrame frm) {
+        frmReporteUsoCubiculo frmPantalla = new frmReporteUsoCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para navegar a la pantalla de reporte estadistico de cubiculos
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteEstadistico(JFrame frm) {
+        frmrReporteEstadistico frmPantalla = new frmrReporteEstadistico(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteIngresosCubiculo(JFrame frm) {
+        frmReporteIngresosCubiculo frmPantalla = new frmReporteIngresosCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
 }

@@ -11,6 +11,7 @@ package mapper;
 import dto.AdeudoCitaDTO;
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.PsicologoCitaDTO;
 import entidades.Adeudo;
 import entidades.Cita;
@@ -43,6 +44,15 @@ public class CitaMapper {
         List<CitaDTO> citasDTO = new ArrayList<>();
         for (Cita cita : citas) {
             citasDTO.add(new CitaDTO(cita.getFechaHora(), cita.getCubiculo()));
+        }
+        return citasDTO;
+    }
+    
+    public List<CitaRegistradaDTO> toDTOList3 (List<Cita> citas) {
+        List<CitaRegistradaDTO> citasDTO = new ArrayList<>();
+        PsicologoMapper mapper = new PsicologoMapper();
+        for (Cita cita : citas) {
+            citasDTO.add(new CitaRegistradaDTO(cita.getId(), cita.getFechaHora(), cita.getCubiculo(), mapper.toDTO2(cita.getPsicologo()), cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente()));
         }
         return citasDTO;
     }

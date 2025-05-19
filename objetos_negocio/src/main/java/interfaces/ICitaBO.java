@@ -6,6 +6,7 @@ package interfaces;
 
 import dto.CitaDTO;
 import dto.CitaNuevaDTO;
+import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoDTO;
 import excepciones.NegocioException;
@@ -78,6 +79,13 @@ public interface ICitaBO {
      * @throws excepciones.NegocioException
      */
     public List<CitaDTO> obtenerCitas() throws NegocioException;
+    
+    /**
+     * Metodo para obtener las citas con todos sus datos
+     * @return una lista de las citas registradas y todos su datos
+     * @throws NegocioException 
+     */
+    public List<CitaRegistradaDTO> obtenerCitasCompletas() throws NegocioException;
 
     /**
      * Metodo para validar que no exista otra cita que tenga la misma fechaHora

@@ -42,12 +42,11 @@ public interface ICubiculoBO {
      public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException; 
      /**
       * Metodo para actualizar el estado de un cubiculo
-      * @param estado estado nuevo a actualizar
       * @param cubiculoAgregar Cubiculo al que se le desea modificar el estado
       * @return True si se actualizo correctamente, False si no 
       * @throws NegocioException 
       */
-     public boolean actualizarEstadoCubiculo(boolean estado, CubiculoDTO cubiculoAgregar) throws NegocioException; 
+     public boolean actualizarEstadoCubiculo( CubiculoDTO cubiculoAgregar) throws NegocioException; 
      /**
       * Metodo para modificar los datos de un cubiculo
       * @param cubiculoModificar cubiculo con los datos a modificar
@@ -57,9 +56,9 @@ public interface ICubiculoBO {
      public boolean modificarCubiculo (CubiculoDTO cubiculoModificar) throws NegocioException;
      /**
       * Metodo para obtener un cubiculo dado su id
-      * @param id Id del cubiculo a obtener
+      * @param nombre Nombre del cubiculo a buscar
       * @return Cubiculo encontrado
       * @throws NegocioException 
       */
-     public CubiculoDTO obtenerCubiculoPorID(Long id) throws NegocioException;
+     public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException;
 }

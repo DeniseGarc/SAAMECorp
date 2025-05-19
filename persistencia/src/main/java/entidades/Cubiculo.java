@@ -4,11 +4,19 @@
  */
 package entidades;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author erika
  */
 public class Cubiculo {
+
+    /**
+     * Id del registro
+     */
+    private ObjectId id;
+
     /**
      * Nombre o identificador del cubículo.
      */
@@ -19,6 +27,21 @@ public class Cubiculo {
      * está ocupado.
      */
     private boolean estado;
+    
+    /**
+     * Capacidad del cubiculo
+     */
+    private int capacidad;
+    
+    /**
+     * Tipo de terapia para la que esta diseñada el cubiculo
+     */
+    private String tipoTerapia;
+    
+    /**
+     * Notas adicionales sobre el cubiculo
+     */
+    private String notas; 
 
     /**
      * Constructor vacío. Crea un objeto {@code CubiculoDTO} sin valores
@@ -38,6 +61,82 @@ public class Cubiculo {
         this.nombre = nombre;
         this.estado = estado;
     }
+    
+    /**
+     * Constructor que inicializa todos sus parametros
+     * @param id
+     * @param nombre
+     * @param estado
+     * @param capacidad
+     * @param tipoTerapia
+     * @param notas 
+     */
+    public Cubiculo(ObjectId id, String nombre, boolean estado, int capacidad, String tipoTerapia, String notas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.tipoTerapia = tipoTerapia;
+        this.notas = notas;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+    
+    
+    /**
+     * Obtieme la capacidad del cubiculo
+     * @return capacidad del cubiculo
+     */
+    public int getCapacidad() {
+        return capacidad;
+    }
+    
+    /**
+     * Establece la capacidad del cubiculo
+     * @param capacidad capacidad del cubiculo 
+     */
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+    
+    /**
+     * Obtiene el tipo de terapia
+     * @return tipo de terapia
+     */
+    public String getTipoTerapia() {
+        return tipoTerapia;
+    }
+    
+    /**
+     * Establece el tipo de terapia
+     * @param tipoTerapia tipo de terapia
+     */
+    public void setTipoTerapia(String tipoTerapia) {
+        this.tipoTerapia = tipoTerapia;
+    }
+    
+    /**
+     * Obtiene las notas del cubiculo
+     * @return notas del cubiculo
+     */
+    public String getNotas() {
+        return notas;
+    }
+    
+    /**
+     * Establece las notas del cubiculo
+     * @param notas notas del cubiculo
+     */
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+    
 
     /**
      * Obtiene el nombre del cubículo.
