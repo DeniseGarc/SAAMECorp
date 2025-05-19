@@ -29,20 +29,16 @@ public class ConexionBD {
 
     public static MongoDatabase getDatabase() {
         if (mongoClient == null) {
-            CodecRegistry localDateCodecRegistry = CodecRegistries.fromCodecs(new LocalDateCodec());
-            CodecRegistry localTimeCodecRegistry = CodecRegistries.fromCodecs(new LocalTimeCodec());
-            CodecRegistry calendarCodecRegistry = CodecRegistries.fromCodecs(new CalendarCodec());
-
-            CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(
-                    PojoCodecProvider.builder().automatic(true).build()
-            );
-
             CodecRegistry combinedCodecRegistry = CodecRegistries.fromRegistries(
                     MongoClientSettings.getDefaultCodecRegistry(),
-                    localDateCodecRegistry,
-                    localTimeCodecRegistry,
-                    calendarCodecRegistry,
-                    pojoCodecRegistry
+                    CodecRegistries.fromCodecs(
+                            new LocalDateCodec(),
+                            new LocalTimeCodec(),
+                            new CalendarCodec()
+                    ),
+                    CodecRegistries.fromProviders(
+                            PojoCodecProvider.builder().automatic(true).build()
+                    )
             );
 
             MongoClientSettings clientSettings = MongoClientSettings.builder()

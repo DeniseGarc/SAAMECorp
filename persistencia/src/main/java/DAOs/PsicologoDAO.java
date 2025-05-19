@@ -4,11 +4,16 @@
  */
 package DAOs;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
+import conexion.ConexionBD;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
 import interfaces.IPsicologoDAO;
 import java.util.LinkedList;
 import java.util.List;
+import org.bson.conversions.Bson;
 
 /**
  * Clase que implementa los metodos para Psicologos en la capa de persistencia
@@ -18,13 +23,19 @@ import java.util.List;
 public class PsicologoDAO implements IPsicologoDAO {
 
     private static PsicologoDAO instanciaPsicologoDAO;
+    private final MongoCollection<Psicologo> coleccion;
+
     /**
      * Constructor privado
      */
     private PsicologoDAO() {
+        MongoDatabase database = ConexionBD.getDatabase();
+        this.coleccion = database.getCollection("psicologos", Psicologo.class);
     }
+
     /**
      * Metodo para obtener la instancia unica de PsicologoDAO
+     *
      * @return instancia unica de la clase PsicologoDAO
      */
     public static PsicologoDAO getInstanciaDAO() {
@@ -44,12 +55,12 @@ public class PsicologoDAO implements IPsicologoDAO {
     public List<Psicologo> obtenerPsicologos() throws PersistenciaException {
         try {
             List<Psicologo> lista = new LinkedList<>();
-            lista.add(new Psicologo("Jose", "Rodriguez", "Gaxiola", "jose@gmail.com"));
-            lista.add(new Psicologo("Jorge", "Blanco", "Verdugo", "mary.ruizp20@gmail.com"));
-            lista.add(new Psicologo("Maria", "Felix", "Perez", "erikalucia005@gmail.com"));
+            for (Psicologo p : coleccion.find()) {
+                lista.add(p);
+            }
             return lista;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener los psicologos: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener los psicólogos: " + e.getMessage());
         }
     }
 
@@ -62,9 +73,14 @@ public class PsicologoDAO implements IPsicologoDAO {
     @Override
     public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException {
         try {
-            return new Psicologo("Abraham", "Sainz", "Felix", "jsusAbhram@potros.itson.com");
+            Bson filtro = eq("correo", identificador);
+            Psicologo psicologo = coleccion.find(filtro).first();
+            if (psicologo == null) {
+                throw new PersistenciaException("No se encontró un psicólogo con el correo: " + identificador);
+            }
+            return psicologo;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener psicologo por su identificador: " + e.getMessage());
+            throw new PersistenciaException("Error al buscar el psicólogo: " + e.getMessage());
         }
     }
 

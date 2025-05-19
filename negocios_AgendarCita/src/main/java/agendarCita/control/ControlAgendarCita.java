@@ -47,23 +47,7 @@ public class ControlAgendarCita {
      */
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws AgendarCitaException {
         try {
-            List<PsicologoCitaDTO> psicologosDisponibles = new LinkedList<>();
-            List<PsicologoDTO> psicologos = psicologoBO.obtenerPsicologos();
-
-            for (PsicologoDTO psicologo : psicologos) {
-                // Obtener horas disponibles de este psicólogo para la fecha seleccionada
-                List<LocalTime> horasDisponibles = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologo);
-
-                // Crear el DTO extendido con las horas disponibles
-                PsicologoCitaDTO dto = new PsicologoCitaDTO(
-                        psicologo.getNombre(),
-                        psicologo.getApellidoPaterno(),
-                        psicologo.getApellidoMaterno(),
-                        psicologo.getCorreo(),
-                        horasDisponibles
-                );
-                psicologosDisponibles.add(dto);
-            }
+            List<PsicologoCitaDTO> psicologosDisponibles = psicologoBO.obtenerPsicologos();
             return psicologosDisponibles;
         } catch (Exception e) {
             Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, null, e);

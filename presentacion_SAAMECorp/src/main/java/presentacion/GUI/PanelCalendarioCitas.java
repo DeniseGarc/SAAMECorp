@@ -1,7 +1,10 @@
 package presentacion.GUI;
 
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modificarCita.control.ControlModificarCita;
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
 
@@ -117,13 +120,18 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarDiaActionPerformed
-        Calendar diaSeleccionado = calendarioCitas.getCalendar();
-        if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
-            JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
-            return;
+        try {
+            Calendar diaSeleccionado = calendarioCitas.getCalendar();
+            if (!controlNegocio.validarDiaSeleccionado(diaSeleccionado)) {
+                JOptionPane.showMessageDialog(null, "Usted ya tiene agenda llena para este día", "Seleccione otra fecha", JOptionPane.OK_OPTION);
+                return;
+            }
+            // Llama al método para pasar a la siguente pantalla 
+            flujoPantallas.pantallaAgregarCita(diaSeleccionado);
+        } catch (Exception e) {
+            Logger.getLogger(PanelCalendarioCitas.class.getName()).log(Level.SEVERE, null, e);
         }
-        // Llama al método para pasar a la siguente pantalla 
-        flujoPantallas.pantallaAgregarCita(diaSeleccionado);;
+
     }//GEN-LAST:event_btnSeleccionarDiaActionPerformed
 
     private void btnModificarCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarCitaMouseClicked
