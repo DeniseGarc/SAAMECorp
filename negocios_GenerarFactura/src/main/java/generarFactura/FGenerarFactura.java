@@ -34,6 +34,9 @@ public class FGenerarFactura implements IGenerarFactura {
         if (facturaTimbrada == null || facturaTimbrada.getId() == null) {
             throw new GenerarFacturaException("Error al timbrar la factura");
         }
+        if (!controlGenerarFactura.registrarFactura(facturaTimbrada)) {
+            throw new GenerarFacturaException("Error al registrar la factura");
+        }
         ResultadoFacturarPago resultadoFacturarPago = new ResultadoFacturarPago(facturaTimbrada,
                 controlGenerarFactura.mandarFacturaCorreo(facturaTimbrada));
         return resultadoFacturarPago;

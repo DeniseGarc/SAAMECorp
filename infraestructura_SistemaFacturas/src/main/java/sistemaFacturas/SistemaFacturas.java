@@ -39,10 +39,14 @@ public class SistemaFacturas implements ISistemaFacturas {
      * @param factura DTO de la factura a timbrar
      * @return DTO de la factura timbrada
      * @throws ConexionFacturamaException si ocurre un error al timbrar la
-     * factura.
+     *                                    factura.
      */
     @Override
     public FacturaRegistroDTO timbrarFactura(FacturaRegistroDTO factura) throws ConexionFacturamaException {
+        if (factura == null) {
+            throw new ConexionFacturamaException("La factura no puede ser nula");
+
+        }
         com.Facturama.sdk_java.Models.Request.Cfdi cfdi = new com.Facturama.sdk_java.Models.Request.Cfdi();
         // Establecer los datos de la factura
         cfdi.setCurrency(factura.getCurrency());
@@ -96,10 +100,13 @@ public class SistemaFacturas implements ISistemaFacturas {
      * @param factura DTO de la factura a enviar
      * @return true si se envía correctamente, false si ocurre un error.
      * @throws ConexionFacturamaException si ocurre un error al enviar el
-     * correo.
+     *                                    correo.
      */
     @Override
     public boolean mandarFacturaCorreo(FacturaRegistroDTO factura) throws ConexionFacturamaException {
+        if (factura.getEmailReceiver() == null || factura.getEmailReceiver().isEmpty()) {
+            throw new ConexionFacturamaException("El correo electrónico del receptor no puede ser nulo o vacío");
+        }
         try {
             instanciaFacturama.Cfdis().SendEmail(factura.getEmailReceiver(), CfdiService.InvoiceType.Issued,
                     factura.getId());
@@ -113,17 +120,19 @@ public class SistemaFacturas implements ISistemaFacturas {
     /**
      * Método para descargar el PDF de la factura.
      *
-     * @param factura DTO de la factura a descargar
+     * @param factura  DTO de la factura a descargar
      * @param filePath Ruta donde se guardará el PDF
      * @return true si se descarga correctamente, false si se cancela la
-     * selección de ruta.
+     *         selección de ruta.
      * @throws ConexionFacturamaException si ocurre un error al descargar el
-     * PDF.
+     *                                    PDF.
      */
     @Override
     public boolean descargarPDF(FacturaRegistroDTO factura, String filePath) throws ConexionFacturamaException {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new ConexionFacturamaException("La ruta del archivo no puede ser nula o vacía");
+        }
         try {
-
             instanciaFacturama.Cfdis().SavePdf(filePath + ".pdf", factura.getId().toString());
             return true;
         } catch (Exception e) {
@@ -135,15 +144,18 @@ public class SistemaFacturas implements ISistemaFacturas {
     /**
      * Método para descargar el XML de la factura.
      *
-     * @param factura DTO de la factura a descargar
+     * @param factura  DTO de la factura a descargar
      * @param filePath Ruta donde se guardará el archivo XML
      * @return true si se descarga correctamente, false si se cancela la
-     * selección de ruta.
+     *         selección de ruta.
      * @throws ConexionFacturamaException si ocurre un error al descargar el
-     * XML.
+     *                                    XML.
      */
     @Override
     public boolean descargarXML(FacturaRegistroDTO factura, String filePath) throws ConexionFacturamaException {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new ConexionFacturamaException("La ruta del archivo no puede ser nula o vacía");
+        }
         try {
             instanciaFacturama.Cfdis().SaveXml(filePath + ".xml", factura.getId().toString());
             return true;
