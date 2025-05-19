@@ -42,8 +42,11 @@ public class Psicologo {
      */
     private String correo;
 
+   /**
+     * Lista de horarios (horas) disponibles del psicólogo durante un día.
+     */
     private List<LocalTime> horasAtencion;
-
+  
     /**
      * Constructor por defecto.
      */
@@ -51,7 +54,7 @@ public class Psicologo {
     }
 
     /**
-     * Constructor que inicializa todos los campos del psicólogo.
+     * Constructor que inicializa casi todos los campos del psicólogo.
      *
      * @param id Identificador único del psicólogo.
      * @param nombre Nombre del psicólogo.
@@ -70,14 +73,26 @@ public class Psicologo {
         this.rfc = rfc;
     }
 
-    public Psicologo(ObjectId id, String rfc, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horasAtencion) {
+    /**
+     * Constructor que inicializa todos los campos del psicólogo.
+     *
+     * @param id Identificador único del psicólogo.
+     * @param nombre Nombre del psicólogo.
+     * @param apellidoPaterno Apellido paterno del psicólogo.
+     * @param apellidoMaterno Apellido materno del psicólogo.
+     * @param correo Correo electrónico del psicólogo.
+     * @param rfc RFC del psicólogo.
+     * @param horarioDia
+     */
+    public Psicologo(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
+            String rfc, List<LocalTime> horarioDia) {
         this.id = id;
-        this.rfc = rfc;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-        this.horasAtencion = horasAtencion;
+        this.rfc = rfc;
+        this.horarioDia = horarioDia;
     }
 
     /**

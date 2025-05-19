@@ -27,7 +27,7 @@ public class CitaMapper {
     }
 
     public Cita toEntity(CitaNuevaDTO cita) {
-        return new Cita(cita.getFechaHora(), cita.getCubiculo(), new Psicologo(null, cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), null),
+        return new Cita(cita.getFechaHora(), cita.getCubiculo(), new Psicologo(null, cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), cita.getPsicologo().getRfc(), cita.getPsicologo().getHorarioDia()),
                 cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
     }
 
