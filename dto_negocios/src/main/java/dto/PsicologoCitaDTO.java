@@ -42,6 +42,11 @@ public class PsicologoCitaDTO {
     private String correo;
 
     /**
+     * RFC del psicólogo.
+     */
+    private String rfc;
+
+    /**
      * Lista de horarios (horas) disponibles del psicólogo durante un día.
      */
     private List<LocalTime> horarioDia;
@@ -56,34 +61,37 @@ public class PsicologoCitaDTO {
     /**
      * Constructor que inicializa los campos del psicólogo.
      *
-     * @param nombre          Nombre del psicólogo.
+     * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo          Correo electrónico del psicólogo.
+     * @param correo Correo electrónico del psicólogo.
+     * @param rfc rfc del psicologo
      */
-    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo) {
+    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
+        this.rfc = rfc;
     }
 
     /**
      * Constructor que inicializa todos los campos del psicólogo y su horario
      * disponible.
      *
-     * @param nombre          Nombre del psicólogo.
+     * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo          Correo electrónico del psicólogo.
-     * @param horarioDia      Lista de horarios disponibles en el día.
+     * @param correo Correo electrónico del psicólogo.
+     * @param rfc rfc del psicologo
+     * @param horarioDia Lista de horarios disponibles en el día.
      */
-    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
-            List<LocalTime> horarioDia) {
+    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc, List<LocalTime> horarioDia) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
+        this.rfc = rfc;
         this.horarioDia = horarioDia;
     }
 
@@ -91,7 +99,7 @@ public class PsicologoCitaDTO {
      * Constructor que crea un {@code PsicologoCitaDTO} a partir de un
      * {@code PsicologoDTO} y una lista de horarios.
      *
-     * @param psicologo  Objeto que contiene los datos personales del psicólogo.
+     * @param psicologo Objeto que contiene los datos personales del psicólogo.
      * @param horarioDia Lista de horarios disponibles en el día.
      */
     public PsicologoCitaDTO(PsicologoDTO psicologo, List<LocalTime> horarioDia) {
@@ -172,6 +180,14 @@ public class PsicologoCitaDTO {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
     /**
