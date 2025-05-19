@@ -112,7 +112,7 @@ public class FAgendarCita implements IAgendarCita {
         return "¿Desea agendar la cita?\n"
                 + citaNueva.getCubiculo() + "\n"
                 + "Fecha: " + fechaCita + "\n"
-                + "Psicólogo: " + citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() + "\n"
+                + "Psicólogo: " + /*citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() +*/ "\n"
                 + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + citaNueva.getCorreoPaciente();
     }
@@ -149,11 +149,11 @@ public class FAgendarCita implements IAgendarCita {
         if (!resultadoAgendarCita) {
             throw new AgendarCitaException("No ha sido posible agendar la cita");
         }
-        boolean resultadoMandarCorreo = control.mandarCorreo(cita, cita.getPsicologo().getCorreo());
+        boolean resultadoMandarCorreo = control.mandarCorreo(cita, cita.getPsicologo()/*.getCorreo()*/);
         String mensajeAdvertencia = null;
         if (!resultadoMandarCorreo) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.WARNING, "No fue posible mandar el correo de confirmación");
-            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación a " + cita.getPsicologo().getCorreo();
+            mensajeAdvertencia = "no ha sido posible mandar el correo de confirmación a " + cita.getPsicologo()/*.getCorreo()*/;
         }
         return new ResultadoAgendarCita(resultadoAgendarCita, resultadoMandarCorreo, mensajeAdvertencia);
     }

@@ -33,7 +33,7 @@ public class CitaNuevaDTO {
     /**
      * Psicólogo asignado a la cita.
      */
-    private PsicologoCitaDTO psicologo;
+    private String psicologo;
 
     /**
      * Nombre completo del paciente.
@@ -73,7 +73,7 @@ public class CitaNuevaDTO {
      * @param correoPaciente Correo del paciente.
      * @param adeudo Adeudo asociado a la cita.
      */
-    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, PsicologoCitaDTO psicologo,
+    public CitaNuevaDTO(Calendar fechaHora, String cubiculo, String psicologo,
             String nombrePaciente, String telefonoPaciente, String correoPaciente,
             AdeudoCitaDTO adeudo) {
         this.fechaHora = fechaHora;
@@ -126,7 +126,7 @@ public class CitaNuevaDTO {
      *
      * @return Objeto {@code PsicologoCitaDTO} con los datos del psicólogo.
      */
-    public PsicologoCitaDTO getPsicologo() {
+    public String getPsicologo() {
         return psicologo;
     }
 
@@ -135,7 +135,7 @@ public class CitaNuevaDTO {
      *
      * @param psicologo Psicólogo a asignar.
      */
-    public void setPsicologo(PsicologoCitaDTO psicologo) {
+    public void setPsicologo(String psicologo) {
         this.psicologo = psicologo;
     }
 

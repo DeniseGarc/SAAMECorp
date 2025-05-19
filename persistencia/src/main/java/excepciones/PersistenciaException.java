@@ -5,6 +5,7 @@
 package excepciones;
 
 /**
+ * Excepcion personalizada para la capa de persistencia
  *
  * @author Maryr
  */
