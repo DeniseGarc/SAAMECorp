@@ -42,13 +42,11 @@ public class Psicologo {
      */
     private String correo;
 
-    private List<LocalTime> horasAtencion;
-
-    /**
+   /**
      * Lista de horarios (horas) disponibles del psicólogo durante un día.
      */
-    private List<LocalTime> horarioDia;
-
+    private List<LocalTime> horasAtencion;
+  
     /**
      * Constructor por defecto.
      */
@@ -205,12 +203,12 @@ public class Psicologo {
         this.rfc = rfc;
     }
 
-    public List<LocalTime> getHorarioDia() {
-        return horarioDia;
+    public List<LocalTime> getHorasAtencion() {
+        return horasAtencion;
     }
 
-    public void setHorarioDia(List<LocalTime> horarioDia) {
-        this.horarioDia = horarioDia;
+    public void setHorasAtencion(List<LocalTime> horasAtencion) {
+        this.horasAtencion = horasAtencion;
     }
 
     /**
