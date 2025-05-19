@@ -157,7 +157,7 @@ public class CitaDAO implements ICitaDAO {
             citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 2", new Psicologo("Luis", "Ramirez", "Lopez", "luis.ramirez@gmail.com"), "Maria Lopez", "0987654321", "maria.lopez@gmail.com", null));
             citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 19, 9, 30)), "Cubiculo 3", new Psicologo("Marta", "Sanchez", "Diaz", "marta.sanchez@gmail.com"), "Carlos Gomez", "1122334455", "carlos.gomez@gmail.com", null));
             citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 20, 14, 15)), "Cubiculo 4", new Psicologo("Carlos", "Vega", "Mendoza", "carlos.vega@gmail.com"), "Laura Ruiz", "6677889900", "laura.ruiz@gmail.com", null));
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 21, 16, 45)), "Cubiculo 2", new Psicologo("Sofia", "Martinez", "Lopez", "sofia.martinez@gmail.com"), "Pedro Sanchez", "5544332211", "pedro.sanchez@gmail.com", null));
+            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 3", new Psicologo("Sofia", "Martinez", "Lopez", "sofia.martinez@gmail.com"), "Pedro Sanchez", "5544332211", "pedro.sanchez@gmail.com", null));
 
             return citas;
         } catch (Exception e) {

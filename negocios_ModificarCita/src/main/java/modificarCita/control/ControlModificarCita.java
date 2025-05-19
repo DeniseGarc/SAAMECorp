@@ -75,35 +75,41 @@ public class ControlModificarCita {
     }
 
     public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(CitaRegistradaDTO citaActualizar) throws ModificarCitaException {
-        try {
-            List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
-            List<CitaRegistradaDTO> citasRegistradas = citaBO.obtenerCitasCompletas();
-            List<CubiculoDTO> cubiculosFiltrados = new LinkedList<>();
-            for (CubiculoDTO cubiculo : cubiculosDisponibles) {
-                boolean cubiculoOcupado = false;
-                for (CitaRegistradaDTO cita : citasRegistradas) {
-                    if (cubiculo.getNombre().equals(cita.getCubiculo())
-                            && cita.getFechaHora().get(Calendar.YEAR) == citaActualizar.getFechaHora().get(Calendar.YEAR)
-                            && cita.getFechaHora().get(Calendar.MONTH) == citaActualizar.getFechaHora().get(Calendar.MONTH)
-                            && cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == citaActualizar.getFechaHora().get(Calendar.DAY_OF_MONTH)
-                            && cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == citaActualizar.getFechaHora().get(Calendar.HOUR_OF_DAY)
-                            && cita.getFechaHora().get(Calendar.MINUTE) == citaActualizar.getFechaHora().get(Calendar.MINUTE)) {
-                        if (!cita.getCubiculo().equals(cita.getCubiculo())) {
-                            cubiculoOcupado = true;
-                            break;
-                        }
-                    }
-                }
-                if (!cubiculoOcupado) {
-                    cubiculosFiltrados.add(cubiculo);
+    try {
+        List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
+        List<CitaRegistradaDTO> citasRegistradas = citaBO.obtenerCitasCompletas();
+        List<CubiculoDTO> cubiculosFiltrados = new LinkedList<>();
+
+        for (CubiculoDTO cubiculo : cubiculosDisponibles) {
+            boolean cubiculoOcupado = false;
+
+            for (CitaRegistradaDTO cita : citasRegistradas) {
+                boolean mismoDiaYHora =
+                    cita.getFechaHora().get(Calendar.YEAR) == citaActualizar.getFechaHora().get(Calendar.YEAR) &&
+                    cita.getFechaHora().get(Calendar.MONTH) == citaActualizar.getFechaHora().get(Calendar.MONTH) &&
+                    cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == citaActualizar.getFechaHora().get(Calendar.DAY_OF_MONTH) &&
+                    cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == citaActualizar.getFechaHora().get(Calendar.HOUR_OF_DAY) &&
+                    cita.getFechaHora().get(Calendar.MINUTE) == citaActualizar.getFechaHora().get(Calendar.MINUTE);
+
+                if (mismoDiaYHora && cubiculo.getNombre().equals(cita.getCubiculo())
+                    && !cita.getCubiculo().equals(citaActualizar.getCubiculo())) {
+                    cubiculoOcupado = true;
+                    break;
                 }
             }
-            return cubiculosFiltrados;
-        } catch (Exception e) {
-            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
-            throw new ModificarCitaException("Ha ocurido un error al intentar obtener los cubiculos disponibles en el horario seleccionado", e);
+
+            if (!cubiculoOcupado) {
+                cubiculosFiltrados.add(cubiculo);
+            }
         }
+
+        return cubiculosFiltrados;
+    } catch (Exception e) {
+        Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
+        throw new ModificarCitaException("Ha ocurrido un error al intentar obtener los cubículos disponibles en el horario seleccionado", e);
     }
+}
+
 
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws ModificarCitaException {
         try {
