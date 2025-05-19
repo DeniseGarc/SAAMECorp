@@ -31,6 +31,7 @@ public class ConexionBD {
         if (mongoClient == null) {
             CodecRegistry localDateCodecRegistry = CodecRegistries.fromCodecs(new LocalDateCodec());
             CodecRegistry localTimeCodecRegistry = CodecRegistries.fromCodecs(new LocalTimeCodec());
+            CodecRegistry calendarCodecRegistry = CodecRegistries.fromCodecs(new CalendarCodec());
 
             CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(
                     PojoCodecProvider.builder().automatic(true).build()
@@ -40,6 +41,7 @@ public class ConexionBD {
                     MongoClientSettings.getDefaultCodecRegistry(),
                     localDateCodecRegistry,
                     localTimeCodecRegistry,
+                    calendarCodecRegistry,
                     pojoCodecRegistry
             );
 
