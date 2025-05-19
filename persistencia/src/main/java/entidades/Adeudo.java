@@ -14,11 +14,6 @@ import org.bson.types.ObjectId;
 public class Adeudo {
 
     /**
-     * Id del registro
-     */
-    private ObjectId id;
-
-    /**
      * Monto del adeudo asociado a la cita.
      */
     private double cantidad;
@@ -28,6 +23,10 @@ public class Adeudo {
      * pendiente.
      */
     private boolean estado;
+
+    private String notas;
+
+    private ObjectId idPago;
 
     /**
      * Constructor vacío. Inicializa un objeto {@code AdeudoCitaDTO} sin valores
@@ -47,14 +46,6 @@ public class Adeudo {
     public Adeudo(double cantidad, boolean estado) {
         this.cantidad = cantidad;
         this.estado = estado;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 
     /**
@@ -93,5 +84,36 @@ public class Adeudo {
      */
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+
+    public ObjectId getIdPago() {
+        return idPago;
+    }
+
+    public void setIdPago(ObjectId idPago) {
+        this.idPago = idPago;
+    }
+
+    
+    public String getObjectPagoString() {
+        return idPago != null ? idPago.toHexString() : null;
+    }
+
+    /**
+     * Asigna el identificador MongoDB a partir de una cadena hexadecimal.
+     *
+     * @param idStr Cadena con el valor del ObjectId. Si es null o vacío, no se
+     * asigna.
+     */
+    public void setObjectPagoString(String idStr) {
+        this.idPago = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
     }
 }

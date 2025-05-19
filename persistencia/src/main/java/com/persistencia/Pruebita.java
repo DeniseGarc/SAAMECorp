@@ -10,7 +10,6 @@ import entidades.Cubiculo;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
