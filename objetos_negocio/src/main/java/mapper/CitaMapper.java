@@ -27,7 +27,7 @@ public class CitaMapper {
     }
 
     public Cita toEntity(CitaNuevaDTO cita) {
-        return new Cita(cita.getFechaHora(), cita.getCubiculo(), new Psicologo(cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), null),
+        return new Cita(cita.getFechaHora(), cita.getCubiculo(), new Psicologo(null, cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), null),
                 cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
     }
 
@@ -52,7 +52,7 @@ public class CitaMapper {
         List<CitaRegistradaDTO> citasDTO = new ArrayList<>();
         PsicologoMapper mapper = new PsicologoMapper();
         for (Cita cita : citas) {
-            citasDTO.add(new CitaRegistradaDTO(cita.getId(), cita.getFechaHora(), cita.getCubiculo(), mapper.toDTO2(cita.getPsicologo()), cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente()));
+//            citasDTO.add(new CitaRegistradaDTO(cita.getId(), cita.getFechaHora(), cita.getCubiculo(), mapper.toDTO2(cita.getPsicologo()), cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente()));
         }
         return citasDTO;
     }

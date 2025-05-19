@@ -22,11 +22,11 @@ public class PsicologoMapper {
     }
 
     public Psicologo toEntity(PsicologoCitaDTO psicologo) {
-        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), null);
+        return new Psicologo(null, psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), null);
     }
 
     public Psicologo toEntity2(PsicologoDTO psicologo) {
-        return new Psicologo(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
+        return new Psicologo(null, psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
     }
 
     public List<PsicologoCitaDTO> toDTOList(List<Psicologo> psicologos) {

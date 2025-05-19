@@ -152,12 +152,12 @@ public class CitaDAO implements ICitaDAO {
     public List<Cita> obtenerCitas() throws PersistenciaException {
         try {
             List<Cita> citas = new LinkedList<>();
-            // Citas simuladas
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 17, 15, 37)), "Cubiculo 1", new Psicologo("Ana", "Perez", "Garcia", "ana.perez@gmail.com"), "Juan Perez", "1234567890", "juan.perez@gmail.com", null));
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 2", new Psicologo("Luis", "Ramirez", "Lopez", "luis.ramirez@gmail.com"), "Maria Lopez", "0987654321", "maria.lopez@gmail.com", null));
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 19, 9, 30)), "Cubiculo 3", new Psicologo("Marta", "Sanchez", "Diaz", "marta.sanchez@gmail.com"), "Carlos Gomez", "1122334455", "carlos.gomez@gmail.com", null));
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 20, 14, 15)), "Cubiculo 4", new Psicologo("Carlos", "Vega", "Mendoza", "carlos.vega@gmail.com"), "Laura Ruiz", "6677889900", "laura.ruiz@gmail.com", null));
-            citas.add(new Cita(toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 3", new Psicologo("Sofia", "Martinez", "Lopez", "sofia.martinez@gmail.com"), "Pedro Sanchez", "5544332211", "pedro.sanchez@gmail.com", null));
+//            // Citas simuladas
+//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 17, 15, 37)), "Cubiculo 1", new Psicologo("Ana", "Perez", "Garcia", "ana.perez@gmail.com"), "Juan Perez", "1234567890", "juan.perez@gmail.com", null));
+//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 2", new Psicologo("Luis", "Ramirez", "Lopez", "luis.ramirez@gmail.com"), "Maria Lopez", "0987654321", "maria.lopez@gmail.com", null));
+//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 19, 9, 30)), "Cubiculo 3", new Psicologo("Marta", "Sanchez", "Diaz", "marta.sanchez@gmail.com"), "Carlos Gomez", "1122334455", "carlos.gomez@gmail.com", null));
+//            citas.add(new Cita(null, toCalendar(LocalDateTime.of(2025, 5, 20, 14, 15)), "Cubiculo 4", new Psicologo("Carlos", "Vega", "Mendoza", "carlos.vega@gmail.com"), "Laura Ruiz", "6677889900", "laura.ruiz@gmail.com", null));
+//            citas.add(new Cita(null,toCalendar(LocalDateTime.of(2025, 5, 18, 10, 0)), "Cubiculo 3", new Psicologo("Sofia", "Martinez", "Lopez", "sofia.martinez@gmail.com"), "Pedro Sanchez", "5544332211", "pedro.sanchez@gmail.com", null));
 
             return citas;
         } catch (Exception e) {

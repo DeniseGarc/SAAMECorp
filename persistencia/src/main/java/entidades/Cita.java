@@ -222,4 +222,12 @@ public class Cita {
     public void setAdeudo(Adeudo adeudo) {
         this.adeudo = adeudo;
     }
+
+    public String getObjectString() {
+        return id != null ? id.toHexString() : null;
+    }
+
+    public void setObjectString(String idStr) {
+        this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
+    }
 }

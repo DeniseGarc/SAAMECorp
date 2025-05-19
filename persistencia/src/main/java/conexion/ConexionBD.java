@@ -21,7 +21,7 @@ public class ConexionBD {
 
     private static MongoClient mongoClient = null;
     private static MongoDatabase database = null;
-    private static final String URL = "mongodb://localhost:27017";
+    private static final String URL = "mongodb+srv://basesDeDatos:Q3csbtApaJCjVWL@basesdedatos.8nugs8t.mongodb.net/?retryWrites=true&w=majority&appName=BasesDeDatos";
     private static final String DATABASE_NAME = "AMECorp";
 
     private ConexionBD() {

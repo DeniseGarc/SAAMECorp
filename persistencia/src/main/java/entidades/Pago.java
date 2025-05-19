@@ -1,6 +1,7 @@
 package entidades;
 
 import java.time.LocalDateTime;
+import org.bson.types.ObjectId;
 
 /**
  *
