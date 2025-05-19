@@ -319,13 +319,13 @@ public class CoordinadorNegocio {
         }
     }
     
-    public List<String> mandarCubiculos(Calendar fecha) throws CoordinadorException {
-        if (fecha == null) {
+    public List<String> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
+        if (cita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
         }
         try {
             List<String> nombresCubiculos = new ArrayList<>();
-            for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(fecha)) {
+            for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(cita)) {
                 nombresCubiculos.add(cubiculo.getNombre());
             }
             return nombresCubiculos;

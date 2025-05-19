@@ -48,6 +48,7 @@ public class CubiculoDAO implements ICubiculoDAO {
             cubiculos.add(new Cubiculo("Cubiculo 1", true));
             cubiculos.add(new Cubiculo("Cubiculo 2", true));
             cubiculos.add(new Cubiculo("Cubiculo 3", true));
+            cubiculos.add(new Cubiculo("Cubiculo 4", true));
             return cubiculos;
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener los cubiculos disponibles: " + e.getMessage());

@@ -28,11 +28,11 @@ public interface IModificarCita {
 
     /**
      * Metodo para obtener los cubiculos disponibles
-     * @param fecha dia de la cita
+     * @param cita
      * @return lista con los cubiculos disponibles
      * @throws ModificarCitaException 
      */
-    public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws ModificarCitaException;
+    public List<CubiculoDTO> mandarCubiculos(CitaRegistradaDTO cita) throws ModificarCitaException;
     
     public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException;
 

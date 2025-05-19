@@ -20,6 +20,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mapper.CubiculoMapper;
 import mapper.CitaMapper;
 import mapper.PsicologoMapper;
@@ -163,20 +165,13 @@ public class CitaBO implements ICitaBO {
      */
     @Override
     public List<CitaRegistradaDTO> obtenerCitasCompletas() throws NegocioException {
-        List<CitaRegistradaDTO> citas = new ArrayList<>();
-        Calendar fecha1 = Calendar.getInstance();
-        fecha1.set(2025, Calendar.MAY, 17, 15, 37);
-        Calendar fecha2 = Calendar.getInstance();
-        fecha2.set(2025, Calendar.MAY, 18, 10, 0);
-        Calendar fecha3 = Calendar.getInstance();
-        fecha3.set(2025, Calendar.MAY, 19, 9, 30); 
-        citas.add(new CitaRegistradaDTO("12", fecha1, "1", new PsicologoDTO("ahh", "ehh", "ihhi", "mary.ruizp20@gmail.com"), "sol", "1234567890", "fvbwsio@dcw.com"));
-        citas.add(new CitaRegistradaDTO("13", fecha2, "2", new PsicologoDTO("que", "stop", "this", "mary.ruizp20@gmail.com"), "los", "0987654321", "nsso@dcw.com"));
-        citas.add(new CitaRegistradaDTO("13", fecha3, "3", new PsicologoDTO("que", "stop", "this", "mary.ruizp20@gmail.com"), "los", "0987654321", "nsso@dcw.com"));
-        citas.add(new CitaRegistradaDTO("13", Calendar.getInstance(), "4", new PsicologoDTO("que", "stop", "this", "mary.ruizp20@gmail.com"), "los", "0987654321", "nsso@dcw.com"));
-        citas.add(new CitaRegistradaDTO("13", Calendar.getInstance(), "5", new PsicologoDTO("que", "stop", "this", "mary.ruizp20@gmail.com"), "los", "0987654321", "nsso@dcw.com"));
-        citas.add(new CitaRegistradaDTO("13", Calendar.getInstance(), "6", new PsicologoDTO("que", "stop", "this", "mary.ruizp20@gmail.com"), "los", "0987654321", "nsso@dcw.com"));
-        return citas;
+        try {
+            List<Cita> citas = citaDAO.obtenerCitas();
+            return cItaMapper.toDTOList3(citas);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(CitaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al obtener las citas completas: ", ex);
+        }
     }
 
     /**
