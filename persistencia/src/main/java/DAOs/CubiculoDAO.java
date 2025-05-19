@@ -23,12 +23,13 @@ import java.util.List;
  * @author erika
  */
 public class CubiculoDAO implements ICubiculoDAO {
-    
+
     private final MongoCollection<Cubiculo> coleccionCubiculos;
     /**
      * Instancia unica de la clase
      */
     private static CubiculoDAO instanciaCubiculoDAO;
+
     /**
      * Constructor privado
      */
@@ -36,8 +37,10 @@ public class CubiculoDAO implements ICubiculoDAO {
         MongoDatabase database = ConexionBD.getDatabase();
         this.coleccionCubiculos = database.getCollection("cubiculos", Cubiculo.class);
     }
+
     /**
      * Metodo para obtener la instancia unica de la clase CubiculoDAO
+     *
      * @return Instancia Unica de la clase CubiculoDAO
      */
     public static CubiculoDAO getInstanciaDAO() {
@@ -55,22 +58,18 @@ public class CubiculoDAO implements ICubiculoDAO {
     @Override
     public List<Cubiculo> obtenerCubiculosEstadoDisponible() throws PersistenciaException {
         try {
-            List<Cubiculo> cubiculos = new LinkedList<>();
-            cubiculos.add(new Cubiculo("Cubiculo 1", true));
-            cubiculos.add(new Cubiculo("Cubiculo 2", true));
-            cubiculos.add(new Cubiculo("Cubiculo 3", true));
-            cubiculos.add(new Cubiculo("Cubiculo 4", true));
-            return cubiculos;
+            return coleccionCubiculos.find(eq("estado", true)).into(new ArrayList<>());
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener los cubiculos disponibles: " + e.getMessage());
+            throw new PersistenciaException("Error al obtener los cubículos disponibles: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo para obtener los cubiculos registrados dado su estado
+     *
      * @param estado estado a buscar
      * @return Lista de cubiculos con el estado dado
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public List<Cubiculo> obtenerCubiculoPorEstado(boolean estado) throws PersistenciaException {
@@ -80,34 +79,39 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al obtener cubículos por estado: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo para modificar los datos de un cubiculo
+     *
      * @param cubiculoModificar cubiculo con los datos a modificar
      * @return true si se actualizo correctamente, false si no
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public boolean ModificarCubiculo(Cubiculo cubiculoModificar) throws PersistenciaException {
-         try {
+        try {
             UpdateResult result = coleccionCubiculos.replaceOne(
+
                 eq("_id", cubiculoModificar.getObjectString()), cubiculoModificar
+
             );
             return result.getModifiedCount() > 0;
         } catch (Exception e) {
             throw new PersistenciaException("Error al modificar el cubículo: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo para modificar el estado de un cubiculo dado
+     *
      * @param CubiculoModificar cubiculo a modificar
      * @return true si se actualizo correctamente, false si no
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public boolean ModificarEstadoCubiculo(Cubiculo CubiculoModificar) throws PersistenciaException {
         try {
+
         // Buscar el cubículo actual por su ID
         Cubiculo cubiculoActual = coleccionCubiculos.find(eq("_id", CubiculoModificar.getObjectString())).first();
 
@@ -115,8 +119,10 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("No se encontró el cubículo con ID: " + CubiculoModificar.getObjectString());
         }
 
-        // Invertir el estado actual
-        boolean nuevoEstado = !cubiculoActual.isEstado();
+
+            // Invertir el estado actual
+            boolean nuevoEstado = !cubiculoActual.isEstado();
+
 
         // Actualizar solo el campo "estado"
         UpdateResult resultado = coleccionCubiculos.updateOne(
@@ -124,17 +130,19 @@ public class CubiculoDAO implements ICubiculoDAO {
             set("estado", nuevoEstado)
         );
 
-        return resultado.getModifiedCount() > 0;
+
+            return resultado.getModifiedCount() > 0;
         } catch (Exception e) {
             throw new PersistenciaException("Error al modificar el estado del cubículo: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo para agregar un cubiculo
+     *
      * @param cubiculoAgregar cubiculo a agregar
      * @return true si se agrego correctamente, false si no
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public boolean AgregarCubiculo(Cubiculo cubiculoAgregar) throws PersistenciaException {
@@ -145,12 +153,13 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al agregar cubículo: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo para buscar un cubiculo dado su nombre
+     *
      * @param nombre nombre del cubiculo a buscar
      * @return cubiculo encontrado
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public Cubiculo buscarCubiculoPorNombre(String nombre) throws PersistenciaException {
@@ -160,11 +169,12 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al buscar cubículo por nombre: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Metodo que regresa todos los cubiculos
+     *
      * @return Lista de todos los cubiculos registrados
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public List<Cubiculo> buscarCubiculos() throws PersistenciaException {
@@ -174,7 +184,5 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al obtener lista de cubículos: " + e.getMessage(), e);
         }
     }
-    
-   
 
 }

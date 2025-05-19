@@ -5,17 +5,14 @@
 package BO;
 
 import DAOs.PsicologoDAO;
+import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import entidades.Psicologo;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.IPsicologoBO;
 import interfaces.IPsicologoDAO;
-import java.time.LocalTime;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mapper.PsicologoMapper;
 
 /**
@@ -55,10 +52,10 @@ public class PsicologoBO implements IPsicologoBO {
      * @return Lista de psicolos registrados
      */
     @Override
-    public List<PsicologoDTO> obtenerPsicologos() throws NegocioException {
+    public List<PsicologoCitaDTO> obtenerPsicologos() throws NegocioException {
         try {
             List<Psicologo> psicologos = psicologoDAO.obtenerPsicologos();
-            return psicologoMapper.toDTOList2(psicologos);
+            return psicologoMapper.toDTOList(psicologos);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al obtener los psicologos: " + e.getMessage());
         }
