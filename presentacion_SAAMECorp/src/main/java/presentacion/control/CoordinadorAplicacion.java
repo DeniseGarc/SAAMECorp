@@ -23,6 +23,9 @@ import pantallasCubiculos.frmMenuCubiculos;
 import pantallasCubiculos.frmMenuReportes;
 import pantallasModificarCita.PantallaActualizarCita;
 import pantallasModificarCita.PantallaSeleccionCitaModificar;
+import pantallasReportes.frmReporteIngresosCubiculo;
+import pantallasReportes.frmReporteUsoCubiculo;
+import pantallasReportes.frmrReporteEstadistico;
 import presentacion.GUI.MenuPrincipalAdmin;
 import presentacion.GUI.MenuPrincipalPsicologo;
 import presentacion.GUI.PantallaGenerarFactura;
@@ -49,7 +52,7 @@ public class CoordinadorAplicacion {
      * Referencia al menu principal cuando el usuario es un psicologo
      */
     private MenuPrincipalPsicologo menuPsicologo;
-
+    
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
      */
@@ -174,7 +177,6 @@ public class CoordinadorAplicacion {
      * una factura de el pago seleccionado.
      *
      * @param frm Frame que mandó a llamar a la acción.
-     * @param pagoSeleccionado Pago seleccionado a facturar.
      */
     public void pantallaGenerarFactura(JFrame frm) {
         PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm);
@@ -265,5 +267,43 @@ public class CoordinadorAplicacion {
             frame.setVisible(false);
         }
     }
-
+    /**
+     * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteUsoCubiculo(JFrame frm) {
+        frmReporteUsoCubiculo frmPantalla = new frmReporteUsoCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para navegar a la pantalla de reporte estadistico de cubiculos
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteEstadistico(JFrame frm) {
+        frmrReporteEstadistico frmPantalla = new frmrReporteEstadistico(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
+    /**
+     * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     * @param frm Frame que mando a llamar la accion
+     */
+    public void pantallaReporteIngresosCubiculo(JFrame frm) {
+        frmReporteIngresosCubiculo frmPantalla = new frmReporteIngresosCubiculo(frm);
+        menuAdmin.setVisible(false);
+        if (frm != null) {
+            frm.setVisible(false);
+        }
+        frmPantalla.setVisible(true);
+    }
+    
 }
