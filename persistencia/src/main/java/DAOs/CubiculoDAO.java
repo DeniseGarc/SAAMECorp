@@ -35,7 +35,7 @@ public class CubiculoDAO implements ICubiculoDAO {
      */
     private CubiculoDAO() {
         MongoDatabase database = ConexionBD.getDatabase();
-        this.coleccionCubiculos = database.getCollection("cubiculos", Cubiculo.class);
+        this.coleccionCubiculos = database.getCollection("Cubiculos", Cubiculo.class);
     }
 
     /**

@@ -48,7 +48,7 @@ public class CitaDAO implements ICitaDAO {
      */
     private CitaDAO() {
         MongoDatabase bd = ConexionBD.getDatabase();
-        coleccionCitas = bd.getCollection("citas", Cita.class);
+        coleccionCitas = bd.getCollection("Citas", Cita.class);
     }
 
     /**

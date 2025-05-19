@@ -30,7 +30,7 @@ public class PsicologoDAO implements IPsicologoDAO {
      */
     private PsicologoDAO() {
         MongoDatabase database = ConexionBD.getDatabase();
-        this.coleccion = database.getCollection("psicologos", Psicologo.class);
+        this.coleccion = database.getCollection("Psicologos", Psicologo.class);
     }
 
     /**
