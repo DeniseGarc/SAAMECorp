@@ -9,7 +9,6 @@ import entidades.Cubiculo;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -32,16 +31,16 @@ public class Pruebita {
 
             Psicologo psicologo = new Psicologo();
             psicologo.setCorreo("prueba@correo.com");
-            psicologo.setHorarioDia(Arrays.asList(
-                    LocalTime.of(9, 0), LocalTime.of(10, 0), LocalTime.of(11, 0)
-            ));
+//            psicologo.setHorarioDia(Arrays.asList(
+//                    LocalTime.of(9, 0), LocalTime.of(10, 0), LocalTime.of(11, 0)
+//            ));
 
             Cubiculo cubiculo = new Cubiculo("Cubiculo A", true);
 
             Cita cita = new Cita();
             cita.setFechaHora((Calendar) fecha.clone());
-            cita.setPsicologo(psicologo);
-            cita.setCubiculo(cubiculo.getNombre());
+//            cita.setPsicologo(psicologo);
+//            cita.setCubiculo(cubiculo.getNombre());
 
             // Guardar cita
             dao.guardarCita(cita);
@@ -51,7 +50,7 @@ public class Pruebita {
             List<Cita> citas = dao.obtenerCitas();
             System.out.println("Citas registradas:");
             for (Cita c : citas) {
-                System.out.println(c.getFechaHora() + " " + c.getPsicologo().getId());
+//                System.out.println(c.getFechaHora() + " " + c.getPsicologo().getId());
             }
 
             // Validar existencia de cita repetida

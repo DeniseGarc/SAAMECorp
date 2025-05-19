@@ -5,9 +5,9 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- * Clase que representa a un psicólogo en el sistema.
- * Contiene información básica como nombre, apellidos, correo y RFC.
- * 
+ * Clase que representa a un psicólogo en el sistema. Contiene información
+ * básica como nombre, apellidos, correo y RFC.
+ *
  * @author erika
  */
 public class Psicologo {
@@ -42,6 +42,8 @@ public class Psicologo {
      */
     private String correo;
 
+    private List<LocalTime> horasAtencion;
+
     /**
      * Constructor por defecto.
      */
@@ -50,13 +52,13 @@ public class Psicologo {
 
     /**
      * Constructor que inicializa todos los campos del psicólogo.
-     * 
-     * @param id              Identificador único del psicólogo.
-     * @param nombre          Nombre del psicólogo.
+     *
+     * @param id Identificador único del psicólogo.
+     * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo          Correo electrónico del psicólogo.
-     * @param rfc             RFC del psicólogo.
+     * @param correo Correo electrónico del psicólogo.
+     * @param rfc RFC del psicólogo.
      */
     public Psicologo(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
             String rfc) {
@@ -68,9 +70,19 @@ public class Psicologo {
         this.rfc = rfc;
     }
 
+    public Psicologo(ObjectId id, String rfc, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horasAtencion) {
+        this.id = id;
+        this.rfc = rfc;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correo = correo;
+        this.horasAtencion = horasAtencion;
+    }
+
     /**
      * Obtiene el identificador único del psicólogo.
-     * 
+     *
      * @return Identificador único del psicólogo.
      */
     public ObjectId getId() {
@@ -79,7 +91,7 @@ public class Psicologo {
 
     /**
      * Establece el identificador único del psicólogo.
-     * 
+     *
      * @param id Nuevo identificador único del psicólogo.
      */
     public void setId(ObjectId id) {
@@ -176,6 +188,14 @@ public class Psicologo {
         this.rfc = rfc;
     }
 
+    public List<LocalTime> getHorasAtencion() {
+        return horasAtencion;
+    }
+
+    public void setHorasAtencion(List<LocalTime> horasAtencion) {
+        this.horasAtencion = horasAtencion;
+    }
+
     /**
      * Devuelve el nombre completo del psicólogo en formato: "Nombre
      * ApellidoPaterno ApellidoMaterno".
@@ -189,7 +209,7 @@ public class Psicologo {
 
     /**
      * Devuelve el identificador MongoDB como una cadena hexadecimal.
-     * 
+     *
      * @return Cadena hexadecimal del ObjectId o null si el id es null.
      */
     public String getObjectString() {
@@ -200,7 +220,7 @@ public class Psicologo {
      * Asigna el identificador MongoDB a partir de una cadena hexadecimal.
      *
      * @param idStr Cadena con el valor del ObjectId. Si es null o vacío, no se
-     *              asigna.
+     * asigna.
      */
     public void setObjectString(String idStr) {
         this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;

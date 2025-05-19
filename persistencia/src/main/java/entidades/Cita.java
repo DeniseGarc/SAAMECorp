@@ -25,16 +25,6 @@ public class Cita {
     private Calendar fechaHora;
 
     /**
-     * Identificador del cubículo donde se llevará a cabo la cita.
-     */
-    private String cubiculo;
-
-    /**
-     * Psicólogo asignado a la cita.
-     */
-    private Psicologo psicologo;
-
-    /**
      * Nombre completo del paciente.
      */
     private String nombrePaciente;
@@ -49,10 +39,9 @@ public class Cita {
      */
     private String correoPaciente;
 
-    /**
-     * Información del adeudo asociado a la cita, si existe.
-     */
-    private Adeudo adeudo;
+    private ObjectId idPsicologo;
+    private ObjectId idCubiculo;
+    private Adeudo detallesAdeudo;
 
     /**
      * Constructor vacío. Crea un objeto {@code CitaNuevaDTO} sin valores
@@ -61,32 +50,15 @@ public class Cita {
     public Cita() {
     }
 
-    /**
-     * Constructor que inicializa todos los campos de la cita.
-     *
-     * @param fechaHora Fecha y hora de la cita.
-     * @param cubiculo Cubículo asignado.
-     * @param psicologo Psicólogo que atenderá.
-     * @param nombrePaciente Nombre del paciente.
-     * @param telefonoPaciente Teléfono del paciente.
-     * @param correoPaciente Correo del paciente.
-     * @param adeudo Adeudo asociado a la cita.
-     */
-    public Cita(Calendar fechaHora, String cubiculo, Psicologo psicologo,
-            String nombrePaciente, String telefonoPaciente, String correoPaciente,
-            Adeudo adeudo) {
+    public Cita(ObjectId id, Calendar fechaHora, String nombrePaciente, String telefonoPaciente, String correoPaciente, ObjectId idPsicologo, ObjectId idCubiculo, Adeudo detallesAdeudo) {
+        this.id = id;
         this.fechaHora = fechaHora;
-        this.cubiculo = cubiculo;
-        this.psicologo = psicologo;
         this.nombrePaciente = nombrePaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.correoPaciente = correoPaciente;
-        this.adeudo = adeudo;
-    }
-
-    public Cita(Calendar fechaHora, String cubiculo) {
-        this.fechaHora = fechaHora;
-        this.cubiculo = cubiculo;
+        this.idPsicologo = idPsicologo;
+        this.idCubiculo = idCubiculo;
+        this.detallesAdeudo = detallesAdeudo;
     }
 
     public ObjectId getId() {
@@ -113,42 +85,6 @@ public class Cita {
      */
     public void setFechaHora(Calendar fechaHora) {
         this.fechaHora = fechaHora;
-    }
-
-    /**
-     * Obtiene el cubículo asignado para la cita.
-     *
-     * @return Identificador del cubículo.
-     */
-    public String getCubiculo() {
-        return cubiculo;
-    }
-
-    /**
-     * Establece el cubículo asignado para la cita.
-     *
-     * @param cubiculo Nuevo cubículo.
-     */
-    public void setCubiculo(String cubiculo) {
-        this.cubiculo = cubiculo;
-    }
-
-    /**
-     * Obtiene el psicólogo asignado a la cita.
-     *
-     * @return Objeto {@code PsicologoCitaDTO} con los datos del psicólogo.
-     */
-    public Psicologo getPsicologo() {
-        return psicologo;
-    }
-
-    /**
-     * Establece el psicólogo asignado a la cita.
-     *
-     * @param psicologo Psicólogo a asignar.
-     */
-    public void setPsicologo(Psicologo psicologo) {
-        this.psicologo = psicologo;
     }
 
     /**
@@ -205,22 +141,28 @@ public class Cita {
         this.correoPaciente = correoPaciente;
     }
 
-    /**
-     * Obtiene el adeudo asociado a la cita.
-     *
-     * @return Objeto {@code AdeudoCitaDTO} con los datos del adeudo.
-     */
-    public Adeudo getAdeudo() {
-        return adeudo;
+    public ObjectId getIdPsicologo() {
+        return idPsicologo;
     }
 
-    /**
-     * Establece el adeudo asociado a la cita.
-     *
-     * @param adeudo Objeto con la información del adeudo.
-     */
-    public void setAdeudo(Adeudo adeudo) {
-        this.adeudo = adeudo;
+    public void setIdPsicologo(ObjectId idPsicologo) {
+        this.idPsicologo = idPsicologo;
+    }
+
+    public ObjectId getIdCubiculo() {
+        return idCubiculo;
+    }
+
+    public void setIdCubiculo(ObjectId idCubiculo) {
+        this.idCubiculo = idCubiculo;
+    }
+
+    public Adeudo getDetallesAdeudo() {
+        return detallesAdeudo;
+    }
+
+    public void setDetallesAdeudo(Adeudo detallesAdeudo) {
+        this.detallesAdeudo = detallesAdeudo;
     }
 
     public String getObjectString() {
@@ -229,5 +171,21 @@ public class Cita {
 
     public void setObjectString(String idStr) {
         this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
+    }
+
+    public String getObjectPsicologoString() {
+        return idPsicologo != null ? idPsicologo.toHexString() : null;
+    }
+
+    public void setObjectPsicologoString(String idStr) {
+        this.idPsicologo = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
+    }
+
+    public String getObjectCubiculoString() {
+        return idCubiculo != null ? idCubiculo.toHexString() : null;
+    }
+
+    public void setObjectCubiculoString(String idStr) {
+        this.idCubiculo = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
     }
 }
