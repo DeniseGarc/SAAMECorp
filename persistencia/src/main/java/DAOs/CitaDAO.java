@@ -182,6 +182,7 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<Cita> obtenerCitas() throws PersistenciaException {
         try {
+
             return coleccionCitas.find().into(new ArrayList<>());
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener las citas: " + e.getMessage(), e);

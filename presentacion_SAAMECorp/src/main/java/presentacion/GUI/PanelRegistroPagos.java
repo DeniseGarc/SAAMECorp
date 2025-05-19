@@ -1,5 +1,6 @@
 package presentacion.GUI;
 
+import dto.PagoDTO;
 import presentacion.control.CoordinadorAplicacion;
 
 /**
@@ -159,7 +160,7 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPagosAnterioresActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        flujoPantallas.pantallaGenerarFactura(null);
+        flujoPantallas.pantallaGenerarFactura(null, new PagoDTO());
     }//GEN-LAST:event_btnFacturarActionPerformed
 
     private void btnConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarPagoActionPerformed

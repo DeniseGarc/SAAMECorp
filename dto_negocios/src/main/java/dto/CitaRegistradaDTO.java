@@ -5,7 +5,6 @@
 package dto;
 
 import java.util.Calendar;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -16,7 +15,7 @@ public class CitaRegistradaDTO {
     /**
      * id del registro de la cita
      */
-    private ObjectId id;
+    private String id;
 
     /**
      * Fecha y hora en que se llevará a cabo la cita.
@@ -51,7 +50,7 @@ public class CitaRegistradaDTO {
     public CitaRegistradaDTO() {
     }
 
-    public CitaRegistradaDTO(ObjectId id, Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
+    public CitaRegistradaDTO(String id, Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
@@ -61,11 +60,11 @@ public class CitaRegistradaDTO {
         this.correoPaciente = correoPaciente;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

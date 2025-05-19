@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
 import java.time.LocalTime;
@@ -9,7 +5,9 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *
+ * Clase que representa a un psicólogo en el sistema.
+ * Contiene información básica como nombre, apellidos, correo y RFC.
+ * 
  * @author erika
  */
 public class Psicologo {
@@ -18,6 +16,11 @@ public class Psicologo {
      * Id del registro
      */
     private ObjectId id;
+
+    /**
+     * RFC del psicólogo.
+     */
+    private String rfc;
 
     /**
      * Nombre del psicólogo.
@@ -40,70 +43,47 @@ public class Psicologo {
     private String correo;
 
     /**
-     * Lista de horarios (horas) disponibles del psicólogo durante un día.
+     * Constructor por defecto.
      */
-    private List<LocalTime> horarioDia;
-
     public Psicologo() {
     }
 
     /**
-     * Constructor que inicializa todos los campos del psicólogo y su horario
-     * disponible.
-     *
-     * @param nombre Nombre del psicólogo.
+     * Constructor que inicializa todos los campos del psicólogo.
+     * 
+     * @param id              Identificador único del psicólogo.
+     * @param nombre          Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo Correo electrónico del psicólogo.
-     * @param horarioDia Lista de horarios disponibles en el día.
+     * @param correo          Correo electrónico del psicólogo.
+     * @param rfc             RFC del psicólogo.
      */
-    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, List<LocalTime> horarioDia) {
+    public Psicologo(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
+            String rfc) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
-        this.horarioDia = horarioDia;
+        this.rfc = rfc;
     }
 
     /**
-     * Constructor que inicializa todos los atributos del psicólogo.
-     *
-     * @param nombre Nombre del psicólogo.
-     * @param apellidoPaterno Apellido paterno del psicólogo.
-     * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo Correo electrónico del psicólogo.
+     * Obtiene el identificador único del psicólogo.
+     * 
+     * @return Identificador único del psicólogo.
      */
-    public Psicologo(String nombre, String apellidoPaterno, String apellidoMaterno, String correo) {
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.correo = correo;
-    }
-
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Establece el identificador único del psicólogo.
+     * 
+     * @param id Nuevo identificador único del psicólogo.
+     */
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    /**
-     * Obtiene la lista de horarios disponibles en el día para el psicólogo.
-     *
-     * @return Lista de horarios disponibles.
-     */
-    public List<LocalTime> getHorarioDia() {
-        return horarioDia;
-    }
-
-    /**
-     * Establece la lista de horarios disponibles en el día para el psicólogo.
-     *
-     * @param horarioDia Nueva lista de horarios disponibles.
-     */
-    public void setHorarioDia(List<LocalTime> horarioDia) {
-        this.horarioDia = horarioDia;
     }
 
     /**
@@ -179,6 +159,24 @@ public class Psicologo {
     }
 
     /**
+     * Obtiene el RFC del psicólogo.
+     *
+     * @return RFC del psicólogo.
+     */
+    public String getRfc() {
+        return rfc;
+    }
+
+    /**
+     * Establece el RFC del psicólogo.
+     *
+     * @param rfc Nuevo RFC del psicólogo.
+     */
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+
+    /**
      * Devuelve el nombre completo del psicólogo en formato: "Nombre
      * ApellidoPaterno ApellidoMaterno".
      *
@@ -187,5 +185,24 @@ public class Psicologo {
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
+
+    /**
+     * Devuelve el identificador MongoDB como una cadena hexadecimal.
+     * 
+     * @return Cadena hexadecimal del ObjectId o null si el id es null.
+     */
+    public String getObjectString() {
+        return id != null ? id.toHexString() : null;
+    }
+
+    /**
+     * Asigna el identificador MongoDB a partir de una cadena hexadecimal.
+     *
+     * @param idStr Cadena con el valor del ObjectId. Si es null o vacío, no se
+     *              asigna.
+     */
+    public void setObjectString(String idStr) {
+        this.id = (idStr != null && !idStr.isBlank()) ? new ObjectId(idStr) : null;
     }
 }

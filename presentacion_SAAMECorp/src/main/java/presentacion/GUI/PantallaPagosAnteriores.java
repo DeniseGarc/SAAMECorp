@@ -4,6 +4,7 @@
  */
 package presentacion.GUI;
 
+import dto.PagoDTO;
 import dto.PsicologoDTO;
 import presentacion.control.CoordinadorAplicacion;
 
@@ -73,17 +74,17 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
         tblPagos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         tblPagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "Fecha y hora del pago", "Método de pago", "Forma de pago", "Monto total"
+                "id", "Fecha y hora del pago", "Condiciones del pago", "Método de pago", "Forma de pago", "Monto total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -126,7 +127,7 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        flujoPantallas.pantallaGenerarFactura(this);
+        flujoPantallas.pantallaGenerarFactura(this, new PagoDTO());
     }//GEN-LAST:event_btnFacturarActionPerformed
 
 

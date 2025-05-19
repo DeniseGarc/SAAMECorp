@@ -9,11 +9,14 @@ import com.toedter.calendar.JCalendar;
 import dto.CitaNuevaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
+import dto.FacturaDTO;
 import dto.PsicologoCitaDTO;
 import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
 import excepciones.GestorCalendarioException;
+import generarFactura.FGenerarFactura;
+import generarFactura.IGenerarFactura;
 import excepciones.ModificarCitaException;
 import excepciones.GestorCubiculosException;
 import gestorCalendario.FGestorCalendario;
@@ -44,6 +47,23 @@ public class CoordinadorNegocio {
      * Instancia única del singleton
      */
     private static CoordinadorNegocio instancia;
+    /**
+     * Subsistema para agendar cita
+     */
+    private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
+    /**
+     * Subsistema para gestionar el calendario de citas
+     */
+    private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
+
+    private final IGenerarFactura sistemaGenerarFactura = new FGenerarFactura();
+
+    private final IModificarCita sistemaModificarCita = new FModificarCita();
+
+    /**
+     * Subsistema para gestionar cubiculos
+     */
+    private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
 
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
@@ -64,31 +84,16 @@ public class CoordinadorNegocio {
     }
 
     /**
-     * Subsistema para agendar cita
-     */
-    private final IAgendarCita sistemaAgendarCita = new FAgendarCita();
-    /**
-     * Subsistema para gestionar el calendario de citas
-     */
-    private final IGestorCalendario sistemaGestorCalendario = new FGestorCalendario();
-
-    private final IModificarCita sistemaModificarCita = new FModificarCita();
-
-    /**
-     * Subsistema para gestionar cubiculos
-     */
-    private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
-
-    /**
      * Método que devuelve el psicólogo al cual pertenece el identificador junto
      * a los horas disponibles para cita que tiene en el día seleccionado.
      *
      * @param identificadorPsicologo Identificador único del psicólogo.
-     * @param fechaCita Fecha seleccionada para la cita
+     * @param fechaCita              Fecha seleccionada para la cita
      * @return datos del psicólogo junto a sus horas disponible
      * @throws CoordinadorException Si ocurre un error al obtener los datos
      */
-    public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo, Calendar fechaCita) throws CoordinadorException {
+    public PsicologoCitaDTO mostrarPsicologo(String identificadorPsicologo, Calendar fechaCita)
+            throws CoordinadorException {
         if (identificadorPsicologo == null || identificadorPsicologo.trim().isEmpty()) {
             throw new CoordinadorException("El identificador del psicólogo es inválido.");
         }
@@ -108,9 +113,9 @@ public class CoordinadorNegocio {
      * adeudo al momento de seleccionar un psicólogo.
      *
      * @param psicologo datos del psicólogo a validar su cantidad total de
-     * adeudo.
+     *                  adeudo.
      * @return true si el psicólogo presenta una cantidad de adeudo que aun le
-     * premite agendar´más citas, false en caso contrario.
+     *         premite agendar´más citas, false en caso contrario.
      * @throws excepciones.CoordinadorException
      */
     public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -150,7 +155,7 @@ public class CoordinadorNegocio {
      *
      * @param psicologo Psicólogo que ha sido seleccionado.
      * @return lista de horas en las que el psicólogo esta disponible para
-     * agendar una cita.
+     *         agendar una cita.
      * @throws excepciones.CoordinadorException
      */
     public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -165,7 +170,7 @@ public class CoordinadorNegocio {
      * fecha y hora seleccionadas para agendar cita.
      *
      * @param fechaHoraCita fecha y hora que han sido seleccionados para la
-     * cita.
+     *                      cita.
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
      * @throws excepciones.CoordinadorException
      */
@@ -214,7 +219,7 @@ public class CoordinadorNegocio {
      * @param cita Datos de la cita a agendar.
      * @return regresa una cadena de texto con el resultado de la operación
      * @throws CoordinadorException Si sucede un error al intentar registrar la
-     * cita.
+     *                              cita.
      */
     public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
         if (cita == null) {
@@ -241,7 +246,7 @@ public class CoordinadorNegocio {
      * agendar cita es de dos meses en adelato.
      *
      * @param calendario Calendario de la interfaz gráfica donde se va a aplicar
-     * el bloqueo de dias
+     *                   el bloqueo de dias
      */
     public void bloquearDiasNoDisponibles(JCalendar calendario) {
         Calendar fechaActual = Calendar.getInstance();
@@ -257,14 +262,16 @@ public class CoordinadorNegocio {
      * los días.
      *
      * @param calendario Calendario de la intefaz gráfica donde se selecciona la
-     * fecha para la cita.
+     *                   fecha para la cita.
      */
     public void pintarDiasCalendario(JCalendar calendario) {
         try {
             List<Calendar> diasConReservas = sistemaGestorCalendario.diasConReservas();
             List<Calendar> diasAgendaLlena = sistemaGestorCalendario.diasAgendaLlena();
-            PintorFechas diasConCita = new PintorFechas(diasConReservas, Color.white, new Color(233, 69, 191), false, "Hay citas agendadas este día");
-            PintorFechas diasSinDisponibilidad = new PintorFechas(diasAgendaLlena, Color.white, new Color(138, 34, 111), true, "La agenda del consultorio esta llena para este día");
+            PintorFechas diasConCita = new PintorFechas(diasConReservas, Color.white, new Color(233, 69, 191), false,
+                    "Hay citas agendadas este día");
+            PintorFechas diasSinDisponibilidad = new PintorFechas(diasAgendaLlena, Color.white, new Color(138, 34, 111),
+                    true, "La agenda del consultorio esta llena para este día");
 
             calendario.getDayChooser().addDateEvaluator(diasConCita);
             calendario.getDayChooser().addDateEvaluator(diasSinDisponibilidad);
@@ -285,7 +292,7 @@ public class CoordinadorNegocio {
      *
      * @param diaSeleccionado Dia seleccionado del calendario.
      * @return true si el psicólogo aun tiene horas de atencion para la fecha
-     * seleccionada, false en caso contrario
+     *         seleccionada, false en caso contrario
      */
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
         if (diaSeleccionado == null) {
@@ -293,7 +300,8 @@ public class CoordinadorNegocio {
         }
         if (GestorSesion.getTipoUsuario().equals(TipoUsuario.PSICOLOGO)) {
             try {
-                if (!sistemaGestorCalendario.diaDisponiblePsicologo(GestorSesion.getIdentificadorUsuario(), diaSeleccionado)) {
+                if (!sistemaGestorCalendario.diaDisponiblePsicologo(GestorSesion.getIdentificadorUsuario(),
+                        diaSeleccionado)) {
                     return false;
                 }
             } catch (GestorCalendarioException ex) {
@@ -301,6 +309,75 @@ public class CoordinadorNegocio {
             }
         }
         return true;
+    }
+
+    /**
+     * Método para generar la factura.
+     *
+     * @param factura Datos de la factura a generar.
+     * @return Regresa el objeto de la factura generada.
+     * @throws CoordinadorException Si ocurre un error al generar la factura.
+     */
+    public FacturaDTO generarFactura(FacturaDTO factura) throws CoordinadorException {
+        String error = Validadores.validarDatosFactura(factura);
+        if (error != null) {
+            throw new CoordinadorException(error);
+        }
+        try {
+            /// return sistemaAgendarCita.generarFactura(factura);
+            return factura;
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al generar la factura.", ex);
+        }
+    }
+
+    /**
+     * Metodo para descargar el PDF de la factura.
+     * 
+     * @param factura  factura a descargar
+     * @param filePath ruta donde se guardara el PDF
+     * @return true si se descarga correctamente, false si se cancela la factura.
+     * @throws CoordinadorException si ocurre un error al descargar el PDF.
+     */
+    public boolean descargarPDF(FacturaDTO factura, String filePath) throws CoordinadorException {
+        if (factura == null || factura.getId() == null) {
+            throw new CoordinadorException("La factura es inválida.");
+        }
+        if (filePath == null || filePath.isEmpty()) {
+            throw new CoordinadorException("La ruta del archivo es inválida.");
+        }
+        try {
+            // return sistemaAgendarCita.descargarPDF(factura, filePath);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al descargar el PDF.", ex);
+        }
+    }
+
+    /**
+     * Método para descargar el XML de la factura.
+     * 
+     * @param factura  factura a descargar
+     * @param filePath ruta donde se guardara el XML
+     * @return true si se descarga correctamente, false si se cancela la factura.
+     * @throws CoordinadorException si ocurre un error al descargar el XML.
+     */
+    public boolean descargarXML(FacturaDTO factura, String filePath) throws CoordinadorException {
+        if (factura == null || factura.getId() == null) {
+            throw new CoordinadorException("La factura es inválida.");
+        }
+        if (filePath == null || filePath.isEmpty()) {
+            throw new CoordinadorException("La ruta del archivo es inválida.");
+        }
+        try {
+            // return sistemaAgendarCita.descargarXML(factura, filePath);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al descargar el XML.", ex);
+        }
     }
 
     /**
@@ -318,7 +395,7 @@ public class CoordinadorNegocio {
             throw new CoordinadorException(ex.getMessage());
         }
     }
-    
+
     public List<String> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
         if (cita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");

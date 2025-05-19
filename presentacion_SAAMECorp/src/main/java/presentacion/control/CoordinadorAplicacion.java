@@ -1,5 +1,6 @@
 package presentacion.control;
 
+import dto.PagoDTO;
 import dto.CitaRegistradaDTO;
 import dto.PsicologoDTO;
 import static enumeradores.TipoBO.CITA;
@@ -178,8 +179,8 @@ public class CoordinadorAplicacion {
      *
      * @param frm Frame que mandó a llamar a la acción.
      */
-    public void pantallaGenerarFactura(JFrame frm) {
-        PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm);
+    public void pantallaGenerarFactura(JFrame frm, PagoDTO pagoSeleccionado) {
+        PantallaGenerarFactura frmPantalla = new PantallaGenerarFactura(frm, pagoSeleccionado);
         menuAdmin.setVisible(false);
         if (frm != null) {
             frm.setVisible(false);
