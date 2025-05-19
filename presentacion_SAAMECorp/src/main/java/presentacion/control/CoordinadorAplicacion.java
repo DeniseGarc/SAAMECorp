@@ -260,7 +260,6 @@ public class CoordinadorAplicacion {
 
     public void pantallaModificarCita(CitaRegistradaDTO cita, JFrame frame) {
         PantallaActualizarCita actualizarCita = new PantallaActualizarCita(cita);
-        actualizarCita.llenarCubiculos();
         actualizarCita.setVisible(true);
         if (frame != null) {
             frame.setVisible(false);

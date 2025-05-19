@@ -42,17 +42,17 @@ public class FModificarCita implements IModificarCita {
     /**
      * Metodo para obtener los cubiculos disponibles
      *
-     * @param fecha dia de la cita
+     * @param cita 
      * @return lista con los cubiculos disponibles
      * @throws ModificarCitaException
      */
     @Override
-    public List<CubiculoDTO> mandarCubiculos(Calendar fecha) throws ModificarCitaException {
-        if (fecha == null) {
+    public List<CubiculoDTO> mandarCubiculos(CitaRegistradaDTO cita) throws ModificarCitaException {
+        if (cita == null) {
             throw new ModificarCitaException("La cita no es valida.");
         }
         try {
-            return control.obtenerCubiculosDisponiblesHorario(fecha);
+            return control.obtenerCubiculosDisponiblesHorario(cita);
         } catch (ModificarCitaException e) {
             throw new ModificarCitaException(e.getMessage());
         }

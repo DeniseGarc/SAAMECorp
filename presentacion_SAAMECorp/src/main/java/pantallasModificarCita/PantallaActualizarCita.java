@@ -6,6 +6,7 @@ package pantallasModificarCita;
 
 import dto.CitaRegistradaDTO;
 import excepciones.CoordinadorException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,14 +25,17 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     private CitaRegistradaDTO cita;
+
     /**
      * Creates new form PantallaActualizarCita
+     *
      * @param cita a actualizar
      */
     public PantallaActualizarCita(CitaRegistradaDTO cita) {
         this.cita = cita;
         initComponents();
         setLocationRelativeTo(null);
+        llenarCubiculos();
         datosCita();
     }
 
@@ -277,9 +281,11 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         try {
             CbBoxCubiculo.removeAllItems();
             CbBoxCubiculo.setEnabled(true);
-            List<String> cubiculos = controlNegocio.mandarCubiculos(cita.getFechaHora());
+            List<String> cubiculos = controlNegocio.mandarCubiculos(cita);
             if (cubiculos.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No hay cubiculos disponibles para la fecha y hora seleccionadas", "Sin disponiblidad de cubiculos", JOptionPane.INFORMATION_MESSAGE);
+                flujoPantallas.pantallaCalendarioCitas(this);
+                this.dispose();
             }
             for (String cubiculo : cubiculos) {
                 CbBoxCubiculo.addItem(cubiculo);
@@ -289,14 +295,16 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al obtener los cubiculos disponibles", "Error al obtener cubiculos", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void llenarHorarios() {
-        
+
     }
-    
+
     public void datosCita() {
         CbBoxCubiculo.setSelectedItem(cita.getCubiculo());
-        CbBoxHorario.setSelectedItem(cita.getFechaHora().getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String horaFormateada = sdf.format(cita.getFechaHora().getTime());
+        CbBoxHorario.setSelectedItem(horaFormateada);
         txtnombrePaciente.setText(cita.getNombrePaciente());
         txtCorreoPaciente.setText(cita.getCorreoPaciente());
         txtTelefonoPaciente.setText(cita.getTelefonoPaciente());

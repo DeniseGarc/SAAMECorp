@@ -6,31 +6,51 @@ package entidades;
 
 import java.time.LocalTime;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author erika
  */
 public class Psicologo {
-    /** Nombre del psicólogo. */
+
+    /**
+     * Id del registro
+     */
+    private ObjectId id;
+
+    /**
+     * Nombre del psicólogo.
+     */
     private String nombre;
 
-    /** Apellido paterno del psicólogo. */
+    /**
+     * Apellido paterno del psicólogo.
+     */
     private String apellidoPaterno;
 
-    /** Apellido materno del psicólogo. */
+    /**
+     * Apellido materno del psicólogo.
+     */
     private String apellidoMaterno;
 
-    /** Correo electrónico del psicólogo. */
-    private String correo;
-    
-   /** Lista de horarios (horas) disponibles del psicólogo durante un día. */
-    private List<LocalTime> horarioDia;
-    
-    
     /**
-     * Constructor que inicializa todos los campos del psicólogo y su horario disponible.
-     * 
+     * Correo electrónico del psicólogo.
+     */
+    private String correo;
+
+    /**
+     * Lista de horarios (horas) disponibles del psicólogo durante un día.
+     */
+    private List<LocalTime> horarioDia;
+
+    public Psicologo() {
+    }
+
+    /**
+     * Constructor que inicializa todos los campos del psicólogo y su horario
+     * disponible.
+     *
      * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
@@ -59,10 +79,18 @@ public class Psicologo {
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
     }
-    
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     /**
      * Obtiene la lista de horarios disponibles en el día para el psicólogo.
-     * 
+     *
      * @return Lista de horarios disponibles.
      */
     public List<LocalTime> getHorarioDia() {
@@ -71,7 +99,7 @@ public class Psicologo {
 
     /**
      * Establece la lista de horarios disponibles en el día para el psicólogo.
-     * 
+     *
      * @param horarioDia Nueva lista de horarios disponibles.
      */
     public void setHorarioDia(List<LocalTime> horarioDia) {
@@ -149,10 +177,11 @@ public class Psicologo {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
+
     /**
-     * Devuelve el nombre completo del psicólogo en formato: "Nombre ApellidoPaterno ApellidoMaterno".
-     * 
+     * Devuelve el nombre completo del psicólogo en formato: "Nombre
+     * ApellidoPaterno ApellidoMaterno".
+     *
      * @return Nombre completo del psicólogo como cadena de texto.
      */
     @Override

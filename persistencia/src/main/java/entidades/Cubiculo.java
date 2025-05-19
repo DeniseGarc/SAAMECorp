@@ -4,11 +4,19 @@
  */
 package entidades;
 
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author erika
  */
 public class Cubiculo {
+
+    /**
+     * Id del registro
+     */
+    private ObjectId id;
+
     /**
      * Nombre o identificador del cubículo.
      */
@@ -37,6 +45,14 @@ public class Cubiculo {
     public Cubiculo(String nombre, boolean estado) {
         this.nombre = nombre;
         this.estado = estado;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     /**

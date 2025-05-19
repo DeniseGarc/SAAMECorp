@@ -74,7 +74,7 @@ public class ControlModificarCita {
                 && fecha1.get(Calendar.DAY_OF_MONTH) == fecha2.get(Calendar.DAY_OF_MONTH);
     }
 
-    public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(Calendar fechaHoraCita) throws ModificarCitaException {
+    public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(CitaRegistradaDTO citaActualizar) throws ModificarCitaException {
         try {
             List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
             List<CitaRegistradaDTO> citasRegistradas = citaBO.obtenerCitasCompletas();
@@ -83,13 +83,15 @@ public class ControlModificarCita {
                 boolean cubiculoOcupado = false;
                 for (CitaRegistradaDTO cita : citasRegistradas) {
                     if (cubiculo.getNombre().equals(cita.getCubiculo())
-                            && cita.getFechaHora().get(Calendar.YEAR) == fechaHoraCita.get(Calendar.YEAR)
-                            && cita.getFechaHora().get(Calendar.MONTH) == fechaHoraCita.get(Calendar.MONTH)
-                            && cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == fechaHoraCita.get(Calendar.DAY_OF_MONTH)
-                            && cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == fechaHoraCita.get(Calendar.HOUR_OF_DAY)
-                            && cita.getFechaHora().get(Calendar.MINUTE) == fechaHoraCita.get(Calendar.MINUTE)) {
-                        cubiculoOcupado = true;
-                        break;
+                            && cita.getFechaHora().get(Calendar.YEAR) == citaActualizar.getFechaHora().get(Calendar.YEAR)
+                            && cita.getFechaHora().get(Calendar.MONTH) == citaActualizar.getFechaHora().get(Calendar.MONTH)
+                            && cita.getFechaHora().get(Calendar.DAY_OF_MONTH) == citaActualizar.getFechaHora().get(Calendar.DAY_OF_MONTH)
+                            && cita.getFechaHora().get(Calendar.HOUR_OF_DAY) == citaActualizar.getFechaHora().get(Calendar.HOUR_OF_DAY)
+                            && cita.getFechaHora().get(Calendar.MINUTE) == citaActualizar.getFechaHora().get(Calendar.MINUTE)) {
+                        if (!cita.getCubiculo().equals(cita.getCubiculo())) {
+                            cubiculoOcupado = true;
+                            break;
+                        }
                     }
                 }
                 if (!cubiculoOcupado) {

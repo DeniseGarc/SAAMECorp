@@ -5,6 +5,7 @@
 package entidades;
 
 import java.util.Calendar;
+import org.bson.types.ObjectId;
 
 /**
  * Mock para la entidad de Cita
@@ -14,9 +15,9 @@ import java.util.Calendar;
 public class Cita {
 
     /**
-     *
+     * Id del registro
      */
-    private String id;
+    private ObjectId id;
 
     /**
      * Fecha y hora en que se llevará a cabo la cita.
@@ -88,11 +89,11 @@ public class Cita {
         this.cubiculo = cubiculo;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

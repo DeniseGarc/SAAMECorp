@@ -4,12 +4,21 @@
  */
 package entidades;
 
+import org.bson.types.ObjectId;
+
 /**
  * Mock para la entidad de audedo
+ *
  * @author erika
  */
 public class Adeudo {
-     /**
+
+    /**
+     * Id del registro
+     */
+    private ObjectId id;
+
+    /**
      * Monto del adeudo asociado a la cita.
      */
     private double cantidad;
@@ -38,6 +47,14 @@ public class Adeudo {
     public Adeudo(double cantidad, boolean estado) {
         this.cantidad = cantidad;
         this.estado = estado;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     /**
