@@ -8,9 +8,11 @@ import entidades.Cita;
 import entidades.Cubiculo;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * Interfaz que establece los metodos para la clase de CitaDAO
@@ -84,4 +86,16 @@ public interface ICitaDAO {
      * @throws excepciones.PersistenciaException
      */
     public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException;
+    
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.PersistenciaException
+     */
+    public List<LocalTime> obtenerHorasDisponibles(Psicologo psicologo, ObjectId idCubiculo, LocalDate fecha) throws PersistenciaException;
 }

@@ -97,4 +97,16 @@ public interface ICitaBO {
      * @throws excepciones.NegocioException
      */
     public boolean validarExistenciaCitaRepetida(CitaNuevaDTO citaARegistrar) throws NegocioException;
+    
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.NegocioException
+     */
+    public List<LocalTime> obtenerHorasDisponibles(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha) throws NegocioException;
 }

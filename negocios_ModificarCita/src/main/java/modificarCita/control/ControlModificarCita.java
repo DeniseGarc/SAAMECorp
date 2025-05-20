@@ -117,13 +117,22 @@ public class ControlModificarCita {
         }
     }
 
-    public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws ModificarCitaException {
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.ModificarCitaException
+     */
+    public List<LocalTime> obtenerHorasDisponibles(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha) throws ModificarCitaException {
         try {
-            List<PsicologoCitaDTO> psicologosDisponibles = psicologoBO.obtenerPsicologos();
-            return psicologosDisponibles;
-        } catch (Exception e) {
+            return citaBO.obtenerHorasDisponibles(psicologo, idCubiculo, fecha);
+        } catch (NegocioException e) {
             Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
-            throw new ModificarCitaException("Ha ocurrido un error al obtener los psicólogos y sus horarios", e);
+            throw new ModificarCitaException("Error al obtener las horas disponible: ", e);
         }
     }
 

@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class PsicologoCitaDTO {
 
+    private String id;
+
     /**
      * Nombre del psicólogo.
      */
@@ -86,7 +88,8 @@ public class PsicologoCitaDTO {
      * @param rfc rfc del psicologo
      * @param horarioDia Lista de horarios disponibles en el día.
      */
-    public PsicologoCitaDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc, List<LocalTime> horarioDia) {
+    public PsicologoCitaDTO(String id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc, List<LocalTime> horarioDia) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -108,6 +111,14 @@ public class PsicologoCitaDTO {
         this.apellidoMaterno = psicologo.getApellidoMaterno();
         this.correo = psicologo.getCorreo();
         this.horarioDia = horarioDia;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
