@@ -20,7 +20,7 @@ public class PagoDTO {
     /** Condiciones de pago. */
     private String condicionesPago;
     /** Cantidad de productos o servicios pagados. */
-    private int cantidad;
+    private int cantidad = 1;
     /** Precio unitario del producto o servicio. */
     private double precioUnitario;
     /** Monto total del pago. */

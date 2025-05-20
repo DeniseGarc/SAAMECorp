@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.util.List;
+
 import entidades.Pago;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
@@ -12,11 +14,10 @@ public interface IPagoDAO {
     /**
      * Método para consultar los pagos realizados por un psicólogo en los ultimos 30 dias.
      *
-     * @param pago Objeto Pago que contiene la información del psicólogo.
      * @return Psicologo objeto que contiene la información del psicólogo.
      * @throws PersistenciaException Si ocurre un error al consultar los pagos.
      */
-    public Psicologo consultarPagosMesPsicologo(Pago pago) throws PersistenciaException;
+    public List<Pago> consultarPagosMesPsicologo(Psicologo psicologo) throws PersistenciaException;
     
     /**
      * Método para registrar un nuevo pago en la base de datos.

@@ -1,7 +1,13 @@
 package DAOs;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
 import conexion.ConexionBD;
 import entidades.Pago;
 import entidades.Psicologo;
@@ -19,11 +25,11 @@ public class PagoDAO implements IPagoDAO {
      * Instancia unica de la clase
      */
     private static PagoDAO instancia;
+    private final MongoCollection<Pago> coleccionPagos;
 
-    /**
-     * Constructor vacio
-     */
     private PagoDAO() {
+        this.coleccionPagos = ConexionBD.getDatabase().getCollection("Pagos", Pago.class);
+
     }
 
     /**
@@ -38,8 +44,7 @@ public class PagoDAO implements IPagoDAO {
         }
         return instancia;
     }
-    
-    
+
     /**
      * Metodo para consultar los pagos realizados por un psicologo en los
      * ultimos 30 dias.
@@ -50,14 +55,18 @@ public class PagoDAO implements IPagoDAO {
      * @throws PersistenciaException Si ocurre un error al consultar los pagos.
      */
     @Override
-    public Psicologo consultarPagosMesPsicologo(Pago pago) throws PersistenciaException {
+    public List<Pago> consultarPagosMesPsicologo(Psicologo psicologo) throws PersistenciaException {
+        if (psicologo == null) {
+            throw new PersistenciaException("El psicologo no puede ser nulo");
+        }
+        if (psicologo.getId() == null) {
+            throw new PersistenciaException("El id del psicologo no puede ser nulo");
+        }
         try {
-            MongoDatabase bd = ConexionBD.getDatabase();
-            MongoCollection<Pago> coleccionPagos = bd.getCollection("pagos", Pago.class);
-            // Aqui se debe implementar la logica para consultar los pagos del psicologo
-            // en el mes actual
-            // Se debe retornar el psicologo que realizo el pago
-            return null;
+            List<Pago> pagosFiltrados = coleccionPagos.find(Filters.and(
+                    Filters.eq("idPsicologo", psicologo.getId()),
+                    Filters.gte("fechaHora", LocalDate.now().minusDays(30)))).into(new ArrayList<>());
+            return pagosFiltrados;
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar los pagos del psicologo: " + e.getMessage());
         }

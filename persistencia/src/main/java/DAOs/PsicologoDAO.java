@@ -30,7 +30,7 @@ public class PsicologoDAO implements IPsicologoDAO {
      */
     private PsicologoDAO() {
         MongoDatabase database = ConexionBD.getDatabase();
-        this.coleccion = database.getCollection("psicologos", Psicologo.class);
+        this.coleccion = database.getCollection("Psicologos", Psicologo.class);
     }
 
     /**
@@ -79,6 +79,19 @@ public class PsicologoDAO implements IPsicologoDAO {
                 throw new PersistenciaException("No se encontró un psicólogo con el correo: " + identificador);
             }
             return psicologo;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar el psicólogo: " + e.getMessage());
+        }
+    }
+
+    public Psicologo obtenerPsicologoPorRfc(Psicologo psicologo) throws PersistenciaException {
+        try {
+            Bson filtro = eq("rfc", psicologo.getRfc());
+            Psicologo psicologoEncontrado = coleccion.find(filtro).first();
+            if (psicologoEncontrado == null) {
+                throw new PersistenciaException("No se encontró un psicólogo con el RFC: " + psicologo.getRfc());
+            }
+            return psicologoEncontrado;
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar el psicólogo: " + e.getMessage());
         }

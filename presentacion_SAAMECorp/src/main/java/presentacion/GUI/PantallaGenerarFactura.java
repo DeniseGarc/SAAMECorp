@@ -92,10 +92,14 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         factura.setPaymentForm(pago.getFormaPago());
         factura.setPaymentMethod(pago.getMetodoPago());
         factura.setQuantity(Double.valueOf(pago.getCantidad()));
-        factura.setUnitPrice(pago.getPrecioUnitario());
-//        factura.setRfcReceiver(pago.getPsicologo().getRfc());
-//        factura.setNameReceiver(pago.getPsicologo().getNombre() + " " + pago.getPsicologo().getApellidoPaterno() + "" + " " + pago.getPsicologo().getApellidoMaterno());
-//        factura.setEmailReceiver(pago.getPsicologo().getCorreo());
+        factura.setUnitPrice(pago.getMonto());
+        factura.setRfcReceiver(pago.getPsicologo().getRfc());
+        factura.setNameReceiver(pago.getPsicologo().getNombre().toUpperCase() + " "
+                + pago.getPsicologo().getApellidoPaterno().toUpperCase() + "" + " "
+                + pago.getPsicologo().getApellidoMaterno().toUpperCase());
+        factura.setEmailReceiver(pago.getPsicologo().getCorreo());
+        factura.setSubtotal(pago.getMonto());
+        factura.setTotal(pago.getMonto());
 
         return factura;
     }
@@ -103,7 +107,8 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -174,19 +179,19 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlBannerLayout = new javax.swing.GroupLayout(pnlBanner);
         pnlBanner.setLayout(pnlBannerLayout);
         pnlBannerLayout.setHorizontalGroup(
-            pnlBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBannerLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                pnlBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlBannerLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 317,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         pnlBannerLayout.setVerticalGroup(
-            pnlBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBannerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
-        );
+                pnlBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlBannerLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(20, 20, 20)));
 
         pnlFondoBlanco.setBackground(new java.awt.Color(255, 255, 255));
         pnlFondoBlanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -359,7 +364,8 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
 
         lblDescripcionProducto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblDescripcionProducto.setText("jLabel22");
-        pnlDatosProducto.add(lblDescripcionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 370, -1));
+        pnlDatosProducto.add(lblDescripcionProducto,
+                new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 370, -1));
 
         lblUnidadProducto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblUnidadProducto.setText("jLabel23");
@@ -394,11 +400,13 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         pnlFondoBlanco.add(tabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 500, 390));
 
         cboxRegimenFiscal.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cboxRegimenFiscal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione el regimen fiscal--" }));
+        cboxRegimenFiscal
+                .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione el regimen fiscal--" }));
         pnlFondoBlanco.add(cboxRegimenFiscal, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 380, 30));
 
         cBoxUsoCfdi.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cBoxUsoCfdi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione el uso del CFDI--" }));
+        cBoxUsoCfdi
+                .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Seleccione el uso del CFDI--" }));
         cBoxUsoCfdi.setBorder(new com.formdev.flatlaf.ui.FlatBorder());
         pnlFondoBlanco.add(cBoxUsoCfdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 380, 30));
 
@@ -409,21 +417,23 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pnlBanner, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 960,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(74, Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(pnlBanner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 73, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(pnlBanner, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 530,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 73, Short.MAX_VALUE)));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 680));
 
@@ -481,7 +491,7 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                 } else {
                     mensajeCorreo = "No ha sido posible mandar la factura al correo del psicólogo";
                 }
-                Object[] options = {"Aceptar", "Descargar PDF", "Descargar XML"};
+                Object[] options = { "Aceptar", "Descargar PDF y XML" };
                 int result = JOptionPane.showOptionDialog(
                         this,
                         "Factura generada con éxito. " + mensajeCorreo,
@@ -495,28 +505,18 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                     flujoPantallas.regresarAlMenuPrincipal(this);
                 } else if (result == 1) {
                     JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Guardar PDF");
+                    fileChooser.setDialogTitle("Guardar documentos");
                     fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
                     int userSelection = fileChooser.showSaveDialog(this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         String filePath = fileChooser.getSelectedFile().getAbsolutePath();
                         controlNegocio.descargarPDF(facturaRegistrada.getFactura(), filePath);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Descarga cancelada", "Información",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } else if (result == 2) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Guardar XML");
-                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
-                    int userSelection = fileChooser.showSaveDialog(this);
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
-                        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
                         controlNegocio.descargarXML(facturaRegistrada.getFactura(), filePath);
                     } else {
                         JOptionPane.showMessageDialog(this, "Descarga cancelada", "Información",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
+                    flujoPantallas.regresarAlMenuPrincipal(this);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Error al generar la factura", "Error", JOptionPane.ERROR_MESSAGE);

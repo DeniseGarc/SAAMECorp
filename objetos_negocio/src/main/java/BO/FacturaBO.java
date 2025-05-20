@@ -1,13 +1,16 @@
 package BO;
 
 import DAOs.FacturaDAO;
+import DAOs.PsicologoDAO;
 import dto.FacturaDTO;
 import dto.PagoDTO;
 import entidades.Factura;
 import entidades.Pago;
+import entidades.Psicologo;
 import excepciones.NegocioException;
 import interfaces.IFacturaBO;
 import interfaces.IFacturaDAO;
+import interfaces.IPsicologoDAO;
 import mapper.FacturaMapper;
 import mapper.PagoMapper;
 
@@ -22,6 +25,7 @@ public class FacturaBO implements IFacturaBO {
      * Instancia única de la clase FacturaDAO.
      */
     private IFacturaDAO facturaDAO = FacturaDAO.getInstance();
+    private IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
     /**
      * Instancia del mapper para convertir entre DTOs y entidades.
      */
@@ -35,7 +39,7 @@ public class FacturaBO implements IFacturaBO {
      * @param pagoDTO Objeto que contiene la información del pago a validar.
      * @return true si el pago ya ha sido facturado, false en caso contrario.
      * @throws NegocioException Si ocurre un error de negocio durante la
-     * validación.
+     *                          validación.
      */
     @Override
     public boolean validarPagoFactura(PagoDTO pagoDTO) throws NegocioException {
@@ -56,22 +60,28 @@ public class FacturaBO implements IFacturaBO {
      *
      * @param pagoDTO
      * @param facturaDTO Objeto que contiene la información de la factura a
-     * registrar.
+     *                   registrar.
      * @return true si la factura se registró correctamente, false en caso
-     * contrario.
+     *         contrario.
      * @throws NegocioException Si ocurre un error de negocio durante el
-     * registro.
+     *                          registro.
      */
     @Override
     public boolean registrarFactura(PagoDTO pagoDTO, FacturaDTO facturaDTO) throws NegocioException {
         if (facturaDTO == null || facturaDTO.getId() == null) {
-            throw new NegocioException("La factura no puede ser nula o no tener el id de la factura registrada en Facturama");
+            throw new NegocioException(
+                    "La factura no puede ser nula o no tener el id de la factura registrada en Facturama");
         }
-        if (pagoDTO == null || pagoDTO.getId() == null) {
-            throw new NegocioException("El pago no puede ser nulo o no tener id");
+        if (pagoDTO == null) {
+            throw new NegocioException("El pago no puede ser nulo");
         }
         try {
-            facturaDAO.guardarFactura(mapperPago.toEntity(pagoDTO), mapperFactura.toEntity(facturaDTO));
+            Pago pago = mapperPago.toEntity(pagoDTO);
+            Psicologo psicologoRfc = new Psicologo();
+            psicologoRfc.setRfc(facturaDTO.getRfcReceiver());
+            Psicologo psicologo = psicologoDAO.obtenerPsicologoPorRfc(psicologoRfc);
+            pago.setIdPsicologo(psicologo.getId());
+            facturaDAO.guardarFactura(pago, mapperFactura.toEntity(facturaDTO));
         } catch (Exception e) {
             throw new NegocioException("Error al registrar la factura: " + e.getMessage());
         }

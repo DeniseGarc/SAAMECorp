@@ -86,11 +86,16 @@ public class FacturaDAO implements IFacturaDAO {
 
     public boolean guardarFactura(Pago pago, Factura factura) throws PersistenciaException {
         try {
-            coleccionPagos.updateOne(Filters.eq("_id", pago.getId()), Updates.set("detallesFactura", factura));
+            pago.setDetallesFactura(factura);
+            coleccionPagos.insertOne(pago);
+            // Ya que este implementada la parte de pagos se debe de actualizar la factura en lugar de ingresar el pago completo.
+            //coleccionPagos.updateOne(Filters.eq("_id", pago.getId()), Updates.set("detallesFactura", factura));
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al guardar la factura: " + e.getMessage());
         }
     }
+
+    
 
 }

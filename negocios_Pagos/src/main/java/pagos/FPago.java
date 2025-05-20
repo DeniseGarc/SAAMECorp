@@ -6,6 +6,7 @@ package pagos;
 
 import java.util.List;
 
+import dto.PagoDTO;
 import dto.PsicologoDTO;
 import excepciones.PagosException;
 
@@ -34,4 +35,22 @@ public class FPago implements IPago {
         return psicologos;
     }
 
+    /**
+     * Método para obtener los pagos del mes anterior de un psicólogo específico.
+     * 
+     * @param psicologo Objeto PsicologoDTO que representa al psicólogo.
+     * @return Lista de objetos PagoDTO que representan los pagos del mes anterior.
+     * @throws PagosException Si ocurre un error de negocio durante la obtención de
+     *                        los pagos.
+     */
+    @Override
+    public List<PagoDTO> obtenerPagosMesAnterior(PsicologoDTO psicologo) throws PagosException {
+        List<PagoDTO> pagos;
+        try {
+            pagos = controlPago.obtenerPagosMesAnterior(psicologo);
+        } catch (PagosException e) {
+            throw new PagosException("Error al obtener los pagos: " + e.getMessage(), e);
+        }
+        return pagos;
+    }
 }

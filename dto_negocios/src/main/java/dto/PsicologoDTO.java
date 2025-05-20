@@ -2,35 +2,44 @@ package dto;
 
 /**
  * Clase DTO que encapsula los datos personales básicos de un psicólogo.
- * 
+ *
  * <p>
  * Este DTO se utiliza principalmente para representar al psicólogo sin
- * información adicional,
- * como horarios o citas, permitiendo transportar los datos de manera simple
- * entre capas del sistema.
+ * información adicional, como horarios o citas, permitiendo transportar los
+ * datos de manera simple entre capas del sistema.
  * </p>
- * 
+ *
  * <p>
  * Incluye nombre, apellidos y correo electrónico del psicólogo.
  * </p>
- * 
+ *
  * @author Alici
  */
 public class PsicologoDTO {
 
-    /** Nombre del psicólogo. */
+    /**
+     * Nombre del psicólogo.
+     */
     private String nombre;
 
-    /** Apellido paterno del psicólogo. */
+    /**
+     * Apellido paterno del psicólogo.
+     */
     private String apellidoPaterno;
 
-    /** Apellido materno del psicólogo. */
+    /**
+     * Apellido materno del psicólogo.
+     */
     private String apellidoMaterno;
 
-    /** Correo electrónico del psicólogo. */
+    /**
+     * Correo electrónico del psicólogo.
+     */
     private String correo;
 
-    /** RFC del psicólogo. */
+    /**
+     * RFC del psicólogo.
+     */
     private String rfc;
 
     /**
@@ -43,11 +52,11 @@ public class PsicologoDTO {
     /**
      * Constructor que inicializa todos los atributos del psicólogo.
      *
-     * @param nombre          Nombre del psicólogo.
+     * @param nombre Nombre del psicólogo.
      * @param apellidoPaterno Apellido paterno del psicólogo.
      * @param apellidoMaterno Apellido materno del psicólogo.
-     * @param correo          Correo electrónico del psicólogo.
-     * @param rfc             RFC del psicólogo.
+     * @param correo Correo electrónico del psicólogo.
+     * @param rfc RFC del psicólogo.
      */
     public PsicologoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String rfc) {
         this.nombre = nombre;
@@ -145,6 +154,11 @@ public class PsicologoDTO {
      */
     public void setRfc(String rfc) {
         this.rfc = rfc;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
 
 }

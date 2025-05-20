@@ -2,6 +2,7 @@ package pagos;
 
 import java.util.List;
 
+import dto.PagoDTO;
 import dto.PsicologoDTO;
 import enumeradores.TipoBO;
 import excepciones.NegocioException;
@@ -34,5 +35,15 @@ public class ControlPago {
             throw new PagosException("Error al obtener los psicólogos: " + e.getMessage(), e);
         }
         return psicologos;
+    }
+
+    protected List<PagoDTO> obtenerPagosMesAnterior(PsicologoDTO psicologo) throws PagosException {
+        List<PagoDTO> pagos;
+        try {
+            pagos = pagoBO.obtenerPagosDelMesPsicologo(psicologo);
+        } catch (NegocioException e) {
+            throw new PagosException("Error al obtener los pagos: " + e.getMessage(), e);
+        }
+        return pagos;
     }
 }

@@ -7,6 +7,9 @@ import excepciones.CoordinadorException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
 import presentacion.utilerias.FormaPago;
@@ -26,15 +29,23 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
 
+    private PagoDTO pagoRealizado;
+
     /**
      * Contructor que inicializa los componentes del panel
      */
     public PanelRegistroPagos() {
         initComponents();
         cargarComboBoxes();
+        btnPagosAnteriores.setEnabled(false);
+        btnFacturar.setEnabled(false);
+        btnConfirmarPago.setEnabled(false);
+        agregarListeners();
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -50,12 +61,14 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         cBoxFormaPago = new javax.swing.JComboBox<>();
         cBoxMetodoPago = new javax.swing.JComboBox<>();
-        txtMonto = new javax.swing.JTextField();
+        txtCondicionesPago = new javax.swing.JTextField();
         btnConfirmarPago = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaResumen = new javax.swing.JTextArea();
         btnFacturar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        txtMonto = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(221, 212, 240));
 
@@ -87,36 +100,36 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel2.setText("Cantidad de adeudo:");
-        pnlFondoBlanco.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+        pnlFondoBlanco.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         lblCantidadAdeudo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblCantidadAdeudo.setText("$ <cantidad> MXN");
-        pnlFondoBlanco.add(lblCantidadAdeudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 230, -1));
+        pnlFondoBlanco.add(lblCantidadAdeudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 230, -1));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel3.setText("Método de pago");
-        pnlFondoBlanco.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 200, 20));
+        jLabel3.setText("Condiciones de pago");
+        pnlFondoBlanco.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 200, 20));
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel4.setText("Forma de pago");
-        pnlFondoBlanco.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 200, -1));
+        pnlFondoBlanco.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 200, -1));
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel5.setText("Monto a pagar");
-        pnlFondoBlanco.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 230, 20));
+        pnlFondoBlanco.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 230, 20));
 
         cBoxFormaPago.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cBoxFormaPago
                 .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione la forma de pago --" }));
-        pnlFondoBlanco.add(cBoxFormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 450, 30));
+        pnlFondoBlanco.add(cBoxFormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 450, 30));
 
         cBoxMetodoPago.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cBoxMetodoPago.setModel(
                 new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione el método de pago --" }));
-        pnlFondoBlanco.add(cBoxMetodoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 450, 30));
+        pnlFondoBlanco.add(cBoxMetodoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 450, 30));
 
-        txtMonto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        pnlFondoBlanco.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 240, 30));
+        txtCondicionesPago.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        pnlFondoBlanco.add(txtCondicionesPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 450, 30));
 
         btnConfirmarPago.setBackground(new java.awt.Color(86, 33, 89));
         btnConfirmarPago.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -128,12 +141,12 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
                 btnConfirmarPagoActionPerformed(evt);
             }
         });
-        pnlFondoBlanco.add(btnConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 450, 30));
+        pnlFondoBlanco.add(btnConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 240, 30));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaResumen.setColumns(20);
+        txtAreaResumen.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtAreaResumen.setRows(5);
+        jScrollPane1.setViewportView(txtAreaResumen);
 
         pnlFondoBlanco.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 700, 220));
 
@@ -151,6 +164,13 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel6.setText("Resumen del pago");
         pnlFondoBlanco.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
+
+        txtMonto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        pnlFondoBlanco.add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 240, 30));
+
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel7.setText("Método de pago");
+        pnlFondoBlanco.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 200, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -171,16 +191,93 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagosAnterioresActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPagosAnterioresActionPerformed
-        flujoPantallas.pantallaPagosAnteriores(null, null);
+        flujoPantallas.pantallaPagosAnteriores(obtenerPsicologoSeleccionado(), null);
+        limpiarFormulario();
     }// GEN-LAST:event_btnPagosAnterioresActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFacturarActionPerformed
-        flujoPantallas.pantallaGenerarFactura(null, new PagoDTO());
+        flujoPantallas.pantallaGenerarFactura(null, pagoRealizado);
+        limpiarFormulario();
     }// GEN-LAST:event_btnFacturarActionPerformed
 
+    private void limpiarFormulario() {
+        pagoRealizado = null;
+        txtAreaResumen.setText("");
+        txtCondicionesPago.setText("");
+        txtMonto.setText("");
+        cBoxFormaPago.setSelectedIndex(0);
+        cBoxMetodoPago.setSelectedIndex(0);
+        cBoxPsicologo.setSelectedIndex(0);
+        btnFacturar.setEnabled(false);
+    }
+
     private void btnConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConfirmarPagoActionPerformed
-        // TODO add your handling code here:
+        cargarResumenPago();
+        btnFacturar.setEnabled(true);
     }// GEN-LAST:event_btnConfirmarPagoActionPerformed
+
+    private PsicologoDTO obtenerPsicologoSeleccionado() {
+        if (cBoxPsicologo.getSelectedIndex() != 0 && !cBoxPsicologo.getSelectedItem().equals("No hay psicólogos registrados")) {
+            PsicologoDTO psicologoSeleccionado = (PsicologoDTO) cBoxPsicologo.getSelectedItem();
+            return psicologoSeleccionado;
+        } else {
+            return null;
+        }
+    }
+
+    private void cargarResumenPago() {
+        PsicologoDTO psicologo = obtenerPsicologoSeleccionado();
+        FormaPago formaPago = (FormaPago) cBoxFormaPago.getSelectedItem();
+        MetodoPago metodoPago = (MetodoPago) cBoxMetodoPago.getSelectedItem();
+        String montoStr = txtMonto.getText();
+        String condiciones = txtCondicionesPago.getText();
+
+        if (psicologo == null || cBoxFormaPago.getSelectedIndex() == 0 || cBoxMetodoPago.getSelectedIndex() == 0
+                || montoStr.isEmpty() || condiciones.isEmpty()) {
+            txtAreaResumen.setText("Por favor, complete todos los campos para registrar el pago.");
+            return;
+        }
+
+        double monto;
+        try {
+            monto = Double.parseDouble(montoStr);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "El monto ingresado no es válido. Por favor, ingrese un número válido.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        PagoDTO pago = new PagoDTO();
+        pago.setPsicologo(psicologo);
+        pago.setFormaPago(formaPago.getClave());
+        pago.setMetodoPago(metodoPago.getClave());
+        pago.setMonto(monto);
+        pago.setCondicionesPago(condiciones);
+
+        StringBuilder resumen = new StringBuilder();
+        resumen.append("Resumen del Pago:\n");
+        resumen.append("Psicólogo: ").append(psicologo.toString()).append("\n");
+        resumen.append("Forma de Pago: ").append(formaPago).append("\n");
+        resumen.append("Método de Pago: ").append(metodoPago).append("\n");
+        resumen.append("Monto: $").append(String.format("%.2f", monto)).append(" MXN\n");
+        resumen.append("Condiciones de Pago: ").append(condiciones).append("\n");
+        double adeudoAnterior = 0.0;
+        try {
+            adeudoAnterior = controlNegocio.obtenerCantidadAdeudoPsicologo(psicologo);
+        } catch (CoordinadorException e) {
+            Logger.getLogger(PanelRegistroPagos.class.getName()).log(Level.SEVERE, null, e);
+        }
+        double adeudoNuevo = adeudoAnterior - monto;
+        if (adeudoNuevo < 0) {
+            adeudoNuevo = 0;
+        }
+        resumen.append("Adeudo anterior: $").append(String.format("%.2f", adeudoAnterior)).append(" MXN\n");
+        resumen.append("Adeudo nuevo: $").append(String.format("%.2f", adeudoNuevo)).append(" MXN\n");
+        txtAreaResumen.setText(resumen.toString());
+
+        pagoRealizado = pago;
+    }
 
     private void cargarComboBoxes() {
         for (FormaPago value : FormaPago.values()) {
@@ -195,7 +292,6 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
             if (psicologos.isEmpty()) {
                 cBoxPsicologo.addItem("No hay psicólogos registrados");
             } else {
-                cBoxPsicologo.removeAllItems();
                 for (PsicologoDTO psicologo : psicologos) {
                     cBoxPsicologo.addItem(psicologo);
                 }
@@ -205,6 +301,80 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
             Logger.getLogger(PanelRegistroPagos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void agregarListeners() {
+        cBoxPsicologo.addActionListener(e -> {
+            PsicologoDTO psicologoSeleccionado = obtenerPsicologoSeleccionado();
+            if (psicologoSeleccionado != null) {
+                try {
+                    lblCantidadAdeudo.setText(
+                            "$ " + controlNegocio.obtenerCantidadAdeudoPsicologo(psicologoSeleccionado) + " MXN");
+                } catch (CoordinadorException e1) {
+                    Logger.getLogger(PanelRegistroPagos.class.getName()).log(Level.SEVERE, null, e1);
+                }
+                actualizarBtnConfirmar();
+                btnPagosAnteriores.setEnabled(true);
+            } else {
+                btnPagosAnteriores.setEnabled(false);
+                lblCantidadAdeudo.setText("$ 0.00 MXN");
+            }
+        });
+
+        cBoxFormaPago.addActionListener(e -> {
+            if (cBoxFormaPago.getSelectedIndex() != 0) {
+                cBoxMetodoPago.setEnabled(true);
+            } else {
+                cBoxMetodoPago.setEnabled(false);
+            }
+        });
+
+        cBoxMetodoPago.addActionListener(e -> {
+            actualizarBtnConfirmar();
+
+        });
+
+        txtCondicionesPago.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+        });
+
+        txtMonto.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                actualizarBtnConfirmar();
+            }
+        });
+    }
+
+    private void actualizarBtnConfirmar() {
+        boolean habilitar = cBoxFormaPago.getSelectedIndex() != 0
+                && cBoxMetodoPago.getSelectedIndex() != 0 && !txtCondicionesPago.getText().isEmpty()
+                && !txtMonto.getText().isEmpty() && cBoxPsicologo.getSelectedIndex() != 0;
+
+        btnConfirmarPago.setEnabled(habilitar);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,10 +390,12 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblCantidadAdeudo;
     private javax.swing.JPanel pnlFondoBlanco;
+    private javax.swing.JTextArea txtAreaResumen;
+    private javax.swing.JTextField txtCondicionesPago;
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,10 +10,11 @@ import java.util.List;
 
 /**
  * INterfaz que implementa los metodos para la clase de PsicologoDAO
+ * 
  * @author erika
  */
 public interface IPsicologoDAO {
-     /**
+    /**
      * Metodo para obtener todos los psicologos registrados
      *
      * @return Lista de psicolos registrados
@@ -29,4 +30,6 @@ public interface IPsicologoDAO {
      * @throws excepciones.PersistenciaException
      */
     public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException;
+
+    public Psicologo obtenerPsicologoPorRfc(Psicologo psicologo) throws PersistenciaException;
 }

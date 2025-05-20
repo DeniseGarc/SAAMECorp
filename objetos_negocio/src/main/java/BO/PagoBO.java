@@ -1,15 +1,21 @@
 package BO;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
+import DAOs.PagoDAO;
 import DAOs.PsicologoDAO;
 import dto.PagoDTO;
 import dto.PsicologoDTO;
+import entidades.Pago;
 import entidades.Psicologo;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.IPagoBO;
 import interfaces.IPsicologoDAO;
+import interfaces.IPagoDAO;
+import mapper.PagoMapper;
 import mapper.PsicologoMapper;
 
 /**
@@ -20,11 +26,12 @@ import mapper.PsicologoMapper;
 public class PagoBO implements IPagoBO {
 
     private IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
+    private IPagoDAO pagoDAO = PagoDAO.getInstancia();
     private PsicologoMapper mapper = new PsicologoMapper();
+    private PagoMapper mapperPago = new PagoMapper();
 
     @Override
     public List<PagoDTO> obtenerPagosDelMesPsicologo(PsicologoDTO psicologoDTO) throws NegocioException {
-        // Implementación de la lógica para obtener los pagos del mes del psicólogo
         return null;
     }
 

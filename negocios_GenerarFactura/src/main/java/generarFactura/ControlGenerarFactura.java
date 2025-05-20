@@ -1,4 +1,3 @@
-
 package generarFactura;
 
 import BO.FacturaBO;
@@ -10,6 +9,8 @@ import excepciones.ConexionFacturamaException;
 import excepciones.GenerarFacturaException;
 import excepciones.NegocioException;
 import interfaces.IFacturaBO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import manejadorBO.ManejadorBO;
 import mapper.FacturaMapper;
 import sistemaFacturas.ISistemaFacturas;
@@ -70,7 +71,7 @@ public class ControlGenerarFactura {
      * @param factura DTO de la factura a enviar por correo
      * @return true si se envió correctamente, false en caso contrario
      * @throws GenerarFacturaException si ocurre un error al enviar la factura
-     *                                 por correo.
+     * por correo.
      */
     protected boolean mandarFacturaCorreo(FacturaDTO factura) throws GenerarFacturaException {
         if (factura == null) {
@@ -89,10 +90,10 @@ public class ControlGenerarFactura {
      * factura, lo convierte a un DTO de registro y lo envía al sistema de
      * facturas para ser descargado como PDF.
      *
-     * @param factura  DTO de la factura a descargar
+     * @param factura DTO de la factura a descargar
      * @param filePath Ruta donde se guardará el PDF
      * @return true si se descarga correctamente, false si se cancela la
-     *         selección de ruta.
+     * selección de ruta.
      * @throws GenerarFacturaException si ocurre un error al descargar el PDF.
      */
     protected boolean descargarPDF(FacturaDTO factura, String filePath) throws GenerarFacturaException {
@@ -115,10 +116,10 @@ public class ControlGenerarFactura {
      * factura, lo convierte a un DTO de registro y lo envía al sistema de
      * facturas para ser descargado como XML.
      *
-     * @param factura  DTO de la factura a descargar
+     * @param factura DTO de la factura a descargar
      * @param filePath Ruta donde se guardará el archivo XML
      * @return true si se descarga correctamente, false si se cancela la
-     *         selección de ruta.
+     * selección de ruta.
      * @throws GenerarFacturaException si ocurre un error al descargar el XML.
      */
     protected boolean descargarXML(FacturaDTO factura, String filePath) throws GenerarFacturaException {
@@ -148,7 +149,12 @@ public class ControlGenerarFactura {
         if (pago == null) {
             throw new GenerarFacturaException("El pago no puede ser nulo");
         }
-        // Se consulta en BO si el pago ya fue facturado
+        try {
+            facturaBO.validarPagoFactura(pago);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ControlGenerarFactura.class.getName()).log(Level.SEVERE, null, ex);
+            throw new GenerarFacturaException("Error al validar si el pago ya ha sido facturado: " + ex.getMessage());
+        }
         return true;
     }
 
@@ -159,7 +165,7 @@ public class ControlGenerarFactura {
      * @param factura DTO de la factura a registrar
      * @return true si se registró correctamente, false en caso contrario
      * @throws GenerarFacturaException si ocurre un error al registrar la
-     *                                 factura.
+     * factura.
      */
     protected boolean registrarFactura(PagoDTO pago, FacturaDTO factura) throws GenerarFacturaException {
         if (factura == null) {
