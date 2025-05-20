@@ -115,6 +115,11 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
                 btnCubiculosMouseClicked(evt);
             }
         });
+        btnCubiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCubiculosActionPerformed(evt);
+            }
+        });
         pnlFondoBarra.add(btnCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 70, 46));
 
         lblCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -194,7 +199,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPsicologosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
+        flujoPantallas.pantallaMenuReportes(this);
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
@@ -202,8 +207,12 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAjustesActionPerformed
 
     private void btnCubiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCubiculosMouseClicked
-        flujoPantallas.PantallaGestionCubiculos(this);
+  
     }//GEN-LAST:event_btnCubiculosMouseClicked
+
+    private void btnCubiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCubiculosActionPerformed
+        flujoPantallas.PantallaGestionCubiculos(this);
+    }//GEN-LAST:event_btnCubiculosActionPerformed
 
     /**
      * Método para agregar los paneles al CardLayout del panel lateral del menú.

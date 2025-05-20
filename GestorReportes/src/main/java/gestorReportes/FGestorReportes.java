@@ -15,20 +15,38 @@ import java.util.List;
  * @author erika
  */
 public class FGestorReportes implements IGestorReportes{
-
+    
+    GestorReportesControl control = new GestorReportesControl();
+    
+    /**
+     * Metodo que llama al controlador para generar un reporte de uso de cubiculo
+     * @param nombreCubiculo Nombre del cubiculo del que se va a realizar el reporte
+     * @return ReporteUsoCubiculoDTO
+     * @throws GestorReportesException 
+     */
     @Override
     public ReporteUsoCubiculoDTO generarReporteUsoCubiculo(String nombreCubiculo) throws GestorReportesException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       return control.generarReporteUsoCubiculo(nombreCubiculo);
     }
-
+    
+    /**
+     * Metodo que llama al controlador para generar un reporte estadistico de cubiculos
+     * @return reporte estadistico de cubiculos
+     * @throws GestorReportesException 
+     */
     @Override
     public List<ReporteResumenCubiculoDTO> generarReporteEstadisticoResumen() throws GestorReportesException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return control.generarReporteEstadisticoResumen();
     }
-
+    /**
+     * Metodo que llama al controlador para generar un reporte de ingresos de cubiculo
+     * @param nombreCubiculo Nombre del cubiculo del que se va a realizar el reporte
+     * @return ReporteIngresosCubiculoDTO
+     * @throws GestorReportesException 
+     */
     @Override
     public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(String nombreCubiculo) throws GestorReportesException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return control.generarReporteIngresosPorCubiculo(nombreCubiculo);
     }
     
 }

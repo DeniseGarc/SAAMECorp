@@ -6,18 +6,24 @@ package BO;
 
 import DAOs.CitaDAO;
 import DAOs.CubiculoDAO;
+import DAOs.PsicologoDAO;
+import dto.DetalleCitaCubiculoDTO;
 import dto.ReporteIngresosCubiculoDTO;
 import dto.ReporteResumenCubiculoDTO;
 import dto.ReporteUsoCubiculoDTO;
 import entidades.Adeudo;
 import entidades.Cita;
 import entidades.Cubiculo;
+import entidades.Psicologo;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.ICitaDAO;
 import interfaces.ICubiculoDAO;
+import interfaces.IPsicologoDAO;
 import interfaces.IReporteCubiculoBO;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +41,8 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
      * Instancia de la clase CitaDAO
      */
     ICitaDAO citaDAO = CitaDAO.getInstancia();
+    
+    IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
     
     /**
      * Instancia unica de la clase
@@ -71,23 +79,73 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
    */
     @Override
     public ReporteUsoCubiculoDTO generarReporteUsoCubiculo(String nombreCubiculo) throws NegocioException {
-          try {
-        List<Cita> citas = citaDAO.obtenerCitas();
-        int usos = 0;
+        try {
+            List<Cita> citas = citaDAO.obtenerCitas();
+            List<Cita> citasFiltradas = new ArrayList<>();
+            Cubiculo cubiculoSeleccionado = cubiculoDAO.buscarCubiculoPorNombre(nombreCubiculo);
 
-        for (Cita cita : citas) {
-            String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
-            if (nombreCubiculo.equalsIgnoreCase(nombre)) {
-                usos++;
+            for (Cita cita : citas) {
+                String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
+                if (nombreCubiculo.equalsIgnoreCase(nombre)) {
+                    citasFiltradas.add(cita); 
+                }
             }
-        }
 
-        return new ReporteUsoCubiculoDTO(nombreCubiculo, usos);
-    } catch (PersistenciaException ex) {
-        Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
-        throw new NegocioException("Error al generar el reporte", ex);
+            // Validar si se encontró el cubículo
+            if (cubiculoSeleccionado == null) {
+                return new ReporteUsoCubiculoDTO(
+                    nombreCubiculo,
+                    0,
+                    "No se encontraron citas para el cubículo seleccionado: " + nombreCubiculo
+                );
+            }
+
+            // Construcción del reporte
+            StringBuilder reporte = new StringBuilder();
+            reporte.append("=== Reporte de Uso de Cubículo ===\n");
+            reporte.append("Cubículo: ").append(nombreCubiculo).append("\n");
+            reporte.append("Tipo de terapia: ").append(cubiculoSeleccionado.getTipoTerapia()).append("\n");
+            reporte.append("Capacidad: ").append(cubiculoSeleccionado.getCapacidad()).append("\n");
+            reporte.append("Notas: ").append(cubiculoSeleccionado.getNotas()).append("\n\n");
+            reporte.append("Citas registradas:\n");
+
+            int citasConAdeudoPendiente = 0;
+
+            for (Cita cita : citasFiltradas) {
+                Psicologo psicologo = psicologoDAO.obtenerPsicologoPorIdentificador(cita.getIdPsicologo().toHexString());
+                Adeudo adeudo = cita.getDetallesAdeudo();
+
+                String estadoAdeudo = adeudo.isEstado() ? "PAGADO" : "PENDIENTE";
+                double cantidad = adeudo.getCantidad();
+
+                if (!adeudo.isEstado()) {
+                    citasConAdeudoPendiente++;
+                }
+
+                reporte.append("- ")
+                    .append(formatFechaHora(cita.getFechaHora()))
+                    .append(" | Psicólogo: ").append(psicologo.getNombre())
+                    .append(" | Estado: ").append(estadoAdeudo)
+                    .append(" | $").append(String.format("%.2f", cantidad))
+                    .append("\n");
+            }
+
+            reporte.append("\nTotal de citas: ").append(citasFiltradas.size()).append("\n");
+            reporte.append("Citas con adeudo pendiente: ").append(citasConAdeudoPendiente).append("\n");
+
+            return new ReporteUsoCubiculoDTO(nombreCubiculo, citasFiltradas.size(), reporte.toString());
+
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al generar el reporte: " + ex.getMessage(), ex);
+        }
     }
+
+    private String formatFechaHora(Calendar fechaHora) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(fechaHora.getTime());
     }
+
     
     /**
    * Metodo que genera un reporte estadistico sobre los cubiculos registrados
@@ -178,13 +236,8 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
     }
     
     private String obtenerNombreCubiculo(ObjectId idCubiculo) throws PersistenciaException {
-        Cubiculo cubiculo = cubiculoDAO.buscarCubiculos()
-            .stream()
-            .filter(c -> c.getObjectString().equals(idCubiculo))
-            .findFirst()
-            .orElse(null);
-
-        return (cubiculo != null) ? cubiculo.getNombre() : "Desconocido";
+        Cubiculo cubiculo = cubiculoDAO.buscarCubiculoPorId(idCubiculo.toHexString());
+        return cubiculo != null ? cubiculo.getNombre() : "Desconocido";
     }
     
 }
