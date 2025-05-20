@@ -410,7 +410,13 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("Error al obtener los cubículos disponibles.", ex);
         }
     }
-
+    
+    /**
+     * Metodo para agregar un nuevo cubiculo
+     * @param cubiculo Cyb
+     * @return
+     * @throws CoordinadorException 
+     */
     public String AgregarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
@@ -426,7 +432,13 @@ public class CoordinadorNegocio {
         }
         return "Se agrego el cubiculo con exito";
     }
-
+    
+    /**
+     * Metodo para modificar la informacion de un cubiculo
+     * @param cubiculo cubiculo con la informacion a modificar
+     * @return
+     * @throws CoordinadorException 
+     */
     public String modificarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
@@ -442,7 +454,13 @@ public class CoordinadorNegocio {
         }
         return "Se modifico el cubiculo con exito";
     }
-
+    
+    /**
+     * Metodo para modificar el estado de un cubiculo
+     * @param cubiculo cubiculo a modificar
+     * @return True si se modifico exitosamente, false si no
+     * @throws CoordinadorException 
+     */
     public String modificarEstadoCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("El estado es invalido.");
@@ -457,5 +475,18 @@ public class CoordinadorNegocio {
             throw new CoordinadorException(ex.getMessage());
         }
         return "Se modifico el estado del cubiculo con exito";
+    }
+    /**
+     * Metodo para obtener todos lo cubiculos registrados
+     * @return Lista de cubiculos 
+     * @throws CoordinadorException 
+     */
+    public List<CubiculoDTO> obtenerCubiculos() throws CoordinadorException{
+         try {
+            return sistemaGestorCubiculoa.obtenerCubiculos();
+        } catch (GestorCubiculosException ex) {
+            
+            throw new CoordinadorException(ex.getMessage());
+        }
     }
 }

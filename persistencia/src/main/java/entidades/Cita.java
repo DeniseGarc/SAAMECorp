@@ -8,7 +8,7 @@ import java.util.Calendar;
 import org.bson.types.ObjectId;
 
 /**
- * Mock para la entidad de Cita
+ * entidad de Cita
  *
  * @author erika
  */

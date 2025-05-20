@@ -16,6 +16,7 @@ import interfaces.ICubiculoDAO;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * Clase que define los metodos en Persistencia para Cubiculos
@@ -184,5 +185,19 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al obtener lista de cubículos: " + e.getMessage(), e);
         }
     }
+    /**
+     * Metodo para obtener un cubiculo dado su id
+     * @param id id del cubiculo
+     * @return cubiculo encontrado
+     * @throws PersistenciaException 
+     */
+    @Override
+    public Cubiculo buscarCubiculoPorId(ObjectId id) throws PersistenciaException {
+    try {
+        return coleccionCubiculos.find(eq("_id", id)).first();
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al buscar cubículo por ID: " + e.getMessage(), e);
+    }
+}
 
 }

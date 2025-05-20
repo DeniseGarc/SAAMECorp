@@ -176,4 +176,21 @@ public class Cubiculo {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+    /**
+     * Obtiene el id del cubiculo
+     * @return Id deo cubiculo
+     */
+    public ObjectId getId() {
+        return id;
+    }
+    /**
+     * Establece el id del cubiculo
+     * @param id id del cubiculo
+     */
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+    
+    
 }

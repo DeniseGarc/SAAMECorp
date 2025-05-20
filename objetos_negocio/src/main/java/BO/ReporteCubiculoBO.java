@@ -70,21 +70,22 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
    */
     @Override
     public ReporteUsoCubiculoDTO generarReporteUsoCubiculo(String nombreCubiculo) throws NegocioException {
-        try {
-            List<Cita> citas = citaDAO.obtenerCitas();
-            int usos = 0;
-            
-            for (Cita cita : citas) {
-                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
-                    usos++;
-                }
+          try {
+        List<Cita> citas = citaDAO.obtenerCitas();
+        int usos = 0;
+
+        for (Cita cita : citas) {
+            String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
+            if (nombreCubiculo.equalsIgnoreCase(nombre)) {
+                usos++;
             }
-            
-            return new ReporteUsoCubiculoDTO(nombreCubiculo, usos);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new NegocioException("Error al generar el reporte", ex);
         }
+
+        return new ReporteUsoCubiculoDTO(nombreCubiculo, usos);
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
+        throw new NegocioException("Error al generar el reporte", ex);
+    }
     }
     
     /**
@@ -172,5 +173,15 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
             throw new NegocioException("Error al generar el reporte", ex);
         }
     }
+    
+    private String obtenerNombreCubiculo(String idCubiculo) throws PersistenciaException {
+    Cubiculo cubiculo = cubiculoDAO.buscarCubiculos()
+        .stream()
+        .filter(c -> c.getObjectString().equals(idCubiculo))
+        .findFirst()
+        .orElse(null);
+
+    return (cubiculo != null) ? cubiculo.getNombre() : "Desconocido";
+}
     
 }
