@@ -26,7 +26,6 @@ public class PanelBienvenida extends javax.swing.JPanel {
 
         pnlFondoMorado = new javax.swing.JPanel();
         pnlFondoBlanco = new javax.swing.JPanel();
-        lblNombreUsuario = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         lblBienvenida = new javax.swing.JLabel();
 
@@ -37,16 +36,12 @@ public class PanelBienvenida extends javax.swing.JPanel {
         pnlFondoBlanco.setBackground(new java.awt.Color(255, 255, 255));
         pnlFondoBlanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblNombreUsuario.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
-        lblNombreUsuario.setText("<nombre usuario>");
-        pnlFondoBlanco.add(lblNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 400, 156));
-
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo.png"))); // NOI18N
         pnlFondoBlanco.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 190, -1));
 
         lblBienvenida.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         lblBienvenida.setText("Bienvenid@ ");
-        pnlFondoBlanco.add(lblBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 62, -1, 156));
+        pnlFondoBlanco.add(lblBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, 156));
 
         pnlFondoMorado.add(pnlFondoBlanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 790, 500));
 
@@ -66,7 +61,6 @@ public class PanelBienvenida extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JPanel pnlFondoBlanco;
     private javax.swing.JPanel pnlFondoMorado;
     // End of variables declaration//GEN-END:variables

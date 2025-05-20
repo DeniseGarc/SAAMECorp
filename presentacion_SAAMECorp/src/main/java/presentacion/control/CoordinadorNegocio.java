@@ -106,7 +106,7 @@ public class CoordinadorNegocio {
      * a los horas disponibles para cita que tiene en el día seleccionado.
      *
      * @param identificadorPsicologo Identificador único del psicólogo.
-     * @param fechaCita              Fecha seleccionada para la cita
+     * @param fechaCita Fecha seleccionada para la cita
      * @return datos del psicólogo junto a sus horas disponible
      * @throws CoordinadorException Si ocurre un error al obtener los datos
      */
@@ -131,9 +131,9 @@ public class CoordinadorNegocio {
      * adeudo al momento de seleccionar un psicólogo.
      *
      * @param psicologo datos del psicólogo a validar su cantidad total de
-     *                  adeudo.
+     * adeudo.
      * @return true si el psicólogo presenta una cantidad de adeudo que aun le
-     *         premite agendar´más citas, false en caso contrario.
+     * premite agendar´más citas, false en caso contrario.
      * @throws excepciones.CoordinadorException
      */
     public boolean validarAdeudoPsicologoSeleccionado(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -173,7 +173,7 @@ public class CoordinadorNegocio {
      *
      * @param psicologo Psicólogo que ha sido seleccionado.
      * @return lista de horas en las que el psicólogo esta disponible para
-     *         agendar una cita.
+     * agendar una cita.
      * @throws excepciones.CoordinadorException
      */
     public List<LocalTime> mostrarHorarios(PsicologoCitaDTO psicologo) throws CoordinadorException {
@@ -188,7 +188,7 @@ public class CoordinadorNegocio {
      * fecha y hora seleccionadas para agendar cita.
      *
      * @param fechaHoraCita fecha y hora que han sido seleccionados para la
-     *                      cita.
+     * cita.
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
      * @throws excepciones.CoordinadorException
      */
@@ -234,7 +234,7 @@ public class CoordinadorNegocio {
      * @param cita Datos de la cita a agendar.
      * @return regresa una cadena de texto con el resultado de la operación
      * @throws CoordinadorException Si sucede un error al intentar registrar la
-     *                              cita.
+     * cita.
      */
     public String agendarCita(CitaNuevaDTO cita) throws CoordinadorException {
         if (cita == null) {
@@ -261,7 +261,7 @@ public class CoordinadorNegocio {
      * agendar cita es de dos meses en adelato.
      *
      * @param calendario Calendario de la interfaz gráfica donde se va a aplicar
-     *                   el bloqueo de dias
+     * el bloqueo de dias
      */
     public void bloquearDiasNoDisponibles(JCalendar calendario) {
         Calendar fechaActual = Calendar.getInstance();
@@ -277,7 +277,7 @@ public class CoordinadorNegocio {
      * los días.
      *
      * @param calendario Calendario de la intefaz gráfica donde se selecciona la
-     *                   fecha para la cita.
+     * fecha para la cita.
      */
     public void pintarDiasCalendario(JCalendar calendario) {
         try {
@@ -307,7 +307,7 @@ public class CoordinadorNegocio {
      *
      * @param diaSeleccionado Dia seleccionado del calendario.
      * @return true si el psicólogo aun tiene horas de atencion para la fecha
-     *         seleccionada, false en caso contrario
+     * seleccionada, false en caso contrario
      */
     public boolean validarDiaSeleccionado(Calendar diaSeleccionado) {
         if (diaSeleccionado == null) {
@@ -354,10 +354,10 @@ public class CoordinadorNegocio {
     /**
      * Metodo para descargar el PDF de la factura.
      *
-     * @param factura  factura a descargar
+     * @param factura factura a descargar
      * @param filePath ruta donde se guardara el PDF
      * @return true si se descarga correctamente, false si se cancela la
-     *         factura.
+     * factura.
      * @throws CoordinadorException si ocurre un error al descargar el PDF.
      */
     public boolean descargarPDF(FacturaDTO factura, String filePath) throws CoordinadorException {
@@ -378,10 +378,10 @@ public class CoordinadorNegocio {
     /**
      * Método para descargar el XML de la factura.
      *
-     * @param factura  factura a descargar
+     * @param factura factura a descargar
      * @param filePath ruta donde se guardara el XML
      * @return true si se descarga correctamente, false si se cancela la
-     *         factura.
+     * factura.
      * @throws CoordinadorException si ocurre un error al descargar el XML.
      */
     public boolean descargarXML(FacturaDTO factura, String filePath) throws CoordinadorException {
@@ -512,6 +512,7 @@ public class CoordinadorNegocio {
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Error al obtener los psicólogos.", ex);
+        }
     }
 
     /**
@@ -531,13 +532,14 @@ public class CoordinadorNegocio {
 
     /**
      * Método para obtener los pagos de un psicólogo en los ultimos 30 dias.
-     * 
-     * @param psicologoDTO El objeto PsicologoDTO que representa el psicólogo para
-     *                     el cual se desean obtener los pagos.
-     * @return Una lista de objetos PagoDTO que representan los pagos realizados al
-     *         psicólogo en los últimos 30 días.
+     *
+     * @param psicologoDTO El objeto PsicologoDTO que representa el psicólogo
+     * para el cual se desean obtener los pagos.
+     * @return Una lista de objetos PagoDTO que representan los pagos realizados
+     * al psicólogo en los últimos 30 días.
      * @throws CoordinadorException Si ocurre un error al obtener los pagos.
-     * @throws CoordinadorException Si el objeto PsicologoDTO proporcionado es nulo.
+     * @throws CoordinadorException Si el objeto PsicologoDTO proporcionado es
+     * nulo.
      */
     public List<PagoDTO> obtenerPagosUltimos30Dias(PsicologoDTO psicologoDTO) throws CoordinadorException {
         if (psicologoDTO == null) {
@@ -565,21 +567,21 @@ public class CoordinadorNegocio {
 
     /**
      * Método para obtener el total de cantidad de adeudo que tiene un psicologo
-     * 
-     * @param psicologoDTO El objeto PsicologoDTO que representa el psicólogo para
-     *                     el cual se desean obtener los pagos.
+     *
+     * @param psicologoDTO El objeto PsicologoDTO que representa el psicólogo
+     * para el cual se desean obtener los pagos.
      * @return Un objeto PagoDTO que contiene los datos del pago.
      * @throws CoordinadorException Si ocurre un error al obtener los pagos.
-     * 
+     *
      */
     public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologoDTO) throws CoordinadorException {
         return 200.0;
     }
 
     /**
-     * Metodo que se encarga de registrar el pago en el sistema de pagos.
-     * TODO LO RELACIONADO A PAGOS SE ENCUENTRA MOCK POR EL MOMENTO.
-     * 
+     * Metodo que se encarga de registrar el pago en el sistema de pagos. TODO
+     * LO RELACIONADO A PAGOS SE ENCUENTRA MOCK POR EL MOMENTO.
+     *
      * @param pagoDTO DTO con los datos del pago a registrar.
      * @return DTO con los datos del pago registrado.
      * @throws CoordinadorException Si ocurre un error al registrar el pago.
@@ -592,9 +594,9 @@ public class CoordinadorNegocio {
      * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
      * un psicologo
      *
-     * @param psicologo  psicologo del cual se requieren las horas
+     * @param psicologo psicologo del cual se requieren las horas
      * @param idCubiculo cubiculo del cual se requieren las horas
-     * @param fecha      fecha en la cual sera la cita
+     * @param fecha fecha en la cual sera la cita
      * @return lista de la horas disponibles coincidentes
      * @throws excepciones.ModificarCitaException
      */
@@ -629,7 +631,7 @@ public class CoordinadorNegocio {
 
     /**
      * Metodo par generar un reporte de uso de cubiculo
-     * 
+     *
      * @param cubiculo cubiculo al que se le va a realizar el reporte
      * @return ReporteUsoCubiculoDTO
      * @throws CoordinadorException
@@ -676,7 +678,7 @@ public class CoordinadorNegocio {
 
     /**
      * Metodo para generar un reporte de resumen estadistico
-     * 
+     *
      * @return List ReporteResumenCubiculoDTO
      * @throws CoordinadorException
      */

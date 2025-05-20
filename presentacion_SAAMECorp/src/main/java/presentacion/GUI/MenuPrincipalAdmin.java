@@ -38,18 +38,16 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         panelLateral = new javax.swing.JPanel();
         pnlFondoBarra = new javax.swing.JPanel();
         btnCitas = new javax.swing.JButton();
-        btnPsicologos = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnCubiculos = new javax.swing.JButton();
         lblCitas = new javax.swing.JLabel();
         lblReportes = new javax.swing.JLabel();
-        lblPsicologos = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         lblIconoUsuario = new javax.swing.JLabel();
         btnPagos = new javax.swing.JButton();
@@ -80,19 +78,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
                 btnCitasActionPerformed(evt);
             }
         });
-        pnlFondoBarra.add(btnCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 70, 51));
-
-        btnPsicologos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/gmail_groups.png"))); // NOI18N
-        btnPsicologos.setBorderPainted(false);
-        btnPsicologos.setContentAreaFilled(false);
-        btnPsicologos.setFocusPainted(false);
-        btnPsicologos.setFocusable(false);
-        btnPsicologos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPsicologosActionPerformed(evt);
-            }
-        });
-        pnlFondoBarra.add(btnPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 70, 60));
+        pnlFondoBarra.add(btnCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 70, 51));
 
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-carpeta-50.png"))); // NOI18N
         btnReportes.setBorderPainted(false);
@@ -103,7 +89,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
                 btnReportesActionPerformed(evt);
             }
         });
-        pnlFondoBarra.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 70, -1));
+        pnlFondoBarra.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 70, 50));
 
         btnCubiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono-cubiculo.png"))); // NOI18N
         btnCubiculos.setBorderPainted(false);
@@ -121,22 +107,17 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
                 btnCubiculosActionPerformed(evt);
             }
         });
-        pnlFondoBarra.add(btnCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 70, 46));
+        pnlFondoBarra.add(btnCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 70, 46));
 
         lblCitas.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblCitas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCitas.setText("Citas");
-        pnlFondoBarra.add(lblCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 50, -1));
+        pnlFondoBarra.add(lblCitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 50, -1));
 
         lblReportes.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblReportes.setText("Reportes");
-        pnlFondoBarra.add(lblReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
-
-        lblPsicologos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblPsicologos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPsicologos.setText("Psicologos");
-        pnlFondoBarra.add(lblPsicologos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 70, -1));
+        pnlFondoBarra.add(lblReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
         lblUsername.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -157,12 +138,12 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
                 btnPagosActionPerformed(evt);
             }
         });
-        pnlFondoBarra.add(btnPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 70, -1));
+        pnlFondoBarra.add(btnPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 70, -1));
 
         lblPagos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblPagos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPagos.setText("Pagos");
-        pnlFondoBarra.add(lblPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 70, -1));
+        pnlFondoBarra.add(lblPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 70, -1));
 
         btnAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icono-ajustes.png"))); // NOI18N
         btnAjustes.setBorder(new com.formdev.flatlaf.ui.FlatButtonBorder());
@@ -179,7 +160,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
         lblCubiculos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblCubiculos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCubiculos.setText("Cubiculos");
-        pnlFondoBarra.add(lblCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 70, -1));
+        pnlFondoBarra.add(lblCubiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 70, -1));
 
         getContentPane().add(pnlFondoBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 680));
 
@@ -250,13 +231,11 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnCitas;
     private javax.swing.JButton btnCubiculos;
     private javax.swing.JButton btnPagos;
-    private javax.swing.JButton btnPsicologos;
     private javax.swing.JButton btnReportes;
     private javax.swing.JLabel lblCitas;
     private javax.swing.JLabel lblCubiculos;
     private javax.swing.JLabel lblIconoUsuario;
     private javax.swing.JLabel lblPagos;
-    private javax.swing.JLabel lblPsicologos;
     private javax.swing.JLabel lblReportes;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel panelLateral;

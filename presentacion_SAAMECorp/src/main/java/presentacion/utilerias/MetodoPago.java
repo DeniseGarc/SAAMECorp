@@ -7,8 +7,9 @@ package presentacion.utilerias;
  * @author Alici
  */
 public enum MetodoPago {
-    PUE("Pago en una sola exhibición"),
-    PPD("Pago en parcialidades o diferido");
+    PUE("Pago en una sola exhibición");
+    //Por el momento el sistema no lo soporta
+    //PPD("Pago en parcialidades o diferido");
 
     private final String descripcion;
 

@@ -457,7 +457,7 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         if (frmPadre == null) {
             flujoPantallas.regresarAlMenuPrincipal(this);
         } else {
-            flujoPantallas.pantallaPagosAnteriores(null, this);
+            flujoPantallas.pantallaPagosAnteriores(pago.getPsicologo(), this);
         }
     }// GEN-LAST:event_btnRegresarActionPerformed
 
@@ -503,7 +503,7 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                 } else {
                     mensajeCorreo = "No ha sido posible mandar la factura al correo del psicólogo";
                 }
-                Object[] options = { "Aceptar", "Descargar PDF y XML" };
+                Object[] options = {"Aceptar", "Descargar PDF y XML"};
                 int result = JOptionPane.showOptionDialog(
                         this,
                         "Factura generada con éxito. " + mensajeCorreo,
