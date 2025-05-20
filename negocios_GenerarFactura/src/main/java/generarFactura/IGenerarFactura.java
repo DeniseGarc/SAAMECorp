@@ -21,7 +21,7 @@ public interface IGenerarFactura {
      *         del envío por correo
      * @throws GenerarFacturaException si ocurre un error al generar la factura
      */
-    public ResultadoFacturarPago facturarPago(FacturaDTO factura) throws GenerarFacturaException;
+    public ResultadoFacturarPago facturarPago(PagoDTO pago, FacturaDTO factura) throws GenerarFacturaException;
 
     /**
      * Método para descargar el PDF de una factura.

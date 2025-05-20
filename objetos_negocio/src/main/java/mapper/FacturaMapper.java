@@ -2,14 +2,17 @@ package mapper;
 
 import DTO.FacturaRegistroDTO;
 import dto.FacturaDTO;
+import entidades.Factura;
+import java.time.LocalDateTime;
 
 /**
  * Clase que se encarga de mapear las facturas de la capa de negocio a la capa
  * de infraestructura, y a entidades de factura.
- * 
+ *
  * @author Alici
  */
 public class FacturaMapper {
+
     /**
      * Método para mapear un DTO de factura de la capa de negocio a un DTO de
      * registro de factura de infraestraestructura.
@@ -48,9 +51,8 @@ public class FacturaMapper {
     }
 
     /**
-     * Método para mapear un DTO de registro de factura de infraestructura a un DTO
-     * de factura de
-     * negocio.
+     * Método para mapear un DTO de registro de factura de infraestructura a un
+     * DTO de factura de negocio.
      *
      * @param facturaRegistroDTO DTO de registro de la factura a mapear
      * @return DTO de la factura
@@ -74,5 +76,12 @@ public class FacturaMapper {
                 facturaRegistroDTO.getSubtotal(),
                 facturaRegistroDTO.getTotal());
         return factura;
+    }
+
+    public Factura toEntity(FacturaDTO facturaDTO) {
+        return new Factura(
+                facturaDTO.getId(),
+                facturaDTO.getFolio(),
+                facturaDTO.getFechaHoraEmision());
     }
 }

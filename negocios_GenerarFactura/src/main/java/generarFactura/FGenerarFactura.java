@@ -26,15 +26,18 @@ public class FGenerarFactura implements IGenerarFactura {
      *         del envío por correo
      * @throws GenerarFacturaException si ocurre un error al generar la factura
      */
-    public ResultadoFacturarPago facturarPago(FacturaDTO factura) throws GenerarFacturaException {
+    public ResultadoFacturarPago facturarPago(PagoDTO pago, FacturaDTO factura) throws GenerarFacturaException {
         if (factura == null) {
             throw new GenerarFacturaException("La factura no puede ser nula");
+        }
+        if (pago == null) {
+            throw new GenerarFacturaException("El pago no puede ser nulo");
         }
         FacturaDTO facturaTimbrada = controlGenerarFactura.timbrarFactura(factura);
         if (facturaTimbrada == null || facturaTimbrada.getId() == null) {
             throw new GenerarFacturaException("Error al timbrar la factura");
         }
-        if (!controlGenerarFactura.registrarFactura(facturaTimbrada)) {
+        if (!controlGenerarFactura.registrarFactura(pago, facturaTimbrada)) {
             throw new GenerarFacturaException("Error al registrar la factura");
         }
         ResultadoFacturarPago resultadoFacturarPago = new ResultadoFacturarPago(facturaTimbrada,

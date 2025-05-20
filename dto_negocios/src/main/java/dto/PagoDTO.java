@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
  * @author Alici
  */
 public class PagoDTO {
+    /** Identificador único del pago. */
+    private String id;
     /** Fecha y hora del pago. */
     private LocalDateTime fechaHora;
     /** Forma de pago utilizada. */
@@ -34,7 +36,7 @@ public class PagoDTO {
     }
 
     /**
-     * Constructor que inicializa todos los atributos del pago.
+     * Constructor que inicializa los atributos del pago.
      *
      * @param fechaHora       Fecha y hora del pago.
      * @param formaPago       Forma de pago utilizada.
@@ -51,6 +53,46 @@ public class PagoDTO {
         this.condicionesPago = condicionesPago;
         this.monto = monto;
         this.psicologo = psicologo;
+    }
+
+    /**
+     * Constructor que inicializa todos los atributos del pago.
+     *
+     * @param id              Identificador único del pago.
+     * @param fechaHora       Fecha y hora del pago.
+     * @param formaPago       Forma de pago utilizada.
+     * @param metodoPago      Método de pago utilizado.
+     * @param condicionesPago Condiciones de pago.
+     * @param monto           Monto total del pago.
+     * @param psicologo       Psicólogo asociado al pago.
+     */
+    public PagoDTO(String id, LocalDateTime fechaHora, String formaPago, String metodoPago,
+            String condicionesPago, double monto, PsicologoDTO psicologo) {
+        this.id = id;
+        this.fechaHora = fechaHora;
+        this.formaPago = formaPago;
+        this.metodoPago = metodoPago;
+        this.condicionesPago = condicionesPago;
+        this.monto = monto;
+        this.psicologo = psicologo;
+    }
+
+    /**
+     * Obtiene el identificador único del pago.
+     *
+     * @return Identificador único del pago.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Establece el identificador único del pago.
+     *
+     * @param id Identificador único del pago.
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

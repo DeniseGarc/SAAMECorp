@@ -13,5 +13,7 @@ public enum TipoBO {
     CITA,
     CUBICULO,
     PSICOLOGO,
-    REPORTE
+    REPORTE,
+    FACTURA,
+    PAGO
 }

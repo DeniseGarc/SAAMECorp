@@ -2,6 +2,7 @@ package presentacion.GUI;
 
 import dto.FacturaDTO;
 import dto.PagoDTO;
+import dto.ResultadoFacturarPago;
 import excepciones.CoordinadorException;
 
 import javax.swing.JFileChooser;
@@ -27,15 +28,17 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
     CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     private JFrame frmPadre;
     private FacturaDTO factura = new FacturaDTO();
+    private PagoDTO pago;
 
     /**
      * Constructor que inicializa los componentes de la clase.
      */
     public PantallaGenerarFactura(JFrame frmPadre, PagoDTO pago) {
         this.frmPadre = frmPadre;
+        this.pago = pago;
         initComponents();
         cargarComboBoxes();
-        cargarDatosFactura(pago);
+        cargarDatosFactura();
     }
 
     /**
@@ -55,8 +58,8 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
      * Método que carga los datos predeterminados de la factura en los labels
      * correspondientes.
      */
-    private void cargarDatosFactura(PagoDTO pago) {
-        FacturaDTO factura = armarFactura(pago);
+    private void cargarDatosFactura() {
+        FacturaDTO factura = armarFactura();
 
         // emisor
         lblLugarExpedicion.setText(factura.getExpeditionPlace());
@@ -84,7 +87,7 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
     /**
      * Método que arma la factura a partir de un pago y los datos del psicólogo.
      */
-    private FacturaDTO armarFactura(PagoDTO pago) {
+    private FacturaDTO armarFactura() {
         factura.setPaymentConditions(pago.getCondicionesPago());
         factura.setPaymentForm(pago.getFormaPago());
         factura.setPaymentMethod(pago.getMetodoPago());
@@ -465,14 +468,19 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
         factura.setFiscalRegime(regimenFiscal);
 
         try {
-            FacturaDTO facturaRegistrada = controlNegocio.generarFactura(factura);
-            if (facturaRegistrada != null) {
-                JOptionPane.showMessageDialog(this, "Factura generada con éxito", "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+            ResultadoFacturarPago facturaRegistrada = controlNegocio.generarFactura(pago, factura);
+            if (facturaRegistrada.getFactura() != null) {
+                String mensajeCorreo;
+
+                if (facturaRegistrada.isCorreoEnviado()) {
+                    mensajeCorreo = "Se ha enviado la factura al correo registrado del psicólogo";
+                } else {
+                    mensajeCorreo = "No ha sido posible mandar la factura al correo del psicólogo";
+                }
                 Object[] options = {"Aceptar", "Descargar PDF", "Descargar XML"};
                 int result = JOptionPane.showOptionDialog(
                         this,
-                        "Factura generada con éxito",
+                        "Factura generada con éxito. " + mensajeCorreo,
                         "Éxito",
                         JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE,
@@ -484,11 +492,11 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                 } else if (result == 1) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Guardar PDF");
-                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFolio()));
+                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
                     int userSelection = fileChooser.showSaveDialog(this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                        controlNegocio.descargarPDF(facturaRegistrada, filePath);
+                        controlNegocio.descargarPDF(facturaRegistrada.getFactura(), filePath);
                     } else {
                         JOptionPane.showMessageDialog(this, "Descarga cancelada", "Información",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -496,11 +504,11 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                 } else if (result == 2) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Guardar XML");
-                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFolio()));
+                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
                     int userSelection = fileChooser.showSaveDialog(this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                        controlNegocio.descargarXML(facturaRegistrada, filePath);
+                        controlNegocio.descargarXML(facturaRegistrada.getFactura(), filePath);
                     } else {
                         JOptionPane.showMessageDialog(this, "Descarga cancelada", "Información",
                                 JOptionPane.INFORMATION_MESSAGE);
