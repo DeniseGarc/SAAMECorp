@@ -149,7 +149,7 @@ public class FAgendarCita implements IAgendarCita {
         if (!resultadoAgendarCita) {
             throw new AgendarCitaException("No ha sido posible agendar la cita");
         }
-        boolean resultadoMandarCorreo = control.mandarCorreo(cita, cita.getPsicologo()/*.getCorreo()*/);
+        boolean resultadoMandarCorreo = control.mandarCorreo(cita);
         String mensajeAdvertencia = null;
         if (!resultadoMandarCorreo) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.WARNING, "No fue posible mandar el correo de confirmación");

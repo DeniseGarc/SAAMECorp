@@ -181,15 +181,12 @@ public class CoordinadorNegocio {
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
      * @throws excepciones.CoordinadorException
      */
-    public List<String> mostrarCubiculos(Calendar fechaHoraCita) throws CoordinadorException {
+    public List<CubiculoDTO> mostrarCubiculos(Calendar fechaHoraCita) throws CoordinadorException {
         if (fechaHoraCita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
         }
         try {
-            List<String> nombresCubiculos = new ArrayList<>();
-            for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
-                nombresCubiculos.add(cubiculo.getNombre());
-            }
+            List<CubiculoDTO> nombresCubiculos = sistemaAgendarCita.mandarCubiculos(fechaHoraCita);
             return nombresCubiculos;
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
@@ -564,7 +561,7 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("Error al intentar actualizar la cita: ", e);
         }
     }
-    
+
     /**
      * Método que se conecta con el servicio externo para mandar un correo
      * electrónico al correo ingresado.
