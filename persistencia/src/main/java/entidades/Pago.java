@@ -45,7 +45,7 @@ public class Pago {
      */
     private List<ObjectId> citasCubiertas = new ArrayList<>();
     /**
-     * Detalles de la factura asociada al pago.
+     * Detalles de la factura asociada al pago. 
      */
     private Factura detallesFactura;
 
@@ -215,6 +215,7 @@ public class Pago {
     public List<ObjectId> getCitasCubiertas() {
         return citasCubiertas;
     }
+
 
     public void setCitasCubiertas(List<ObjectId> citasCubiertas) {
         this.citasCubiertas = citasCubiertas;

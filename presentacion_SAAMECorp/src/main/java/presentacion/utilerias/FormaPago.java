@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
- */
 package presentacion.utilerias;
 
 /**
- *
+ * Enumeración que representa las formas de pago autorizadas para CFDI.
+ * Cada forma de pago tiene una clave y una descripción.
+ * 
  * @author Alici
  */
 public enum FormaPago {
@@ -35,21 +33,33 @@ public enum FormaPago {
     private final String clave;
     private final String descripcion;
 
+    /**
+     * Constructor del enum FormaPago.
+     * @param clave clave de la forma de pago.
+     * @param descripcion descripción legible de la forma de pago.
+     */
     FormaPago(String clave, String descripcion) {
         this.clave = clave;
         this.descripcion = descripcion;
     }
 
+    /**
+     * Obtiene la clave de la forma de pago.
+     * @return clave en formato String.
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * Obtiene la descripción legible de la forma de pago.
+     * @return descripción en formato String.
+     */
     public String getDescripcion() {
         return descripcion;
     }
-
     @Override
     public String toString() {
-        return descripcion; // Para mostrar la descripción en el ComboBox
+        return descripcion;
     }
 }

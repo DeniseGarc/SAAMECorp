@@ -9,6 +9,8 @@ import excepciones.NegocioException;
  * Interfaz que define los métodos para la lógica de negocio relacionada con los
  * pagos.
  * 
+ * ESTA CLASE ES UN MOCK
+ * 
  * @author Alici
  */
 public interface IPagoBO {

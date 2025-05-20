@@ -37,7 +37,8 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         panelLateral = new javax.swing.JPanel();
@@ -181,29 +182,29 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitasActionPerformed
+    private void btnCitasActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCitasActionPerformed
         flujoPantallas.pantallaCalendarioCitas(null);
-    }//GEN-LAST:event_btnCitasActionPerformed
+    }// GEN-LAST:event_btnCitasActionPerformed
 
-    private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
+    private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPagosActionPerformed
         flujoPantallas.pantallaRegistroPagos();
-    }//GEN-LAST:event_btnPagosActionPerformed
+    }// GEN-LAST:event_btnPagosActionPerformed
 
-    private void btnPsicologosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPsicologosActionPerformed
+    private void btnPsicologosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPsicologosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPsicologosActionPerformed
+    }// GEN-LAST:event_btnPsicologosActionPerformed
 
-    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReportesActionPerformed
+    }// GEN-LAST:event_btnReportesActionPerformed
 
-    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjustesActionPerformed
+    private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAjustesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAjustesActionPerformed
+    }// GEN-LAST:event_btnAjustesActionPerformed
 
-    private void btnCubiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCubiculosMouseClicked
+    private void btnCubiculosMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnCubiculosMouseClicked
         flujoPantallas.PantallaGestionCubiculos(this);
-    }//GEN-LAST:event_btnCubiculosMouseClicked
+    }// GEN-LAST:event_btnCubiculosMouseClicked
 
     /**
      * Método para agregar los paneles al CardLayout del panel lateral del menú.
@@ -219,7 +220,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
      * muestran las pantallas del menú de la barra lateral izquierda.
      *
      * @return Panel lateral derecho donde aparecen las pantallas según lo
-     * seleccionado en el menú.
+     *         seleccionado en el menú.
      */
     public JPanel getPanelLateral() {
         return panelLateral;
@@ -234,7 +235,6 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     public CardLayout getCardLayout() {
         return cardLayout;
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjustes;

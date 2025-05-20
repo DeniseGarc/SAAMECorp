@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
- */
 package presentacion.utilerias;
 
 /**
- *
+ * Enum que representa los diferentes regímenes fiscales permitidos,
+ * cada uno con su clave y descripción para uso en facturación electrónica.
+ * 
  * @author Alici
  */
 public enum RegimenFiscal {
@@ -22,22 +20,50 @@ public enum RegimenFiscal {
     SIMPLIFICADO_DE_CONFIANZA("626", "Simplificado de Confianza"),
     ENAJENACION_DE_ACCIONES_EN_BOLSA_DE_VALORES("630", "Enajenación de acciones en bolsa de valores");
 
+    /**
+     * Clave del régimen fiscal, según catálogo oficial.
+     */
     private final String clave;
+
+    /**
+     * Descripción del régimen fiscal.
+     */
     private final String descripcion;
 
+    /**
+     * Constructor del enum RegimenFiscal.
+     * 
+     * @param clave clave oficial del régimen fiscal.
+     * @param descripcion descripción del régimen fiscal.
+     */
     RegimenFiscal(String clave, String descripcion) {
         this.clave = clave;
         this.descripcion = descripcion;
     }
 
+    /**
+     * Obtiene la clave del régimen fiscal.
+     * 
+     * @return la clave oficial como String.
+     */
     public String getClave() {
         return clave;
     }
 
+    /**
+     * Obtiene la descripción del régimen fiscal.
+     * 
+     * @return la descripción como String.
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * Devuelve la descripción para mostrar en interfaces, como JComboBox.
+     * 
+     * @return la descripción del régimen fiscal.
+     */
     @Override
     public String toString() {
         return descripcion; // Para mostrar la descripción en el ComboBox

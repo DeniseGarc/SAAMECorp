@@ -1,7 +1,11 @@
 package presentacion.utilerias;
 
 /**
- *
+ * Enumeración que representa las claves CFDI (Comprobante Fiscal Digital por
+ * Internet)
+ * usadas para clasificar tipos de gastos o ingresos según el SAT.
+ * Cada clave tiene una descripción legible.
+ * 
  * @author Alici
  */
 public enum ClaveCFDI {
@@ -25,25 +29,40 @@ public enum ClaveCFDI {
     D07("Primas por seguros de gastos médicos"),
     D08("Gastos por transportación escolar obligatoria"),
     D09("Depósito en cuentas para ahorro, primas que tengan como base planes de pensiones"),
-    D10("Pagos por servicios educativos (colegiaturas)"),
-    P01("Por definir");
+    D10("Pagos por servicios educativos (colegiaturas)");
+    // No es soportado por el sistema de facturación
+    // P01("Por definir");
 
     private final String descripcion;
 
+    /**
+     * Constructor privado del enum.
+     * 
+     * @param descripcion descripción legible de la clave CFDI
+     */
     ClaveCFDI(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Obtiene la descripción de la clave CFDI.
+     * 
+     * @return descripción legible.
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * Obtiene la clave CFDI en formato String.
+     * 
+     * @return clave, que es el nombre del enum.
+     */
     public String getClave() {
-        return this.name(); // El nombre del enum es la clave
+        return this.name();
     }
-
     @Override
     public String toString() {
-        return descripcion; // Para que el ComboBox muestre la descripción
+        return descripcion;
     }
 }
