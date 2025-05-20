@@ -9,15 +9,16 @@ import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
-import dto.PsicologoDTO;
+import dto.PsicologoCitaDTO;
 import entidades.Cita;
 import entidades.Cubiculo;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import interfaces.ICitaBO;
 import interfaces.ICitaDAO;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
 import mapper.CubiculoMapper;
 import mapper.CitaMapper;
 import mapper.PsicologoMapper;
+import org.bson.types.ObjectId;
 
 /**
  * Clase que implementa la logica de negocio para las citas
@@ -69,9 +71,9 @@ public class CitaBO implements ICitaBO {
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) throws NegocioException {
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoCitaDTO psicologo) throws NegocioException {
         try {
-            List<LocalTime> horasDisponibles = citaDAO.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psicologoMapper.toEntity2(psicologo));
+            List<LocalTime> horasDisponibles = citaDAO.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psicologoMapper.toEntity(psicologo));
             return horasDisponibles;
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al obtener las horas disponibles: " + e.getMessage());
@@ -188,6 +190,47 @@ public class CitaBO implements ICitaBO {
             return citaDAO.validarExistenciaCitaRepetida(cItaMapper.toEntity(citaARegistrar));
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al validar las citas repetidas: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.NegocioException
+     */
+    @Override
+    public List<LocalTime> obtenerHorasDisponibles(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha) throws NegocioException {
+        try {
+            LocalDate localDate = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            return citaDAO.obtenerHorasDisponibles(
+                    psicologoMapper.toEntity(psicologo),
+                    new ObjectId(idCubiculo),
+                    localDate
+            );
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener las horas disponibles: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.NegocioException
+     */
+    @Override
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws NegocioException {
+        try {
+            return citaDAO.actualizarCita(cItaMapper.toEntity2(citaActualizada));
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(CitaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al actualizar la cita: ", ex);
         }
     }
 

@@ -4,8 +4,22 @@
  */
 package pantallasReportes;
 
+import dto.CubiculoDTO;
+import dto.ReporteIngresosCubiculoDTO;
+import excepciones.CoordinadorException;
+import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
+import presentacion.utilerias.DocumentoPDFUtil;
 
 /**
  *
@@ -13,18 +27,77 @@ import presentacion.control.CoordinadorAplicacion;
  */
 public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
     /**
+     * Lista de cubiculos
+     */
+    private List<CubiculoDTO> listaCubiculos = new ArrayList<>();
+    /**
+     * Coordinador para la logica de negocio de la aplicacion
+     */
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
+    /**
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
-    private JFrame frmPadre;
+    private final JFrame frmPadre;
     
     /**
      *  Constructor que inicializa los componentes de la clase.
+     * @param frmPadre
      */
     public frmReporteIngresosCubiculo(JFrame frmPadre) {
         this.frmPadre = frmPadre;
         initComponents();
         setLocationRelativeTo(null);
+        mostrarCubiculos();
+        
+        btnGenerarReporte.addActionListener((ActionEvent evt) -> {
+            CubiculoDTO cubiculoSeleccionado = (CubiculoDTO) cBoxCubiculo.getSelectedItem();
+            if (cubiculoSeleccionado != null) {
+                try {
+                    ReporteIngresosCubiculoDTO dto = controlNegocio.generarReporteIngresosPorCubiculo(cubiculoSeleccionado);
+                    mostrarDatosEnTabla(dto);
+                } catch (CoordinadorException ex) {
+                    Logger.getLogger(frmReporteIngresosCubiculo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
+    private void mostrarDatosEnTabla(ReporteIngresosCubiculoDTO dto) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Cubículo");
+        model.addColumn("Ingresos");
+        model.addColumn("Citas Pagadas");
+        model.addColumn("Citas Pendientes");
+
+        model.addRow(new Object[] {
+            dto.getNombreCubiculo(),
+            dto.getTotalIngresos(),
+            dto.getCitasConPago(),
+            dto.getCitasPendientes()
+        });
+
+        jTable1.setModel(model);
+    }
+    
+    private void mostrarCubiculos() {
+        try {
+            listaCubiculos = controlNegocio.obtenerCubiculos();
+
+            if (listaCubiculos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay cubículos registrados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            cBoxCubiculo.removeAllItems();
+
+            for (CubiculoDTO cubiculo : listaCubiculos) {
+                cBoxCubiculo.addItem(cubiculo); 
+            }
+
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los cubículos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -43,6 +116,7 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         cBoxCubiculo = new javax.swing.JComboBox<>();
         btnGenerarReporte = new javax.swing.JButton();
+        btnDescargarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,12 +152,20 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        cBoxCubiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnGenerarReporte.setBackground(new java.awt.Color(0, 0, 0));
         btnGenerarReporte.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarReporte.setText("Generar Reporte");
+
+        btnDescargarPDF.setBackground(new java.awt.Color(0, 0, 0));
+        btnDescargarPDF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        btnDescargarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnDescargarPDF.setText("DescargarPDF");
+        btnDescargarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,16 +176,20 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
                 .addComponent(btnRegresar)
                 .addGap(75, 75, 75)
                 .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(205, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnDescargarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(134, 134, 134))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cBoxCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201)
-                        .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(134, 134, 134))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +204,9 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
                     .addComponent(btnGenerarReporte))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDescargarPDF)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,11 +232,37 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
         flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-   
+    private void btnDescargarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarPDFActionPerformed
+         descargarReporteComoPDF();
+    }//GEN-LAST:event_btnDescargarPDFActionPerformed
+    
+    private void descargarReporteComoPDF() {
+        CubiculoDTO cubiculo =  (CubiculoDTO) cBoxCubiculo.getSelectedItem();
+        if (cubiculo != null) {
+            try {
+                ReporteIngresosCubiculoDTO dto = controlNegocio.generarReporteIngresosPorCubiculo(cubiculo);
+
+                File pdfGenerado = DocumentoPDFUtil.generarPDFIngresosCubiculo(dto);
+
+                // Abre el archivo PDF en el visor predeterminado del sistema
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfGenerado);
+                } else {
+                    JOptionPane.showMessageDialog(this, "El visor de escritorio no es compatible en este sistema.");
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar o abrir el PDF: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDescargarPDF;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> cBoxCubiculo;
+    private javax.swing.JComboBox<CubiculoDTO> cBoxCubiculo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -19,12 +19,14 @@ public class CalendarCodec implements Codec<Calendar> {
 
     @Override
     public void encode(BsonWriter writer, Calendar value, EncoderContext encoderContext) {
-        writer.writeDateTime(value.getTimeInMillis());
+        Calendar sonoraCalendar = Calendar.getInstance(java.util.TimeZone.getTimeZone("America/Hermosillo"));
+        sonoraCalendar.setTimeInMillis(value.getTimeInMillis());
+        writer.writeDateTime(sonoraCalendar.getTimeInMillis());
     }
 
     @Override
     public Calendar decode(BsonReader reader, DecoderContext decoderContext) {
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(java.util.TimeZone.getTimeZone("America/Hermosillo"));
         calendar.setTimeInMillis(reader.readDateTime());
         return calendar;
     }

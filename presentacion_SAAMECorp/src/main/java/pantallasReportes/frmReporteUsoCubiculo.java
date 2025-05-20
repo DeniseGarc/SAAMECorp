@@ -4,8 +4,28 @@
  */
 package pantallasReportes;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import dto.CubiculoDTO;
+import dto.ReporteIngresosCubiculoDTO;
+import dto.ReporteUsoCubiculoDTO;
+import excepciones.CoordinadorException;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
@@ -13,6 +33,14 @@ import presentacion.control.CoordinadorAplicacion;
  */
 public class frmReporteUsoCubiculo extends javax.swing.JFrame {
     
+    /**
+     * Lista de cubiculos
+     */
+    private List<CubiculoDTO> listaCubiculos = new ArrayList<>();
+    /**
+     * Coordinador para la logica de negocio de la aplicacion
+     */
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     /**
      * Coordinador del flujo de pantallas de la aplicación.
      */
@@ -26,6 +54,62 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
         this.frmPadre = frmPadre;
         initComponents();
         setLocationRelativeTo(null);
+        mostrarCubiculos();
+        
+        btnGenerarReporte.addActionListener((ActionEvent evt) -> {
+            String cubiculoSeleccionado = (String) cBoxCubiculo.getSelectedItem();
+            if (cubiculoSeleccionado != null) {
+                try {
+                    ReporteUsoCubiculoDTO dto = controlNegocio.generaraReporteUsoCubiculo(cubiculoSeleccionado);
+                    
+                } catch (CoordinadorException ex) {
+                    Logger.getLogger(frmReporteIngresosCubiculo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        btnExportarPDF.addActionListener(e -> {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Reporte como PDF");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            if (!fileToSave.getName().endsWith(".pdf")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".pdf");
+            }
+
+            try {
+                exportarReporteAPdf(txtReporte.getText(), fileToSave);
+                JOptionPane.showMessageDialog(this, "Reporte exportado exitosamente.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al exportar PDF: " + ex.getMessage());
+            }
+        }
+    });
+    }
+    
+
+    
+    
+    private void mostrarCubiculos() {
+        try {
+            listaCubiculos = controlNegocio.obtenerCubiculos();
+
+            if (listaCubiculos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay cubículos registrados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            cBoxCubiculo.removeAllItems();
+
+            for (CubiculoDTO cubiculo : listaCubiculos) {
+                cBoxCubiculo.addItem(cubiculo.getNombre()); 
+            }
+
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los cubículos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -41,9 +125,10 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        txtReporte = new javax.swing.JTextArea();
         cBoxCubiculo = new javax.swing.JComboBox<>();
         btnGenerarReporte = new javax.swing.JButton();
+        btnExportarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,28 +148,29 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        cBoxCubiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtReporte.setColumns(20);
+        txtReporte.setRows(5);
+        jScrollPane1.setViewportView(txtReporte);
 
         btnGenerarReporte.setBackground(new java.awt.Color(0, 0, 0));
         btnGenerarReporte.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarReporte.setText("Generar Reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
+
+        btnExportarPDF.setBackground(new java.awt.Color(0, 0, 0));
+        btnExportarPDF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        btnExportarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarPDF.setText("Exportar a PDF");
+        btnExportarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -99,12 +185,17 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(205, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cBoxCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201)
-                        .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(134, 134, 134))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cBoxCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(201, 201, 201)
+                                .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(134, 134, 134))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExportarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +210,9 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
                     .addComponent(btnGenerarReporte))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExportarPDF)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,15 +238,37 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
         flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+       try {
+        String nombreCubiculo = (String) cBoxCubiculo.getSelectedItem();
+        ReporteUsoCubiculoDTO reporte = controlNegocio.generaraReporteUsoCubiculo(nombreCubiculo);
+        txtReporte.setText(reporte.getDetalleReporte());
+    } catch (CoordinadorException e) {
+        JOptionPane.showMessageDialog(this, "Error al generar reporte: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
+
+    private void btnExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPDFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExportarPDFActionPerformed
+    public void exportarReporteAPdf(String contenidoReporte, File archivoDestino) throws Exception {
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(archivoDestino));
+        document.open();
+        com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLACK);
+        document.add(new Paragraph(contenidoReporte, font));
+        document.close();
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExportarPDF;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cBoxCubiculo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextArea txtReporte;
     // End of variables declaration//GEN-END:variables
 }

@@ -27,10 +27,10 @@ public interface IPsicologoBO {
     /**
      * Método para obtener el psicólogo por su identificador dado.
      *
-     * @param identificador Identificador único del psicólogo.
+     * @param id
      * @return Datos del psicologo.
      * @throws excepciones.NegocioException
      */
-    public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) throws NegocioException;
+    public PsicologoCitaDTO obtenerPsicologoPorIdentificador(String id) throws NegocioException;
 
 }

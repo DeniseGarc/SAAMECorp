@@ -61,4 +61,13 @@ public interface ICubiculoBO {
       * @throws NegocioException 
       */
      public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException;
+     
+     /**
+     * Metodo para buscar un cubiculo por su ID
+     *
+     * @param id ID del cubiculo a buscar
+     * @return cubiculo encontrado o null si no existe
+     * @throws excepciones.NegocioException
+     */
+    public CubiculoDTO buscarCubiculoPorId(String id) throws NegocioException;
 }

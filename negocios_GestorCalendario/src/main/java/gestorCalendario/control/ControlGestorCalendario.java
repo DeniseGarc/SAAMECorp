@@ -1,6 +1,7 @@
 package gestorCalendario.control;
 
 import dto.CubiculoDTO;
+import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import enumeradores.TipoBO;
 import excepciones.GestorCalendarioException;
@@ -149,7 +150,7 @@ public class ControlGestorCalendario {
         }
 
         try {
-            PsicologoDTO psicologoEncontrado = psicologoBO.obtenerPsicologoPorIdentificador(identificador);
+            PsicologoCitaDTO psicologoEncontrado = psicologoBO.obtenerPsicologoPorIdentificador(identificador);
             if (psicologoEncontrado == null) {
                 throw new GestorCalendarioException("No se encontró un psicólogo con el identificador: " + identificador);
             }

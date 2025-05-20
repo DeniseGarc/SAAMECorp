@@ -15,9 +15,8 @@ import presentacion.control.CoordinadorAplicacion;
  */
 public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
 
-    
-    private List<CitaRegistradaDTO> citasPanel;
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+
     /**
      * Creates new form PantallaSeleccionCitaModificar
      */
@@ -141,10 +140,10 @@ public class PantallaSeleccionCitaModificar extends javax.swing.JFrame {
 
     /**
      * Metodo para generar los paneles por cita en la pantalla
+     *
      * @param citas la lista de las citas ya filtradas que se necesitaran
      */
     public void cargarCitas(List<CitaRegistradaDTO> citas) {
-        this.citasPanel = citas;
         panelInternoCitas.removeAll();
         for (CitaRegistradaDTO cita : citas) {
             PanelCita panelCita = new PanelCita(cita, this);

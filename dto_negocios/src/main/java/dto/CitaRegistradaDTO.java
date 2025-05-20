@@ -25,12 +25,12 @@ public class CitaRegistradaDTO {
     /**
      * Identificador del cubículo donde se llevará a cabo la cita.
      */
-    private String cubiculo;
+    private CubiculoDTO cubiculo;
 
     /**
      * Psicólogo asignado a la cita.
      */
-    private PsicologoDTO psicologo;
+    private PsicologoCitaDTO psicologo;
 
     /**
      * Nombre completo del paciente.
@@ -47,10 +47,15 @@ public class CitaRegistradaDTO {
      */
     private String correoPaciente;
 
+    /**
+     * Información del adeudo asociado a la cita, si existe.
+     */
+    private AdeudoCitaDTO adeudo;
+
     public CitaRegistradaDTO() {
     }
 
-    public CitaRegistradaDTO(String id, Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
+    public CitaRegistradaDTO(String id, Calendar fechaHora, CubiculoDTO cubiculo, PsicologoCitaDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
@@ -58,6 +63,7 @@ public class CitaRegistradaDTO {
         this.nombrePaciente = nombrePaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.correoPaciente = correoPaciente;
+        this.adeudo = adeudo;
     }
 
     public String getId() {
@@ -76,19 +82,19 @@ public class CitaRegistradaDTO {
         this.fechaHora = fechaHora;
     }
 
-    public String getCubiculo() {
+    public CubiculoDTO getCubiculo() {
         return cubiculo;
     }
 
-    public void setCubiculo(String cubiculo) {
+    public void setCubiculo(CubiculoDTO cubiculo) {
         this.cubiculo = cubiculo;
     }
 
-    public PsicologoDTO getPsicologo() {
+    public PsicologoCitaDTO getPsicologo() {
         return psicologo;
     }
 
-    public void setPsicologo(PsicologoDTO psicologo) {
+    public void setPsicologo(PsicologoCitaDTO psicologo) {
         this.psicologo = psicologo;
     }
 
@@ -114,6 +120,14 @@ public class CitaRegistradaDTO {
 
     public void setCorreoPaciente(String correoPaciente) {
         this.correoPaciente = correoPaciente;
+    }
+
+    public AdeudoCitaDTO getAdeudo() {
+        return adeudo;
+    }
+
+    public void setAdeudo(AdeudoCitaDTO adeudo) {
+        this.adeudo = adeudo;
     }
 
 }

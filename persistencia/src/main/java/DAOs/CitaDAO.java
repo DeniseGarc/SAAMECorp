@@ -6,6 +6,7 @@ package DAOs;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import conexion.ConexionBD;
@@ -23,9 +24,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -48,7 +51,7 @@ public class CitaDAO implements ICitaDAO {
      */
     private CitaDAO() {
         MongoDatabase bd = ConexionBD.getDatabase();
-        coleccionCitas = bd.getCollection("citas", Cita.class);
+        coleccionCitas = bd.getCollection("Citas", Cita.class);
     }
 
     /**
@@ -107,7 +110,7 @@ public class CitaDAO implements ICitaDAO {
             List<Cita> citas = coleccionCitas.find(eq("fechaHora", fechaConsulta)).into(new ArrayList<>());
             Set<String> nombresCubiculos = new HashSet<>();
             for (Cita cita : citas) {
-//                nombresCubiculos.add(cita.getCubiculo());
+                nombresCubiculos.add(cita.getObjectCubiculoString());
             }
             List<Cubiculo> ocupados = new ArrayList<>();
             for (String nombre : nombresCubiculos) {
@@ -200,11 +203,58 @@ public class CitaDAO implements ICitaDAO {
     public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException {
         try {
             Date fechaConsulta = citaARegistrar.getFechaHora().getTime();
-//            Cita existente = coleccionCitas.find(and(eq("fechaHora", fechaConsulta), eq("cubiculo", citaARegistrar.getCubiculo()))).first();
-//            return existente == null;
-            return true;
+            Cita existente = coleccionCitas.find(and(eq("fechaHora", fechaConsulta), eq("cubiculo", citaARegistrar.getIdCubiculo()))).first();
+            return existente == null;
         } catch (Exception e) {
             throw new PersistenciaException("Error al validar cita duplicada: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.PersistenciaException
+     */
+    @Override
+    public List<LocalTime> obtenerHorasDisponibles(Psicologo psicologo, ObjectId idCubiculo, LocalDate fecha) throws PersistenciaException {
+        try {
+            List<LocalTime> horasAtencion = psicologo.getHorasAtencion();
+            List<Cita> citasPsicologo = obtenerCitasPorDiaYPsicologo(psicologo.getId(), fecha);
+            List<Cita> citasCubiculo = obtenerCitasPorDiaYCubiculo(idCubiculo, fecha);
+            Set<LocalTime> horasOcupadasPsicologo = citasPsicologo.stream()
+                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withMinute(0).withSecond(0).withNano(0))
+                    .collect(Collectors.toSet());
+            Set<LocalTime> horasOcupadasCubiculo = citasCubiculo.stream()
+                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withMinute(0).withSecond(0).withNano(0))
+                    .collect(Collectors.toSet());
+            return horasAtencion.stream()
+                    .filter(h -> !horasOcupadasPsicologo.contains(h) && !horasOcupadasCubiculo.contains(h))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al obtener las horas disponibles por cubiculo y psicologo: ", e);
+        }
+    }
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws PersistenciaException si ocurre un error en la base de datos
+     */
+    @Override
+    public boolean actualizarCita(Cita citaActualizada) throws PersistenciaException {
+        try {
+            Bson filtro = eq("_id", citaActualizada.getId());
+            long modificados = coleccionCitas.replaceOne(filtro, citaActualizada).getModifiedCount();
+            return modificados > 0;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar la cita: " + e.getMessage(), e);
         }
     }
 
@@ -215,6 +265,42 @@ public class CitaDAO implements ICitaDAO {
 
     private Calendar toCalendar(LocalDate date) {
         return GregorianCalendar.from(date.atStartOfDay(ZoneId.systemDefault()));
+    }
+
+    /**
+     * Metodo auxiliar para obtener las citas del psicologo por dia
+     *
+     * @param idPsicologo psicologo del que se requieren las citas
+     * @param fecha la fecha de la que se requieren las citas
+     * @return la lista con las citas de ese psicologo en ese dia
+     */
+    public List<Cita> obtenerCitasPorDiaYPsicologo(ObjectId idPsicologo, LocalDate fecha) {
+        LocalDateTime start = fecha.atStartOfDay();
+        LocalDateTime end = fecha.atTime(LocalTime.MAX);
+        Bson filtro = Filters.and(
+                Filters.eq("idPsicologo", idPsicologo),
+                Filters.gte("fechaHora", Date.from(start.atZone(ZoneId.systemDefault()).toInstant())),
+                Filters.lte("fechaHora", Date.from(end.atZone(ZoneId.systemDefault()).toInstant()))
+        );
+        return coleccionCitas.find(filtro, Cita.class).into(new ArrayList<>());
+    }
+
+    /**
+     * Metodo auxiliar para obtener las citas del cubiculo por dia
+     *
+     * @param idCubiculo del que se requieren las citas
+     * @param fecha la fecha de la que se requieren las citas
+     * @return la lista con las citas de ese cubiculo en ese dia
+     */
+    public List<Cita> obtenerCitasPorDiaYCubiculo(ObjectId idCubiculo, LocalDate fecha) {
+        LocalDateTime start = fecha.atStartOfDay();
+        LocalDateTime end = fecha.atTime(LocalTime.MAX);
+        Bson filtro = Filters.and(
+                Filters.eq("idCubiculo", idCubiculo),
+                Filters.gte("fechaHora", Date.from(start.atZone(ZoneId.systemDefault()).toInstant())),
+                Filters.lte("fechaHora", Date.from(end.atZone(ZoneId.systemDefault()).toInstant()))
+        );
+        return coleccionCitas.find(filtro, Cita.class).into(new ArrayList<>());
     }
 
 }

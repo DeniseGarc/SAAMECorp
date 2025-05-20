@@ -15,6 +15,9 @@ import dto.FacturaDTO;
 import dto.PagoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
+import dto.ReporteIngresosCubiculoDTO;
+import dto.ReporteResumenCubiculoDTO;
+import dto.ReporteUsoCubiculoDTO;
 import dto.ResultadoAgendarCita;
 import dto.ResultadoFacturarPago;
 import excepciones.AgendarCitaException;
@@ -24,10 +27,13 @@ import generarFactura.FGenerarFactura;
 import generarFactura.IGenerarFactura;
 import excepciones.ModificarCitaException;
 import excepciones.GestorCubiculosException;
+import exception.GestorReportesException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import gestorCubiculos.FGestorCubiculos;
 import gestorCubiculos.IGestorCubiculos;
+import gestorReportes.FGestorReportes;
+import gestorReportes.IGestorReportes;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -74,6 +80,8 @@ public class CoordinadorNegocio {
      * Subsistema para gestionar cubiculos
      */
     private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
+
+    private final IGestorReportes sistemaGestorReportes = new FGestorReportes();
 
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
@@ -184,15 +192,12 @@ public class CoordinadorNegocio {
      * @return Lista de los cubiculos disponibles a la fecha y hora indicados.
      * @throws excepciones.CoordinadorException
      */
-    public List<String> mostrarCubiculos(Calendar fechaHoraCita) throws CoordinadorException {
+    public List<CubiculoDTO> mostrarCubiculos(Calendar fechaHoraCita) throws CoordinadorException {
         if (fechaHoraCita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
         }
         try {
-            List<String> nombresCubiculos = new ArrayList<>();
-            for (CubiculoDTO cubiculo : sistemaAgendarCita.mandarCubiculos(fechaHoraCita)) {
-                nombresCubiculos.add(cubiculo.getNombre());
-            }
+            List<CubiculoDTO> nombresCubiculos = sistemaAgendarCita.mandarCubiculos(fechaHoraCita);
             return nombresCubiculos;
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
@@ -410,14 +415,14 @@ public class CoordinadorNegocio {
         }
     }
 
-    public List<String> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
+    public List<CubiculoDTO> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
         if (cita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
         }
         try {
-            List<String> nombresCubiculos = new ArrayList<>();
+            List<CubiculoDTO> nombresCubiculos = new ArrayList<>();
             for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(cita)) {
-                nombresCubiculos.add(cubiculo.getNombre());
+                nombresCubiculos.add(cubiculo);
             }
             return nombresCubiculos;
         } catch (ModificarCitaException ex) {
@@ -425,6 +430,13 @@ public class CoordinadorNegocio {
         }
     }
 
+    /**
+     * Metodo para agregar un nuevo cubiculo
+     *
+     * @param cubiculo
+     * @return
+     * @throws CoordinadorException
+     */
     public String AgregarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
@@ -441,6 +453,13 @@ public class CoordinadorNegocio {
         return "Se agrego el cubiculo con exito";
     }
 
+    /**
+     * Metodo para modificar la informacion de un cubiculo
+     *
+     * @param cubiculo cubiculo con la informacion a modificar
+     * @return
+     * @throws CoordinadorException
+     */
     public String modificarCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("Los datos del cubiculo son inválidos.");
@@ -457,6 +476,13 @@ public class CoordinadorNegocio {
         return "Se modifico el cubiculo con exito";
     }
 
+    /**
+     * Metodo para modificar el estado de un cubiculo
+     *
+     * @param cubiculo cubiculo a modificar
+     * @return True si se modifico exitosamente, false si no
+     * @throws CoordinadorException
+     */
     public String modificarEstadoCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         if (cubiculo == null) {
             throw new CoordinadorException("El estado es invalido.");
@@ -486,6 +512,20 @@ public class CoordinadorNegocio {
         } catch (Exception ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Error al obtener los psicólogos.", ex);
+    }
+
+    /**
+     * Metodo para obtener todos lo cubiculos registrados
+     *
+     * @return Lista de cubiculos
+     * @throws CoordinadorException
+     */
+    public List<CubiculoDTO> obtenerCubiculos() throws CoordinadorException {
+        try {
+            return sistemaGestorCubiculoa.obtenerCubiculos();
+        } catch (GestorCubiculosException ex) {
+
+            throw new CoordinadorException(ex.getMessage());
         }
     }
 
@@ -523,6 +563,15 @@ public class CoordinadorNegocio {
         }
     }
 
+    /**
+     * Método para obtener el total de cantidad de adeudo que tiene un psicologo
+     * 
+     * @param psicologoDTO El objeto PsicologoDTO que representa el psicólogo para
+     *                     el cual se desean obtener los pagos.
+     * @return Un objeto PagoDTO que contiene los datos del pago.
+     * @throws CoordinadorException Si ocurre un error al obtener los pagos.
+     * 
+     */
     public double obtenerCantidadAdeudoPsicologo(PsicologoDTO psicologoDTO) throws CoordinadorException {
         return 200.0;
     }
@@ -537,6 +586,108 @@ public class CoordinadorNegocio {
      */
     public PagoDTO confirmarPago(PagoDTO pagoDTO) throws CoordinadorException {
         return pagoDTO;
+    }
+
+    /**
+     * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
+     * un psicologo
+     *
+     * @param psicologo  psicologo del cual se requieren las horas
+     * @param idCubiculo cubiculo del cual se requieren las horas
+     * @param fecha      fecha en la cual sera la cita
+     * @return lista de la horas disponibles coincidentes
+     * @throws excepciones.ModificarCitaException
+     */
+    public List<LocalTime> mandarHorario(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha)
+            throws ModificarCitaException {
+        try {
+            return sistemaModificarCita.mandarHorario(psicologo, idCubiculo, fecha);
+        } catch (ModificarCitaException e) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, e);
+            throw new ModificarCitaException("Error al mandar horario: ", e);
+        }
+    }
+
+    /**
+     * Metodo que accede al subsistema de gestor de reportes para generar el
+     * reporte de ingresos por cubiculo
+     *
+     * @param cubiculo cubiculo al que se le va a realizar el reporte
+     * @return ReporteIngresosCubiculoDTO
+     * @throws CoordinadorException
+     */
+    public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(CubiculoDTO cubiculo)
+            throws CoordinadorException {
+        try {
+            return sistemaGestorReportes.generarReporteIngresosPorCubiculo(cubiculo.getNombre());
+        } catch (GestorReportesException ex) {
+
+            throw new CoordinadorException(ex.getMessage());
+        }
+
+    }
+
+    /**
+     * Metodo par generar un reporte de uso de cubiculo
+     * 
+     * @param cubiculo cubiculo al que se le va a realizar el reporte
+     * @return ReporteUsoCubiculoDTO
+     * @throws CoordinadorException
+     */
+    public ReporteUsoCubiculoDTO generaraReporteUsoCubiculo(String cubiculo) throws CoordinadorException {
+        try {
+            return sistemaGestorReportes.generarReporteUsoCubiculo(cubiculo);
+        } catch (GestorReportesException ex) {
+
+            throw new CoordinadorException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.CoordinadorException
+     */
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.actualizarCita(citaActualizada);
+        } catch (ModificarCitaException e) {
+            throw new CoordinadorException("Error al intentar actualizar la cita: ", e);
+        }
+    }
+
+    /**
+     * Método que se conecta con el servicio externo para mandar un correo
+     * electrónico al correo ingresado.
+     *
+     * @param cita de la cual se enviará confirmación
+     * @return true si la operación fue exitosa, false en caso contrario.
+     * @throws excepciones.CoordinadorException
+     */
+    public boolean mandarCorreo(CitaRegistradaDTO cita) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.mandarCorreo(cita);
+        } catch (ModificarCitaException e) {
+            throw new CoordinadorException("Error al enviar correo: ", e);
+        }
+    }
+
+    /**
+     * Metodo para generar un reporte de resumen estadistico
+     * 
+     * @return List ReporteResumenCubiculoDTO
+     * @throws CoordinadorException
+     */
+    public List<ReporteResumenCubiculoDTO> generaReporteResumenCubiculo() throws CoordinadorException {
+        try {
+            return sistemaGestorReportes.generarReporteEstadisticoResumen();
+        } catch (GestorReportesException ex) {
+
+            throw new CoordinadorException(ex.getMessage());
+        }
+
     }
 
 }

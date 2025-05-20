@@ -1,6 +1,7 @@
 package presentacion.GUI;
 
 import dto.CitaNuevaDTO;
+import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import excepciones.CoordinadorException;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,8 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
      * Lista de psicologos registrados en el consultorio
      */
     private List<PsicologoCitaDTO> psicologos;
+    
+    private List<CubiculoDTO> cubiculos;
 
     /**
      * Constructor que recibe la fecha seleccionada para la cita, inicializa los
@@ -272,11 +275,10 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
      * @return CitaNuevaDTO con los datos ingresados por el usuario.
      */
     private CitaNuevaDTO obtenerDatosCita() {
-        PsicologoCitaDTO psicologo = (PsicologoCitaDTO) cmbPsicologos.getSelectedItem();
         return new CitaNuevaDTO(
                 obtenerFechaHoraCita(),
-                cmbCubiculo.getSelectedItem().toString(),
-                psicologo,
+                cubiculos.get(cmbCubiculo.getSelectedIndex()).getId(),
+                psicologos.get(cmbPsicologos.getSelectedIndex()).getId(),
                 txtNombrePaciente.getText(),
                 txtTelefonoPaciente.getText(),
                 txtCorreoPaciente.getText(),
@@ -380,12 +382,12 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
         try {
             cmbCubiculo.removeAllItems();
             cmbCubiculo.setEnabled(true);
-            List<String> cubiculos = controlNegocio.mostrarCubiculos(obtenerFechaHoraCita());
+            cubiculos = controlNegocio.mostrarCubiculos(obtenerFechaHoraCita());
             if (cubiculos.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No hay cubiculos disponibles para la fecha y hora seleccionadas", "Sin disponiblidad de cubiculos", JOptionPane.INFORMATION_MESSAGE);
             }
-            for (String cubiculo : cubiculos) {
-                cmbCubiculo.addItem(cubiculo);
+            for (CubiculoDTO cubiculo : cubiculos) {
+                cmbCubiculo.addItem(cubiculo.getNombre());
             }
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);

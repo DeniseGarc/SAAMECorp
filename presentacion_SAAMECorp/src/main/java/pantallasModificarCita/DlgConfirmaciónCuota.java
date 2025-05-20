@@ -4,18 +4,39 @@
  */
 package pantallasModificarCita;
 
+import dto.CitaRegistradaDTO;
+import excepciones.CoordinadorException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
+
 /**
  *
  * @author Maryr
  */
 public class DlgConfirmaciónCuota extends javax.swing.JDialog {
 
+    private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
+    private CitaRegistradaDTO cita;
+    private JFrame parent;
+
     /**
      * Creates new form DlgConfirmaciónCuota
+     *
+     * @param parent
+     * @param modal
+     * @param cita
      */
-    public DlgConfirmaciónCuota(java.awt.Frame parent, boolean modal) {
+    public DlgConfirmaciónCuota(JFrame parent, boolean modal, CitaRegistradaDTO cita) {
         super(parent, modal);
+        this.cita = cita;
+        this.parent = parent;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -57,11 +78,21 @@ public class DlgConfirmaciónCuota extends javax.swing.JDialog {
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
         btnAceptar.setBorder(null);
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseClicked(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(188, 163, 226));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(null);
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,6 +149,30 @@ public class DlgConfirmaciónCuota extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        flujoPantallas.pantallaCalendarioCitas(parent);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+        try {
+            cita.getAdeudo().setCantidad(150.0);
+            cita.getAdeudo().setNotas("Se le agregó una cuota a su adeudo por la antelacion de modificación.");
+            controlNegocio.actualizarCita(cita);
+            JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            if (controlNegocio.mandarCorreo(cita)) {
+                JOptionPane.showMessageDialog(this, "El correo de confirmación fue enviado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al enviar el correo, favor de comuncarse con el recipiente.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            flujoPantallas.pantallaCalendarioCitas(parent);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar la cita, intentelo mas tarde.", "Error", JOptionPane.ERROR_MESSAGE);
+            flujoPantallas.pantallaCalendarioCitas(parent);
+        }
+    }//GEN-LAST:event_btnAceptarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,16 +5,23 @@
 package pantallasModificarCita;
 
 import dto.CitaRegistradaDTO;
+import dto.CubiculoDTO;
 import excepciones.CoordinadorException;
+import excepciones.ModificarCitaException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import presentacion.GUI.PantallaAgregarCita;
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
+import presentacion.utilerias.Validadores;
 
 /**
  *
@@ -25,6 +32,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
     private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     private CitaRegistradaDTO cita;
+    private List<CubiculoDTO> cubiculos;
 
     /**
      * Creates new form PantallaActualizarCita
@@ -35,7 +43,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         this.cita = cita;
         initComponents();
         setLocationRelativeTo(null);
+        agregarListenersComboBox();
         llenarCubiculos();
+        llenarHorarios();
         datosCita();
     }
 
@@ -107,7 +117,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
         CbBoxHorario.setBackground(new java.awt.Color(255, 255, 255));
         CbBoxHorario.setForeground(new java.awt.Color(0, 0, 0));
-        CbBoxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbBoxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre del paciente:");
@@ -146,6 +156,11 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         btnConfirmar.setForeground(new java.awt.Color(0, 0, 0));
         btnConfirmar.setText("Confirmar");
         btnConfirmar.setBorder(null);
+        btnConfirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmarMouseClicked(evt);
+            }
+        });
 
         btnVolver.setBackground(new java.awt.Color(86, 33, 89));
         btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icons8-back-30.png"))); // NOI18N
@@ -277,18 +292,46 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         flujoPantallas.pantallaCalendarioCitas(this);
     }//GEN-LAST:event_btnVolverMouseClicked
 
+    private void btnConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarMouseClicked
+        if (!validarCampos()) {
+            return;
+        }
+        if (antelacion()) {
+            try {
+                CitaRegistradaDTO c = getNuevaCita();
+                c.getAdeudo().setNotas("Modificada sin cuota.");
+                controlNegocio.actualizarCita(c);
+                JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                if (controlNegocio.mandarCorreo(c)) {
+                    JOptionPane.showMessageDialog(this, "El correo de confirmación fue enviado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al enviar el correo, favor de comuncarse con el recipiente.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                flujoPantallas.pantallaCalendarioCitas(this);
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar la cita, intentelo mas tarde.", "Error", JOptionPane.ERROR_MESSAGE);
+                flujoPantallas.pantallaCalendarioCitas(this);
+            }
+        } else {
+            CitaRegistradaDTO c = getNuevaCita();
+            flujoPantallas.dialogoCuota(this, c);
+        }
+
+    }//GEN-LAST:event_btnConfirmarMouseClicked
+
     public void llenarCubiculos() {
         try {
             CbBoxCubiculo.removeAllItems();
             CbBoxCubiculo.setEnabled(true);
-            List<String> cubiculos = controlNegocio.mandarCubiculos(cita);
+            cubiculos = controlNegocio.mandarCubiculos(cita);
             if (cubiculos.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No hay cubiculos disponibles para la fecha y hora seleccionadas", "Sin disponiblidad de cubiculos", JOptionPane.INFORMATION_MESSAGE);
                 flujoPantallas.pantallaCalendarioCitas(this);
                 this.dispose();
             }
-            for (String cubiculo : cubiculos) {
-                CbBoxCubiculo.addItem(cubiculo);
+            for (CubiculoDTO cubiculo : cubiculos) {
+                CbBoxCubiculo.addItem(cubiculo.getNombre());
             }
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
@@ -297,11 +340,27 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     }
 
     public void llenarHorarios() {
-
+        try {
+            List<LocalTime> horarios = controlNegocio.mandarHorario(cita.getPsicologo(), cubiculos.get(CbBoxCubiculo.getSelectedIndex()).getId(), cita.getFechaHora());
+            CbBoxHorario.removeAllItems();
+            CbBoxHorario.setEnabled(true);
+            for (LocalTime hora : horarios) {
+                CbBoxHorario.addItem(hora.toString());
+            }
+            if (CbBoxCubiculo.getSelectedItem().toString().equalsIgnoreCase(cita.getCubiculo().getNombre())) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String fechaCitaFormateada = sdf.format(cita.getFechaHora().getTime());
+                if (((DefaultComboBoxModel<String>) CbBoxHorario.getModel()).getIndexOf(fechaCitaFormateada) == -1) {
+                    CbBoxHorario.addItem(fechaCitaFormateada);
+                }
+            }
+        } catch (ModificarCitaException ex) {
+            Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void datosCita() {
-        CbBoxCubiculo.setSelectedItem(cita.getCubiculo());
+        CbBoxCubiculo.setSelectedItem(cita.getCubiculo().getNombre());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String horaFormateada = sdf.format(cita.getFechaHora().getTime());
         CbBoxHorario.setSelectedItem(horaFormateada);
@@ -309,6 +368,75 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         txtCorreoPaciente.setText(cita.getCorreoPaciente());
         txtTelefonoPaciente.setText(cita.getTelefonoPaciente());
     }
+
+    private boolean validarCampos() {
+        String nombre = txtnombrePaciente.getText().trim();
+        String correo = txtCorreoPaciente.getText().trim();
+        String telefono = txtTelefonoPaciente.getText().trim();
+
+        if (!Validadores.validarNombrePaciente(nombre)) {
+            JOptionPane.showMessageDialog(null, "Nombre inválido. Asegúrese de no exceder 100 caracteres y usar solo letras.");
+            return false;
+        }
+
+        if (!Validadores.validarCorreo(correo)) {
+            JOptionPane.showMessageDialog(null, "Correo inválido. Ingrese un formato válido.");
+            return false;
+        }
+
+        if (!Validadores.validarTelefono(telefono)) {
+            JOptionPane.showMessageDialog(null, "Teléfono inválido. Debe contener solo números (máximo 10 dígitos).");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean antelacion() {
+        Date fechaActual = new Date();
+        Date fechaCita = cita.getFechaHora().getTime();
+        long diferenciaMillis = fechaCita.getTime() - fechaActual.getTime();
+        long horasDiferencia = diferenciaMillis / (1000 * 60 * 60);
+        return horasDiferencia >= 24;
+    }
+
+    private CitaRegistradaDTO getNuevaCita() {
+        String nombrePaciente = txtnombrePaciente.getText().trim();
+        String telefonoPaciente = txtTelefonoPaciente.getText().trim();
+        String correoPaciente = txtCorreoPaciente.getText().trim();
+        String horaSeleccionada = (String) CbBoxHorario.getSelectedItem();
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String soloFecha = sdfFecha.format(cita.getFechaHora().getTime());
+        String fechaCompleta = soloFecha + " " + horaSeleccionada;
+        SimpleDateFormat sdfCompleto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date nuevaFecha = null;
+        try {
+            nuevaFecha = sdfCompleto.parse(fechaCompleta);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nuevaFecha);
+        CubiculoDTO cub = cubiculos.get(CbBoxCubiculo.getSelectedIndex());
+        CitaRegistradaDTO citaNueva = new CitaRegistradaDTO();
+        citaNueva.setId(cita.getId());
+        citaNueva.setFechaHora(calendar);
+        citaNueva.setCubiculo(cub);
+        citaNueva.setPsicologo(cita.getPsicologo());
+        citaNueva.setNombrePaciente(nombrePaciente);
+        citaNueva.setTelefonoPaciente(telefonoPaciente);
+        citaNueva.setCorreoPaciente(correoPaciente);
+        citaNueva.setAdeudo(cita.getAdeudo());
+        return citaNueva;
+    }
+
+    private void agregarListenersComboBox() {
+        CbBoxCubiculo.addActionListener((java.awt.event.ActionEvent evt) -> {
+            if (CbBoxCubiculo.getSelectedIndex() >= 0) {
+                llenarHorarios();
+            }
+        });
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbBoxCubiculo;

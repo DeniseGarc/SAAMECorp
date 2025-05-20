@@ -21,31 +21,34 @@ import mapper.PsicologoMapper;
  * @author erika
  */
 public class PsicologoBO implements IPsicologoBO {
-    
+
     /**
-     * Instancia unica de la clase 
+     * Instancia unica de la clase
      */
-    private static PsicologoBO instancia; 
-    
+    private static PsicologoBO instancia;
+
     private static final IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
     PsicologoMapper psicologoMapper = new PsicologoMapper();
+
     /**
      * Constructor privado para evitar instancias externas
      */
-    private PsicologoBO(){}
-    
-     /**
-     * Metodo para obtener la instancia unica de PsicologoBO
-     * Si no existe una la crea
+    private PsicologoBO() {
+    }
+
+    /**
+     * Metodo para obtener la instancia unica de PsicologoBO Si no existe una la
+     * crea
+     *
      * @return instancia unida de PsicologoBO
      */
-    public static PsicologoBO getInstancia(){
-        if (instancia == null){
-            instancia= new PsicologoBO();
+    public static PsicologoBO getInstancia() {
+        if (instancia == null) {
+            instancia = new PsicologoBO();
         }
-        return instancia; 
+        return instancia;
     }
-    
+
     /**
      * Metodo para obtener todos los psicologos registrados
      *
@@ -62,18 +65,19 @@ public class PsicologoBO implements IPsicologoBO {
     }
 
     /**
-     * Metodo para obtener un psicolo en especifico dado su identificador unico
+     * Método para obtener el psicólogo por su identificador dado.
      *
-     * @param identificador Identificador del psicologo a buscar
-     * @return Psicologo Encontrado
+     * @param id
+     * @return Datos del psicologo.
+     * @throws excepciones.NegocioException
      */
     @Override
-    public PsicologoDTO obtenerPsicologoPorIdentificador(String identificador) throws NegocioException {
+    public PsicologoCitaDTO obtenerPsicologoPorIdentificador(String id) throws NegocioException {
         try {
-            Psicologo psicologoEncontrado = psicologoDAO.obtenerPsicologoPorIdentificador(identificador);
-            return psicologoMapper.toDTO2(psicologoEncontrado);
+            Psicologo psicologo = psicologoDAO.obtenerPsicologoPorIdentificador(id);
+            return psicologoMapper.toDTO(psicologo);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error al obtener psicologo por su id: " + e.getMessage());
+            throw new NegocioException("Error al obtener los psicologos: " + e.getMessage());
         }
     }
 

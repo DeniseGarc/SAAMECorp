@@ -15,7 +15,11 @@ package dto;
  * @author Alici
  */
 public class CubiculoDTO {
-
+    
+    /**
+     * Id del cubiculo
+     */
+    private String id;
     /**
      * Nombre o identificador del cubículo.
      */
@@ -30,7 +34,7 @@ public class CubiculoDTO {
     /**
      * Numero de personas que admite el cubiculo
      */
-    private int capacidad;
+    private Integer capacidad;
     
     /**
      * Tipo de terapia para la que esta diseñada el cubiculo
@@ -59,6 +63,39 @@ public class CubiculoDTO {
     public CubiculoDTO(String nombre, boolean estado) {
         this.nombre = nombre;
         this.estado = estado;
+    }
+    /**
+     * Constructor que inicializa todos los metodos
+     * @param id
+     * @param nombre
+     * @param estado
+     * @param capacidad
+     * @param tipoTerapia
+     * @param notas 
+     */
+    public CubiculoDTO(String id, String nombre, boolean estado, Integer capacidad, String tipoTerapia, String notas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.tipoTerapia = tipoTerapia;
+        this.notas = notas;
+    }
+    
+    /**
+     * Obtiene el id del cubiculo
+     * @return id del cubiculo
+     */
+    public String getId() {
+        return id;
+    }
+    
+    /**
+     * Establece id del cubiculo
+     * @param id id del cubiculo
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -102,7 +139,7 @@ public class CubiculoDTO {
      * Obtiene la capacidad del cubiculo
      * @return Capacidad del cubiculo
      */
-    public int getCapacidad() {
+    public Integer getCapacidad() {
         return capacidad;
     }
     
@@ -110,7 +147,7 @@ public class CubiculoDTO {
      * Establece la capacidad del cubiculo
      * @param capacidad Capacidad del cubiculo
      */
-    public void setCapacidad(int capacidad) {
+    public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
     /**
@@ -143,6 +180,30 @@ public class CubiculoDTO {
      */
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+    
+    /**
+     * Constructor que inicializa todos sus atributos
+     * @param nombre
+     * @param estado
+     * @param capacidad
+     * @param tipoTerapia
+     * @param notas 
+     */
+    public CubiculoDTO(String nombre, boolean estado, Integer capacidad, String tipoTerapia, String notas) {
+        this.nombre = nombre;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.tipoTerapia = tipoTerapia;
+        this.notas = notas;
+    }
+    /**
+     * Metodo to string que muestra solo el nombre del cubiculo
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return this.getNombre(); // o como se llame el atributo del nombre
     }
     
     

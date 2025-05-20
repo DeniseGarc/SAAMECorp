@@ -4,15 +4,33 @@
  */
 package pantallasReportes;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import dto.ReporteResumenCubiculoDTO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
  * @author erika
  */
 public class frmrReporteEstadistico extends javax.swing.JFrame {
-    
+    /**
+     * Coordinador para la logica de negocio de la aplicacion
+     */
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     /**
      * Coordinador del flujo de pantallas de la aplicación.
      */
@@ -26,6 +44,79 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
         this.frmPadre = frmPadre;
         initComponents();
         setLocationRelativeTo(null);
+        configurarTabla();
+        cargarReporteEnTabla();
+    }
+    
+    private void configurarTabla() {
+        String[] columnas = {"Cubículo", "Total Citas", "Horas Usadas", "Ingresos"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jTable4.setModel(modelo);
+    }
+    private void cargarReporteEnTabla() {
+        try {
+
+            List<ReporteResumenCubiculoDTO> resumen = controlNegocio.generaReporteResumenCubiculo();
+            DefaultTableModel modelo = (DefaultTableModel) jTable4.getModel();
+
+            for (ReporteResumenCubiculoDTO dto : resumen) {
+                modelo.addRow(new Object[]{
+                    dto.getNombreCubiculo(),
+                    dto.getTotalCitas(),
+                    dto.getTotalCitas() + " h", 
+                    String.format("$%,.2f", dto.getTotalIngresos())
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el reporte: " + e.getMessage());
+        }
+    }
+    private void exportarTablaAPDF() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("reporte_cubiculos.pdf"));
+        int option = fileChooser.showSaveDialog(this);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+                document.open();
+
+                // Título
+                Font tituloFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
+                Paragraph titulo = new Paragraph("Reporte estadístico resumido", tituloFont);
+                titulo.setAlignment(Element.ALIGN_CENTER);
+                document.add(titulo);
+                document.add(new Paragraph(" ")); // Espacio
+
+                // Tabla
+                PdfPTable pdfTable = new PdfPTable(jTable4.getColumnCount());
+                for (int i = 0; i < jTable4.getColumnCount(); i++) {
+                    pdfTable.addCell(jTable4.getColumnName(i));
+                }
+
+                for (int rows = 0; rows < jTable4.getRowCount(); rows++) {
+                    for (int cols = 0; cols < jTable4.getColumnCount(); cols++) {
+                        Object value = jTable4.getValueAt(rows, cols);
+                        pdfTable.addCell(value != null ? value.toString() : "");
+                    }
+                }
+
+                document.add(pdfTable);
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "PDF generado con éxito.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar PDF: " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -42,6 +133,7 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         btnRegresar10 = new javax.swing.JButton();
+        btnExportarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +174,16 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
             }
         });
 
+        btnExportarPDF.setBackground(new java.awt.Color(0, 0, 0));
+        btnExportarPDF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        btnExportarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarPDF.setText("Exportar a PDF");
+        btnExportarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -93,9 +195,11 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
                 .addComponent(lblTitulo3)
                 .addGap(241, 241, 241))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(258, 258, 258)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGap(253, 253, 253)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnExportarPDF)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 122, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,9 +208,11 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTitulo3)
                     .addComponent(btnRegresar10))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExportarPDF)
+                .addGap(45, 45, 45))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,34 +243,18 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
        flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresar10ActionPerformed
 
+    private void btnExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPDFActionPerformed
+        exportarTablaAPDF();
+    }//GEN-LAST:event_btnExportarPDFActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenerarReporte;
-    private javax.swing.JButton btnGenerarReporte1;
-    private javax.swing.JButton btnGenerarReporte2;
+    private javax.swing.JButton btnExportarPDF;
     private javax.swing.JButton btnRegresar10;
-    private javax.swing.JButton btnRegresar7;
-    private javax.swing.JButton btnRegresar8;
-    private javax.swing.JButton btnRegresar9;
-    private javax.swing.JComboBox<String> cBoxCubiculo;
-    private javax.swing.JComboBox<String> cBoxCubiculo1;
-    private javax.swing.JComboBox<String> cBoxCubiculo2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTitulo1;
-    private javax.swing.JLabel lblTitulo2;
     private javax.swing.JLabel lblTitulo3;
     // End of variables declaration//GEN-END:variables
 }

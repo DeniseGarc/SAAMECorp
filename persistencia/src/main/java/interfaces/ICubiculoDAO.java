@@ -7,6 +7,7 @@ package interfaces;
 import entidades.Cubiculo;
 import excepciones.PersistenciaException;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * Interfaz que define los metodos para la clase CubiculoDAO
@@ -66,5 +67,14 @@ public interface ICubiculoDAO {
       */
     public List<Cubiculo> buscarCubiculos() throws PersistenciaException;
 
+
+    /**
+     * Metodo para buscar un cubiculo por su ID
+     *
+     * @param id ID del cubiculo a buscar
+     * @return cubiculo encontrado o null si no existe
+     * @throws PersistenciaException si ocurre un error en la búsqueda
+     */
+    public Cubiculo buscarCubiculoPorId(String id) throws PersistenciaException;
 
 }
