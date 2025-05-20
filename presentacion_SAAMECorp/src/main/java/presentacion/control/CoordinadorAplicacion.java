@@ -293,8 +293,12 @@ public class CoordinadorAplicacion {
     public void pantallaReporteIngresosCubiculo(JFrame frm) {
         frmReporteIngresosCubiculo frmPantalla = new frmReporteIngresosCubiculo(frm);
         menuAdmin.setVisible(false);
-        frm.dispose();
+
+        if (frm != null) {
+            frm.dispose();
+        }
+
         frmPantalla.setVisible(true);
-    }
+        }
     
 }

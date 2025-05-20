@@ -197,8 +197,14 @@ public class CubiculoDTO {
         this.tipoTerapia = tipoTerapia;
         this.notas = notas;
     }
-    
-    
+    /**
+     * Metodo to string que muestra solo el nombre del cubiculo
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return this.getNombre(); // o como se llame el atributo del nombre
+    }
     
     
 

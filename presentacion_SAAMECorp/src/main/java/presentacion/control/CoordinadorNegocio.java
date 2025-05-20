@@ -11,6 +11,7 @@ import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.FacturaDTO;
 import dto.PsicologoCitaDTO;
+import dto.ReporteIngresosCubiculoDTO;
 import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
@@ -19,10 +20,13 @@ import generarFactura.FGenerarFactura;
 import generarFactura.IGenerarFactura;
 import excepciones.ModificarCitaException;
 import excepciones.GestorCubiculosException;
+import exception.GestorReportesException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
 import gestorCubiculos.FGestorCubiculos;
 import gestorCubiculos.IGestorCubiculos;
+import gestorReportes.FGestorReportes;
+import gestorReportes.IGestorReportes;
 import java.awt.Color;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -64,6 +68,8 @@ public class CoordinadorNegocio {
      * Subsistema para gestionar cubiculos
      */
     private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
+    
+    private final IGestorReportes sistemaGestorReportes = new FGestorReportes();
 
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
@@ -488,5 +494,21 @@ public class CoordinadorNegocio {
             
             throw new CoordinadorException(ex.getMessage());
         }
+    }
+    
+    /**
+     * Metodo que accede al subsistema de gestor de reportes para generar el reporte de ingresos por cubiculo
+     * @param cubiculo cubiculo al que se le va a realizar el reporte
+     * @return ReporteIngresosCubiculoDTO
+     * @throws CoordinadorException 
+     */
+    public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(CubiculoDTO cubiculo) throws CoordinadorException{
+        try {
+            return sistemaGestorReportes.generarReporteIngresosPorCubiculo(cubiculo.getNombre());
+        } catch (GestorReportesException ex) {
+            
+            throw new CoordinadorException(ex.getMessage());
+        }
+    
     }
 }
