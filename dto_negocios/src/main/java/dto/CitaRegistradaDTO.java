@@ -25,12 +25,12 @@ public class CitaRegistradaDTO {
     /**
      * Identificador del cubículo donde se llevará a cabo la cita.
      */
-    private String cubiculo;
+    private CubiculoDTO cubiculo;
 
     /**
      * Psicólogo asignado a la cita.
      */
-    private String psicologo;
+    private PsicologoCitaDTO psicologo;
 
     /**
      * Nombre completo del paciente.
@@ -55,7 +55,7 @@ public class CitaRegistradaDTO {
     public CitaRegistradaDTO() {
     }
 
-    public CitaRegistradaDTO(String id, Calendar fechaHora, String cubiculo, String psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
+    public CitaRegistradaDTO(String id, Calendar fechaHora, CubiculoDTO cubiculo, PsicologoCitaDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
@@ -82,19 +82,19 @@ public class CitaRegistradaDTO {
         this.fechaHora = fechaHora;
     }
 
-    public String getCubiculo() {
+    public CubiculoDTO getCubiculo() {
         return cubiculo;
     }
 
-    public void setCubiculo(String cubiculo) {
+    public void setCubiculo(CubiculoDTO cubiculo) {
         this.cubiculo = cubiculo;
     }
 
-    public String getPsicologo() {
+    public PsicologoCitaDTO getPsicologo() {
         return psicologo;
     }
 
-    public void setPsicologo(String psicologo) {
+    public void setPsicologo(PsicologoCitaDTO psicologo) {
         this.psicologo = psicologo;
     }
 

@@ -66,13 +66,15 @@ public interface ICubiculoDAO {
       * @throws PersistenciaException 
       */
     public List<Cubiculo> buscarCubiculos() throws PersistenciaException;
-    
+
+
     /**
-     * Metodo para obtener un cubiculo dado su id
-     * @param id id del cubiculo
-     * @return cubiculo encontrado
-     * @throws PersistenciaException 
+     * Metodo para buscar un cubiculo por su ID
+     *
+     * @param id ID del cubiculo a buscar
+     * @return cubiculo encontrado o null si no existe
+     * @throws PersistenciaException si ocurre un error en la búsqueda
      */
-    public Cubiculo buscarCubiculoPorId(ObjectId id) throws PersistenciaException;
+    public Cubiculo buscarCubiculoPorId(String id) throws PersistenciaException;
 
 }

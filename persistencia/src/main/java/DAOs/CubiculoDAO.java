@@ -112,24 +112,21 @@ public class CubiculoDAO implements ICubiculoDAO {
     public boolean ModificarEstadoCubiculo(Cubiculo CubiculoModificar) throws PersistenciaException {
         try {
 
-        // Buscar el cubículo actual por su ID
-        Cubiculo cubiculoActual = coleccionCubiculos.find(eq("_id", CubiculoModificar.getObjectString())).first();
+            // Buscar el cubículo actual por su ID
+            Cubiculo cubiculoActual = coleccionCubiculos.find(eq("_id", CubiculoModificar.getObjectString())).first();
 
-        if (cubiculoActual == null) {
-            throw new PersistenciaException("No se encontró el cubículo con ID: " + CubiculoModificar.getObjectString());
-        }
-
+            if (cubiculoActual == null) {
+                throw new PersistenciaException("No se encontró el cubículo con ID: " + CubiculoModificar.getObjectString());
+            }
 
             // Invertir el estado actual
             boolean nuevoEstado = !cubiculoActual.isEstado();
 
-
-        // Actualizar solo el campo "estado"
-        UpdateResult resultado = coleccionCubiculos.updateOne(
-            eq("_id", CubiculoModificar.getObjectString()),
-            set("estado", nuevoEstado)
-        );
-
+            // Actualizar solo el campo "estado"
+            UpdateResult resultado = coleccionCubiculos.updateOne(
+                    eq("_id", CubiculoModificar.getObjectString()),
+                    set("estado", nuevoEstado)
+            );
 
             return resultado.getModifiedCount() > 0;
         } catch (Exception e) {
@@ -184,19 +181,22 @@ public class CubiculoDAO implements ICubiculoDAO {
             throw new PersistenciaException("Error al obtener lista de cubículos: " + e.getMessage(), e);
         }
     }
+
     /**
-     * Metodo para obtener un cubiculo dado su id
-     * @param id id del cubiculo
-     * @return cubiculo encontrado
-     * @throws PersistenciaException 
+     * Metodo para buscar un cubiculo por su ID
+     *
+     * @param id ID del cubiculo a buscar
+     * @return cubiculo encontrado o null si no existe
+     * @throws PersistenciaException si ocurre un error en la búsqueda
      */
     @Override
-    public Cubiculo buscarCubiculoPorId(ObjectId id) throws PersistenciaException {
-    try {
-        return coleccionCubiculos.find(eq("_id", id)).first();
-    } catch (Exception e) {
-        throw new PersistenciaException("Error al buscar cubículo por ID: " + e.getMessage(), e);
+    public Cubiculo buscarCubiculoPorId(String id) throws PersistenciaException {
+        try {
+            ObjectId o = new ObjectId(id);
+            return coleccionCubiculos.find(eq("_id", o)).first();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar cubículo por ID: " + e.getMessage(), e);
+        }
     }
-}
 
 }

@@ -7,6 +7,7 @@ package interfaces;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  * INterfaz que implementa los metodos para la clase de PsicologoDAO
@@ -24,9 +25,9 @@ public interface IPsicologoDAO {
     /**
      * Método para obtener el psicólogo por su identificador dado.
      *
-     * @param identificador Identificador único del psicólogo.
+     * @param id
      * @return Datos del psicologo.
      * @throws excepciones.PersistenciaException
      */
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException;
+    public Psicologo obtenerPsicologoPorIdentificador(String id) throws PersistenciaException;
 }

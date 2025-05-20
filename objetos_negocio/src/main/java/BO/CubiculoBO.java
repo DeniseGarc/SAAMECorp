@@ -21,35 +21,36 @@ import mapper.CubiculoMapper;
  * @author erika
  */
 public class CubiculoBO implements ICubiculoBO {
-    
+
     /**
-     * Instancia unica de la clase 
+     * Instancia unica de la clase
      */
-    private static CubiculoBO instancia; 
-    
+    private static CubiculoBO instancia;
+
     private static final ICubiculoDAO cubiculoDAO = CubiculoDAO.getInstanciaDAO();
-    
+
     CubiculoMapper mapper = new CubiculoMapper();
-    
+
     /**
-     * Constructor privado 
+     * Constructor privado
      */
-    private CubiculoBO(){
-        
+    private CubiculoBO() {
+
     }
-    
+
     /**
-     * Metodo para obtener la instancia unica de CubiculoBO
-     * Si no existe una la crea
+     * Metodo para obtener la instancia unica de CubiculoBO Si no existe una la
+     * crea
+     *
      * @return instancia unida de CubiculoBO
      */
-    public static CubiculoBO getInstancia(){
-        if (instancia == null){
-            instancia= new CubiculoBO();
+    public static CubiculoBO getInstancia() {
+        if (instancia == null) {
+            instancia = new CubiculoBO();
         }
-        return instancia; 
+        return instancia;
     }
-    
+
     /**
      * Metodo que obtiene todos los cubiculos cuyo estado sea disponible
      *
@@ -67,58 +68,75 @@ public class CubiculoBO implements ICubiculoBO {
 
     @Override
     public List<CubiculoDTO> obtenerCubiculosPorEstado(boolean estado) throws NegocioException {
-        try{
+        try {
             List<Cubiculo> cubiculos = cubiculoDAO.obtenerCubiculoPorEstado(estado);
             return mapper.toDTOList(cubiculos);
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al obtener los cubibulos: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener los cubibulos: " + e.getMessage());
         }
     }
 
     @Override
     public List<CubiculoDTO> obtenerCubiculos() throws NegocioException {
-        try{
+        try {
             List<Cubiculo> cubiculos = cubiculoDAO.buscarCubiculos();
             return mapper.toDTOList(cubiculos);
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al obtener los cubibulos: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener los cubibulos: " + e.getMessage());
         }
     }
 
     @Override
     public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException {
-        try{
+        try {
             return cubiculoDAO.AgregarCubiculo(mapper.toEntity(cubiculo));
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al agregar el cubiculo: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al agregar el cubiculo: " + e.getMessage());
         }
     }
 
     @Override
     public boolean actualizarEstadoCubiculo(CubiculoDTO cubiculoAgregar) throws NegocioException {
-         try{
+        try {
             return cubiculoDAO.ModificarEstadoCubiculo(mapper.toEntity(cubiculoAgregar));
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
         }
     }
 
     @Override
     public boolean modificarCubiculo(CubiculoDTO cubiculoModificar) throws NegocioException {
-        try{
+        try {
             return cubiculoDAO.ModificarCubiculo(mapper.toEntity(cubiculoModificar));
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
         }
     }
 
     @Override
     public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException {
-        try{
+        try {
             Cubiculo cubiculoEntidad = cubiculoDAO.buscarCubiculoPorNombre(nombre);
             return mapper.toDTO(cubiculoEntidad);
-        }catch(PersistenciaException e){
-        throw new NegocioException ("Error al actualizar el cubiculo: "+ e.getMessage());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Metodo para buscar un cubiculo por su ID
+     *
+     * @param id ID del cubiculo a buscar
+     * @return cubiculo encontrado o null si no existe
+     * @throws excepciones.NegocioException
+     */
+    @Override
+    public CubiculoDTO buscarCubiculoPorId(String id) throws NegocioException {
+        try {
+            Cubiculo cubiculoEntidad = cubiculoDAO.buscarCubiculoPorId(id);
+            return mapper.toDTO(cubiculoEntidad);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
         }
     }
 

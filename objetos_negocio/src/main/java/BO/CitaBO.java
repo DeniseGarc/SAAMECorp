@@ -9,6 +9,7 @@ import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
+import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import entidades.Cita;
 import entidades.Cubiculo;
@@ -69,9 +70,9 @@ public class CitaBO implements ICitaBO {
      * @return Lista de horas disponibles del psicologo
      */
     @Override
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) throws NegocioException {
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoCitaDTO psicologo) throws NegocioException {
         try {
-            List<LocalTime> horasDisponibles = citaDAO.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psicologoMapper.toEntity2(psicologo));
+            List<LocalTime> horasDisponibles = citaDAO.obtenerHorasDisponiblesPorFechaYPsicologo(fecha, psicologoMapper.toEntity(psicologo));
             return horasDisponibles;
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al obtener las horas disponibles: " + e.getMessage());
