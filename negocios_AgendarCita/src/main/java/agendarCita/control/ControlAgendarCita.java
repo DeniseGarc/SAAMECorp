@@ -157,22 +157,22 @@ public class ControlAgendarCita {
      * electrónico al correo ingresado.
      *
      * @param cita de la cual se enviará confirmación
-     * @param correo Correo electrónico al que se le va a enviar el mensaje.
      * @return true si la operación fue exitosa, false en caso contrario.
      */
-    public boolean mandarCorreo(CitaNuevaDTO cita, String correo) {
+    public boolean mandarCorreo(CitaNuevaDTO cita) {
         try {
             FCorreoElectronico correoInfra = new FCorreoElectronico();
+            PsicologoCitaDTO pcdto = psicologoBO.obtenerPsicologoPorIdentificador(cita.getPsicologo());
+            CubiculoDTO cdto = cubiculoBO.buscarCubiculoPorId(cita.getCubiculo());
             String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
-            String nombrePsicologo = cita.getPsicologo();
-//                    .getNombre() + " " + cita.getPsicologo().getApellidoPaterno() + " " + cita.getPsicologo().getApellidoMaterno();
-            CorreoCitaDTO correoCita = new CorreoCitaDTO(correo, cita.getCubiculo(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
+            String nombrePsicologo = pcdto.getNombre() + " " + pcdto.getApellidoPaterno() + " " + pcdto.getApellidoMaterno();
+            CorreoCitaDTO correoCita = new CorreoCitaDTO(pcdto.getCorreo(), cdto.getNombre(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
             CorreoMapper correoMapper = new CorreoMapper();
             boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO(correoCita));
             return enviado;
         } catch (Exception e) {
-            Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.WARNING, "Error al enviar el correo a " + correo, e);
-            System.err.println("Error al enviar el correo a " + correo + ": " + e.getMessage());
+            Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.WARNING, "Error al enviar el correo: ", e);
+            System.err.println("Error al enviar el correo: " + e.getMessage());
             return false;
         }
 
