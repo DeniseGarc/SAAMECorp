@@ -57,6 +57,10 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
             txtCapacidad.setText(String.valueOf(cubiculo.getCapacidad()));
             txtTipoTerapia.setText(cubiculo.getTipoTerapia());
             jTextArea1.setText(cubiculo.getNotas()); // Asegúrate de que CubiculoDTO tenga el método getNotas()
+            
+ 
+        btnEstado.setSelected(cubiculo.isEstado());
+        btnEstado.setText(cubiculo.isEstado()? "true" : "false");
         }
     }
 
@@ -106,6 +110,8 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btnRegresar7 = new javax.swing.JButton();
+        btnEstado = new javax.swing.JToggleButton();
+        lblEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +157,16 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
             }
         });
 
+        btnEstado.setText("Activo");
+        btnEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstadoActionPerformed(evt);
+            }
+        });
+
+        lblEstado.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        lblEstado.setText("Estado");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -163,6 +179,10 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,7 +207,11 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEstado)
+                    .addComponent(lblEstado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(btnRegresar7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -295,12 +319,25 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadoActionPerformed
+        int index = cBoxSeleccionarCubiculo.getSelectedIndex();
+    if (index >= 0 && index < listaCubiculos.size()) {
+        CubiculoDTO cubiculo = listaCubiculos.get(index);
+
+        boolean nuevoEstado = btnEstado.isSelected();
+        cubiculo.setEstado(nuevoEstado);
+
+        btnEstado.setText(nuevoEstado ? "Activo" : "Inactivo");
+    }
+    }//GEN-LAST:event_btnEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnEstado;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRegresar7;
     private javax.swing.JComboBox<String> cBoxSeleccionarCubiculo;
@@ -312,6 +349,7 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblEstado;
     private javax.swing.JTextField txtCapacidad;
     private javax.swing.JTextField txtTipoTerapia;
     // End of variables declaration//GEN-END:variables
