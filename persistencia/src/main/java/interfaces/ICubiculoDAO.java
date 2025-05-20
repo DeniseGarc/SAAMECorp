@@ -67,6 +67,7 @@ public interface ICubiculoDAO {
       */
     public List<Cubiculo> buscarCubiculos() throws PersistenciaException;
 
+
     /**
      * Metodo para buscar un cubiculo por su ID
      *

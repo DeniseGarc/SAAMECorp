@@ -210,9 +210,7 @@ public class CoordinadorAplicacion {
     public void PantallaEditarCubiculos(JFrame frm) {
         frmEditarCubiculo frmPantalla = new frmEditarCubiculo(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frm.dispose();
         frmPantalla.setVisible(true);
     }
 
@@ -224,18 +222,15 @@ public class CoordinadorAplicacion {
     public void pantallaAgregarCubiculo(JFrame frm) {
         frmAgregarCubiculo frmPantalla = new frmAgregarCubiculo(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frm.dispose();
         frmPantalla.setVisible(true);
     }
 
     public void pantallaMenuReportes(JFrame frm) {
         frmMenuReportes frmPantalla = new frmMenuReportes(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        
+        frm.dispose();
         frmPantalla.setVisible(true);
     }
 
@@ -275,9 +270,7 @@ public class CoordinadorAplicacion {
     public void pantallaReporteUsoCubiculo(JFrame frm) {
         frmReporteUsoCubiculo frmPantalla = new frmReporteUsoCubiculo(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frm.dispose();
         frmPantalla.setVisible(true);
     }
     
@@ -288,9 +281,8 @@ public class CoordinadorAplicacion {
     public void pantallaReporteEstadistico(JFrame frm) {
         frmrReporteEstadistico frmPantalla = new frmrReporteEstadistico(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frm.dispose();
+                
         frmPantalla.setVisible(true);
     }
     
@@ -301,9 +293,7 @@ public class CoordinadorAplicacion {
     public void pantallaReporteIngresosCubiculo(JFrame frm) {
         frmReporteIngresosCubiculo frmPantalla = new frmReporteIngresosCubiculo(frm);
         menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frm.dispose();
         frmPantalla.setVisible(true);
     }
     
