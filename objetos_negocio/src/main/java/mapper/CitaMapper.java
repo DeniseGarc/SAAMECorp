@@ -34,7 +34,7 @@ public class CitaMapper {
 
     public CitaNuevaDTO toDTO(Cita cita) {
         return new CitaNuevaDTO(cita.getFechaHora(), cita.getObjectCubiculoString(), cita.getObjectPsicologoString(),
-                cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
+                cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado(), cita.getDetallesAdeudo().getNotas()));
     }
 
     public Cita toEntity(CitaNuevaDTO cita) {
@@ -45,7 +45,20 @@ public class CitaMapper {
         c.setCorreoPaciente(cita.getCorreoPaciente());
         c.setObjectPsicologoString(cita.getPsicologo());
         c.setObjectCubiculoString(cita.getCubiculo());
-        c.setDetallesAdeudo(new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
+        c.setDetallesAdeudo(new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado(), cita.getAdeudo().getNotas()));
+        return c;
+    }
+
+    public Cita toEntity2(CitaRegistradaDTO cita) {
+        Cita c = new Cita();
+        c.setObjectString(cita.getId());
+        c.setFechaHora(cita.getFechaHora());
+        c.setNombrePaciente(cita.getNombrePaciente());
+        c.setTelefonoPaciente(cita.getTelefonoPaciente());
+        c.setCorreoPaciente(cita.getCorreoPaciente());
+        c.setObjectPsicologoString(cita.getPsicologo().getId());
+        c.setObjectCubiculoString(cita.getCubiculo().getId());
+        c.setDetallesAdeudo(new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado(), cita.getAdeudo().getNotas()));
         return c;
     }
 
@@ -59,7 +72,7 @@ public class CitaMapper {
             c.setCorreoPaciente(cita.getCorreoPaciente());
             c.setPsicologo(cita.getObjectPsicologoString());
             c.setCubiculo(cita.getObjectCubiculoString());
-            c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
+            c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado(), cita.getDetallesAdeudo().getNotas()));
             citasDTO.add(c);
         }
         return citasDTO;
@@ -85,7 +98,7 @@ public class CitaMapper {
                 c.setCorreoPaciente(cita.getCorreoPaciente());
                 c.setPsicologo(psicologoBO.obtenerPsicologoPorIdentificador(cita.getObjectPsicologoString()));
                 c.setCubiculo(cubiculoBO.buscarCubiculoPorId(cita.getObjectCubiculoString()));
-                c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
+                c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado(), cita.getDetallesAdeudo().getNotas()));
                 citasDTO.add(c);
             } catch (NegocioException ex) {
                 Logger.getLogger(CitaMapper.class.getName()).log(Level.SEVERE, null, ex);

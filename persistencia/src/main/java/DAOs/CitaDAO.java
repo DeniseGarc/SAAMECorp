@@ -236,7 +236,25 @@ public class CitaDAO implements ICitaDAO {
                     .filter(h -> !horasOcupadasPsicologo.contains(h) && !horasOcupadasCubiculo.contains(h))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            throw  new PersistenciaException("Error al obtener las horas disponibles por cubiculo y psicologo: ", e);
+            throw new PersistenciaException("Error al obtener las horas disponibles por cubiculo y psicologo: ", e);
+        }
+    }
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws PersistenciaException si ocurre un error en la base de datos
+     */
+    @Override
+    public boolean actualizarCita(Cita citaActualizada) throws PersistenciaException {
+        try {
+            Bson filtro = eq("_id", citaActualizada.getId());
+            long modificados = coleccionCitas.replaceOne(filtro, citaActualizada).getModifiedCount();
+            return modificados > 0;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al actualizar la cita: " + e.getMessage(), e);
         }
     }
 

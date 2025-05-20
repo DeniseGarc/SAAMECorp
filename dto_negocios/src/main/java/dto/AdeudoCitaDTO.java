@@ -28,6 +28,11 @@ public class AdeudoCitaDTO {
     private boolean estado;
 
     /**
+     * Notas sobre el adeudo
+     */
+    private String notas;
+
+    /**
      * Constructor vacío. Inicializa un objeto {@code AdeudoCitaDTO} sin valores
      * definidos.
      */
@@ -42,9 +47,10 @@ public class AdeudoCitaDTO {
      * @param estado Estado del adeudo: {@code true} si está pagado,
      * {@code false} si está pendiente.
      */
-    public AdeudoCitaDTO(double cantidad, boolean estado) {
+    public AdeudoCitaDTO(double cantidad, boolean estado, String notas) {
         this.cantidad = cantidad;
         this.estado = estado;
+        this.notas = notas;
     }
 
     /**
@@ -83,6 +89,14 @@ public class AdeudoCitaDTO {
      */
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public void setNotas(String notas) {
+        this.notas = notas;
     }
 
 }

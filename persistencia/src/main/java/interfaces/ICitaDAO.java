@@ -86,7 +86,7 @@ public interface ICitaDAO {
      * @throws excepciones.PersistenciaException
      */
     public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException;
-    
+
     /**
      * Metodo para obtener las horas disponibles que coinciden de un cubiculo y
      * un psicologo
@@ -98,4 +98,13 @@ public interface ICitaDAO {
      * @throws excepciones.PersistenciaException
      */
     public List<LocalTime> obtenerHorasDisponibles(Psicologo psicologo, ObjectId idCubiculo, LocalDate fecha) throws PersistenciaException;
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws PersistenciaException si ocurre un error en la base de datos
+     */
+    public boolean actualizarCita(Cita citaActualizada) throws PersistenciaException;
 }

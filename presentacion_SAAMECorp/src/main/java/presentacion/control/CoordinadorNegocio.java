@@ -69,7 +69,7 @@ public class CoordinadorNegocio {
      * Subsistema para gestionar cubiculos
      */
     private final IGestorCubiculos sistemaGestorCubiculoa = new FGestorCubiculos();
-    
+
     private final IGestorReportes sistemaGestorReportes = new FGestorReportes();
 
     /**
@@ -521,30 +521,63 @@ public class CoordinadorNegocio {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, e);
             throw new ModificarCitaException("Error al mandar horario: ", e);
         }
-    
+    }
+
     /**
-     * Metodo que accede al subsistema de gestor de reportes para generar el reporte de ingresos por cubiculo
+     * Metodo que accede al subsistema de gestor de reportes para generar el
+     * reporte de ingresos por cubiculo
+     *
      * @param cubiculo cubiculo al que se le va a realizar el reporte
      * @return ReporteIngresosCubiculoDTO
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
-    public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(CubiculoDTO cubiculo) throws CoordinadorException{
+    public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(CubiculoDTO cubiculo) throws CoordinadorException {
         try {
             return sistemaGestorReportes.generarReporteIngresosPorCubiculo(cubiculo.getNombre());
         } catch (GestorReportesException ex) {
-            
+
             throw new CoordinadorException(ex.getMessage());
         }
-    
+
     }
-    
-    public ReporteUsoCubiculoDTO generaraReporteUsoCubiculo(String cubiculo)throws CoordinadorException{
+
+    public ReporteUsoCubiculoDTO generaraReporteUsoCubiculo(String cubiculo) throws CoordinadorException {
         try {
             return sistemaGestorReportes.generarReporteUsoCubiculo(cubiculo);
         } catch (GestorReportesException ex) {
-            
+
             throw new CoordinadorException(ex.getMessage());
         }
+    }
+
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.CoordinadorException
+     */
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.actualizarCita(citaActualizada);
+        } catch (ModificarCitaException e) {
+            throw new CoordinadorException("Error al intentar actualizar la cita: ", e);
+        }
+    }
     
+    /**
+     * Método que se conecta con el servicio externo para mandar un correo
+     * electrónico al correo ingresado.
+     *
+     * @param cita de la cual se enviará confirmación
+     * @return true si la operación fue exitosa, false en caso contrario.
+     * @throws excepciones.CoordinadorException
+     */
+    public boolean mandarCorreo(CitaRegistradaDTO cita) throws CoordinadorException {
+        try {
+            return sistemaModificarCita.mandarCorreo(cita);
+        } catch (ModificarCitaException e) {
+            throw new CoordinadorException("Error al enviar correo: ", e);
+        }
     }
 }

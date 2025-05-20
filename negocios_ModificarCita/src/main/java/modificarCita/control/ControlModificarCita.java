@@ -4,8 +4,10 @@
  */
 package modificarCita.control;
 
+import correoElectronico.FCorreoElectronico;
 import dto.CitaDTO;
 import dto.CitaRegistradaDTO;
+import dto.CorreoCitaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
@@ -19,6 +21,7 @@ import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
 import interfaces.IPsicologoBO;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -28,6 +31,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import manejadorBO.ManejadorBO;
+import mapper.CorreoMapper;
 
 /**
  * Clase control para la comunicacion entre el subsistema y objetos negocio u
@@ -134,6 +138,45 @@ public class ControlModificarCita {
             Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
             throw new ModificarCitaException("Error al obtener las horas disponible: ", e);
         }
+    }
+    
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.ModificarCitaException
+     */
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws ModificarCitaException {
+        try {
+            return citaBO.actualizarCita(citaActualizada);
+        } catch (NegocioException e) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new ModificarCitaException("Error al modificar la cita: ", e);
+        }
+    }
+    
+    /**
+     * Método que se conecta con el servicio externo para mandar un correo
+     * electrónico al correo ingresado.
+     *
+     * @param cita de la cual se enviará confirmación
+     * @return true si la operación fue exitosa, false en caso contrario.
+     */
+    public boolean mandarCorreo(CitaRegistradaDTO cita) {
+        try {
+            FCorreoElectronico correoInfra = new FCorreoElectronico();
+            String fechaCitaFormateada = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(cita.getFechaHora().getTime());
+            String nombrePsicologo = cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno() + " " + cita.getPsicologo().getApellidoMaterno();
+            CorreoCitaDTO correoCita = new CorreoCitaDTO(cita.getPsicologo().getCorreo(), cita.getCubiculo().getNombre(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente());
+            CorreoMapper correoMapper = new CorreoMapper();
+            boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO2(correoCita));
+            return enviado;
+        } catch (Exception e) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.WARNING, "Error al enviar el correo a " + cita.getPsicologo().getCorreo(), e);
+            return false;
+        }
+
     }
 
 }

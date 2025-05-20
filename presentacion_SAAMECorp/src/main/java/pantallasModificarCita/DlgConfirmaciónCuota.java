@@ -4,17 +4,25 @@
  */
 package pantallasModificarCita;
 
+import dto.CitaRegistradaDTO;
+
 /**
  *
  * @author Maryr
  */
 public class DlgConfirmaciónCuota extends javax.swing.JDialog {
 
+    private CitaRegistradaDTO cita;
+
     /**
      * Creates new form DlgConfirmaciónCuota
+     * @param parent
+     * @param modal
+     * @param cita
      */
-    public DlgConfirmaciónCuota(java.awt.Frame parent, boolean modal) {
+    public DlgConfirmaciónCuota(java.awt.Frame parent, boolean modal, CitaRegistradaDTO cita) {
         super(parent, modal);
+        this.cita = cita;
         initComponents();
     }
 

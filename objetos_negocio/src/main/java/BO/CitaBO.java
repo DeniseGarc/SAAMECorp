@@ -216,4 +216,21 @@ public class CitaBO implements ICitaBO {
         }
     }
 
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.NegocioException
+     */
+    @Override
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws NegocioException {
+        try {
+            return citaDAO.actualizarCita(cItaMapper.toEntity2(citaActualizada));
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(CitaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al actualizar la cita: ", ex);
+        }
+    }
+
 }

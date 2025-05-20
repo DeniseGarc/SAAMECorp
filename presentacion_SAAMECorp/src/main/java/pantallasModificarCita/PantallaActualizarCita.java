@@ -8,12 +8,15 @@ import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import excepciones.CoordinadorException;
 import excepciones.ModificarCitaException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import presentacion.GUI.PantallaAgregarCita;
 import presentacion.control.CoordinadorAplicacion;
@@ -290,6 +293,29 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMouseClicked
 
     private void btnConfirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarMouseClicked
+        if (!validarCampos()) {
+            return;
+        }
+        if (antelacion()) {
+            try {
+                CitaRegistradaDTO c = getNuevaCita();
+                c.getAdeudo().setNotas("Modificada sin cuota.");
+                controlNegocio.actualizarCita(c);
+                JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                if(controlNegocio.mandarCorreo(c)) {
+                    JOptionPane.showMessageDialog(this, "El correo de confirmación fue enviado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al enviar el correo, favor de comuncarse con el recipiente.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                flujoPantallas.pantallaCalendarioCitas(this);
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al actualizar la cita, intentelo mas tarde.", "Error", JOptionPane.ERROR_MESSAGE);
+                flujoPantallas.pantallaCalendarioCitas(this);
+            }
+        } else {
+
+        }
 
     }//GEN-LAST:event_btnConfirmarMouseClicked
 
@@ -320,14 +346,20 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
             for (LocalTime hora : horarios) {
                 CbBoxHorario.addItem(hora.toString());
             }
-            CbBoxHorario.addItem(cita.getFechaHora().getTime().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String fechaCitaFormateada = sdf.format(cita.getFechaHora().getTime());
+            if (((DefaultComboBoxModel<String>) CbBoxHorario.getModel()).getIndexOf(fechaCitaFormateada) == -1) {
+                CbBoxHorario.addItem(fechaCitaFormateada);
+            }
+            CbBoxHorario.setSelectedItem(fechaCitaFormateada);
+
         } catch (ModificarCitaException ex) {
             Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void datosCita() {
-        CbBoxCubiculo.setSelectedItem(cita.getCubiculo());
+        CbBoxCubiculo.setSelectedItem(cita.getCubiculo().getNombre());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String horaFormateada = sdf.format(cita.getFechaHora().getTime());
         CbBoxHorario.setSelectedItem(horaFormateada);
@@ -336,25 +368,64 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         txtTelefonoPaciente.setText(cita.getTelefonoPaciente());
     }
 
-    private void validarCampos() {
+    private boolean validarCampos() {
         String nombre = txtnombrePaciente.getText().trim();
         String correo = txtCorreoPaciente.getText().trim();
         String telefono = txtTelefonoPaciente.getText().trim();
 
         if (!Validadores.validarNombrePaciente(nombre)) {
             JOptionPane.showMessageDialog(null, "Nombre inválido. Asegúrese de no exceder 100 caracteres y usar solo letras.");
-            return;
+            return false;
         }
 
         if (!Validadores.validarCorreo(correo)) {
             JOptionPane.showMessageDialog(null, "Correo inválido. Ingrese un formato válido.");
-            return;
+            return false;
         }
 
         if (!Validadores.validarTelefono(telefono)) {
             JOptionPane.showMessageDialog(null, "Teléfono inválido. Debe contener solo números (máximo 10 dígitos).");
-            return;
+            return false;
         }
+        return true;
+    }
+
+    private boolean antelacion() {
+        Date fechaActual = new Date();
+        Date fechaCita = cita.getFechaHora().getTime();
+        long diferenciaMillis = fechaCita.getTime() - fechaActual.getTime();
+        long horasDiferencia = diferenciaMillis / (1000 * 60 * 60);
+        return horasDiferencia >= 24;
+    }
+
+    private CitaRegistradaDTO getNuevaCita() {
+        String nombrePaciente = txtnombrePaciente.getText().trim();
+        String telefonoPaciente = txtTelefonoPaciente.getText().trim();
+        String correoPaciente = txtCorreoPaciente.getText().trim();
+        String horaSeleccionada = (String) CbBoxHorario.getSelectedItem();
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        String soloFecha = sdfFecha.format(cita.getFechaHora().getTime());
+        String fechaCompleta = soloFecha + " " + horaSeleccionada;
+        SimpleDateFormat sdfCompleto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date nuevaFecha = null;
+        try {
+            nuevaFecha = sdfCompleto.parse(fechaCompleta);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(nuevaFecha);
+        CubiculoDTO cub = cubiculos.get(CbBoxCubiculo.getSelectedIndex());
+        CitaRegistradaDTO citaNueva = new CitaRegistradaDTO();
+        citaNueva.setId(cita.getId());
+        citaNueva.setFechaHora(calendar);
+        citaNueva.setCubiculo(cub);
+        citaNueva.setPsicologo(cita.getPsicologo());
+        citaNueva.setNombrePaciente(nombrePaciente);
+        citaNueva.setTelefonoPaciente(telefonoPaciente);
+        citaNueva.setCorreoPaciente(correoPaciente);
+        citaNueva.setAdeudo(cita.getAdeudo());
+        return citaNueva;
     }
 
     private void agregarListenersComboBox() {
