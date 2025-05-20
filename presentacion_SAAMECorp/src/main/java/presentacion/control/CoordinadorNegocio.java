@@ -12,6 +12,7 @@ import dto.CubiculoDTO;
 import dto.FacturaDTO;
 import dto.PsicologoCitaDTO;
 import dto.ReporteIngresosCubiculoDTO;
+import dto.ReporteResumenCubiculoDTO;
 import dto.ReporteUsoCubiculoDTO;
 import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
@@ -537,7 +538,12 @@ public class CoordinadorNegocio {
         }
 
     }
-
+    /**
+     * Metodo par generar un reporte de uso de cubiculo
+     * @param cubiculo cubiculo al que se le va a realizar el reporte
+     * @return ReporteUsoCubiculoDTO
+     * @throws CoordinadorException 
+     */
     public ReporteUsoCubiculoDTO generaraReporteUsoCubiculo(String cubiculo) throws CoordinadorException {
         try {
             return sistemaGestorReportes.generarReporteUsoCubiculo(cubiculo);
@@ -577,4 +583,20 @@ public class CoordinadorNegocio {
             throw new CoordinadorException("Error al enviar correo: ", e);
         }
     }
+    
+        /**
+     * Metodo para generar un reporte de resumen estadistico
+     * @return List ReporteResumenCubiculoDTO
+     * @throws CoordinadorException 
+     */
+    public List<ReporteResumenCubiculoDTO> generaReporteResumenCubiculo()throws CoordinadorException{
+        try {
+            return sistemaGestorReportes.generarReporteEstadisticoResumen();
+        } catch (GestorReportesException ex) {
+            
+            throw new CoordinadorException(ex.getMessage());
+        }
+    
+    }
+
 }
