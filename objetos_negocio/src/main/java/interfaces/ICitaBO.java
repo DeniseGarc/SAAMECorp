@@ -109,4 +109,13 @@ public interface ICitaBO {
      * @throws excepciones.NegocioException
      */
     public List<LocalTime> obtenerHorasDisponibles(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha) throws NegocioException;
+    
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.NegocioException
+     */
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws NegocioException;
 }

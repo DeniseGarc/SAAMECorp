@@ -82,19 +82,38 @@ public class FModificarCita implements IModificarCita {
         }
     }
 
+    /**
+     * Método para actualizar una cita existente
+     *
+     * @param citaActualizada La cita con los nuevos datos
+     * @return true si la actualización fue exitosa, false en caso contrario
+     * @throws excepciones.ModificarCitaException
+     */
     @Override
-    public boolean actualizarCita(CitaRegistradaDTO cita) throws ModificarCitaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean actualizarCita(CitaRegistradaDTO citaActualizada) throws ModificarCitaException {
+        try {
+            return control.actualizarCita(citaActualizada);
+        } catch (ModificarCitaException e) {
+            Logger.getLogger(ControlModificarCita.class.getName()).log(Level.SEVERE, null, e);
+            throw new ModificarCitaException("Error al modificar la cita: ", e);
+        }
     }
-
+    
+    /**
+     * Método que se conecta con el servicio externo para mandar un correo
+     * electrónico al correo ingresado.
+     *
+     * @param cita de la cual se enviará confirmación
+     * @return true si la operación fue exitosa, false en caso contrario.
+     * @throws excepciones.ModificarCitaException
+     */
     @Override
-    public AdeudoCitaDTO verificarAdeudoCita(CitaRegistradaDTO cita) throws ModificarCitaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean aplicarCuota(CitaRegistradaDTO cita) throws ModificarCitaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean mandarCorreo(CitaRegistradaDTO cita) throws ModificarCitaException {
+        try {
+            return control.mandarCorreo(cita);
+        } catch (Exception e) {
+            throw new ModificarCitaException("Error al mandar el correo: ", e);
+        }
     }
 
 }

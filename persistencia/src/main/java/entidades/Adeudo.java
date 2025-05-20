@@ -43,9 +43,10 @@ public class Adeudo {
      * @param estado Estado del adeudo: {@code true} si está pagado,
      * {@code false} si está pendiente.
      */
-    public Adeudo(double cantidad, boolean estado) {
+    public Adeudo(double cantidad, boolean estado, String notas) {
         this.cantidad = cantidad;
         this.estado = estado;
+        this.notas = notas;
     }
 
     /**

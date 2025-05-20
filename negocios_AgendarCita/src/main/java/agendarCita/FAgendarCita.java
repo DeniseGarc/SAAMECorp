@@ -138,7 +138,7 @@ public class FAgendarCita implements IAgendarCita {
         if (cita == null || cita.getPsicologo() == null || cita.getCubiculo() == null) {
             throw new AgendarCitaException("Datos incompletos de la cita");
         }
-        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false);
+        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false, "-");
         cita.setAdeudo(adeudo);
 
         if (!control.validarFechaCitaRepetida(cita)) {

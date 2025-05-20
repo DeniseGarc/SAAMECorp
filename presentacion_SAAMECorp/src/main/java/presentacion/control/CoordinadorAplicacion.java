@@ -22,6 +22,7 @@ import pantallasCubiculos.frmAgregarCubiculo;
 import pantallasCubiculos.frmEditarCubiculo;
 import pantallasCubiculos.frmMenuCubiculos;
 import pantallasCubiculos.frmMenuReportes;
+import pantallasModificarCita.DlgConfirmaciónCuota;
 import pantallasModificarCita.PantallaActualizarCita;
 import pantallasModificarCita.PantallaSeleccionCitaModificar;
 import pantallasReportes.frmReporteIngresosCubiculo;
@@ -306,5 +307,15 @@ public class CoordinadorAplicacion {
 
         frmPantalla.setVisible(true);
         }
+    
+    /**
+     * Metodo para que se presente el dialogo de cuota
+     * @param frame el frame de modificar cita
+     * @param cita la cita q se va a actualizar
+     */
+    public void dialogoCuota(JFrame frame, CitaRegistradaDTO cita) {
+        DlgConfirmaciónCuota cuota = new DlgConfirmaciónCuota(frame, true, cita);
+        cuota.setVisible(true);
+    }
     
 }
