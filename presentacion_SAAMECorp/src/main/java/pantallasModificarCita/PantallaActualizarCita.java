@@ -302,7 +302,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
                 c.getAdeudo().setNotas("Modificada sin cuota.");
                 controlNegocio.actualizarCita(c);
                 JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                if(controlNegocio.mandarCorreo(c)) {
+                if (controlNegocio.mandarCorreo(c)) {
                     JOptionPane.showMessageDialog(this, "El correo de confirmación fue enviado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Ocurrió un error al enviar el correo, favor de comuncarse con el recipiente.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -314,7 +314,8 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
                 flujoPantallas.pantallaCalendarioCitas(this);
             }
         } else {
-
+            CitaRegistradaDTO c = getNuevaCita();
+            flujoPantallas.dialogoCuota(this, c);
         }
 
     }//GEN-LAST:event_btnConfirmarMouseClicked
@@ -346,13 +347,13 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
             for (LocalTime hora : horarios) {
                 CbBoxHorario.addItem(hora.toString());
             }
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            String fechaCitaFormateada = sdf.format(cita.getFechaHora().getTime());
-            if (((DefaultComboBoxModel<String>) CbBoxHorario.getModel()).getIndexOf(fechaCitaFormateada) == -1) {
-                CbBoxHorario.addItem(fechaCitaFormateada);
+            if (CbBoxCubiculo.getSelectedItem().toString().equalsIgnoreCase(cita.getCubiculo().getNombre())) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String fechaCitaFormateada = sdf.format(cita.getFechaHora().getTime());
+                if (((DefaultComboBoxModel<String>) CbBoxHorario.getModel()).getIndexOf(fechaCitaFormateada) == -1) {
+                    CbBoxHorario.addItem(fechaCitaFormateada);
+                }
             }
-            CbBoxHorario.setSelectedItem(fechaCitaFormateada);
-
         } catch (ModificarCitaException ex) {
             Logger.getLogger(PantallaActualizarCita.class.getName()).log(Level.SEVERE, null, ex);
         }
