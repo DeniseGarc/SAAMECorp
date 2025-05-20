@@ -190,9 +190,7 @@ public class ControlAgendarCita {
      */
     public PsicologoCitaDTO obtenerPsicologo(String identificador, Calendar fechaCita) throws AgendarCitaException {
         try {
-            PsicologoDTO psicologoEncontrado = psicologoBO.obtenerPsicologoPorIdentificador(identificador);
-            List<LocalTime> horasPsicologo = citaBO.obtenerHorasDisponiblesPorFechaYPsicologo(fechaCita, psicologoEncontrado);
-            return new PsicologoCitaDTO(psicologoEncontrado, horasPsicologo);
+            return psicologoBO.obtenerPsicologoPorIdentificador(identificador);
         } catch (Exception e) {
             Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, null, e);
             throw new AgendarCitaException("Ha ocurrido un error al intentar consultar el psicólogo y sus horas disponibles", e);

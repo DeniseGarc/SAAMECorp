@@ -74,11 +74,11 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
             List<Cita> citas = citaDAO.obtenerCitas();
             int usos = 0;
             
-            for (Cita cita : citas) {
-                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
-                    usos++;
-                }
-            }
+//            for (Cita cita : citas) {
+//                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
+//                    usos++;
+//                }
+//            }
             
             return new ReporteUsoCubiculoDTO(nombreCubiculo, usos);
         } catch (PersistenciaException ex) {
@@ -101,14 +101,14 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
             Map<String, Integer> totalCitas = new HashMap<>();
             Map<String, Double> ingresos = new HashMap<>();
             
-            for (Cita cita : citas) {
-                String cubiculo = cita.getCubiculo(); 
-                double monto = (cita.getAdeudo() != null && cita.getAdeudo().isEstado())
-                        ? cita.getAdeudo().getCantidad() : 0;
-                
-                totalCitas.put(cubiculo, totalCitas.getOrDefault(cubiculo, 0) + 1);
-                ingresos.put(cubiculo, ingresos.getOrDefault(cubiculo, 0.0) + monto);
-            }
+//            for (Cita cita : citas) {
+//                String cubiculo = cita.getCubiculo(); 
+//                double monto = (cita.getAdeudo() != null && cita.getAdeudo().isEstado())
+//                        ? cita.getAdeudo().getCantidad() : 0;
+//                
+//                totalCitas.put(cubiculo, totalCitas.getOrDefault(cubiculo, 0) + 1);
+//                ingresos.put(cubiculo, ingresos.getOrDefault(cubiculo, 0.0) + monto);
+//            }
             
             List<ReporteResumenCubiculoDTO> resumen = new ArrayList<>();
             for (Cubiculo cubiculo : cubiculos) {
@@ -152,19 +152,19 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
             int pagadas = 0;
             int pendientes = 0;
             
-            for (Cita cita : citas) {
-                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
-                    Adeudo adeudo = cita.getAdeudo();
-                    if (adeudo != null) {
-                        if (adeudo.isEstado()) { 
-                            ingreso += adeudo.getCantidad();
-                            pagadas++;
-                        } else {
-                            pendientes++;
-                        }
-                    }
-                }
-            }
+//            for (Cita cita : citas) {
+//                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
+//                    Adeudo adeudo = cita.getAdeudo();
+//                    if (adeudo != null) {
+//                        if (adeudo.isEstado()) { 
+//                            ingreso += adeudo.getCantidad();
+//                            pagadas++;
+//                        } else {
+//                            pendientes++;
+//                        }
+//                    }
+//                }
+//            }
             
             return new ReporteIngresosCubiculoDTO(nombreCubiculo, ingreso, pagadas, pendientes);
         } catch (PersistenciaException ex) {

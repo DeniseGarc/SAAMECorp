@@ -11,9 +11,11 @@ import conexion.ConexionBD;
 import entidades.Psicologo;
 import excepciones.PersistenciaException;
 import interfaces.IPsicologoDAO;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  * Clase que implementa los metodos para Psicologos en la capa de persistencia
@@ -54,7 +56,7 @@ public class PsicologoDAO implements IPsicologoDAO {
     @Override
     public List<Psicologo> obtenerPsicologos() throws PersistenciaException {
         try {
-            List<Psicologo> lista = new LinkedList<>();
+            List<Psicologo> lista = new ArrayList<>();
             for (Psicologo p : coleccion.find()) {
                 lista.add(p);
             }
@@ -67,20 +69,21 @@ public class PsicologoDAO implements IPsicologoDAO {
     /**
      * Metodo para obtener un Psicologo especificp por su identificador
      *
-     * @param identificador Identificador unico del Psicologo a buscar
+     * @param id
      * @return Psicologo encontrado
+     * @throws excepciones.PersistenciaException
      */
     @Override
-    public Psicologo obtenerPsicologoPorIdentificador(String identificador) throws PersistenciaException {
+    public Psicologo obtenerPsicologoPorIdentificador(String id) throws PersistenciaException {
         try {
-            Bson filtro = eq("correo", identificador);
-            Psicologo psicologo = coleccion.find(filtro).first();
+            ObjectId o = new ObjectId(id);
+            Psicologo psicologo = coleccion.find(eq("_id", o)).first();
             if (psicologo == null) {
-                throw new PersistenciaException("No se encontró un psicólogo con el correo: " + identificador);
+                throw new PersistenciaException("No se encontró un psicólogo con ID: " + id);
             }
             return psicologo;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar el psicólogo: " + e.getMessage());
+            throw new PersistenciaException("Error al buscar el psicólogo por ID: " + e.getMessage(), e);
         }
     }
 

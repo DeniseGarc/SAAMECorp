@@ -8,6 +8,7 @@ import dto.CitaDTO;
 import dto.CitaNuevaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
+import dto.PsicologoCitaDTO;
 import dto.PsicologoDTO;
 import excepciones.NegocioException;
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public interface ICitaBO {
      * @return Lista de horas disponibles del psicologo
      * @throws excepciones.NegocioException
      */
-    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoDTO psicologo) throws NegocioException;
+    public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, PsicologoCitaDTO psicologo) throws NegocioException;
 
     /**
      * Obtiene los cubiculos que tienen citas registradas en la fecha y hora
