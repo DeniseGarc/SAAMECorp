@@ -22,20 +22,34 @@ import java.util.List;
 public class CitaMapper {
 
     public CitaNuevaDTO toDTO(Cita cita) {
-        return new CitaNuevaDTO(cita.getFechaHora(), cita.getCubiculo(), new PsicologoCitaDTO(cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), null),
-                cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new AdeudoCitaDTO(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
+        return new CitaNuevaDTO(cita.getFechaHora(), cita.getObjectCubiculoString(), cita.getObjectPsicologoString(),
+                cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
     }
 
     public Cita toEntity(CitaNuevaDTO cita) {
-        return new Cita(cita.getFechaHora(), cita.getCubiculo(), new Psicologo(null, cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), cita.getPsicologo().getRfc(), cita.getPsicologo().getHorarioDia()),
-                cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
+        Cita c = new Cita();
+        c.setFechaHora(cita.getFechaHora());
+        c.setNombrePaciente(cita.getNombrePaciente());
+        c.setTelefonoPaciente(cita.getTelefonoPaciente());
+        c.setCorreoPaciente(cita.getCorreoPaciente());
+        c.setObjectPsicologoString(cita.getPsicologo());
+        c.setObjectCubiculoString(cita.getCubiculo());
+        c.setDetallesAdeudo(new Adeudo(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado()));
+        return c;
     }
 
     public List<CitaNuevaDTO> toDTOList(List<Cita> citas) {
         List<CitaNuevaDTO> citasDTO = new ArrayList<>();
         for (Cita cita : citas) {
-            citasDTO.add(new CitaNuevaDTO(cita.getFechaHora(), cita.getCubiculo(), new PsicologoCitaDTO(cita.getPsicologo().getNombre(), cita.getPsicologo().getApellidoPaterno(), cita.getPsicologo().getApellidoMaterno(), cita.getPsicologo().getCorreo(), null),
-                    cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente(), new AdeudoCitaDTO(cita.getAdeudo().getCantidad(), cita.getAdeudo().isEstado())));
+            CitaNuevaDTO c = new CitaNuevaDTO();
+            c.setFechaHora(cita.getFechaHora());
+            c.setNombrePaciente(cita.getNombrePaciente());
+            c.setTelefonoPaciente(cita.getTelefonoPaciente());
+            c.setCorreoPaciente(cita.getCorreoPaciente());
+            c.setPsicologo(cita.getObjectPsicologoString());
+            c.setCubiculo(cita.getObjectCubiculoString());
+            c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
+            citasDTO.add(c);
         }
         return citasDTO;
     }
@@ -43,16 +57,24 @@ public class CitaMapper {
     public List<CitaDTO> toDTOList2(List<Cita> citas) {
         List<CitaDTO> citasDTO = new ArrayList<>();
         for (Cita cita : citas) {
-            citasDTO.add(new CitaDTO(cita.getFechaHora(), cita.getCubiculo()));
+            citasDTO.add(new CitaDTO(cita.getFechaHora(), cita.getObjectCubiculoString()));
         }
         return citasDTO;
     }
-    
-    public List<CitaRegistradaDTO> toDTOList3 (List<Cita> citas) {
+
+    public List<CitaRegistradaDTO> toDTOList3(List<Cita> citas) {
         List<CitaRegistradaDTO> citasDTO = new ArrayList<>();
-        PsicologoMapper mapper = new PsicologoMapper();
         for (Cita cita : citas) {
-//            citasDTO.add(new CitaRegistradaDTO(cita.getId(), cita.getFechaHora(), cita.getCubiculo(), mapper.toDTO2(cita.getPsicologo()), cita.getNombrePaciente(), cita.getTelefonoPaciente(), cita.getCorreoPaciente()));
+            CitaRegistradaDTO c = new CitaRegistradaDTO();
+            c.setId(cita.getObjectString());
+            c.setFechaHora(cita.getFechaHora());
+            c.setNombrePaciente(cita.getNombrePaciente());
+            c.setTelefonoPaciente(cita.getTelefonoPaciente());
+            c.setCorreoPaciente(cita.getCorreoPaciente());
+            c.setPsicologo(cita.getObjectPsicologoString());
+            c.setCubiculo(cita.getObjectCubiculoString());
+            c.setAdeudo(new AdeudoCitaDTO(cita.getDetallesAdeudo().getCantidad(), cita.getDetallesAdeudo().isEstado()));
+            citasDTO.add(c);
         }
         return citasDTO;
     }

@@ -74,7 +74,7 @@ public class CitaDAO implements ICitaDAO {
     @Override
     public List<LocalTime> obtenerHorasDisponiblesPorFechaYPsicologo(Calendar fecha, Psicologo psicologo) throws PersistenciaException {
         try {
-            List<LocalTime> horasTotales = psicologo.getHorarioDia(); 
+            List<LocalTime> horasTotales = psicologo.getHorasAtencion(); 
             Date fechaConsulta = fecha.getTime();
             List<Cita> citas = coleccionCitas.find(and(eq("psicologo.correo", psicologo.getCorreo()), eq("fechaHora", fechaConsulta))).into(new ArrayList<>());
             Set<LocalTime> ocupadas = new HashSet<>();
@@ -107,7 +107,7 @@ public class CitaDAO implements ICitaDAO {
             List<Cita> citas = coleccionCitas.find(eq("fechaHora", fechaConsulta)).into(new ArrayList<>());
             Set<String> nombresCubiculos = new HashSet<>();
             for (Cita cita : citas) {
-                nombresCubiculos.add(cita.getCubiculo());
+                nombresCubiculos.add(cita.getObjectCubiculoString());
             }
             List<Cubiculo> ocupados = new ArrayList<>();
             for (String nombre : nombresCubiculos) {
@@ -200,7 +200,7 @@ public class CitaDAO implements ICitaDAO {
     public boolean validarExistenciaCitaRepetida(Cita citaARegistrar) throws PersistenciaException {
         try {
             Date fechaConsulta = citaARegistrar.getFechaHora().getTime();
-            Cita existente = coleccionCitas.find(and(eq("fechaHora", fechaConsulta), eq("cubiculo", citaARegistrar.getCubiculo()))).first();
+            Cita existente = coleccionCitas.find(and(eq("fechaHora", fechaConsulta), eq("cubiculo", citaARegistrar.getObjectCubiculoString()))).first();
             return existente == null;
         } catch (Exception e) {
             throw new PersistenciaException("Error al validar cita duplicada: " + e.getMessage(), e);

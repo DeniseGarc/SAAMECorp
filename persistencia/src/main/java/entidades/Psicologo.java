@@ -85,14 +85,14 @@ public class Psicologo {
      * @param horarioDia
      */
     public Psicologo(ObjectId id, String nombre, String apellidoPaterno, String apellidoMaterno, String correo,
-            String rfc, List<LocalTime> horarioDia) {
+            String rfc, List<LocalTime> horasAtencion) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.rfc = rfc;
-        this.horarioDia = horarioDia;
+        this.horasAtencion = horasAtencion;
     }
 
     /**

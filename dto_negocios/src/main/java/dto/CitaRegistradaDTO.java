@@ -30,7 +30,7 @@ public class CitaRegistradaDTO {
     /**
      * Psicólogo asignado a la cita.
      */
-    private PsicologoDTO psicologo;
+    private String psicologo;
 
     /**
      * Nombre completo del paciente.
@@ -47,10 +47,15 @@ public class CitaRegistradaDTO {
      */
     private String correoPaciente;
 
+    /**
+     * Información del adeudo asociado a la cita, si existe.
+     */
+    private AdeudoCitaDTO adeudo;
+
     public CitaRegistradaDTO() {
     }
 
-    public CitaRegistradaDTO(String id, Calendar fechaHora, String cubiculo, PsicologoDTO psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente) {
+    public CitaRegistradaDTO(String id, Calendar fechaHora, String cubiculo, String psicologo, String nombrePaciente, String telefonoPaciente, String correoPaciente, AdeudoCitaDTO adeudo) {
         this.id = id;
         this.fechaHora = fechaHora;
         this.cubiculo = cubiculo;
@@ -58,6 +63,7 @@ public class CitaRegistradaDTO {
         this.nombrePaciente = nombrePaciente;
         this.telefonoPaciente = telefonoPaciente;
         this.correoPaciente = correoPaciente;
+        this.adeudo = adeudo;
     }
 
     public String getId() {
@@ -84,11 +90,11 @@ public class CitaRegistradaDTO {
         this.cubiculo = cubiculo;
     }
 
-    public PsicologoDTO getPsicologo() {
+    public String getPsicologo() {
         return psicologo;
     }
 
-    public void setPsicologo(PsicologoDTO psicologo) {
+    public void setPsicologo(String psicologo) {
         this.psicologo = psicologo;
     }
 
@@ -114,6 +120,14 @@ public class CitaRegistradaDTO {
 
     public void setCorreoPaciente(String correoPaciente) {
         this.correoPaciente = correoPaciente;
+    }
+
+    public AdeudoCitaDTO getAdeudo() {
+        return adeudo;
+    }
+
+    public void setAdeudo(AdeudoCitaDTO adeudo) {
+        this.adeudo = adeudo;
     }
 
 }

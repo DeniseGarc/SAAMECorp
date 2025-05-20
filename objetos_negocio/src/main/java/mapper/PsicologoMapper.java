@@ -18,7 +18,7 @@ import java.util.List;
 public class PsicologoMapper {
 
     public PsicologoCitaDTO toDTO(Psicologo psicologo) {
-        return new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc(), psicologo.getHorarioDia());
+        return new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc(), psicologo.getHorasAtencion());
     }
 
     public Psicologo toEntity(PsicologoCitaDTO psicologo) {
@@ -32,7 +32,7 @@ public class PsicologoMapper {
     public List<PsicologoCitaDTO> toDTOList(List<Psicologo> psicologos) {
         List<PsicologoCitaDTO> psicologosDTO = new ArrayList<>();
         for (Psicologo psicologo : psicologos) {
-            psicologosDTO.add(new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc(), psicologo.getHorarioDia()));
+            psicologosDTO.add(new PsicologoCitaDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc(), psicologo.getHorasAtencion()));
         }
         return psicologosDTO;
     }

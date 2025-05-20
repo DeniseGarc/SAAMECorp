@@ -276,7 +276,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
         return new CitaNuevaDTO(
                 obtenerFechaHoraCita(),
                 cmbCubiculo.getSelectedItem().toString(),
-                psicologo,
+                cmbPsicologos.getSelectedItem().toString(),
                 txtNombrePaciente.getText(),
                 txtTelefonoPaciente.getText(),
                 txtCorreoPaciente.getText(),
