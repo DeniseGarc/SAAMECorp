@@ -21,6 +21,7 @@ public class frmMenuReportes extends javax.swing.JFrame {
     
     /**
      * Creates new form frmMenuReportes
+     * @param frm
      */
     public frmMenuReportes(JFrame frm) {
         this.frmPadre = frmPadre;
@@ -178,19 +179,19 @@ public class frmMenuReportes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReporteIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteIngresosMouseClicked
-        flujoPantallas.PantallaEditarCubiculos(frmPadre);
+        
     }//GEN-LAST:event_btnReporteIngresosMouseClicked
 
     private void btnReporteIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteIngresosActionPerformed
-        // TODO add your handling code here:
+        flujoPantallas.pantallaReporteIngresosCubiculo(frmPadre);
     }//GEN-LAST:event_btnReporteIngresosActionPerformed
 
     private void btnReporteUsoCubiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteUsoCubiculosActionPerformed
-        // TODO add your handling code here:
+        flujoPantallas.pantallaReporteUsoCubiculo(frmPadre);
     }//GEN-LAST:event_btnReporteUsoCubiculosActionPerformed
 
     private void ReporteEstadisticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteEstadisticoActionPerformed
-        // TODO add your handling code here:
+        flujoPantallas.pantallaReporteEstadistico(frmPadre);
     }//GEN-LAST:event_ReporteEstadisticoActionPerformed
 
     private void btnRegresar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar7ActionPerformed

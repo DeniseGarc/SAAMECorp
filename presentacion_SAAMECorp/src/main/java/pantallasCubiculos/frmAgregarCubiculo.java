@@ -4,8 +4,16 @@
  */
 package pantallasCubiculos;
 
+import dto.CubiculoDTO;
+import excepciones.CoordinadorException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
@@ -17,6 +25,7 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     private JFrame frmPadre;
     
     /**
@@ -26,7 +35,28 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
         this.frmPadre = frmPadre;
         initComponents();
         setLocationRelativeTo(null);
+        btnGuardar.setEnabled(false);
+        agregarListeners();
+        
+        
     }
+    private void agregarListeners() {
+        DocumentListener listener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { verificarCampos(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { verificarCampos(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { verificarCampos(); }
+        };
+
+        txtNombre.getDocument().addDocumentListener(listener);
+        txtCapacidad.getDocument().addDocumentListener(listener);
+        txtTipoTerapia.getDocument().addDocumentListener(listener);
+        txtNotas.getDocument().addDocumentListener(listener);
+    }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +70,7 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txtCapacidad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -64,10 +94,15 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 36)); // NOI18N
         jLabel2.setText("Agregar Cubiculo");
 
-        jButton1.setBackground(new java.awt.Color(102, 0, 102));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jButton1.setText("Guardar");
+        btnGuardar.setBackground(new java.awt.Color(102, 0, 102));
+        btnGuardar.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(204, 204, 204));
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel1.setText("Capacidad");
@@ -150,9 +185,7 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(777, 777, 777)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -163,7 +196,7 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
-                .addComponent(jButton1)
+                .addComponent(btnGuardar)
                 .addGap(58, 58, 58))
         );
 
@@ -205,11 +238,38 @@ public class frmAgregarCubiculo extends javax.swing.JFrame {
         flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresar7ActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String nombre = txtNombre.getText();
+        Integer capacidad = Integer.valueOf(txtCapacidad.getText());
+        String tipoTerapia = txtTipoTerapia.getText();
+        String notas = txtNotas.getText();
+        
+        CubiculoDTO cubiculo = new CubiculoDTO(nombre, true, capacidad, tipoTerapia, notas);
+        try {
+           String resultado = controlNegocio.AgregarCubiculo(cubiculo);
+        JOptionPane.showMessageDialog(this, resultado );
+        flujoPantallas.PantallaGestionCubiculos(frmPadre);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entero válido.");
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(frmAgregarCubiculo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+    
+    private void verificarCampos() {
+        boolean nombreValido = !txtNombre.getText().trim().isEmpty();
+        boolean capacidadValida = !txtCapacidad.getText().trim().isEmpty() && txtCapacidad.getText().matches("\\d+");
+        boolean tipoTerapiaValido = !txtTipoTerapia.getText().trim().isEmpty();
+        boolean notasValidas = !txtNotas.getText().trim().isEmpty();
+
+        btnGuardar.setEnabled(nombreValido && capacidadValida && tipoTerapiaValido && notasValidas);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRegresar7;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
