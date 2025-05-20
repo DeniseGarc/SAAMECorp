@@ -75,6 +75,14 @@ public class Cubiculo {
         this.tipoTerapia = tipoTerapia;
         this.notas = notas;
     }
+
+    public Cubiculo(String nombre, boolean estado, int capacidad, String tipoTerapia, String notas) {
+        this.nombre = nombre;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.tipoTerapia = tipoTerapia;
+        this.notas = notas;
+    }
     
     /**
      * Devuelve el identificador en formato String (hexadecimal)

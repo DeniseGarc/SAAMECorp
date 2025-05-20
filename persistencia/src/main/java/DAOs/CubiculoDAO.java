@@ -92,9 +92,8 @@ public class CubiculoDAO implements ICubiculoDAO {
     public boolean ModificarCubiculo(Cubiculo cubiculoModificar) throws PersistenciaException {
         try {
             UpdateResult result = coleccionCubiculos.replaceOne(
-
-                eq("_id", cubiculoModificar.getObjectString()), cubiculoModificar
-
+                eq("_id", cubiculoModificar.getId()), // Usa ObjectId directamente
+                cubiculoModificar
             );
             return result.getModifiedCount() > 0;
         } catch (Exception e) {
