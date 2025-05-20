@@ -44,7 +44,7 @@ public class ManejadorBO {
                 return psicologoBO;
             case REPORTE: 
                 IReporteCubiculoBO reporteBO = ReporteCubiculoBO.getInstancia();
-                
+                return reporteBO;
             default:
                 throw new IllegalArgumentException("Tipo de BO no soportado: " + tipo);
         }

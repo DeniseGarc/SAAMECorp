@@ -4,29 +4,85 @@
  */
 package pantallasCubiculos;
 
+import dto.CubiculoDTO;
+import excepciones.CoordinadorException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 
 /**
  *
  * @author erika
  */
 public class frmEditarCubiculo extends javax.swing.JFrame {
-
+    /**
+     * Lista de cubiculos
+     */
+    private List<CubiculoDTO> listaCubiculos = new ArrayList<>();
     /**
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    /**
+     * Coordinador para la logica de negocio de la aplicacion
+     */
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
     private JFrame frmPadre;
     
     /**
      * Creates new form frmEditarCubiculo
      */
     public frmEditarCubiculo(JFrame frm) {
-        this.frmPadre = frmPadre;
+        this.frmPadre = frm;
         initComponents();
         setLocationRelativeTo(null);
+        mostrarCubiculos();
+        
+        cBoxSeleccionarCubiculo.addActionListener((ActionEvent e) -> {
+            mostrarDatosCubiculoSeleccionado();
+        });
     }
+    
+    private void mostrarDatosCubiculoSeleccionado() {
+        int index = cBoxSeleccionarCubiculo.getSelectedIndex();
+        if (index >= 0 && index < listaCubiculos.size()) {
+            CubiculoDTO cubiculo = listaCubiculos.get(index);
+            txtCapacidad.setText(String.valueOf(cubiculo.getCapacidad()));
+            txtTipoTerapia.setText(cubiculo.getTipoTerapia());
+            jTextArea1.setText(cubiculo.getNotas()); // Asegúrate de que CubiculoDTO tenga el método getNotas()
+        }
+    }
+
+    
+    private void mostrarCubiculos() {
+        try {
+            listaCubiculos = controlNegocio.obtenerCubiculos();
+
+            if (listaCubiculos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay cubículos registrados.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            cBoxSeleccionarCubiculo.removeAllItems();
+
+            for (CubiculoDTO cubiculo : listaCubiculos) {
+                cBoxSeleccionarCubiculo.addItem(cubiculo.getNombre());
+            }
+
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los cubículos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,7 +96,7 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cBoxSeleccionarCubiculo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtCapacidad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -52,7 +108,6 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         btnRegresar7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 680));
 
         jPanel1.setBackground(new java.awt.Color(221, 212, 240));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 680));
@@ -63,10 +118,15 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         cBoxSeleccionarCubiculo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cBoxSeleccionarCubiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setBackground(new java.awt.Color(102, 0, 102));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jButton1.setText("Guardar");
+        btnGuardar.setBackground(new java.awt.Color(102, 0, 102));
+        btnGuardar.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(204, 204, 204));
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel1.setText("Capacidad");
@@ -149,7 +209,7 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
                                 .addComponent(cBoxSeleccionarCubiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(777, 777, 777)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(27, 27, 27))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,7 +222,7 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
-                .addComponent(jButton1)
+                .addComponent(btnGuardar)
                 .addGap(58, 58, 58))
         );
 
@@ -189,15 +249,61 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
         flujoPantallas.regresarAlMenuPrincipal(this);
     }//GEN-LAST:event_btnRegresar7ActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        int index = cBoxSeleccionarCubiculo.getSelectedIndex();
+        if (index < 0 || index >= listaCubiculos.size()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cubículo válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        CubiculoDTO cubiculo = listaCubiculos.get(index);
+
+        try {
+            // Validar y asignar capacidad
+            String capacidadTexto = txtCapacidad.getText().trim();
+            if (capacidadTexto.isEmpty()) {
+                throw new IllegalArgumentException("La capacidad no puede estar vacía.");
+            }
+
+            int capacidad = Integer.parseInt(capacidadTexto);
+            if (capacidad <= 0) {
+                throw new IllegalArgumentException("La capacidad debe ser mayor a cero.");
+            }
+
+            String tipoTerapia = txtTipoTerapia.getText().trim();
+            if (tipoTerapia.isEmpty()) {
+                throw new IllegalArgumentException("El tipo de terapia no puede estar vacío.");
+            }
+
+            String notas = jTextArea1.getText().trim();
+
+            // Actualizar el objeto DTO
+            cubiculo.setCapacidad(capacidad);
+            cubiculo.setTipoTerapia(tipoTerapia);
+            cubiculo.setNotas(notas);
+
+            controlNegocio.modificarCubiculo(cubiculo);
+
+            JOptionPane.showMessageDialog(this, "Cubículo actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el cubículo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRegresar7;
     private javax.swing.JComboBox<String> cBoxSeleccionarCubiculo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

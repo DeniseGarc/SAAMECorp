@@ -413,7 +413,7 @@ public class CoordinadorNegocio {
     
     /**
      * Metodo para agregar un nuevo cubiculo
-     * @param cubiculo Cyb
+     * @param cubiculo 
      * @return
      * @throws CoordinadorException 
      */

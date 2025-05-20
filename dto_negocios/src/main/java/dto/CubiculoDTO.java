@@ -15,7 +15,11 @@ package dto;
  * @author Alici
  */
 public class CubiculoDTO {
-
+    
+    /**
+     * Id del cubiculo
+     */
+    private String id;
     /**
      * Nombre o identificador del cubículo.
      */
@@ -59,6 +63,39 @@ public class CubiculoDTO {
     public CubiculoDTO(String nombre, boolean estado) {
         this.nombre = nombre;
         this.estado = estado;
+    }
+    /**
+     * Constructor que inicializa todos los metodos
+     * @param id
+     * @param nombre
+     * @param estado
+     * @param capacidad
+     * @param tipoTerapia
+     * @param notas 
+     */
+    public CubiculoDTO(String id, String nombre, boolean estado, Integer capacidad, String tipoTerapia, String notas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.tipoTerapia = tipoTerapia;
+        this.notas = notas;
+    }
+    
+    /**
+     * Obtiene el id del cubiculo
+     * @return id del cubiculo
+     */
+    public String getId() {
+        return id;
+    }
+    
+    /**
+     * Establece id del cubiculo
+     * @param id id del cubiculo
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
