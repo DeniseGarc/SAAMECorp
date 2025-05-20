@@ -8,14 +8,15 @@ import BO.AdeudoBO;
 import BO.CitaBO;
 import BO.CubiculoBO;
 import BO.FacturaBO;
+import BO.PagoBO;
 import BO.PsicologoBO;
 import BO.ReporteCubiculoBO;
-import DAOs.FacturaDAO;
 import enumeradores.TipoBO;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
 import interfaces.ICubiculoBO;
 import interfaces.IFacturaBO;
+import interfaces.IPagoBO;
 import interfaces.IPsicologoBO;
 import interfaces.IReporteCubiculoBO;
 
@@ -36,8 +37,8 @@ public class ManejadorBO {
     public static Object crearBO(TipoBO tipo) {
         switch (tipo) {
             case ADEUDO:
-                IAdeudoBO audeudoBO = AdeudoBO.getInstancia();
-                return audeudoBO;
+                IAdeudoBO adeudoBO = AdeudoBO.getInstancia();
+                return adeudoBO;
             case CITA:
                 ICitaBO citaBO = CitaBO.getInstancia();
                 return citaBO;
@@ -49,9 +50,13 @@ public class ManejadorBO {
                 return psicologoBO;
             case REPORTE:
                 IReporteCubiculoBO reporteBO = ReporteCubiculoBO.getInstancia();
+                return reporteBO;
             case FACTURA:
                 IFacturaBO facturaBO = new FacturaBO();
                 return facturaBO;
+            case PAGO:
+                IPagoBO pagoBO = new PagoBO();
+                return pagoBO;
 
             default:
                 throw new IllegalArgumentException("Tipo de BO no soportado: " + tipo);

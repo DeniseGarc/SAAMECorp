@@ -38,7 +38,8 @@ public class PagoDAO implements IPagoDAO {
         }
         return instancia;
     }
-
+    
+    
     /**
      * Metodo para consultar los pagos realizados por un psicologo en los
      * ultimos 30 dias.

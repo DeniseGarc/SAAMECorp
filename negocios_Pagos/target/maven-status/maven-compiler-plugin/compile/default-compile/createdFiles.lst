@@ -1,3 +1,4 @@
-com\infraestructura_pagos\IPago.class
-pago\control\ControlPago.class
-com\infraestructura_pagos\FPago.class
+excepciones\PagosException.class
+pagos\FPago.class
+pagos\ControlPago.class
+pagos\IPago.class

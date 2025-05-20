@@ -31,4 +31,6 @@ public interface IPagoBO {
      *                          del pago.
      */
     public PagoDTO registrarPago(PagoDTO pagoDTO) throws NegocioException;
+
+    public List<PsicologoDTO> obtenerPsicologos() throws NegocioException;
 }

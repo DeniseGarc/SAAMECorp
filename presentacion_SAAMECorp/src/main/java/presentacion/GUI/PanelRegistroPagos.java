@@ -1,7 +1,16 @@
 package presentacion.GUI;
 
 import dto.PagoDTO;
+import dto.PsicologoDTO;
+import excepciones.CoordinadorException;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
+import presentacion.utilerias.FormaPago;
+import presentacion.utilerias.MetodoPago;
 
 /**
  * Clase que representa el panel donde se registran los pagos realizados en el
@@ -15,16 +24,19 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
      * Coordinador del flujo de las pantallas
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
 
     /**
      * Contructor que inicializa los componentes del panel
      */
     public PanelRegistroPagos() {
         initComponents();
+        cargarComboBoxes();
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlFondoBlanco = new javax.swing.JPanel();
@@ -56,7 +68,8 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         pnlFondoBlanco.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
         cBoxPsicologo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        cBoxPsicologo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBoxPsicologo
+                .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione un psicólogo --" }));
         pnlFondoBlanco.add(cBoxPsicologo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 300, 30));
 
         btnPagosAnteriores.setBackground(new java.awt.Color(86, 33, 89));
@@ -93,11 +106,13 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         pnlFondoBlanco.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 230, 20));
 
         cBoxFormaPago.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        cBoxFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBoxFormaPago
+                .setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione la forma de pago --" }));
         pnlFondoBlanco.add(cBoxFormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 450, 30));
 
         cBoxMetodoPago.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        cBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cBoxMetodoPago.setModel(
+                new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Seleccione el método de pago --" }));
         pnlFondoBlanco.add(cBoxMetodoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 450, 30));
 
         txtMonto.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -140,41 +155,65 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(106, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(107, 107, 107)
+                                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 807,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(106, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(pnlFondoBlanco, javax.swing.GroupLayout.PREFERRED_SIZE, 637,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(22, Short.MAX_VALUE)));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPagosAnterioresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosAnterioresActionPerformed
+    private void btnPagosAnterioresActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnPagosAnterioresActionPerformed
         flujoPantallas.pantallaPagosAnteriores(null, null);
-    }//GEN-LAST:event_btnPagosAnterioresActionPerformed
+    }// GEN-LAST:event_btnPagosAnterioresActionPerformed
 
-    private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+    private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFacturarActionPerformed
         flujoPantallas.pantallaGenerarFactura(null, new PagoDTO());
-    }//GEN-LAST:event_btnFacturarActionPerformed
+    }// GEN-LAST:event_btnFacturarActionPerformed
 
-    private void btnConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarPagoActionPerformed
+    private void btnConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConfirmarPagoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfirmarPagoActionPerformed
+    }// GEN-LAST:event_btnConfirmarPagoActionPerformed
 
+    private void cargarComboBoxes() {
+        for (FormaPago value : FormaPago.values()) {
+            cBoxFormaPago.addItem(value);
+        }
+
+        for (MetodoPago value : MetodoPago.values()) {
+            cBoxMetodoPago.addItem(value);
+        }
+        try {
+            List<PsicologoDTO> psicologos = controlNegocio.obtenerPsicologos();
+            if (psicologos.isEmpty()) {
+                cBoxPsicologo.addItem("No hay psicólogos registrados");
+            } else {
+                cBoxPsicologo.removeAllItems();
+                for (PsicologoDTO psicologo : psicologos) {
+                    cBoxPsicologo.addItem(psicologo);
+                }
+            }
+
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PanelRegistroPagos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmarPago;
     private javax.swing.JButton btnFacturar;
     private javax.swing.JButton btnPagosAnteriores;
-    private javax.swing.JComboBox<String> cBoxFormaPago;
-    private javax.swing.JComboBox<String> cBoxMetodoPago;
-    private javax.swing.JComboBox<String> cBoxPsicologo;
+    private javax.swing.JComboBox<Object> cBoxFormaPago;
+    private javax.swing.JComboBox<Object> cBoxMetodoPago;
+    private javax.swing.JComboBox<Object> cBoxPsicologo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

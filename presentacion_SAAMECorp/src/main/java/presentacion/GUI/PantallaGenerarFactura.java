@@ -450,17 +450,21 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String usoCFDI = ((ClaveCFDI) cBoxUsoCfdi.getSelectedItem()).getClave();
-        String regimenFiscal = ((RegimenFiscal) cboxRegimenFiscal.getSelectedItem()).getClave();
-        if (usoCFDI.isBlank()) {
+        String usoCFDI;
+        String regimenFiscal;
+        if (cBoxUsoCfdi.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "El campo de uso del CFDI no puede estar vacío", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
+        } else {
+            usoCFDI = ((ClaveCFDI) cBoxUsoCfdi.getSelectedItem()).getClave();
         }
-        if (regimenFiscal.isBlank()) {
+        if (cboxRegimenFiscal.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "El campo de régimen fiscal no puede estar vacío", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
+        } else {
+            regimenFiscal = ((RegimenFiscal) cboxRegimenFiscal.getSelectedItem()).getClave();
         }
 
         factura.setTaxZipCode(cpReceptor);

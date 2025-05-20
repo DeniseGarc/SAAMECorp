@@ -33,6 +33,8 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
     public PantallaPagosAnteriores(PsicologoDTO psicologo) {
         this.psicologo = psicologo;
         initComponents();
+        tblPagos.removeColumn(tblPagos.getColumnModel().getColumn(0));
+        
     }
     
     @SuppressWarnings("unchecked")

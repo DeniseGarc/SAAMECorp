@@ -52,7 +52,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
     public PantallaAgregarCita(Calendar fechaSeleccionada) {
         try {
             this.fechaCita = fechaSeleccionada;
-            this.psicologos = controlNegocio.mostrarPsicologos(fechaSeleccionada);
+            this.psicologos = controlNegocio.mostrarPsicologosCita(fechaSeleccionada);
             initComponents();
             btnConfirmar.setEnabled(false);
             SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", Locale.of("es", "ES"));
@@ -290,7 +290,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
      */
     private void seleccionarPsicologoUsuario() {
         try {
-            PsicologoCitaDTO psicologoUsuario = controlNegocio.mostrarPsicologo(GestorSesion.getIdentificadorUsuario(), fechaCita);
+            PsicologoCitaDTO psicologoUsuario = controlNegocio.mostrarPsicologoCita(GestorSesion.getIdentificadorUsuario(), fechaCita);
             cmbPsicologos.addItem(psicologoUsuario);
             cmbPsicologos.setEnabled(false);
         } catch (CoordinadorException ex) {
