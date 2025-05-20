@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -94,37 +95,38 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
      * @throws excepciones.NegocioException
    */
     @Override
-    public List<ReporteResumenCubiculoDTO> generarReporteEstadisticoResumen() throws NegocioException{
+    public List<ReporteResumenCubiculoDTO> generarReporteEstadisticoResumen() throws NegocioException {
         try {
             List<Cita> citas = citaDAO.obtenerCitas();
             List<Cubiculo> cubiculos = cubiculoDAO.buscarCubiculos();
-            
+
             Map<String, Integer> totalCitas = new HashMap<>();
             Map<String, Double> ingresos = new HashMap<>();
-            
+
             for (Cita cita : citas) {
-                String cubiculo = cita.getCubiculo(); 
-                double monto = (cita.getAdeudo() != null && cita.getAdeudo().isEstado())
-                        ? cita.getAdeudo().getCantidad() : 0;
-                
-                totalCitas.put(cubiculo, totalCitas.getOrDefault(cubiculo, 0) + 1);
-                ingresos.put(cubiculo, ingresos.getOrDefault(cubiculo, 0.0) + monto);
+                String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
+                double monto = (cita.getDetallesAdeudo() != null && cita.getDetallesAdeudo().isEstado())
+                        ? cita.getDetallesAdeudo().getCantidad()
+                        : 0;
+
+                totalCitas.put(nombre, totalCitas.getOrDefault(nombre, 0) + 1);
+                ingresos.put(nombre, ingresos.getOrDefault(nombre, 0.0) + monto);
             }
-            
+
             List<ReporteResumenCubiculoDTO> resumen = new ArrayList<>();
             for (Cubiculo cubiculo : cubiculos) {
                 String nombre = cubiculo.getNombre();
                 int citasCubiculo = totalCitas.getOrDefault(nombre, 0);
                 double ingresoCubiculo = ingresos.getOrDefault(nombre, 0.0);
-                double porcentajeUso = calcularPorcentajeUso(nombre, citasCubiculo); 
+                double porcentajeUso = calcularPorcentajeUso(nombre, citasCubiculo);
                 resumen.add(new ReporteResumenCubiculoDTO(nombre, citasCubiculo, ingresoCubiculo, porcentajeUso));
             }
-            
+
             return resumen;
         } catch (PersistenciaException ex) {
             Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Error al generar reporte estadístico", ex);
         }
-        return null;
     }
     
     private double calcularPorcentajeUso(String nombreCubiculo, int citasCubiculo) {
@@ -148,16 +150,17 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
     public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(String nombreCubiculo) throws NegocioException {
         try {
             List<Cita> citas = citaDAO.obtenerCitas();
-            
+
             double ingreso = 0.0;
             int pagadas = 0;
             int pendientes = 0;
-            
+
             for (Cita cita : citas) {
-                if (nombreCubiculo.equalsIgnoreCase(cita.getCubiculo())) {
-                    Adeudo adeudo = cita.getAdeudo();
+                String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
+                if (nombreCubiculo.equalsIgnoreCase(nombre)) {
+                    Adeudo adeudo = cita.getDetallesAdeudo();
                     if (adeudo != null) {
-                        if (adeudo.isEstado()) { 
+                        if (adeudo.isEstado()) {
                             ingreso += adeudo.getCantidad();
                             pagadas++;
                         } else {
@@ -166,7 +169,7 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
                     }
                 }
             }
-            
+
             return new ReporteIngresosCubiculoDTO(nombreCubiculo, ingreso, pagadas, pendientes);
         } catch (PersistenciaException ex) {
             Logger.getLogger(ReporteCubiculoBO.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,14 +177,14 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
         }
     }
     
-    private String obtenerNombreCubiculo(String idCubiculo) throws PersistenciaException {
-    Cubiculo cubiculo = cubiculoDAO.buscarCubiculos()
-        .stream()
-        .filter(c -> c.getObjectString().equals(idCubiculo))
-        .findFirst()
-        .orElse(null);
+    private String obtenerNombreCubiculo(ObjectId idCubiculo) throws PersistenciaException {
+        Cubiculo cubiculo = cubiculoDAO.buscarCubiculos()
+            .stream()
+            .filter(c -> c.getObjectString().equals(idCubiculo))
+            .findFirst()
+            .orElse(null);
 
-    return (cubiculo != null) ? cubiculo.getNombre() : "Desconocido";
-}
+        return (cubiculo != null) ? cubiculo.getNombre() : "Desconocido";
+    }
     
 }
