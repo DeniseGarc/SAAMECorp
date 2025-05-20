@@ -9,6 +9,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import dto.ReporteIngresosCubiculoDTO;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -17,23 +18,19 @@ import java.io.IOException;
  * @author erika
  */
 public class DocumentoPDFUtil {
-    public static void generarPDFIngresosCubiculo(ReporteIngresosCubiculoDTO dto) throws DocumentException, IOException {
-        // Ruta donde se guardará el PDF
-        String nombreArchivo = "ReporteIngresos_" + dto.getNombreCubiculo().replaceAll("\\s+", "_") + ".pdf";
+    public static File generarPDFIngresosCubiculo(ReporteIngresosCubiculoDTO dto) throws Exception {
+        String nombreArchivo = "reporte_ingresos_cubiculo.pdf";
+        File archivo = new File(nombreArchivo);
 
-        Document documento = new Document() {};
-        PdfWriter.getInstance(documento, new FileOutputStream(nombreArchivo));
-        documento.open();
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(archivo));
+        document.open();
+        document.add(new Paragraph("Reporte de Ingresos del Cubículo: " + dto.getNombreCubiculo()));
+        document.add(new Paragraph("Total ingresos: $" + dto.getTotalIngresos()));
+        document.add(new Paragraph("Citas pagadas: " + dto.getCitasConPago()));
+        document.add(new Paragraph("Citas pendientes: " + dto.getCitasPendientes()));
+        document.close();
 
-        // Título
-        documento.add(new Paragraph("REPORTE DE INGRESOS POR CUBÍCULO\n\n"));
-
-        // Contenido del reporte
-        documento.add(new Paragraph("Cubículo: " + dto.getNombreCubiculo()));
-        documento.add(new Paragraph("Total ingresos: $" + dto.getTotalIngresos()));
-        documento.add(new Paragraph("Citas pagadas: " + dto.getCitasConPago()));
-        documento.add(new Paragraph("Citas con pago pendiente: " + dto.getCitasPendientes()));
-
-        documento.close();
+        return archivo;
     }
 }

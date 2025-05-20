@@ -4,6 +4,8 @@
  */
 package dto;
 
+import java.util.List;
+
 /**
  * DTO para crear reportes de uso de cubiculo
  * @author erika
@@ -14,26 +16,53 @@ public class ReporteUsoCubiculoDTO {
      * Nombre del cubiculo
      */
     private String nombreCubiculo;
-    /*
-    *Cantidad de usos del cubiculo
-    */
-    private int cantidadDeUsos;
+  
+    /**
+     * Tipo de terapia 
+     */
+    private String tipoTerapia;
+    /**
+     * Capacidad del cubiculo
+     */
+    private int capacidad;
+    /**
+     * Notas
+     */
+    private String notas;
+    /**
+     * Lista de citas del cubiculo
+     */
+    private List<DetalleCitaCubiculoDTO> citas;
+    /**
+     * Total de citas del cubiculo
+     */
+    private int totalCitas;
+    /**
+     * Citas con adeudo del cubiculo
+     */
+    private int citasConAdeudo;
     
     /**
      * Constructor vacio
      */
     public ReporteUsoCubiculoDTO() {
     }
-    
-    /**
-     * Constructor para con todos los parametros
-     * @param nombreCubiculo Nombre del cubiculo
-     * @param cantidadDeUsos Cantidad de rentas del cubiculos
-     */
-    public ReporteUsoCubiculoDTO(String nombreCubiculo, int cantidadDeUsos) {
+    private String detalleReporte;
+
+    public ReporteUsoCubiculoDTO(String nombreCubiculo, int cantidadDeUsos, String detalleReporte) {
         this.nombreCubiculo = nombreCubiculo;
-        this.cantidadDeUsos = cantidadDeUsos;
+        this.totalCitas = cantidadDeUsos;
+        this.detalleReporte = detalleReporte;
     }
+
+    public String getDetalleReporte() {
+        return detalleReporte;
+    }
+
+    public void setDetalleReporte(String detalleReporte) {
+        this.detalleReporte = detalleReporte;
+    }
+
     
     /**
      * Metodo para obtener el nombre del cubiculo
@@ -50,22 +79,56 @@ public class ReporteUsoCubiculoDTO {
     public void setNombreCubiculo(String nombreCubiculo) {
         this.nombreCubiculo = nombreCubiculo;
     }
-    
-    /**
-     * Metodo para obtener la cantidad de usos del cubiculo
-     * @return Cantidad de usos del cubiculo
-     */
-    public int getCantidadDeUsos() {
-        return cantidadDeUsos;
+
+    public String getTipoTerapia() {
+        return tipoTerapia;
+    }
+
+    public void setTipoTerapia(String tipoTerapia) {
+        this.tipoTerapia = tipoTerapia;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
+
+    public List<DetalleCitaCubiculoDTO> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<DetalleCitaCubiculoDTO> citas) {
+        this.citas = citas;
+    }
+
+
+    public int getTotalCitas() {
+        return totalCitas;
+    }
+
+    public void setTotalCitas(int totalCitas) {
+        this.totalCitas = totalCitas;
+    }
+
+    public int getCitasConAdeudo() {
+        return citasConAdeudo;
+    }
+
+    public void setCitasConAdeudo(int citasConAdeudo) {
+        this.citasConAdeudo = citasConAdeudo;
     }
     
-    /**
-     * Metodo para establecer la cantidad de usos del cubiculo
-     * @param cantidadDeUsos Cantidad de rentas del cubiculo
-     */
-    public void setCantidadDeUsos(int cantidadDeUsos) {
-        this.cantidadDeUsos = cantidadDeUsos;
-    }
     
     
 }
