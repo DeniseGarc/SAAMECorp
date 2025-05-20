@@ -82,15 +82,12 @@ public class ReporteCubiculoBO implements IReporteCubiculoBO{
         try {
             List<Cita> citas = citaDAO.obtenerCitas();
             List<Cita> citasFiltradas = new ArrayList<>();
-            Cubiculo cubiculoSeleccionado = null;
+            Cubiculo cubiculoSeleccionado = cubiculoDAO.buscarCubiculoPorNombre(nombreCubiculo);
 
             for (Cita cita : citas) {
                 String nombre = obtenerNombreCubiculo(cita.getIdCubiculo());
                 if (nombreCubiculo.equalsIgnoreCase(nombre)) {
-                    citasFiltradas.add(cita);
-                    if (cubiculoSeleccionado == null) {
-                        cubiculoSeleccionado = cubiculoDAO.buscarCubiculoPorId(cita.getIdCubiculo().toHexString());
-                    }
+                    citasFiltradas.add(cita); 
                 }
             }
 
