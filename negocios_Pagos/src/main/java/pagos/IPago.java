@@ -1,7 +1,6 @@
 package pagos;
 
 import java.util.List;
-
 import dto.PagoDTO;
 import dto.PsicologoDTO;
 import excepciones.PagosException;
@@ -9,6 +8,7 @@ import excepciones.PagosException;
 /**
  * Interfaz que define los métodos para la lógica de negocio relacionada con
  * los pagos.
+ * ESTA CLASE ES UN MOCK
  * 
  * @author Alici
  */

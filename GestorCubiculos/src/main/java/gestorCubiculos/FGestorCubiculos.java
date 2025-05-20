@@ -12,17 +12,16 @@ import java.util.List;
  *
  * @author erika
  */
-public class FGestorCubiculos implements IGestorCubiculos{
-    
+public class FGestorCubiculos implements IGestorCubiculos {
+
     private final GestorCubiculosControl control = new GestorCubiculosControl();
 
     public FGestorCubiculos() {
     }
-    
-    
+
     @Override
     public List<CubiculoDTO> obtenerCubiculosPorEstado(boolean estado) throws GestorCubiculosException {
-       return control.ObtenerCubiculosPorEstado(estado);
+        return control.ObtenerCubiculosPorEstado(estado);
     }
 
     @Override
@@ -32,7 +31,7 @@ public class FGestorCubiculos implements IGestorCubiculos{
 
     @Override
     public boolean agregarCubiculo(CubiculoDTO cubiculo) throws GestorCubiculosException {
-       return control.AgregaeCubiculo(cubiculo);
+        return control.AgregaeCubiculo(cubiculo);
     }
 
     @Override
@@ -44,5 +43,5 @@ public class FGestorCubiculos implements IGestorCubiculos{
     public boolean modificarCubiculo(CubiculoDTO cubiculoModificar) throws GestorCubiculosException {
         return control.ModificarCubiculo(cubiculoModificar);
     }
-    
+
 }

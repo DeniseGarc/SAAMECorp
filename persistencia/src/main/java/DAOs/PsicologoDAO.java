@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAOs;
 
 import com.mongodb.client.MongoCollection;
@@ -84,6 +80,14 @@ public class PsicologoDAO implements IPsicologoDAO {
         }
     }
 
+    /**
+     * Metodo para obtener un Psicologo especifico por su RFC.
+     * 
+     * @param psicologo Objeto Psicologo que contiene la información del
+     *                  psicólogo.
+     * @return Psicologo encontrado
+     * @throws PersistenciaException Si ocurre un error al buscar el psicólogo.
+     */
     public Psicologo obtenerPsicologoPorRfc(Psicologo psicologo) throws PersistenciaException {
         try {
             Bson filtro = eq("rfc", psicologo.getRfc());

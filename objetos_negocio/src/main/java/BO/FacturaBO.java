@@ -25,12 +25,17 @@ public class FacturaBO implements IFacturaBO {
      * Instancia única de la clase FacturaDAO.
      */
     private IFacturaDAO facturaDAO = FacturaDAO.getInstance();
+    /**
+     * Instancia única de la clase PsicologoDAO
+     */
     private IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
     /**
-     * Instancia del mapper para convertir entre DTOs y entidades.
+     * Instancia del mapper para convertir entre DTOs y entidades para facturas.
      */
     private FacturaMapper mapperFactura = new FacturaMapper();
-
+    /**
+     * Instancia del mapper para convertir entre DTOs y entidades para pagos.
+     */
     private PagoMapper mapperPago = new PagoMapper();
 
     /**

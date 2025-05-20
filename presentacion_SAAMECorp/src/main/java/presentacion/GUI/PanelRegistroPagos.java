@@ -3,13 +3,10 @@ package presentacion.GUI;
 import dto.PagoDTO;
 import dto.PsicologoDTO;
 import excepciones.CoordinadorException;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JOptionPane;
-
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
 import presentacion.utilerias.FormaPago;
@@ -200,6 +197,10 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         limpiarFormulario();
     }// GEN-LAST:event_btnFacturarActionPerformed
 
+    /**
+     * Método que limpia el formulario y los campos de texto una vez se pasa a la
+     * pantalla de facturar pago.
+     */
     private void limpiarFormulario() {
         pagoRealizado = null;
         txtAreaResumen.setText("");
@@ -216,8 +217,14 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         btnFacturar.setEnabled(true);
     }// GEN-LAST:event_btnConfirmarPagoActionPerformed
 
+    /**
+     * Método que obtiene el psicólogo seleccionado en el combo box.
+     * 
+     * @return PsicologoDTO psicologo seleccionado en el combo box.
+     */
     private PsicologoDTO obtenerPsicologoSeleccionado() {
-        if (cBoxPsicologo.getSelectedIndex() != 0 && !cBoxPsicologo.getSelectedItem().equals("No hay psicólogos registrados")) {
+        if (cBoxPsicologo.getSelectedIndex() != 0
+                && !cBoxPsicologo.getSelectedItem().equals("No hay psicólogos registrados")) {
             PsicologoDTO psicologoSeleccionado = (PsicologoDTO) cBoxPsicologo.getSelectedItem();
             return psicologoSeleccionado;
         } else {
@@ -225,6 +232,9 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Método que carga el resumen del pago en el área de texto.
+     */
     private void cargarResumenPago() {
         PsicologoDTO psicologo = obtenerPsicologoSeleccionado();
         FormaPago formaPago = (FormaPago) cBoxFormaPago.getSelectedItem();
@@ -279,6 +289,9 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         pagoRealizado = pago;
     }
 
+    /**
+     * Método que carga los valores de los combo boxes.
+     */
     private void cargarComboBoxes() {
         for (FormaPago value : FormaPago.values()) {
             cBoxFormaPago.addItem(value);
@@ -303,6 +316,9 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Método que agrega los listeners para los campos de texto y combo boxes.
+     */
     private void agregarListeners() {
         cBoxPsicologo.addActionListener(e -> {
             PsicologoDTO psicologoSeleccionado = obtenerPsicologoSeleccionado();
@@ -369,6 +385,9 @@ public class PanelRegistroPagos extends javax.swing.JPanel {
         });
     }
 
+    /**
+     * Metodo que actualiza el estado del botón de confirmar pago.
+     */
     private void actualizarBtnConfirmar() {
         boolean habilitar = cBoxFormaPago.getSelectedIndex() != 0
                 && cBoxMetodoPago.getSelectedIndex() != 0 && !txtCondicionesPago.getText().isEmpty()

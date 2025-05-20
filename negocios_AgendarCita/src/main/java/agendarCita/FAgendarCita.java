@@ -1,8 +1,6 @@
 package agendarCita;
 
 import agendarCita.control.ControlAgendarCita;
-import correoElectronico.FCorreoElectronico;
-import correoElectronico.ICorreoElectronico;
 import dto.AdeudoCitaDTO;
 import excepciones.AgendarCitaException;
 import dto.CitaNuevaDTO;

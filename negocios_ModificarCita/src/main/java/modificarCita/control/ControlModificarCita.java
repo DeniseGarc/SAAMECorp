@@ -117,6 +117,13 @@ public class ControlModificarCita {
         }
     }
 
+    /**
+     * Obtiene la lista de psicólogos disponibles para una fecha específica.
+     *
+     * @param fechaCita la fecha para la cual se desean obtener los psicólogos disponibles
+     * @return lista de objetos {@link PsicologoCitaDTO} con información de los psicólogos y sus horarios
+     * @throws ModificarCitaException si ocurre un error al recuperar la información desde la capa de negocio
+     */
     public List<PsicologoCitaDTO> obtenerPsicologos(Calendar fechaCita) throws ModificarCitaException {
         try {
             List<PsicologoCitaDTO> psicologosDisponibles = psicologoBO.obtenerPsicologos();

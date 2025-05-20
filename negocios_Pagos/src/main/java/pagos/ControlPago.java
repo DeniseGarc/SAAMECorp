@@ -1,7 +1,6 @@
 package pagos;
 
 import java.util.List;
-
 import dto.PagoDTO;
 import dto.PsicologoDTO;
 import enumeradores.TipoBO;
@@ -11,6 +10,8 @@ import interfaces.IPagoBO;
 import manejadorBO.ManejadorBO;
 
 /**
+ * Clase que representa el controlador para la fachada de pagos.
+ * ESTA CLASE ES UN MOCK
  * 
  * @author Alici
  */
@@ -37,6 +38,15 @@ public class ControlPago {
         return psicologos;
     }
 
+    /**
+     * Metodo para obtener los pagos realizados hace 30 dias de un psicologo.
+     * 
+     * @param psicologo PsicologoDTO que representa el psicologo.
+     * @return Lista de objetos PagoDTO que representan los pagos realizados.
+     * @throws PagosException Si ocurre un error de negocio durante la obtención de
+     *                        los pagos.
+     * 
+     */
     protected List<PagoDTO> obtenerPagosMesAnterior(PsicologoDTO psicologo) throws PagosException {
         List<PagoDTO> pagos;
         try {

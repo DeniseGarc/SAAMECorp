@@ -5,13 +5,14 @@
 package pagos;
 
 import java.util.List;
-
 import dto.PagoDTO;
 import dto.PsicologoDTO;
 import excepciones.PagosException;
 
 /**
- *
+ * Interfaz que define los métodos para realizar operaciones de pago.
+ * ESTA CLASE ES UN MOCK
+ * 
  * @author Alici
  */
 public class FPago implements IPago {

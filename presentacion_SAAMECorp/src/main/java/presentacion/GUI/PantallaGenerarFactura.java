@@ -25,9 +25,21 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    /**
+     * Coordinador de la lógica de negocio.
+     */
     CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
+    /**
+     * Frame padre de la pantalla.
+     */
     private JFrame frmPadre;
+    /**
+     * Factura a generar.
+     */
     private FacturaDTO factura = new FacturaDTO();
+    /**
+     * Pago a facturar.
+     */
     private PagoDTO pago;
 
     /**
@@ -506,7 +518,8 @@ public class PantallaGenerarFactura extends javax.swing.JFrame {
                 } else if (result == 1) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Guardar documentos");
-                    fileChooser.setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
+                    fileChooser
+                            .setSelectedFile(new java.io.File("Factura_" + facturaRegistrada.getFactura().getFolio()));
                     int userSelection = fileChooser.showSaveDialog(this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         String filePath = fileChooser.getSelectedFile().getAbsolutePath();

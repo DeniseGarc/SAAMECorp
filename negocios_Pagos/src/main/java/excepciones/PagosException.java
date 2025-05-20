@@ -3,8 +3,7 @@ package excepciones;
 /**
  * Excepción personalizada para el módulo de pagos.
  * Esta clase extiende la clase Exception y se utiliza para manejar errores
- * específicos
- * relacionados con la lógica de negocio de los pagos.
+ * específicos relacionados con la lógica de negocio de los pagos.
  *
  * @author Alici
  */

@@ -11,7 +11,9 @@ import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
 
 /**
- *
+ * Clase que representa la pantalla de pagos anteriores del psicologo
+ * seleccionado.
+ * 
  * @author Alici
  */
 public class PantallaPagosAnteriores extends javax.swing.JFrame {
@@ -20,12 +22,17 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
      * Psicologo del cual se van a mostrar sus pagos anteriores.
      */
     private final PsicologoDTO psicologo;
-
+    /**
+     * DTO del pago seleccionado a facturar en esta pantalla.
+     */
     private PagoDTO pagoSeleccionado;
     /**
      * Coordinador del flujo de las pantallas
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    /**
+     * Controlador de la lógica de negocio.
+     */
     private final CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
 
     /**
@@ -141,6 +148,9 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
         flujoPantallas.pantallaGenerarFactura(this, pagoSeleccionado);
     }
 
+    /**
+     * Método para cargar los pagos anteriores del psicólogo en la tabla.
+     */
     private void cargarPagosAnteriores() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tblPagos.getModel();
         modeloTabla.setRowCount(0);
@@ -167,6 +177,10 @@ public class PantallaPagosAnteriores extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método para recuperar el pago seleccionado en la tabla y guardarlo en la
+     * variable pagoSeleccionado.
+     */
     private void recuperarPagoSeleccionado() {
         int filaSeleccionada = tblPagos.getSelectedRow();
         if (filaSeleccionada != -1) {

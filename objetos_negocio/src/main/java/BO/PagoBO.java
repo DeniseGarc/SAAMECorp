@@ -20,15 +20,20 @@ import mapper.PsicologoMapper;
 
 /**
  * Clase que implementa la lógica de negocio para los pagos. MOCK
- *
+ * ESTA CLASE ES UN MOCK
+ * 
  * @author Alici
  */
 public class PagoBO implements IPagoBO {
 
+    /**
+     * instacia de psicologo DAO
+     */
     private IPsicologoDAO psicologoDAO = PsicologoDAO.getInstanciaDAO();
-    private IPagoDAO pagoDAO = PagoDAO.getInstancia();
+    /**
+     * instancia de mapper de psicologo
+     */
     private PsicologoMapper mapper = new PsicologoMapper();
-    private PagoMapper mapperPago = new PagoMapper();
 
     @Override
     public List<PagoDTO> obtenerPagosDelMesPsicologo(PsicologoDTO psicologoDTO) throws NegocioException {

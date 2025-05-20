@@ -17,6 +17,8 @@ import interfaces.IPagoDAO;
 /*
  * Clase que implementa la interfaz IPagoDAO para gestionar los pagos en la base de datos.
  * Esta clase es un singleton, lo que significa que solo puede haber una instancia de ella en la aplicación.
+ * 
+ * ESTA CLASE ES UN MOCK
  *  
  * @author Alici  
  */

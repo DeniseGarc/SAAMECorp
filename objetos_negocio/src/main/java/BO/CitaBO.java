@@ -112,9 +112,10 @@ public class CitaBO implements ICitaBO {
     }
 
     /**
-     * Obtiene las fechas que ya tienen citas agendadas
-     *
-     * @return
+     * Obtiene las fechas que ya tienen al menos una cita agendada en el sistema.
+     * 
+     * @return Lista de objetos {@link Calendar} que representan las fechas con citas registradas.
+     * @throws NegocioException si ocurre un error al consultar la capa de persistencia.
      */
     @Override
     public List<Calendar> obtenerFechasConCitaAgendada() throws NegocioException {
