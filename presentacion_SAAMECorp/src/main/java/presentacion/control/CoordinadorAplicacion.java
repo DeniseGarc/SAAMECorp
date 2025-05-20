@@ -269,8 +269,12 @@ public class CoordinadorAplicacion {
      */
     public void pantallaReporteUsoCubiculo(JFrame frm) {
         frmReporteUsoCubiculo frmPantalla = new frmReporteUsoCubiculo(frm);
-        menuAdmin.setVisible(false);
-        frm.dispose();
+         menuAdmin.setVisible(false);
+
+        if (frm != null) {
+            frm.dispose();
+        }
+
         frmPantalla.setVisible(true);
     }
     
@@ -280,9 +284,11 @@ public class CoordinadorAplicacion {
      */
     public void pantallaReporteEstadistico(JFrame frm) {
         frmrReporteEstadistico frmPantalla = new frmrReporteEstadistico(frm);
-        menuAdmin.setVisible(false);
-        frm.dispose();
-                
+         menuAdmin.setVisible(false);
+
+        if (frm != null) {
+            frm.dispose();
+        }
         frmPantalla.setVisible(true);
     }
     

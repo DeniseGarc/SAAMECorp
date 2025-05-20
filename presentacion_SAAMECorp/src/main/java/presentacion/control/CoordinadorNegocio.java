@@ -12,6 +12,7 @@ import dto.CubiculoDTO;
 import dto.FacturaDTO;
 import dto.PsicologoCitaDTO;
 import dto.ReporteIngresosCubiculoDTO;
+import dto.ReporteUsoCubiculoDTO;
 import dto.ResultadoAgendarCita;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
@@ -505,6 +506,16 @@ public class CoordinadorNegocio {
     public ReporteIngresosCubiculoDTO generarReporteIngresosPorCubiculo(CubiculoDTO cubiculo) throws CoordinadorException{
         try {
             return sistemaGestorReportes.generarReporteIngresosPorCubiculo(cubiculo.getNombre());
+        } catch (GestorReportesException ex) {
+            
+            throw new CoordinadorException(ex.getMessage());
+        }
+    
+    }
+    
+    public ReporteUsoCubiculoDTO generaraReporteUsoCubiculo(String cubiculo)throws CoordinadorException{
+        try {
+            return sistemaGestorReportes.generarReporteUsoCubiculo(cubiculo);
         } catch (GestorReportesException ex) {
             
             throw new CoordinadorException(ex.getMessage());
