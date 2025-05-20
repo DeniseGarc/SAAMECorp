@@ -1,7 +1,6 @@
 package presentacion;
 
 import presentacion.control.CoordinadorAplicacion;
-import presentacion.utilerias.ClaveCFDI;
 
 /**
  * Clase principal que inicializa la pantalla de inicio del sistema.

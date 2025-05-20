@@ -42,6 +42,9 @@ public class Psicologo {
      */
     private String correo;
 
+    /**
+     * Lista de horas de atención del psicólogo.
+     */
     private List<LocalTime> horasAtencion;
 
     /**
