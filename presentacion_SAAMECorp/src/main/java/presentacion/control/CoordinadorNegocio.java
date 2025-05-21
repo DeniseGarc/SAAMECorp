@@ -419,7 +419,12 @@ public class CoordinadorNegocio {
             throw new CoordinadorException(ex.getMessage());
         }
     }
-
+    /**
+     * Metodo para mandar los cubiculos disponibles
+     * @param cita 
+     * @return Lista de cubiculos
+     * @throws CoordinadorException 
+     */
     public List<CubiculoDTO> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
         if (cita == null) {
             throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
