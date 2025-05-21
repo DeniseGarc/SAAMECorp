@@ -65,7 +65,12 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al obtener los cubiculos disponibles: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para obtener cubiculos dado su estado
+     * @param estado estado a buscar
+     * @return lista de cubiculos encontrados 
+     * @throws NegocioException 
+     */
     @Override
     public List<CubiculoDTO> obtenerCubiculosPorEstado(boolean estado) throws NegocioException {
         try {
@@ -75,7 +80,11 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al obtener los cubibulos: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para obtener todos los cubiculos registrados
+     * @return Lista de todos los cubiculos
+     * @throws NegocioException 
+     */
     @Override
     public List<CubiculoDTO> obtenerCubiculos() throws NegocioException {
         try {
@@ -85,7 +94,12 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al obtener los cubibulos: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para agregar un nuevo cubiculo
+     * @param cubiculo cubiculo a agragar
+     * @return True si se agrego correctamente 
+     * @throws NegocioException 
+     */
     @Override
     public boolean agregarCubiculo(CubiculoDTO cubiculo) throws NegocioException {
         try {
@@ -94,7 +108,12 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al agregar el cubiculo: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para actualizar el estado de un cubiculo
+     * @param cubiculoAgregar cubiculo al que se le va a actualizar el estado
+     * @return True si se actualizo correctamente 
+     * @throws NegocioException 
+     */
     @Override
     public boolean actualizarEstadoCubiculo(CubiculoDTO cubiculoAgregar) throws NegocioException {
         try {
@@ -103,7 +122,12 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para modificar los datos de un cubiculo
+     * @param cubiculoModificar cubiculo con los datos a modificar
+     * @return True si se actualizo  correctamente 
+     * @throws NegocioException 
+     */
     @Override
     public boolean modificarCubiculo(CubiculoDTO cubiculoModificar) throws NegocioException {
         try {
@@ -112,14 +136,19 @@ public class CubiculoBO implements ICubiculoBO {
             throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para obtener un cubiculo dado su nombre
+     * @param nombre nombre del cubiculo a obtener
+     * @return CubiculoDTO encontrado
+     * @throws NegocioException si no se encuentra el cubiculo
+     */
     @Override
     public CubiculoDTO obtenerCubiculoPorNombre(String nombre) throws NegocioException {
         try {
             Cubiculo cubiculoEntidad = cubiculoDAO.buscarCubiculoPorNombre(nombre);
             return mapper.toDTO(cubiculoEntidad);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error al actualizar el cubiculo: " + e.getMessage());
+            throw new NegocioException("Error al buscar el cubiculo: " + e.getMessage());
         }
     }
 
