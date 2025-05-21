@@ -6,7 +6,6 @@ package pantallasModificarCita;
 
 import dto.CitaRegistradaDTO;
 import java.util.List;
-import javax.swing.Box;
 import presentacion.control.CoordinadorAplicacion;
 
 /**

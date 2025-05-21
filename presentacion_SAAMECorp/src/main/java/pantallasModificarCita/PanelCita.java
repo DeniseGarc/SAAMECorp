@@ -31,6 +31,9 @@ public class PanelCita extends javax.swing.JPanel {
         cargarDatos();
     }
 
+    /**
+     * Metodo para cargar los datos de la cita en sus lugares del panel
+     */
     private void cargarDatos() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String fechaCitaFormateada = sdf.format(cita.getFechaHora().getTime());
@@ -38,6 +41,11 @@ public class PanelCita extends javax.swing.JPanel {
         lblDatos.setText(cita.getCubiculo().getNombre() + ", Paciente: " + cita.getNombrePaciente() + ", Psicologo: " + cita.getPsicologo().getNombre() + " " + cita.getPsicologo().getApellidoPaterno());
     }
 
+    /**
+     * Metodo para obtener la cita que le pertenece al panel
+     *
+     * @return la cita
+     */
     public CitaRegistradaDTO getCita() {
         return cita;
     }
