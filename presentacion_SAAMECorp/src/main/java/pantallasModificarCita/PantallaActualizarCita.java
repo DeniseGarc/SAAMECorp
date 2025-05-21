@@ -296,6 +296,10 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         if (!validarCampos()) {
             return;
         }
+        if (validarCambio()) {
+            JOptionPane.showMessageDialog(this, "No se detectaron cambios en la cita.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            flujoPantallas.pantallaCalendarioCitas(this);;
+        }
         if (antelacion()) {
             try {
                 CitaRegistradaDTO c = getNuevaCita();
@@ -320,6 +324,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnConfirmarMouseClicked
 
+    
     public void llenarCubiculos() {
         try {
             CbBoxCubiculo.removeAllItems();
@@ -427,6 +432,25 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         citaNueva.setCorreoPaciente(correoPaciente);
         citaNueva.setAdeudo(cita.getAdeudo());
         return citaNueva;
+    }
+
+    public boolean validarCambio() {
+        String cubiculoSeleccionado = (String) CbBoxCubiculo.getSelectedItem();
+        String horarioSeleccionado = (String) CbBoxHorario.getSelectedItem();
+        String nombrePaciente = txtnombrePaciente.getText().trim();
+        String correoPaciente = txtCorreoPaciente.getText().trim();
+        String telefonoPaciente = txtTelefonoPaciente.getText().trim();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String horaOriginal = sdf.format(cita.getFechaHora().getTime());
+        String cubiculoOriginal = cita.getCubiculo().getNombre();
+        String nombreOriginal = cita.getNombrePaciente();
+        String correoOriginal = cita.getCorreoPaciente();
+        String telefonoOriginal = cita.getTelefonoPaciente();
+        return cubiculoSeleccionado.equals(cubiculoOriginal)
+                && horarioSeleccionado.equals(horaOriginal)
+                && nombrePaciente.equals(nombreOriginal)
+                && correoPaciente.equals(correoOriginal)
+                && telefonoPaciente.equals(telefonoOriginal);
     }
 
     private void agregarListenersComboBox() {
