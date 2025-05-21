@@ -308,7 +308,10 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
     private void mostrarResumenCita() {
         try {
             CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
-            String mensaje = controlNegocio.obtenerResumenCita(cita);
+            String nombreCubiculo = cubiculos.get(cmbCubiculo.getSelectedIndex()).getNombre();
+            String nombrePsicologo = psicologos.get(cmbPsicologos.getSelectedIndex()).getNombre() + " " + psicologos.get(cmbPsicologos.getSelectedIndex()).getApellidoPaterno() 
+                    + " " + psicologos.get(cmbPsicologos.getSelectedIndex()).getApellidoMaterno();
+            String mensaje = controlNegocio.obtenerResumenCita(cita, nombreCubiculo, nombrePsicologo);
             
             if (!mensaje.startsWith("¿Desea agendar la cita?")) {
                 JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);

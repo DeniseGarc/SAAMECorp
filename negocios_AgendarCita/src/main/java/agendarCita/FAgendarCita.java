@@ -96,11 +96,13 @@ public class FAgendarCita implements IAgendarCita {
      * Método que devuelve el resumen de la cita nueva.
      *
      * @param citaNueva Cita nueva a agendar en el sistema.
+     * @param cubiculo nombre del cubiculo
+     * @param psicologo nombre del psicologo
      * @return Texto con el resumen de la cita generado.
      * @throws AgendarCitaException Si la cita llega nula.
      */
     @Override
-    public String resumenCita(CitaNuevaDTO citaNueva) throws AgendarCitaException {
+    public String resumenCita(CitaNuevaDTO citaNueva, String cubiculo, String psicologo) throws AgendarCitaException {
         if (citaNueva == null) {
             throw new AgendarCitaException("La cita no puede ser nula");
         }
@@ -108,9 +110,9 @@ public class FAgendarCita implements IAgendarCita {
         String fechaCita = formato.format(citaNueva.getFechaHora().getTime());
 
         return "¿Desea agendar la cita?\n"
-                + citaNueva.getCubiculo() + "\n"
+                + cubiculo + "\n"
                 + "Fecha: " + fechaCita + "\n"
-                + "Psicólogo: " + /*citaNueva.getPsicologo().getNombre() + " " + citaNueva.getPsicologo().getApellidoPaterno() + " " + citaNueva.getPsicologo().getApellidoMaterno() +*/ "\n"
+                + "Psicólogo: " + psicologo + "\n"
                 + "Cliente: " + citaNueva.getNombrePaciente() + ", Teléfono: " + citaNueva.getTelefonoPaciente() + "\n"
                 + "Correo del paciente: " + citaNueva.getCorreoPaciente();
     }
