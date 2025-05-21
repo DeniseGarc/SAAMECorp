@@ -4,7 +4,6 @@
  */
 package modificarCita;
 
-import dto.AdeudoCitaDTO;
 import dto.CitaRegistradaDTO;
 import dto.CubiculoDTO;
 import dto.PsicologoCitaDTO;

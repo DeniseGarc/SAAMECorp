@@ -41,9 +41,7 @@ import mapper.CorreoMapper;
  */
 public class ControlModificarCita {
 
-    IPsicologoBO psicologoBO = (IPsicologoBO) ManejadorBO.crearBO(PSICOLOGO);
     ICitaBO citaBO = (ICitaBO) ManejadorBO.crearBO(CITA);
-    IAdeudoBO adeudoBO = (IAdeudoBO) ManejadorBO.crearBO(ADEUDO);
     ICubiculoBO cubiculoBO = (ICubiculoBO) ManejadorBO.crearBO(CUBICULO);
 
     /**
