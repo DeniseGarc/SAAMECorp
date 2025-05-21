@@ -305,7 +305,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
                 CitaRegistradaDTO c = getNuevaCita();
                 c.getAdeudo().setNotas("Modificada sin cuota.");
                 controlNegocio.actualizarCita(c);
-                JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente. Espere un momento, se enviara su correo.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 if (controlNegocio.mandarCorreo(c)) {
                     JOptionPane.showMessageDialog(this, "El correo de confirmación fue enviado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -324,7 +324,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnConfirmarMouseClicked
 
-    
+    /**
+     * Metodo para cargar los cubiculo disponibles en su combo box
+     */
     public void llenarCubiculos() {
         try {
             CbBoxCubiculo.removeAllItems();
@@ -344,6 +346,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metodo para cargar los horarios obtenidos a su combo box
+     */
     public void llenarHorarios() {
         try {
             List<LocalTime> horarios = controlNegocio.mandarHorario(cita.getPsicologo(), cubiculos.get(CbBoxCubiculo.getSelectedIndex()).getId(), cita.getFechaHora());
@@ -364,6 +369,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metodo para pre seleccionar los datos que ya estan registrados en la cita
+     */
     public void datosCita() {
         CbBoxCubiculo.setSelectedItem(cita.getCubiculo().getNombre());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -374,6 +382,10 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         txtTelefonoPaciente.setText(cita.getTelefonoPaciente());
     }
 
+    /**
+     * Metodo para validar los campos libres
+     * @return true si todos son validos, falso en caso contrario
+     */
     private boolean validarCampos() {
         String nombre = txtnombrePaciente.getText().trim();
         String correo = txtCorreoPaciente.getText().trim();
@@ -396,6 +408,10 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Metodo para verificar el tiempo de antelacion al momento de cambiar la cita
+     * @return true si es mayor o igual a 24 horas, falso si no
+     */
     private boolean antelacion() {
         Date fechaActual = new Date();
         Date fechaCita = cita.getFechaHora().getTime();
@@ -404,6 +420,10 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         return horasDiferencia >= 24;
     }
 
+    /**
+     * Metodo para crear el dto con los nuevos datos
+     * @return el dto con los datos actualizados
+     */
     private CitaRegistradaDTO getNuevaCita() {
         String nombrePaciente = txtnombrePaciente.getText().trim();
         String telefonoPaciente = txtTelefonoPaciente.getText().trim();
@@ -434,6 +454,10 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         return citaNueva;
     }
 
+    /**
+     * Metodo para validar si hubo cambios en la cita
+     * @return true si no hubo cambios, false si si
+     */
     public boolean validarCambio() {
         String cubiculoSeleccionado = (String) CbBoxCubiculo.getSelectedItem();
         String horarioSeleccionado = (String) CbBoxHorario.getSelectedItem();
@@ -453,6 +477,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
                 && telefonoPaciente.equals(telefonoOriginal);
     }
 
+    /**
+     * Metodo que agrega un listener al combo box de cubiculo para que cada q se seleccione otro se verifique su horario
+     */
     private void agregarListenersComboBox() {
         CbBoxCubiculo.addActionListener((java.awt.event.ActionEvent evt) -> {
             if (CbBoxCubiculo.getSelectedIndex() >= 0) {
