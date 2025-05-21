@@ -227,10 +227,11 @@ public class CitaDAO implements ICitaDAO {
             List<Cita> citasPsicologo = obtenerCitasPorDiaYPsicologo(psicologo.getId(), fecha);
             List<Cita> citasCubiculo = obtenerCitasPorDiaYCubiculo(idCubiculo, fecha);
             Set<LocalTime> horasOcupadasPsicologo = citasPsicologo.stream()
-                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withMinute(0).withSecond(0).withNano(0))
+                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0))
                     .collect(Collectors.toSet());
+
             Set<LocalTime> horasOcupadasCubiculo = citasCubiculo.stream()
-                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withMinute(0).withSecond(0).withNano(0))
+                    .map(c -> c.getFechaHora().toInstant().atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0))
                     .collect(Collectors.toSet());
             return horasAtencion.stream()
                     .filter(h -> !horasOcupadasPsicologo.contains(h) && !horasOcupadasCubiculo.contains(h))
