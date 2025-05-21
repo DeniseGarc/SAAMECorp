@@ -9,7 +9,7 @@ package dto;
  * @author Maryr
  */
 public class CorreoCitaDTO {
-
+    
     private String correoDestino;
     private String cubiculo;
     private String fechaHora;

@@ -543,8 +543,6 @@ public class CoordinadorNegocio {
      * @return Una lista de objetos PagoDTO que representan los pagos realizados
      * al psicólogo en los últimos 30 días.
      * @throws CoordinadorException Si ocurre un error al obtener los pagos.
-     * @throws CoordinadorException Si el objeto PsicologoDTO proporcionado es
-     * nulo.
      */
     public List<PagoDTO> obtenerPagosUltimos30Dias(PsicologoDTO psicologoDTO) throws CoordinadorException {
         if (psicologoDTO == null) {
@@ -696,7 +694,12 @@ public class CoordinadorNegocio {
         }
 
     }
-
+    /**
+     * Metodo para iniciar sesion 
+     * @param usuario usuario que inicia sesion
+     * @return UsuarioDTO
+     * @throws CoordinadorException 
+     */
     public UsuarioDTO iniciarSesion(UsuarioDTO usuario) throws CoordinadorException {
         if (usuario == null || usuario.getTipoUsuario() == null || usuario.getContrasena() == null || usuario.getUsuario() == null) {
             throw new CoordinadorException("El usuario ni contraseña no pueden ser nulos");

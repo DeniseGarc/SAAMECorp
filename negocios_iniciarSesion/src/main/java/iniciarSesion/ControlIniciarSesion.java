@@ -19,9 +19,16 @@ import manejadorBO.ManejadorBO;
  * @author Alici
  */
 public class ControlIniciarSesion {
-
+    /**
+     * Instancia de la clase de usuario BO por medio del manejador de BO
+     */
     private IUsuarioBO usuarioBO = (UsuarioBO) ManejadorBO.crearBO(TipoBO.USUARIO);
-
+    /**
+     * Metodo para iniciar sesion al sistema
+     * @param usuario Usuario que inicia sesion
+     * @return UsuarioDTO con los datos del usuario
+     * @throws IniciarSesionException 
+     */
     protected UsuarioDTO iniciarSesion(UsuarioDTO usuario) throws IniciarSesionException {
         try {
             return usuarioBO.iniciarSesion(usuario);
