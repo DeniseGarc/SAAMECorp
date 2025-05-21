@@ -43,8 +43,8 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
         this.cita = cita;
         initComponents();
         setLocationRelativeTo(null);
-        agregarListenersComboBox();
         llenarCubiculos();
+        agregarListenersComboBox();
         llenarHorarios();
         datosCita();
     }
@@ -384,6 +384,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
     /**
      * Metodo para validar los campos libres
+     *
      * @return true si todos son validos, falso en caso contrario
      */
     private boolean validarCampos() {
@@ -409,7 +410,9 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     }
 
     /**
-     * Metodo para verificar el tiempo de antelacion al momento de cambiar la cita
+     * Metodo para verificar el tiempo de antelacion al momento de cambiar la
+     * cita
+     *
      * @return true si es mayor o igual a 24 horas, falso si no
      */
     private boolean antelacion() {
@@ -422,6 +425,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
     /**
      * Metodo para crear el dto con los nuevos datos
+     *
      * @return el dto con los datos actualizados
      */
     private CitaRegistradaDTO getNuevaCita() {
@@ -456,6 +460,7 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
 
     /**
      * Metodo para validar si hubo cambios en la cita
+     *
      * @return true si no hubo cambios, false si si
      */
     public boolean validarCambio() {
@@ -478,11 +483,13 @@ public class PantallaActualizarCita extends javax.swing.JFrame {
     }
 
     /**
-     * Metodo que agrega un listener al combo box de cubiculo para que cada q se seleccione otro se verifique su horario
+     * Metodo que agrega un listener al combo box de cubiculo para que cada q se
+     * seleccione otro se verifique su horario
      */
     private void agregarListenersComboBox() {
-        CbBoxCubiculo.addActionListener((java.awt.event.ActionEvent evt) -> {
-            if (CbBoxCubiculo.getSelectedIndex() >= 0) {
+        CbBoxCubiculo.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
                 llenarHorarios();
             }
         });

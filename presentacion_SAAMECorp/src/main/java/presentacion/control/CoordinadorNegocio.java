@@ -429,14 +429,14 @@ public class CoordinadorNegocio {
      */
     public List<CubiculoDTO> mandarCubiculos(CitaRegistradaDTO cita) throws CoordinadorException {
         if (cita == null) {
-            throw new CoordinadorException("La fecha y hora seleccionadas son inválidas.");
+            throw new CoordinadorException("Cita invalida..");
         }
         try {
-            List<CubiculoDTO> nombresCubiculos = new ArrayList<>();
+            List<CubiculoDTO> cubiculos = new ArrayList<>();
             for (CubiculoDTO cubiculo : sistemaModificarCita.mandarCubiculos(cita)) {
-                nombresCubiculos.add(cubiculo);
+                cubiculos.add(cubiculo);
             }
-            return nombresCubiculos;
+            return cubiculos;
         } catch (ModificarCitaException ex) {
             throw new CoordinadorException("Error al obtener los cubículos disponibles.", ex);
         }
@@ -610,8 +610,7 @@ public class CoordinadorNegocio {
      * @return lista de la horas disponibles coincidentes
      * @throws excepciones.ModificarCitaException
      */
-    public List<LocalTime> mandarHorario(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha)
-            throws ModificarCitaException {
+    public List<LocalTime> mandarHorario(PsicologoCitaDTO psicologo, String idCubiculo, Calendar fecha) throws ModificarCitaException {
         try {
             return sistemaModificarCita.mandarHorario(psicologo, idCubiculo, fecha);
         } catch (ModificarCitaException e) {
