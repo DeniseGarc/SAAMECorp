@@ -17,13 +17,12 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
-    private JFrame frmPadre;
+    
     
     /**
      * Constructor que inicializa los componentes de la clase.
      */
-    public frmMenuCubiculos(JFrame frmPadre) {
-        this.frmPadre = frmPadre;
+    public frmMenuCubiculos() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -180,11 +179,11 @@ public class frmMenuCubiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresar7ActionPerformed
 
     private void btnEditarCubiculos7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarCubiculos7MouseClicked
-        flujoPantallas.PantallaEditarCubiculos(frmPadre);
+        flujoPantallas.PantallaEditarCubiculos(this);
     }//GEN-LAST:event_btnEditarCubiculos7MouseClicked
 
     private void btnAgregarCubiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCubiculoMouseClicked
-        flujoPantallas.pantallaAgregarCubiculo(frmPadre);
+        flujoPantallas.pantallaAgregarCubiculo(this);
     }//GEN-LAST:event_btnAgregarCubiculoMouseClicked
 
     /**

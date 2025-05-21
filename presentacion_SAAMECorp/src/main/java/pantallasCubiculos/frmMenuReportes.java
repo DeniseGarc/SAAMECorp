@@ -17,14 +17,12 @@ public class frmMenuReportes extends javax.swing.JFrame {
      * Coordinador del flujo de pantallas de la aplicación.
      */
     private final CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
-    private JFrame frmPadre;
     
     /**
      * Creates new form frmMenuReportes
      * @param frm
      */
-    public frmMenuReportes(JFrame frm) {
-        this.frmPadre = frmPadre;
+    public frmMenuReportes() {
         initComponents();
         setLocationRelativeTo(null);
     
@@ -183,15 +181,15 @@ public class frmMenuReportes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReporteIngresosMouseClicked
 
     private void btnReporteIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteIngresosActionPerformed
-        flujoPantallas.pantallaReporteIngresosCubiculo(frmPadre);
+        flujoPantallas.pantallaReporteIngresosCubiculo(this);
     }//GEN-LAST:event_btnReporteIngresosActionPerformed
 
     private void btnReporteUsoCubiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteUsoCubiculosActionPerformed
-        flujoPantallas.pantallaReporteUsoCubiculo(frmPadre);
+        flujoPantallas.pantallaReporteUsoCubiculo(this);
     }//GEN-LAST:event_btnReporteUsoCubiculosActionPerformed
 
     private void ReporteEstadisticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteEstadisticoActionPerformed
-        flujoPantallas.pantallaReporteEstadistico(frmPadre);
+        flujoPantallas.pantallaReporteEstadistico(this);
     }//GEN-LAST:event_ReporteEstadisticoActionPerformed
 
     private void btnRegresar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar7ActionPerformed

@@ -270,7 +270,7 @@ public class frmEditarCubiculo extends javax.swing.JFrame {
 
     private void btnRegresar7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar7ActionPerformed
 
-        flujoPantallas.regresarAlMenuPrincipal(this);
+        flujoPantallas.PantallaGestionCubiculos(this);
     }//GEN-LAST:event_btnRegresar7ActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed

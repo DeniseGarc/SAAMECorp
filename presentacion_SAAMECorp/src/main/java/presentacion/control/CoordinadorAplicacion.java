@@ -198,11 +198,8 @@ public class CoordinadorAplicacion {
      * @param frm Frame que mando a llamar la accion
      */
     public void PantallaGestionCubiculos(JFrame frm) {
-        frmMenuCubiculos frmPantalla = new frmMenuCubiculos(frm);
-        menuAdmin.setVisible(false);
-        if (frm != null) {
-            frm.setVisible(false);
-        }
+        frmMenuCubiculos frmPantalla = new frmMenuCubiculos();
+        frm.setVisible(false);
         frmPantalla.setVisible(true);
     }
 
@@ -213,8 +210,7 @@ public class CoordinadorAplicacion {
      */
     public void PantallaEditarCubiculos(JFrame frm) {
         frmEditarCubiculo frmPantalla = new frmEditarCubiculo(frm);
-        menuAdmin.setVisible(false);
-        frm.dispose();
+        frm.setVisible(false);
         frmPantalla.setVisible(true);
     }
 
@@ -225,16 +221,13 @@ public class CoordinadorAplicacion {
      */
     public void pantallaAgregarCubiculo(JFrame frm) {
         frmAgregarCubiculo frmPantalla = new frmAgregarCubiculo(frm);
-        menuAdmin.setVisible(false);
-        frm.dispose();
+        frm.setVisible(false);
         frmPantalla.setVisible(true);
     }
 
     public void pantallaMenuReportes(JFrame frm) {
-        frmMenuReportes frmPantalla = new frmMenuReportes(frm);
-        menuAdmin.setVisible(false);
-
-        frm.dispose();
+        frmMenuReportes frmPantalla = new frmMenuReportes();
+        frm.setVisible(false);
         frmPantalla.setVisible(true);
     }
 
