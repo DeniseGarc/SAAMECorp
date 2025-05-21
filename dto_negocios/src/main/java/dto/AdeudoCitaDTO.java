@@ -90,11 +90,17 @@ public class AdeudoCitaDTO {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-
+    /**
+     * Obtiene las notas del adeudo
+     * @return notas del adeudo
+     */
     public String getNotas() {
         return notas;
     }
-
+    /**
+     * Establece notas del adeudo
+     * @param notas notas del adeudo
+     */
     public void setNotas(String notas) {
         this.notas = notas;
     }
