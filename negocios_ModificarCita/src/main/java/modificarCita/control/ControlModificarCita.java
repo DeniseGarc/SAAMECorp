@@ -85,8 +85,7 @@ public class ControlModificarCita {
      * @return lista de cubiculos disponibles en dicha fecha y hora
      * @throws ModificarCitaException
      */
-    public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(CitaRegistradaDTO citaActualizar)
-            throws ModificarCitaException {
+    public List<CubiculoDTO> obtenerCubiculosDisponiblesHorario(CitaRegistradaDTO citaActualizar) throws ModificarCitaException {
         try {
             List<CubiculoDTO> cubiculosDisponibles = cubiculoBO.obtenerCubiculosEstadoDisponible();
             List<CitaRegistradaDTO> citasRegistradas = citaBO.obtenerCitasCompletas();
@@ -107,8 +106,7 @@ public class ControlModificarCita {
                             && cita.getFechaHora().get(Calendar.MINUTE) == citaActualizar.getFechaHora()
                                     .get(Calendar.MINUTE);
 
-                    if (mismoDiaYHora && cubiculo.getNombre().equals(cita.getCubiculo().getNombre())
-                            && !cita.getCubiculo().equals(citaActualizar.getCubiculo())) {
+                    if (mismoDiaYHora && cubiculo.getNombre().equals(cita.getCubiculo().getNombre()) && !cita.getCubiculo().getNombre().equals(citaActualizar.getCubiculo().getNombre())) {
                         cubiculoOcupado = true;
                         break;
                     }
