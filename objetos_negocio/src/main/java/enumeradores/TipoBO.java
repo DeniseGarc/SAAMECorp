@@ -2,7 +2,7 @@ package enumeradores;
 
 /**
  * Clase de enumeración que representa los tipos de objetos negocio.
- * 
+ *
  * @author erika
  */
 public enum TipoBO {
@@ -12,5 +12,6 @@ public enum TipoBO {
     PSICOLOGO,
     REPORTE,
     FACTURA,
-    PAGO
+    PAGO,
+    USUARIO
 }

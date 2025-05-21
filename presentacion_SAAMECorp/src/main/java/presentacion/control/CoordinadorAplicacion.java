@@ -48,7 +48,7 @@ public class CoordinadorAplicacion {
      * Referencia al menu principal cuando el usuario es un psicologo
      */
     private MenuPrincipalPsicologo menuPsicologo;
-    
+
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
      */
@@ -69,10 +69,15 @@ public class CoordinadorAplicacion {
 
     /**
      * Método para abrir la pantalla de inicio de sesión del sistema.
+     *
+     * @param frm Frame que manda a llamar al metodo
      */
-    public void pantallaInicioSesion() {
+    public void pantallaInicioSesion(JFrame frm) {
         PantallaIniciarSesion frmInicioSesion = new PantallaIniciarSesion();
         frmInicioSesion.setVisible(true);
+        if (frm != null) {
+            frm.dispose();
+        }
     }
 
     /**
@@ -144,8 +149,12 @@ public class CoordinadorAplicacion {
     public void regresarAlMenuPrincipal(JFrame frm) {
         if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
             menuAdmin.setVisible(true);
+            menuAdmin.getPanelLateral().revalidate();
+            menuAdmin.getPanelLateral().repaint();
         } else {
             menuPsicologo.setVisible(true);
+            menuPsicologo.getPanelLateral().revalidate();
+            menuPsicologo.getPanelLateral().repaint();
         }
         frm.dispose();
     }
@@ -224,7 +233,7 @@ public class CoordinadorAplicacion {
     public void pantallaMenuReportes(JFrame frm) {
         frmMenuReportes frmPantalla = new frmMenuReportes(frm);
         menuAdmin.setVisible(false);
-        
+
         frm.dispose();
         frmPantalla.setVisible(true);
     }
@@ -258,13 +267,15 @@ public class CoordinadorAplicacion {
             frame.setVisible(false);
         }
     }
+
     /**
      * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     *
      * @param frm Frame que mando a llamar la accion
      */
     public void pantallaReporteUsoCubiculo(JFrame frm) {
         frmReporteUsoCubiculo frmPantalla = new frmReporteUsoCubiculo(frm);
-         menuAdmin.setVisible(false);
+        menuAdmin.setVisible(false);
 
         if (frm != null) {
             frm.dispose();
@@ -272,23 +283,25 @@ public class CoordinadorAplicacion {
 
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para navegar a la pantalla de reporte estadistico de cubiculos
+     *
      * @param frm Frame que mando a llamar la accion
      */
     public void pantallaReporteEstadistico(JFrame frm) {
         frmrReporteEstadistico frmPantalla = new frmrReporteEstadistico(frm);
-         menuAdmin.setVisible(false);
+        menuAdmin.setVisible(false);
 
         if (frm != null) {
             frm.dispose();
         }
         frmPantalla.setVisible(true);
     }
-    
+
     /**
      * Metodo para navegar a la pantalla de reporte de uso de cubiculo
+     *
      * @param frm Frame que mando a llamar la accion
      */
     public void pantallaReporteIngresosCubiculo(JFrame frm) {
@@ -300,10 +313,11 @@ public class CoordinadorAplicacion {
         }
 
         frmPantalla.setVisible(true);
-        }
-    
+    }
+
     /**
      * Metodo para que se presente el dialogo de cuota
+     *
      * @param frame el frame de modificar cita
      * @param cita la cita q se va a actualizar
      */
@@ -311,5 +325,5 @@ public class CoordinadorAplicacion {
         DlgConfirmaciónCuota cuota = new DlgConfirmaciónCuota(frame, true, cita);
         cuota.setVisible(true);
     }
-    
+
 }

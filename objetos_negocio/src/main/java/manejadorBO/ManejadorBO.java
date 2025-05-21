@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package manejadorBO;
 
 import BO.AdeudoBO;
@@ -11,6 +7,7 @@ import BO.FacturaBO;
 import BO.PagoBO;
 import BO.PsicologoBO;
 import BO.ReporteCubiculoBO;
+import BO.UsuarioBO;
 import enumeradores.TipoBO;
 import interfaces.IAdeudoBO;
 import interfaces.ICitaBO;
@@ -19,6 +16,7 @@ import interfaces.IFacturaBO;
 import interfaces.IPagoBO;
 import interfaces.IPsicologoBO;
 import interfaces.IReporteCubiculoBO;
+import interfaces.IUsuarioBO;
 
 /**
  * Clase que funciona como fábrica de objetos negocio.
@@ -52,12 +50,14 @@ public class ManejadorBO {
                 IReporteCubiculoBO reporteBO = ReporteCubiculoBO.getInstancia();
                 return reporteBO;
             case FACTURA:
-                IFacturaBO facturaBO = new FacturaBO();
+                IFacturaBO facturaBO = FacturaBO.getInstancia();
                 return facturaBO;
             case PAGO:
-                IPagoBO pagoBO = new PagoBO();
+                IPagoBO pagoBO = PagoBO.getInstancia();
                 return pagoBO;
-
+            case USUARIO:
+                IUsuarioBO usuarioBO = UsuarioBO.getInstancia();
+                return usuarioBO;
             default:
                 throw new IllegalArgumentException("Tipo de BO no soportado: " + tipo);
         }

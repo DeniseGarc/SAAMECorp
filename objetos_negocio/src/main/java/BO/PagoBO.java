@@ -19,9 +19,9 @@ import mapper.PagoMapper;
 import mapper.PsicologoMapper;
 
 /**
- * Clase que implementa la lógica de negocio para los pagos. MOCK
- * ESTA CLASE ES UN MOCK
- * 
+ * Clase que implementa la lógica de negocio para los pagos. MOCK ESTA CLASE ES
+ * UN MOCK
+ *
  * @author Alici
  */
 public class PagoBO implements IPagoBO {
@@ -35,6 +35,18 @@ public class PagoBO implements IPagoBO {
      */
     private PsicologoMapper mapper = new PsicologoMapper();
 
+    private static PagoBO instancia;
+
+    private PagoBO() {
+    }
+
+    public static PagoBO getInstancia() {
+        if (instancia == null) {
+            instancia = new PagoBO();
+        }
+        return instancia;
+    }
+
     @Override
     public List<PagoDTO> obtenerPagosDelMesPsicologo(PsicologoDTO psicologoDTO) throws NegocioException {
         return null;
@@ -45,9 +57,9 @@ public class PagoBO implements IPagoBO {
      *
      * @param pagoDTO Objeto que contiene la información del pago a registrar.
      * @return true si el pago se registró correctamente, false en caso
-     *         contrario.
+     * contrario.
      * @throws NegocioException Si ocurre un error de negocio durante el
-     *                          registro.
+     * registro.
      */
     @Override
     public PagoDTO registrarPago(PagoDTO pagoDTO) throws NegocioException {
@@ -57,10 +69,10 @@ public class PagoBO implements IPagoBO {
 
     /**
      * Método para obtener todos los psicólogos registrados.
-     * 
+     *
      * @return Lista de psicólogos registrados.
      * @throws NegocioException Si ocurre un error de negocio durante la
-     *                          obtención de los psicólogos.
+     * obtención de los psicólogos.
      */
     public List<PsicologoDTO> obtenerPsicologos() throws NegocioException {
         try {

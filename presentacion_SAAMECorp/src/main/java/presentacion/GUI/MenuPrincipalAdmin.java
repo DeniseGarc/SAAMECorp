@@ -5,8 +5,11 @@
 package presentacion.GUI;
 
 import java.awt.CardLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.sesion.GestorSesion;
 
 /**
  * Clase que representa el Frame de la pantalla de inicio del usuario
@@ -185,11 +188,12 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnAjustesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAjustesActionPerformed
-        // TODO add your handling code here:
+        GestorSesion.borrarDatosSesion();
+        flujoPantallas.pantallaInicioSesion(this);
     }// GEN-LAST:event_btnAjustesActionPerformed
 
     private void btnCubiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCubiculosMouseClicked
-  
+
     }//GEN-LAST:event_btnCubiculosMouseClicked
 
     private void btnCubiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCubiculosActionPerformed
@@ -200,8 +204,21 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
      * Método para agregar los paneles al CardLayout del panel lateral del menú.
      */
     public void agregarPanelesLateral() {
+        PanelCalendarioCitas panelCalendario = new PanelCalendarioCitas();
+        panelCalendario.addPropertyChangeListener("visible", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Verificar si el panel se acaba de hacer visible
+                if (evt.getNewValue().equals(true)) {
+                    System.out.println("Panel con calendario se hizo visible. Recargando JCalendar...");
+                    panelCalendario.getCalendarioCitas().revalidate();
+                    panelCalendario.getCalendarioCitas().repaint();
+
+                }
+            }
+        });
         panelLateral.add(new PanelBienvenida(), "pantallaBienvenida");
-        panelLateral.add(new PanelCalendarioCitas(), "pantallaCalendarioCitas");
+        panelLateral.add(panelCalendario, "pantallaCalendarioCitas");
         panelLateral.add(new PanelRegistroPagos(), "pantallaRegistroPagos");
     }
 
@@ -210,7 +227,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
      * muestran las pantallas del menú de la barra lateral izquierda.
      *
      * @return Panel lateral derecho donde aparecen las pantallas según lo
-     *         seleccionado en el menú.
+     * seleccionado en el menú.
      */
     public JPanel getPanelLateral() {
         return panelLateral;
@@ -225,6 +242,7 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     public CardLayout getCardLayout() {
         return cardLayout;
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAjustes;

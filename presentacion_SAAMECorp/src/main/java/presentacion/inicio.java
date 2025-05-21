@@ -17,8 +17,7 @@ public class inicio {
      */
     public static void main(String[] args) {
         CoordinadorAplicacion control = CoordinadorAplicacion.getInstance();
-        control.pantallaInicioSesion();
-        
+        control.pantallaInicioSesion(null);
 
     }
 

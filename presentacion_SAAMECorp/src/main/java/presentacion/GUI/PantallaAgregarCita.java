@@ -298,6 +298,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Usted no tiene disponibilidad de horarios para el día seleccionado", "No es posible agendar ninguna cita para el día seleccionado", JOptionPane.INFORMATION_MESSAGE);
+            flujoPantallas.regresarAlMenuPrincipal(this);
         }
     }
 
@@ -308,12 +309,12 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
         try {
             CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
             String mensaje = controlNegocio.obtenerResumenCita(cita);
-
+            
             if (!mensaje.startsWith("¿Desea agendar la cita?")) {
                 JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
             int opcion = JOptionPane.showOptionDialog(
                     this,
                     mensaje,
@@ -324,7 +325,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
                     new Object[]{"Cancelar", "Aceptar"},
                     "Aceptar"
             );
-
+            
             if (opcion == 1) {
                 String resultado = controlNegocio.agendarCita(cita);
                 JOptionPane.showMessageDialog(null, "¡Cita agendada exitosamente!, " + resultado, "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
@@ -406,9 +407,9 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
                 && cmbCubiculo.getSelectedIndex() != -1
                 && cmbPsicologos.getSelectedIndex() != -1
                 && cmbHorarios.getSelectedIndex() != -1;
-
+        
         btnConfirmar.setEnabled(camposLlenos);
-
+        
     }
 
     /**
@@ -421,12 +422,12 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();
             }
-
+            
             @Override
             public void removeUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();
             }
-
+            
             @Override
             public void changedUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();

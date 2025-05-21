@@ -10,11 +10,15 @@ public class GestorSesion {
     /**
      * Identificador de usuario
      */
-    private static String identificadorUsuario = "123";
+    private static String identificadorUsuario;
     /**
      * Tipo de usuario
      */
     private static TipoUsuario tipoUsuario;
+    /**
+     * Nombre de usuario
+     */
+    private static String usuario;
 
     /**
      * Método para obtener el identificador del usuario.
@@ -53,12 +57,31 @@ public class GestorSesion {
     }
 
     /**
+     * Devuelve el nombre de usuario de la sesion.
+     *
+     * @return regresa el nombre de usuario
+     */
+    public static String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * Define el nombre de usuario de la sesión.
+     *
+     * @param usuario
+     */
+    public static void setUsuario(String usuario) {
+        GestorSesion.usuario = usuario;
+    }
+
+    /**
      * Método que se utiliza para poder borrar los datos la sesión anterior
      * cuando se cierra sesión.
      */
     public static void borrarDatosSesion() {
         identificadorUsuario = null;
         tipoUsuario = null;
+        usuario = null;
     }
 
 }

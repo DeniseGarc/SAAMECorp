@@ -1,5 +1,6 @@
 package presentacion.GUI;
 
+import com.toedter.calendar.JCalendar;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,6 +8,8 @@ import javax.swing.JOptionPane;
 import modificarCita.control.ControlModificarCita;
 import presentacion.control.CoordinadorAplicacion;
 import presentacion.control.CoordinadorNegocio;
+import presentacion.sesion.GestorSesion;
+import presentacion.sesion.TipoUsuario;
 
 /**
  * Clase que representa el frame el cual muestra el calendario para seleccionar
@@ -26,7 +29,12 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         initComponents();
         controlNegocio.pintarDiasCalendario(calendarioCitas);
         controlNegocio.bloquearDiasNoDisponibles(calendarioCitas);
+        if (GestorSesion.getTipoUsuario() == TipoUsuario.PSICOLOGO) {
+            btnModificarCita.hide();
+        }
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -138,6 +146,10 @@ public class PanelCalendarioCitas extends javax.swing.JPanel {
         Calendar diaSeleccionado = calendarioCitas.getCalendar();
         flujoPantallas.pantallaSeleccionCita(diaSeleccionado);
     }//GEN-LAST:event_btnModificarCitaMouseClicked
+
+    public JCalendar getCalendarioCitas() {
+        return calendarioCitas;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

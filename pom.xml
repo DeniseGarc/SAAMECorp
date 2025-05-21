@@ -19,6 +19,7 @@
         <module>negocios_Pagos</module>
         <module>infraestructura_SistemaFacturas</module>
         <module>negocios_ModificarCita</module>
+        <module>negocios_iniciarSesion</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

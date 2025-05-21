@@ -20,6 +20,7 @@ import dto.ReporteResumenCubiculoDTO;
 import dto.ReporteUsoCubiculoDTO;
 import dto.ResultadoAgendarCita;
 import dto.ResultadoFacturarPago;
+import dto.UsuarioDTO;
 import excepciones.AgendarCitaException;
 import excepciones.CoordinadorException;
 import excepciones.GestorCalendarioException;
@@ -27,6 +28,7 @@ import generarFactura.FGenerarFactura;
 import generarFactura.IGenerarFactura;
 import excepciones.ModificarCitaException;
 import excepciones.GestorCubiculosException;
+import excepciones.IniciarSesionException;
 import exception.GestorReportesException;
 import gestorCalendario.FGestorCalendario;
 import gestorCalendario.IGestorCalendario;
@@ -34,6 +36,8 @@ import gestorCubiculos.FGestorCubiculos;
 import gestorCubiculos.IGestorCubiculos;
 import gestorReportes.FGestorReportes;
 import gestorReportes.IGestorReportes;
+import iniciarSesion.FIniciarSesion;
+import iniciarSesion.IIniciarSesion;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -75,6 +79,7 @@ public class CoordinadorNegocio {
 
     private final IModificarCita sistemaModificarCita = new FModificarCita();
     private final IPago sistemaPagos = new FPago();
+    private final IIniciarSesion sistemaInicioSesion = new FIniciarSesion();
 
     /**
      * Subsistema para gestionar cubiculos
@@ -690,6 +695,18 @@ public class CoordinadorNegocio {
             throw new CoordinadorException(ex.getMessage());
         }
 
+    }
+
+    public UsuarioDTO iniciarSesion(UsuarioDTO usuario) throws CoordinadorException {
+        if (usuario == null || usuario.getTipoUsuario() == null || usuario.getContrasena() == null || usuario.getUsuario() == null) {
+            throw new CoordinadorException("El usuario ni contraseña no pueden ser nulos");
+        }
+        try {
+            return sistemaInicioSesion.iniciarSesion(usuario);
+        } catch (IniciarSesionException ex) {
+            Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Credenciales Incorrectas");
+        }
     }
 
 }

@@ -1,6 +1,12 @@
 package presentacion.GUI;
 
+import dto.UsuarioDTO;
+import excepciones.CoordinadorException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import presentacion.control.CoordinadorAplicacion;
+import presentacion.control.CoordinadorNegocio;
 import presentacion.sesion.GestorSesion;
 import presentacion.sesion.TipoUsuario;
 
@@ -14,7 +20,8 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
     /**
      * Coordinador del flujo de pantallas de la aplicación
      */
-    CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private CoordinadorAplicacion flujoPantallas = CoordinadorAplicacion.getInstance();
+    private CoordinadorNegocio controlNegocio = CoordinadorNegocio.getInstance();
 
     /**
      * Constructor que inicializa los componentes del frame
@@ -32,9 +39,9 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblID = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         lblPwd = new javax.swing.JLabel();
-        PwdField = new javax.swing.JPasswordField();
+        pwdField = new javax.swing.JPasswordField();
         CbBoxTipo = new javax.swing.JComboBox<>();
         btnIngresar = new javax.swing.JButton();
         lblPwd1 = new javax.swing.JLabel();
@@ -78,8 +85,8 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                     .addComponent(lblID)
-                    .addComponent(txtID)
-                    .addComponent(PwdField)
+                    .addComponent(txtUsuario)
+                    .addComponent(pwdField)
                     .addComponent(CbBoxTipo, 0, 296, Short.MAX_VALUE)
                     .addComponent(lblPwd)
                     .addComponent(lblPwd1))
@@ -91,11 +98,11 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(lblID)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPwd1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PwdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(lblPwd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,17 +152,43 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarMouseClicked
-        if (CbBoxTipo.getSelectedItem() == "Administrador") {
-            GestorSesion.setTipoUsuario(TipoUsuario.ADMIN);
-        } else {
-            GestorSesion.setTipoUsuario(TipoUsuario.PSICOLOGO);
-        }
-        flujoPantallas.pantallaPrincipal(this);
+        iniciarSesion();
     }//GEN-LAST:event_btnIngresarMouseClicked
+
+    private void iniciarSesion() {
+        if (txtUsuario.getText().trim().isEmpty() || txtUsuario.getText() == null) {
+            JOptionPane.showMessageDialog(null, "Ingrese el usuario", "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (pwdField.getText().trim().isEmpty() || txtUsuario.getText() == null) {
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña", "", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String tipoUsuario;
+        if (CbBoxTipo.getSelectedItem() == "Administrador") {
+            tipoUsuario = TipoUsuario.ADMIN.name();
+        } else {
+            tipoUsuario = TipoUsuario.PSICOLOGO.name();
+        }
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setUsuario(txtUsuario.getText());
+        usuario.setContrasena(pwdField.getText());
+        usuario.setTipoUsuario(tipoUsuario);
+
+        try {
+            UsuarioDTO usuarioRegistrado = controlNegocio.iniciarSesion(usuario);
+            GestorSesion.setIdentificadorUsuario(usuarioRegistrado.getIdentificador());
+            GestorSesion.setTipoUsuario(TipoUsuario.valueOf(usuarioRegistrado.getTipoUsuario()));
+            GestorSesion.setUsuario(usuarioRegistrado.getUsuario());
+            flujoPantallas.pantallaPrincipal(this);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbBoxTipo;
-    private javax.swing.JPasswordField PwdField;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -163,6 +196,7 @@ public class PantallaIniciarSesion extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblPwd;
     private javax.swing.JLabel lblPwd1;
-    private javax.swing.JTextField txtID;
+    private javax.swing.JPasswordField pwdField;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

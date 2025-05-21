@@ -38,13 +38,25 @@ public class FacturaBO implements IFacturaBO {
      */
     private PagoMapper mapperPago = new PagoMapper();
 
+    private static FacturaBO instancia;
+
+    private FacturaBO() {
+    }
+
+    public static FacturaBO getInstancia() {
+        if (instancia == null) {
+            instancia = new FacturaBO();
+        }
+        return instancia;
+    }
+
     /**
      * Valida si el pago ya ha sido facturado.
      *
      * @param pagoDTO Objeto que contiene la información del pago a validar.
      * @return true si el pago ya ha sido facturado, false en caso contrario.
      * @throws NegocioException Si ocurre un error de negocio durante la
-     *                          validación.
+     * validación.
      */
     @Override
     public boolean validarPagoFactura(PagoDTO pagoDTO) throws NegocioException {
@@ -65,11 +77,11 @@ public class FacturaBO implements IFacturaBO {
      *
      * @param pagoDTO
      * @param facturaDTO Objeto que contiene la información de la factura a
-     *                   registrar.
+     * registrar.
      * @return true si la factura se registró correctamente, false en caso
-     *         contrario.
+     * contrario.
      * @throws NegocioException Si ocurre un error de negocio durante el
-     *                          registro.
+     * registro.
      */
     @Override
     public boolean registrarFactura(PagoDTO pagoDTO, FacturaDTO facturaDTO) throws NegocioException {
