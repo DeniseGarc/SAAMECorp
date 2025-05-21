@@ -107,7 +107,7 @@ public class ControlModificarCita {
                             && cita.getFechaHora().get(Calendar.MINUTE) == citaActualizar.getFechaHora()
                                     .get(Calendar.MINUTE);
 
-                    if (mismoDiaYHora && cubiculo.getNombre().equals(cita.getCubiculo())
+                    if (mismoDiaYHora && cubiculo.getNombre().equals(cita.getCubiculo().getNombre())
                             && !cita.getCubiculo().equals(citaActualizar.getCubiculo())) {
                         cubiculoOcupado = true;
                         break;
