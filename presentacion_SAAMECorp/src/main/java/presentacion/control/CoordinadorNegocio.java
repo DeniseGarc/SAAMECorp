@@ -214,10 +214,12 @@ public class CoordinadorNegocio {
      * Método para obtener el texto con el resumen de la cita.
      *
      * @param cita Datos de la cita a agendar
+     * @param cubiculo nombre del cubiculo
+     * @param psicologo nombre del psicologo
      * @return regresa el texto con el resumen de la cita.
      * @throws CoordinadorException Si ocurre un problema al obtener el resumen
      */
-    public String obtenerResumenCita(CitaNuevaDTO cita) throws CoordinadorException {
+    public String obtenerResumenCita(CitaNuevaDTO cita, String cubiculo, String psicologo) throws CoordinadorException {
         if (cita == null) {
             throw new CoordinadorException("Los datos de la cita son nulos.");
         }
@@ -226,7 +228,7 @@ public class CoordinadorNegocio {
             return error;
         }
         try {
-            return sistemaAgendarCita.resumenCita(cita);
+            return sistemaAgendarCita.resumenCita(cita, cubiculo, psicologo);
         } catch (AgendarCitaException ex) {
             Logger.getLogger(CoordinadorNegocio.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Error al generar resumen de la cita.", ex);

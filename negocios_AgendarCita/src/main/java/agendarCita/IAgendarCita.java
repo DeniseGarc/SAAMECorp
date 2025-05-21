@@ -49,10 +49,12 @@ public interface IAgendarCita {
      * Método que devuelve el resumen de la cita nueva.
      *
      * @param cita Cita nueva a agendar en el sistema.
+     * @param cubiculo nombre del cubiculo
+     * @param psicologo nombre del psicologo
      * @return Texto con el resumen de la cita generado.
      * @throws AgendarCitaException Si la cita llega nula.
      */
-    public String resumenCita(CitaNuevaDTO cita) throws AgendarCitaException;
+    public String resumenCita(CitaNuevaDTO cita, String cubiculo, String psicologo) throws AgendarCitaException;
 
     /**
      * Método que se encarga de agendar la cita en el sistema.
