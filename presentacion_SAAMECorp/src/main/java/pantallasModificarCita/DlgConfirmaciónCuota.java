@@ -157,7 +157,7 @@ public class DlgConfirmaciónCuota extends javax.swing.JDialog {
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         try {
-            cita.getAdeudo().setCantidad(150.0);
+            cita.getAdeudo().setCantidad(cita.getAdeudo().getCantidad() + 50.0);
             cita.getAdeudo().setNotas("Se le agregó una cuota a su adeudo por la antelacion de modificación.");
             controlNegocio.actualizarCita(cita);
             JOptionPane.showMessageDialog(this, "Cita actualizada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
