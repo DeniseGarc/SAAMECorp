@@ -53,6 +53,7 @@ public class frmReporteUsoCubiculo extends javax.swing.JFrame {
     public frmReporteUsoCubiculo(JFrame frmPadre) {
         this.frmPadre = frmPadre;
         initComponents();
+        txtReporte.setEditable(false);
         setLocationRelativeTo(null);
         mostrarCubiculos();
         
