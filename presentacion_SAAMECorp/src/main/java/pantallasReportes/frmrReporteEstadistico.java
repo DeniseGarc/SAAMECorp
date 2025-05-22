@@ -141,7 +141,7 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(1100, 680));
 
         lblTitulo3.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 36)); // NOI18N
-        lblTitulo3.setText("Reporte uso de Cubiculo");
+        lblTitulo3.setText("Reporte de resumen estadistico");
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -191,25 +191,25 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRegresar10)
-                .addGap(42, 42, 42)
+                .addGap(52, 52, 52)
                 .addComponent(lblTitulo3)
-                .addGap(241, 241, 241))
+                .addGap(165, 165, 165))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(253, 253, 253)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnExportarPDF)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 122, Short.MAX_VALUE))
+                .addGap(0, 134, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTitulo3)
                     .addComponent(btnRegresar10))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExportarPDF)
                 .addGap(45, 45, 45))
@@ -219,17 +219,11 @@ public class frmrReporteEstadistico extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1112, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
         );
 
         pack();

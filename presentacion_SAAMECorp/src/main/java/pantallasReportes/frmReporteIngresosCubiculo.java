@@ -61,24 +61,44 @@ public class frmReporteIngresosCubiculo extends javax.swing.JFrame {
                 }
             }
         });
+        
+        jTable1.setModel(new DefaultTableModel(
+            new Object[][] {}, // sin filas
+            new String[] {
+                "Cubículo", "Ingresos", "Citas Pagadas", "Citas Pendientes"
+            }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
     }
     
-    private void mostrarDatosEnTabla(ReporteIngresosCubiculoDTO dto) {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Cubículo");
-        model.addColumn("Ingresos");
-        model.addColumn("Citas Pagadas");
-        model.addColumn("Citas Pendientes");
-
-        model.addRow(new Object[] {
-            dto.getNombreCubiculo(),
-            dto.getTotalIngresos(),
-            dto.getCitasConPago(),
-            dto.getCitasPendientes()
-        });
+   private void mostrarDatosEnTabla(ReporteIngresosCubiculoDTO dto) {
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[][] {
+                {
+                    dto.getNombreCubiculo(),
+                    dto.getTotalIngresos(),
+                    dto.getCitasConPago(),
+                    dto.getCitasPendientes()
+                }
+            },
+            new String[] {
+                "Cubículo", "Ingresos", "Citas Pagadas", "Citas Pendientes"
+            }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Todas las celdas son no editables
+            }
+        };
 
         jTable1.setModel(model);
     }
+
     
     private void mostrarCubiculos() {
         try {
