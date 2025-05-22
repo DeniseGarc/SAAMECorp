@@ -158,9 +158,9 @@ public class DlgConfirmaciónCuota extends javax.swing.JDialog {
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         try {
             cita.getAdeudo().setCantidad(cita.getAdeudo().getCantidad() + 50.0);
-            if (cita.getAdeudo().isEstado()) {
+            if (!cita.getAdeudo().isEstado()) {
                 cita.getAdeudo().setNotas("Se le agregó una cuota a su adeudo por la antelacion de modificación. La cita ya había sido pagada.");
-                cita.getAdeudo().setEstado(false);
+                cita.getAdeudo().setEstado(true);
             } else {
                 cita.getAdeudo().setNotas("Se le agregó una cuota a su adeudo por la antelacion de modificación.");
             }

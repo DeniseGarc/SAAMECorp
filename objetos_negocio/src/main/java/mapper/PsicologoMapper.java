@@ -26,7 +26,11 @@ public class PsicologoMapper {
     }
 
     public Psicologo toEntity2(PsicologoDTO psicologo) {
-        return new Psicologo(null, psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
+        Psicologo p = new Psicologo(null, psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
+        if (psicologo.getId() != null && !psicologo.getId().isEmpty()) {
+            p.setObjectString(psicologo.getId());
+        }
+        return p;
     }
 
     public List<PsicologoCitaDTO> toDTOList(List<Psicologo> psicologos) {
@@ -40,7 +44,9 @@ public class PsicologoMapper {
     public List<PsicologoDTO> toDTOList2(List<Psicologo> psicologos) {
         List<PsicologoDTO> psicologosDTO = new ArrayList<>();
         for (Psicologo psicologo : psicologos) {
-            psicologosDTO.add(new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc()));
+            PsicologoDTO p = new PsicologoDTO(psicologo.getNombre(), psicologo.getApellidoPaterno(), psicologo.getApellidoMaterno(), psicologo.getCorreo(), psicologo.getRfc());
+            p.setId(psicologo.getObjectString());
+            psicologosDTO.add(p);
         }
         return psicologosDTO;
     }

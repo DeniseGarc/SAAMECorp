@@ -59,7 +59,7 @@ public class FAgendarCita implements IAgendarCita {
      */
     @Override
     public boolean validarAdeudoPsicologo(PsicologoCitaDTO psicologo) {
-        if (psicologo == null) {
+        if (psicologo.getNombre() == null) {
             Logger.getLogger(FAgendarCita.class.getName()).log(Level.SEVERE, "Psicólogo nulo");
             return false;
         }
@@ -138,7 +138,7 @@ public class FAgendarCita implements IAgendarCita {
         if (cita == null || cita.getPsicologo() == null || cita.getCubiculo() == null) {
             throw new AgendarCitaException("Datos incompletos de la cita");
         }
-        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, false, "-");
+        AdeudoCitaDTO adeudo = new AdeudoCitaDTO(100.0, true, "-");
         cita.setAdeudo(adeudo);
 
         if (!control.validarFechaCitaRepetida(cita)) {
