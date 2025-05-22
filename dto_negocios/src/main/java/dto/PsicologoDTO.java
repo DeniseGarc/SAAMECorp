@@ -17,6 +17,8 @@ package dto;
  */
 public class PsicologoDTO {
 
+    private String id;
+
     /**
      * Nombre del psicólogo.
      */
@@ -64,6 +66,14 @@ public class PsicologoDTO {
         this.apellidoMaterno = apellidoMaterno;
         this.correo = correo;
         this.rfc = rfc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

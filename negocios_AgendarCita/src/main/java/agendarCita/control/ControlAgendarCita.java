@@ -71,7 +71,7 @@ public class ControlAgendarCita {
                     psicologo.getCorreo(),
                     null
             );
-
+            dto.setId(psicologo.getId());
             return adeudoBO.consultarAdeudoTotalPsicologo(dto);
         } catch (Exception e) {
             Logger.getLogger(ControlAgendarCita.class.getName()).log(Level.SEVERE, null, e);

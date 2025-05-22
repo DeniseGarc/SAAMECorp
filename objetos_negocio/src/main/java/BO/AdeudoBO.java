@@ -55,7 +55,8 @@ public class AdeudoBO implements IAdeudoBO {
     public double consultarAdeudoTotalPsicologo(PsicologoDTO psicologo) throws NegocioException {
         try {
             Psicologo entidad = psicologoMapper.toEntity2(psicologo);
-            return adeudoDAO.consultarAdeudoTotalPsicologo(entidad);
+            double ad = adeudoDAO.consultarAdeudoTotalPsicologo(entidad);
+            return ad;
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al consultar el adeudo total del psicologo: " + e.getMessage());
         }

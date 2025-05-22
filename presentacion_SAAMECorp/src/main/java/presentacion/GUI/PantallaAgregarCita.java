@@ -43,7 +43,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
      * Lista de psicologos registrados en el consultorio
      */
     private List<PsicologoCitaDTO> psicologos;
-    
+
     private List<CubiculoDTO> cubiculos;
 
     /**
@@ -308,16 +308,24 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
     private void mostrarResumenCita() {
         try {
             CitaNuevaDTO cita = obtenerDatosCita(); // Método que obtiene los datos de la UI
+            boolean adeudo = controlNegocio.validarAdeudoPsicologoSeleccionado(psicologos.get(cmbPsicologos.getSelectedIndex()));
+            if (!adeudo) {
+                JOptionPane.showMessageDialog(this,
+                        "El psicólogo seleccionado tiene adeudos y no puede agendar citas.",
+                        "Adeudo detectado",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             String nombreCubiculo = cubiculos.get(cmbCubiculo.getSelectedIndex()).getNombre();
-            String nombrePsicologo = psicologos.get(cmbPsicologos.getSelectedIndex()).getNombre() + " " + psicologos.get(cmbPsicologos.getSelectedIndex()).getApellidoPaterno() 
+            String nombrePsicologo = psicologos.get(cmbPsicologos.getSelectedIndex()).getNombre() + " " + psicologos.get(cmbPsicologos.getSelectedIndex()).getApellidoPaterno()
                     + " " + psicologos.get(cmbPsicologos.getSelectedIndex()).getApellidoMaterno();
             String mensaje = controlNegocio.obtenerResumenCita(cita, nombreCubiculo, nombrePsicologo);
-            
+
             if (!mensaje.startsWith("¿Desea agendar la cita?")) {
                 JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             int opcion = JOptionPane.showOptionDialog(
                     this,
                     mensaje,
@@ -328,7 +336,7 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
                     new Object[]{"Cancelar", "Aceptar"},
                     "Aceptar"
             );
-            
+
             if (opcion == 1) {
                 String resultado = controlNegocio.agendarCita(cita);
                 JOptionPane.showMessageDialog(null, "¡Cita agendada exitosamente!, " + resultado, "Cita agendada exitosamente", JOptionPane.INFORMATION_MESSAGE);
@@ -410,9 +418,9 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
                 && cmbCubiculo.getSelectedIndex() != -1
                 && cmbPsicologos.getSelectedIndex() != -1
                 && cmbHorarios.getSelectedIndex() != -1;
-        
+
         btnConfirmar.setEnabled(camposLlenos);
-        
+
     }
 
     /**
@@ -425,12 +433,12 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
             public void insertUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 actualizarEstadoBoton();
@@ -444,24 +452,18 @@ public class PantallaAgregarCita extends javax.swing.JFrame {
         cmbPsicologos.addItemListener(e -> {
             if (cmbPsicologos.getSelectedIndex() != -1) {
                 try {
-                    PsicologoCitaDTO psicologoSeleccionado = (PsicologoCitaDTO) cmbPsicologos.getSelectedItem();
+                    PsicologoCitaDTO psicologoSeleccionado = psicologos.get(cmbPsicologos.getSelectedIndex());
                     if (controlNegocio.validarAdeudoPsicologoSeleccionado(psicologoSeleccionado)) {
                         llenarComboHorariosPsicologo(psicologoSeleccionado);
                     } else {
-                        if (GestorSesion.getTipoUsuario() == TipoUsuario.ADMIN) {
-                            JOptionPane.showMessageDialog(null, "El psicólogo seleccionado presenta un adeudo de 500 o mayor, por lo que no es posible agendarle una cita", "No le es posible agendar cita a este psicólogo en este momento", JOptionPane.INFORMATION_MESSAGE);
-                            cmbPsicologos.removeItem(psicologoSeleccionado);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Usted presenta un adeudo de 500 o mayor, por lo que no es posible agendar una cita", "No le es posible agendar cita en este momento", JOptionPane.INFORMATION_MESSAGE);
-                        }
+                        JOptionPane.showMessageDialog(null, "El psicólogo seleccionado presenta un adeudo de 500 o mayor, por lo que no es posible agendarle una cita", "No le es posible agendar cita a este psicólogo en este momento", JOptionPane.INFORMATION_MESSAGE);
+                        cmbHorarios.setEnabled(false);
+                        cmbCubiculo.setEnabled(false);
                     }
                 } catch (CoordinadorException ex) {
                     Logger.getLogger(PantallaAgregarCita.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null, "Error al obtener los cubiculos disponibles", "Error al obtener cubiculos", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                cmbHorarios.setEnabled(false);
-                cmbCubiculo.setEnabled(false);
             }
         });
 

@@ -176,7 +176,7 @@ public class ControlModificarCita {
                     cita.getCubiculo().getNombre(), fechaCitaFormateada, nombrePsicologo, cita.getNombrePaciente(),
                     cita.getTelefonoPaciente(), cita.getCorreoPaciente());
             CorreoMapper correoMapper = new CorreoMapper();
-            boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO2(correoCita));
+            boolean enviado = correoInfra.mandarCorreo(correoMapper.toDTO2(correoCita, cita.getAdeudo()));
             return enviado;
         } catch (Exception e) {
             Logger.getLogger(ControlModificarCita.class.getName()).log(Level.WARNING,
